@@ -1,0 +1,50 @@
+body{
+	background: url('../../images/background.jpg') no-repeat fixed;
+	background-size: cover;
+}
+.login {
+	margin-bottom:5px;
+}
+.dropdown-menu {
+    width: 300px !important;
+}
+.in {
+    overflow-y: scroll;
+}
+.affix {
+    top: 0;
+    width: 100%;
+}
+.affix + .container-fluid {
+	padding-top: 70px;
+}
+.overlay::after {
+	position: absolute;
+	background: url('../../images/below-logo.png') no-repeat;
+	margin-top: -200px;
+	background-size: 100%;
+	height: 200px;
+	width: 100%;
+	content: '';
+	z-index: 1;
+}
+.logo-overlay::after{
+	position: absolute;
+	background: url('../../images/logo-overlay.png') no-repeat center center;
+	margin-top: -200px;
+	height: 200px;
+	width: 100%;
+	content: '';
+	z-index: 2;
+}
+.logo-text::after{
+	position: absolute;
+	text-align: center;
+	margin-top: -30px;
+	height: 30px;
+	color: white;
+	width:100%;
+	content: '21 Quezon Ave. Poblacion, Alaminos City Pangasinan';
+	z-index: 3;
+}
+
