@@ -1,6 +1,6 @@
 <?php
   // LOGIN
-  if (isset($_POST['email'])){
+  if (isset($_REQUEST['email'])){
     $email = stripslashes($_REQUEST['email']); // removes backslashes
     $email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
     $password = stripslashes($_REQUEST['password']);
