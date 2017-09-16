@@ -1,4 +1,3 @@
-<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
@@ -13,8 +12,8 @@
 	<body>
     <div class="se-pre-con"></div>
     <?php
-      require 'carousel.php';
       require '../files/navbar.php';
+      require 'galleryTabs.php';
     ?>
 		<div class="container-fluid">
 			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

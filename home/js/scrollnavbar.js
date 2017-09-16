@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    $(this).scrollTop(0);
     $(".navbar").hide();
         // fade in .navbar
     $(function () {

@@ -1,23 +1,4 @@
-body{
-	background: url('../../images/background.jpg') no-repeat fixed;
-	background-size: cover;
-}
-.login {
-	margin-bottom:5px;
-}
-.dropdown-menu {
-    width: 300px !important;
-}
-.in {
-    overflow-y: scroll;
-}
-.affix {
-    top: 0;
-    width: 100%;
-}
-.affix + .container-fluid {
-	padding-top: 70px;
-}
+/*northwood logo overlay*/
 .overlay::after {
 	position: absolute;
 	background: url('../../images/below-logo.png') no-repeat;
