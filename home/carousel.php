@@ -21,7 +21,7 @@
                         <?php
                             while ($row = mysqli_fetch_assoc($result))
                             {
-                                echo "<div class='item'><img src='../images/".$row['Source']."' alt='".$row['Name']."'></div>\n";
+                                echo "<div class='item'><img src='/nwh/images/".$row['Source']."' alt='".$row['Name']."'></div>\n";
                             }
                         ?>
                     </div>

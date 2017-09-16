@@ -13,7 +13,6 @@
 	<body>
     <div class="se-pre-con"></div>
     <?php
-      require 'carousel.php';
       require '../files/navbar.php';
     ?>
 		<div class="container-fluid">

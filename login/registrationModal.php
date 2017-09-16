@@ -1,13 +1,16 @@
-<div id="registrationModal" class="modal fade" role="dialog" style="z-index:100;">
+<div id="registrationModal" class="modal fade" role="dialog" data-backdrop="false" >
   	<div class="modal-dialog">
 	    <!-- Modal content-->
 	    <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Registration</h4>
+				<h4 class="modal-title text-center">Registration</h4>
 			</div>
 			<div class="modal-body">
-				<form name="registration" action="" method="post" class="form-horizontal">
+				<form id="registerform" method="post" class="form-horizontal">
+          <div id="errorRegister">
+            <!-- error will be shown here ! -->
+          </div>
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-10">
@@ -24,7 +27,7 @@
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<input name="emailreg" type="email" class="form-control" id="email" placeholder="Email" required/>
+							<input name="email" type="email" class="form-control" id="email" placeholder="Email" required/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -34,7 +37,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-info" style="">Register</button>
+						<button id="register" type="submit" class="btn btn-info" onclick="submitRegisterForm();return false;">Register</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

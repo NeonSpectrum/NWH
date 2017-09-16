@@ -1,6 +1,4 @@
-.modal-backdrop {
-    z-index: -1;
-}
-.modal-open {
-    overflow-y: scroll;
+.modal-open{
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

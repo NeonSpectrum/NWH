@@ -1,3 +1,4 @@
+<?php include '../files/header.php'?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

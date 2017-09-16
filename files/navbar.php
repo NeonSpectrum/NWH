@@ -1,8 +1,9 @@
 <?php include 'active.php'?>
 <nav class="navbar navbar-default" data-spy="affix" data-offset-top="650">
+  <a name="navbarHash"></a>
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="./"><img src="../images/logo.png" width="30px" style="float:left;margin-right:10px"/>Northwood Hotel</a>
+      <a class="navbar-brand" href="./"><img src="/nwh/images/logo.png" width="30px" style="float:left;margin-right:10px"/>Northwood Hotel</a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -16,12 +17,12 @@
           <li <?php echo $rates;?>><a href="/nwh/rates">Room & Rates</a></li>
           <li <?php echo $food;?>><a href="/nwh/foodanddrinks">Food & Drinks</a></li>
           <li class="dropdown" <?php echo $amenities;?>>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="/nwh/amenities">Amenities
+            <a class="dropdown-toggle" data-toggle="dropdown">Amenities
             <span class="caret"></span></a>
             <ul class="dropdown-menu" style="color:white">
-                <li><a href="#">Function Room</a></li>
-                <li><a href="#">Swimming Pool</a></li>
-                <li><a href="#">BigBite Restaurant</a></li>
+                <li><a href="/nwh/amenities/function">Function Room</a></li>
+                <li><a href="/nwh/amenities/pool">Swimming Pool</a></li>
+                <li><a href="/nwh/amenities/bigbite">BigBite Restaurant</a></li>
             </ul>
           </li>
           <li <?php echo $contact;?>><a href="/nwh/contactus">Contact Us</a></li>

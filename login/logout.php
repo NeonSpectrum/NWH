@@ -2,6 +2,6 @@
   session_start();
 	if(session_destroy()) // Destroying All Sessions
 	{
-		header("Location: ../.."); // Redirecting To Home Page
+		header("location:".$_SERVER['HTTP_REFERER']); // Redirecting To Home Page
 	}
 ?>

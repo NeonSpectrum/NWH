@@ -1,4 +1,4 @@
-<?php include '../files/header.php'?>
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
@@ -6,19 +6,18 @@
   		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1">
       <?php 
-        require '../files/db.php';
-        require '../files/css.php';
+        require '../../files/db.php';
+        require '../../files/css.php';
       ;?>
 	</head>
 	<body>
     <div class="se-pre-con"></div>
     <?php
-      require 'carousel.php';
-      require '../files/navbar.php';
+      require '../../files/navbar.php';
     ?>
 		<div class="container-fluid">
 			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 		</div>
-    <?php require '../files/script.php';?>
+    <?php require '../../files/script.php';?>
 	</body>
 </html>
