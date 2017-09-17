@@ -5,14 +5,16 @@
     try{
       $fname = stripslashes($_POST['fname']); // removes backslashes
       $fname = mysqli_real_escape_string($db,$fname); //escapes special characters in a string
+      $fname = ucwords($fname); //capitalize first character
       $lname = stripslashes($_POST['lname']); // removes backslashes
       $lname = mysqli_real_escape_string($db,$lname); //escapes special characters in a string
+      $lname = ucwords($lname); //capitalize first character
       $email = stripslashes($_POST['email']);
       $email = mysqli_real_escape_string($db,$email);
       $password = stripslashes($_POST['password']);
       $password = mysqli_real_escape_string($db,$password);
       $password = password_hash($password, PASSWORD_DEFAULT);
-      $query = "INSERT INTO `account` VALUES ('$email', '$password','User', '$fname', '$lname')";
+      $query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname')";
       $result = mysqli_query($db,$query);
       if($result){
         echo "ok";

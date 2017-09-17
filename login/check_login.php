@@ -12,10 +12,12 @@
       $row = $result->fetch_assoc();
       $count = mysqli_num_rows($result);
       if($count==1 && password_verify($password, $row['Password'])){
-        echo "ok";
         $_SESSION['logged'] = true;
         $_SESSION['fname'] = $row['FirstName'];
         $_SESSION['lname'] = $row['LastName'];
+        $_SESSION['picture'] = $row['ProfilePicture'];
+        $_SESSION['accounttype'] = $row['AccountType'];
+        echo "ok";
       }
       else{
         echo "Invalid Username or Password.";
