@@ -5,4 +5,10 @@
   foreach (glob("css/*.css") as $css) {
 		echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
   }
+  if(isset($links))
+  {
+    foreach (glob($links."css/*.css") as $css) {
+      echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
+    }
+  }
 ?>

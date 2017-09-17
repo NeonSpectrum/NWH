@@ -10,7 +10,6 @@
     if(isset($link))
     {
       header("location:'$link'");
-      unset($link);
     }
 		header("location:".$_SERVER['HTTP_REFERER']); // Redirecting To Home Page
 	}

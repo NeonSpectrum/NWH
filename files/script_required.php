@@ -5,4 +5,10 @@
   foreach (glob("js/*.js") as $js) {
     echo "<script src='".$js."'></script>\n";
   }
+  if(isset($links))
+  {
+    foreach (glob($links."js/*.js") as $js) {
+      echo "<script src='".$js."'></script>\n";
+    }
+  }
 ?>

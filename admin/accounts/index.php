@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  if($_SESSION['accounttype']=="User")
+  if($_SESSION['accounttype']!="Owner")
   {
     header('location: ../home');
     exit();
@@ -12,13 +12,14 @@
 		<title>Northwood Hotel</title>
   		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1">
-      <?php 
-        require '../files/db.php';
-        require '../files/css_required.php';
+      <?php
+        $links= '../';
+        require '../../files/db.php';
+        require '../../files/css_required.php';
       ;?>
 	</head>
-	<body>
-    <div class="se-pre-con"></div>
+	<body><!-- 
+    <div class="se-pre-con"></div> -->
     <div id="wrapper">
     <div class="overlay"></div>
       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
@@ -26,11 +27,11 @@
           <li class="sidebar-brand">
             <a class="navbar-brand" href="../" style="line-height:40px">Northwood Hotel</a>
           </li>
-          <li style="background-color: #ec1b5a;">
-              <a href="javascript.void(0)">Overview</a>
-          </li>
           <li>
-              <a href="accounts">Accounts</a>
+              <a href="../">Overview</a>
+          </li>
+          <li style="background-color: #79aefe;">
+              <a href="javascript.void(0)">Accounts</a>
           </li>
           <li>
               <a href="#">Database</a>
@@ -58,14 +59,36 @@
           <span class="hamb-bottom"></span>
         </button>
         <div class="container">
-          <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h1>Welcome, <?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?><br/><br/>to the<br/><br/>Admin Page<br/><br/>of<br/><br/>Northwood Hotel</h1>
+          <form id="editAccountForm">
+            <div id="errorLogin">
+              <!-- error will be shown here ! -->
             </div>
-          </div>
+            <select id="emailcombobox">
+              <option></option>
+              <?php
+                $query = "SELECT * FROM account";
+                $result = mysqli_query($db,$query) or die(mysql_error());
+                while($row=mysqli_fetch_assoc($result))
+                {                                                 
+                  echo "<option value='".$row['EmailAddress']."'>".$row['EmailAddress']."</option>\n";
+                }
+              ?>
+            </select>
+            <select id="accounttypecombobox">
+              <option></option>
+              <option>User</option>
+              <option>Admin</option>
+              <option>Owner</option>
+            </select>
+            <input type="text" id="profilepicture" name="profilepicture" required>
+            <input type="text" id="firstname" name="firstname" required>
+            <input type="text" id="lastname" name="lastname" required>
+            <input type="text" id="islogged" name="islogged" required>
+            <button id="edit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Submit</button>
+          </form>
         </div>
       </div>
     </div>
-    <?php require '../files/script_required.php';?>
+    <?php require '../../files/script_required.php';?>
 	</body>
 </html>
