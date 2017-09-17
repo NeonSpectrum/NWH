@@ -11,6 +11,13 @@
       ;?>
 	</head>
 	<body>
+    <?php
+      if(isset($_SESSION["picture"]))
+      {
+        echo '<style>body{background: url("../images/profilepics/'.$_SESSION["picture"].'") no-repeat fixed;background-size:cover;}</style>';
+      }
+      
+    ?>
     <div class="se-pre-con"></div>
     <?php
       require 'carousel.php';
