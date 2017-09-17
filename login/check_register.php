@@ -1,6 +1,8 @@
 <?php
   session_start();
-	require_once '../files/db.php';
+  if(!isset($root))
+    $root='';
+	require_once $root.'../files/db.php';
   if (isset($_POST['email'])){
     try{
       $fname = stripslashes($_POST['fname']); // removes backslashes

@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); $root='../';?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

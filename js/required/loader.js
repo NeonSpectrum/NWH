@@ -4,5 +4,5 @@ $(window).on("load", function() {
 });
 $(document).ready(function(){
   $(this).scrollTop(0);
-  document.getElementById('.navbarHash').scrollIntoView();
+  //document.getElementById('.navbarHash').scrollIntoView();
 });

@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); $root='../';?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
@@ -6,8 +6,8 @@
   		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1">
       <?php 
-        require '../../files/db.php';
-        require '../../files/css.php';
+        require $root.'/../files/db.php';
+        require $root.'/../files/css.php';
       ;?>
 	</head>
 	<body>

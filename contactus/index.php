@@ -1,4 +1,4 @@
-<?php include '../files/header.php'?>
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

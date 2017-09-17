@@ -1,7 +1,10 @@
 <?php
-	echo "<script src='../js/required/jquery.min.js'></script>\n";
-	echo "<script src='../js/required/bootstrap.min.js'></script>\n";
-  foreach (glob("../js/*.js") as $js) {
+  if(!isset($root))
+    $root='';
+	echo "<script src='/nwh/js/required/jquery.min.js'></script>\n";
+	echo "<script src='/nwh/js/required/bootstrap.min.js'></script>\n";
+	echo "<script src='/nwh/js/required/loader.js'></script>\n";
+  foreach (glob($root."../js/*.js") as $js) {
     echo "<script src='".$js."'></script>\n";
 	}
   foreach (glob("js/*.js") as $js) {

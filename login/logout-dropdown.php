@@ -6,7 +6,7 @@
 ?>
 <li class="dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
-    <div class="user-icon-navbar" style="background-image: url('../images/profilepics/<?php echo $picture;?>');"></div>
+    <div class="user-icon-navbar" style="background-image: url('/nwh/images/profilepics/<?php echo $picture;?>');"></div>
       <div class="user-name-navbar">
         <?php echo $fname.' '.$lname;?>
       </div>
@@ -14,8 +14,8 @@
   <ul class="dropdown-menu" style="color:white;width:200px;">
       <?php
         if($accounttype == "Owner")
-          echo "<li><a href='../admin/'>Admin Configuration</a></li>\n";
+          echo "<li><a href='/nwh/admin/'>Admin Configuration</a></li>\n";
       ?>
-      <li><a href="../login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
   </ul>
 </li>

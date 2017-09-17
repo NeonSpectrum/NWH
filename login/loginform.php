@@ -22,11 +22,11 @@
               <button id="login" type="submit" class="btn btn-primary btn-block" onclick="submitLoginForm();return false;">Sign in</button>
               <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#registrationModal">Register</button>
             </div>
-            <!-- <div class="checkbox">
+            <div class="checkbox">
               <label>
-                <input type="checkbox"> Keep me logged-in
+                <input type="checkbox" name="remembercheckbox"> Keep me logged-in
               </label>
-            </div> -->
+            </div>
           </form>
         </div>
       </div>

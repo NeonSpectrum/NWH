@@ -1,6 +1,6 @@
 body{
-	background: url('../images/background.jpg') no-repeat fixed;
-	background-size: cover;
+	background: url('/nwh/images/background.jpg') no-repeat fixed;
+  background-size: cover;
 }
 .login {
 	margin-bottom:5px;

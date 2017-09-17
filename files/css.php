@@ -1,7 +1,10 @@
 <?php
-  echo "<link rel='shortcut icon' href='../favicon.ico'/>\n";
-  echo "<link type='text/css' rel='stylesheet' href='../css/required/bootstrap.min.css'>\n";
-  foreach (glob("../css/*.css") as $css) {
+  if(!isset($root))
+    $root='';
+  echo "<link rel='shortcut icon' href='/nwh/favicon.ico'/>\n";
+  echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/bootstrap.min.css'>\n";
+  echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/loader.css'>\n";
+  foreach (glob($root."../css/*.css") as $css) {
 		echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
 	}
 	foreach (glob("css/*.css") as $css) {
