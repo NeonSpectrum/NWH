@@ -9,3 +9,9 @@
 	z-index: 9999;
 	background: url("../../images/loader.gif") center no-repeat #fff;
 }
+img.white-border {
+  -webkit-filter: drop-shadow(0.5px 0.5px 0 white)
+                  drop-shadow(-0.5px -0.5px 0 white);
+  filter: drop-shadow(0.5px 0.5px 0 white) 
+          drop-shadow(-0.5px -0.5px 0 white);
+}
