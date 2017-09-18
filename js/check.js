@@ -5,3 +5,14 @@ function capLock(e){
       ((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
   document.getElementById('caps').style.display = display
 }
+function removeLoginError(){
+  $("#errorLogin").fadeOut();
+}
+function removeRegError(){
+  $("#errorRegister").fadeOut();
+}
+function validateEmail(email) 
+{
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}

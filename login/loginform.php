@@ -10,12 +10,12 @@
             </div>
             <div class="form-group">
               <label class="sr-only">Email address</label>
-              <input type="email" class="form-control" name="email" placeholder="Email address" required>
+              <input type="email" class="form-control" name="email" placeholder="Email address" onchange="removeLoginError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required>
             </div>
             <div class="form-group">
               <label class="sr-only">Password</label>
-              <input id="pass" type="password" class="form-control" name="password" placeholder="Password" onkeypress="capLock(event)" required>
-              <div id="caps" style="display:none;margin-top:4px;">Caps Lock is on.</div> 
+              <input id="pass" type="password" class="form-control" name="password" placeholder="Password" onkeypress="capLock(event);" onchange="removeLoginError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required>
+              <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
               <div class="help-block text-right"><a href="">Forgot the password ?</a></div>
             </div>
             <div class="form-group">
