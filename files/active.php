@@ -13,7 +13,7 @@
     $food = 'class="active"';
   }
   elseif(strpos($_SERVER['PHP_SELF'],'amenities')){
-    $amenities = 'class="active"';
+    $amenities = 'active';
   }
   elseif(strpos($_SERVER['PHP_SELF'],'contactus')){
     $contact = 'class="active"';

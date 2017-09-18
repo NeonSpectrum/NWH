@@ -3,14 +3,14 @@ function submitLoginForm()
   var data = $("#loginform").serialize();
   $.ajax({
     type : 'POST',
-    url  : '../login/check_login.php',
+    url  : '/nwh/login/check_login.php',
     data : data,
     success :  function(response)
     {
-      console.log(response);
+      console.log(data);
       if(response=="ok")
       {
-        $("#login").html('<img src="../images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
+        $("#login").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
         $("#login").prop('disabled',true);
         setTimeout('location.reload(); ',2000);
       }

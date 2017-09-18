@@ -16,7 +16,7 @@
       $password = stripslashes($_POST['password']);
       $password = mysqli_real_escape_string($db,$password);
       $password = password_hash($password, PASSWORD_DEFAULT);
-      $query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname')";
+      $query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname',0)";
       $result = mysqli_query($db,$query);
       if($result){
         echo "ok";

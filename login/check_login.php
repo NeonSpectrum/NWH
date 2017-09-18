@@ -21,18 +21,17 @@
         $_SESSION['picture'] = $row['ProfilePicture'];
         $_SESSION['accounttype'] = $row['AccountType'];
         //update isLogged
-        $query = "UPDATE account SET isLogged=1 WHERE EmailAddress='$email'";
+        $query = "UPDATE account SET isLogged=0 WHERE EmailAddress='$email'";
         $result = mysqli_query($db,$query) or die(mysql_error());
-
+        $cookie = "email=".$email."&password=".$row['Password'];
         if(!empty($_POST["remembercheckbox"])) {
-          setcookie ("member_login",$_POST["email"],time()+ (365 * 24 * 60));
-          setcookie ("member_password",$_POST["password"],time()+ (365 * 24 * 60));
+          setcookie ("nwhAuth",$cookie,time()+ (60 * 60 * 24 * 7), "/");
         } else {
-          if(isset($_COOKIE["member_login"])) {
-            setcookie ("member_login","");
+          if(isset($_COOKIE["nwh_email"])) {
+            setcookie ("nwh_email","");
           }
-          if(isset($_COOKIE["member_password"])) {
-            setcookie ("member_password","");
+          if(isset($_COOKIE["nwh_password"])) {
+            setcookie ("nwh_password","");
           }
         }
         echo "ok";

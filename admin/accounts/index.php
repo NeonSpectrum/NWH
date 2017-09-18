@@ -1,8 +1,9 @@
 <?php 
-  session_start();
-  if($_SESSION['accounttype']!="Owner")
+  $root = '../';
+  include '../../files/autologin.php';
+  if($_SESSION['accounttype']=='User' || !isset($_SESSION['accounttype']))
   {
-    header('location: ../home');
+    header('location: ../../home');
     exit();
   }
 ?>
@@ -21,7 +22,7 @@
 	<body><!-- 
     <div class="se-pre-con"></div> -->
     <div id="wrapper">
-    <div class="overlay"></div>
+      <div class="overlay"></div>
       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
         <ul class="nav sidebar-nav">
           <li class="sidebar-brand">
@@ -48,22 +49,23 @@
             </ul>
           </li>
           <li>
-              <a href="<?php $link = '../'; echo '../login/logout.php';?>"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            <a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ul>
       </nav>
+      <h2 class="center-header">Account Management</h2>
       <div id="page-content-wrapper">
         <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
           <span class="hamb-top"></span>
           <span class="hamb-middle"></span>
           <span class="hamb-bottom"></span>
         </button>
-        <div class="container">
-          <form id="editAccountForm">
+        <div class="well center-block" style="width:30%">
+          <form id="accountForm">
             <div id="errorLogin">
               <!-- error will be shown here ! -->
             </div>
-            <select id="emailcombobox">
+            Email Address: <select id="emailcombobox" class="form-control">
               <option></option>
               <?php
                 $query = "SELECT * FROM account";
@@ -74,17 +76,26 @@
                 }
               ?>
             </select>
-            <select id="accounttypecombobox">
+            <br/> 
+            Account Type: <select id="accounttypecombobox" class="form-control">
               <option></option>
               <option>User</option>
               <option>Admin</option>
               <option>Owner</option>
             </select>
-            <input type="text" id="profilepicture" name="profilepicture" required>
-            <input type="text" id="firstname" name="firstname" required>
-            <input type="text" id="lastname" name="lastname" required>
-            <input type="text" id="islogged" name="islogged" required>
-            <button id="edit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Submit</button>
+            <br/>
+            Profile Picture: <input type="text" id="profilepicture" name="profilepicture" class="form-control" required>
+            <br/>
+            First Name: <input type="text" id="firstname" name="firstname" class="form-control" required>
+            <br/>
+            Last Name: <input type="text" id="lastname" name="lastname" class="form-control" required>
+            <br/>
+            isLogged: <input type="text" id="islogged" name="islogged" class="form-control" required>
+            <br/>
+            <div class="text-right">
+              <button id="edit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Edit</button>
+              <button id="delete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button>
+            </div>
           </form>
         </div>
       </div>

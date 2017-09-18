@@ -1,7 +1,7 @@
 <div id="registrationModal" class="modal fade" role="dialog" data-backdrop="false" >
-  	<div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content">
+  <div class="modal-dialog">
+	  <!-- Modal content-->
+	  <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title text-center">Registration</h4>
@@ -43,5 +43,5 @@
 				</form>
 			</div>
 		</div>
-  	</div>
+ 	</div>
 </div>

@@ -1,6 +1,6 @@
 <?php 
-  session_start();
-  if($_SESSION['accounttype']=="User")
+  include '../files/autologin.php';
+  if($_SESSION['accounttype']=='User' || !isset($_SESSION['accounttype']))
   {
     header('location: ../home');
     exit();
@@ -47,7 +47,7 @@
             </ul>
           </li>
           <li>
-              <a href="<?php $link = '../'; echo '../login/logout.php';?>"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+              <a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ul>
       </nav>

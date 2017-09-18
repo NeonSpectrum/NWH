@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php include '../files/autologin.php';?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
@@ -12,11 +12,10 @@
 	</head>
 	<body>
     <?php
-      if(isset($_SESSION["picture"]))
+      /* if(isset($_SESSION["picture"]))
       {
         echo '<style>body{background: url("../images/profilepics/'.$_SESSION["picture"].'") no-repeat fixed;background-size:cover;}</style>';
-      }
-      
+      }   */
     ?>
     <div class="se-pre-con"></div>
     <?php

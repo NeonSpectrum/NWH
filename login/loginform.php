@@ -24,7 +24,7 @@
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="remembercheckbox"> Keep me logged-in
+                <input type="checkbox" name="remembercheckbox" checked> Keep me logged-in
               </label>
             </div>
           </form>

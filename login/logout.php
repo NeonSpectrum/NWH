@@ -5,12 +5,13 @@
   //update isLogged
   $query = "UPDATE account SET isLogged=0 WHERE EmailAddress='$email'";
   $result = mysqli_query($db,$query) or die(mysql_error());
+  if(isSet($_COOKIE['nwhAuth']))
+  {
+    setcookie ('nwhAuth', '', time() - (60 * 60 * 24 * 7),'/');
+    unset($_COOKIE['nwhAuth']);
+  }
 	if(session_destroy()) // Destroying All Sessions
 	{
-    if(isset($link))
-    {
-      header("location:'$link'");
-    }
 		header("location:".$_SERVER['HTTP_REFERER']); // Redirecting To Home Page
 	}
 ?>

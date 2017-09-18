@@ -13,7 +13,7 @@
   <span class="caret"></span></a>
   <ul class="dropdown-menu" style="color:white;width:200px;">
       <?php
-        if($accounttype == "Owner")
+        if($accounttype == "Owner" || $accounttype == "Admin")
           echo "<li><a href='/nwh/admin/'>Admin Configuration</a></li>\n";
       ?>
       <li><a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

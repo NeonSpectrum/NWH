@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php include '../files/autologin.php';?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

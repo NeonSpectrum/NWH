@@ -3,15 +3,16 @@ function submitRegisterForm()
   var data = $("#registerform").serialize();
   $.ajax({
     type : 'POST',
-    url  : '../login/check_register.php',
+    url  : '/nwh/login/check_register.php',
     data : data,
     success :  function(response)
     {
       console.log(response);
       if(response=="ok")
       {
-        $("#register").html('<img src="../images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+        $("#register").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
         $('#register').attr('disabled', true);
+        $("#errorRegister").html('');
         setTimeout("alert('Registered Successfully!');$('#register').attr('disabled', false);document.getElementById('registerform').reset();$('#registrationModal').modal('hide');$('#register').html('Register')",2000);
       }
       else

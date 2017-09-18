@@ -1,4 +1,4 @@
-<?php session_start(); $root='../';?>
+<?php $root='../';include '../../files/autologin.php';?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

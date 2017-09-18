@@ -17,7 +17,7 @@
           <li <?php echo $gallery;?>><a href="<?php echo $gallery=='' ? '/nwh/gallery' : 'javascript:void(0)';?>">Gallery</a></li>
           <li <?php echo $rates;?>><a href="<?php echo $rates=='' ? '/nwh/rates' : 'javascript:void(0)';?>">Room & Rates</a></li>
           <li <?php echo $food;?>><a href="<?php echo $food=='' ? '/nwh/foodanddrinks' : 'javascript:void(0)';?>">Food & Drinks</a></li>
-          <li class="dropdown" <?php echo $amenities;?>>
+          <li class="dropdown <?php echo $amenities;?>" style="cursor:pointer">
             <a class="dropdown-toggle" data-toggle="dropdown">Amenities
             <span class="caret"></span></a>
             <ul class="dropdown-menu" style="color:white">
