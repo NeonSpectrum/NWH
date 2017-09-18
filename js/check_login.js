@@ -11,7 +11,7 @@ function submitLoginForm()
       {
         $("#login").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
         $("#login").prop('disabled',true);
-        setTimeout('location.reload(); ',2000);
+        setTimeout('location.reload();',2000);
       }
       else
       {
