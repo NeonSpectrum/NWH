@@ -18,8 +18,12 @@
       $password = password_hash($password, PASSWORD_DEFAULT);
       $query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname',0)";
       $result = mysqli_query($db,$query);
-      if($result){
+      if($result && strpos($email,'@') && strpos($email,'.')){
         echo "ok";
+      }
+      elseif(strpos($email, '@') || strpos($email, '.'))
+      {
+        echo "Invalid Email Address!";
       }
       else
       {

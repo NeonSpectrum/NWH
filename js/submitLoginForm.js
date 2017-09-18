@@ -1,5 +1,7 @@
 function submitLoginForm()
-{	
+{
+  var email = $('#email').val();
+  $("#errorLogin").html('');
   var data = $("#loginform").serialize();
   $.ajax({
     type : 'POST',

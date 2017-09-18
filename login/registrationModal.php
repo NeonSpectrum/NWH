@@ -16,10 +16,10 @@
 						<div class="col-sm-10">
 							<div class="row">
 								<div class="col-md-5">
-									<input name="fname" type="text" class="form-control" placeholder="First Name" onchange="removeRegError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required />
+									<input name="fname" type="text" class="form-control" placeholder="First Name" required />
 								</div>
 								<div class="col-md-5">
-									<input name="lname" type="text" class="form-control" placeholder="Last Name" onchange="removeRegError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required/>
+									<input name="lname" type="text" class="form-control" placeholder="Last Name" required/>
 								</div>
 							</div>
 						</div>
@@ -27,13 +27,19 @@
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<input name="email" type="email" class="form-control" id="email" placeholder="Email" onchange="removeRegError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required/>
+							<input name="email" type="email" class="form-control" id="email" placeholder="Email" required/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="password" class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
-							<input name="password" type="password" class="form-control" id="password" placeholder="Password" onchange="removeRegError();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" required/>
+							<input name="password" type="password" class="form-control" id="password" placeholder="Password" required/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+              <input name="verifypassword" type="password" class="form-control" id="verifypassword" placeholder="Verify Password" required/>
 						</div>
 					</div>
 					<div class="modal-footer">

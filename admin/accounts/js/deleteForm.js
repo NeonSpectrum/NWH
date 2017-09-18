@@ -11,7 +11,7 @@ function submitDeleteForm()
       {
         $("#delete").html('<img src="../../images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Deleting ...');
         $("#delete").prop('disabled',true);
-        setTimeout('alert("Records Deleted Successfully!");location.reload();',2000);
+        setTimeout('alert("Records Deleted Successfully!");location.reload();',500);
       }
       else
       {

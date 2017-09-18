@@ -13,7 +13,7 @@
       $result = mysqli_query($db,$query) or die(mysql_error());
       $row = $result->fetch_assoc();
       $count = mysqli_num_rows($result);
-      if($count==1 && password_verify($password, $row['Password']) && $row['isLogged']==0){
+      if($count==1 && password_verify($password, $row['Password']) && $row['isLogged']==0 && strpos($email,'@') && strpos($email,'.')){
         $_SESSION['logged'] = true;
         $_SESSION['email'] = $row['EmailAddress'];
         $_SESSION['fname'] = $row['FirstName'];
@@ -35,6 +35,10 @@
           }
         }
         echo "ok";
+      }
+      elseif(!strpos($email, '@') || !strpos($email, '.'))
+      {
+        echo "Invalid Email Address!";
       }
       elseif($row['isLogged']==1)
       {

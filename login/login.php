@@ -8,6 +8,8 @@
   	else
   	{
         include 'registrationModal.php';
+        include 'forgotModal.php';
+        include 'changeModal.php';
         include 'loginform.php';
     }
   ?>

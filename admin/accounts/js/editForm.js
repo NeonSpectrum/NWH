@@ -13,7 +13,7 @@ function submitEditForm()
       {
         $("#edit").html('<img src="../../images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
         $("#edit").prop('disabled',true);
-        setTimeout('alert("Records Updated Succesfully!");location.reload();',2000);
+        setTimeout('alert("Records Updated Successfully!");location.reload();',500);
       }
       else
       {
