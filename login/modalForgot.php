@@ -18,7 +18,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnReset" type="submit" class="btn btn-info" onclick="submitForgotForm();return false;">Reset</button>
+						<button id="btnReset" type="submit" class="btn btn-info" onclick="submitForgotForm();return false;">Submit</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

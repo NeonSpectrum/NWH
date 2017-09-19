@@ -1,7 +1,6 @@
 function submitEditForm()
 {		
   var data = $("#frmAccount").serialize();
-  console.log(data);
   $.ajax({
     type : 'POST',
     url  : 'editAccount.php',

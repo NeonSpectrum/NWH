@@ -2,7 +2,6 @@ $(document).ready(function() {
   $("#cmbEmail").change(function(){
     //var data = $('#cmbEmail option:selected').val();
     var data = $('#frmAccount').serialize();
-    console.log(data);
     $.ajax({
       url: "displayAccount.php",
       type: "POST",
