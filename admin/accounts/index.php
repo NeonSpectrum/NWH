@@ -1,7 +1,7 @@
 <?php 
   $root = '../';
   include '../../files/autologin.php';
-  if($_SESSION['accounttype']=='User' || !isset($_SESSION['accounttype']))
+  if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
   {
     header('location: ../../home');
     exit();
@@ -11,16 +11,15 @@
 <html lang="en" class="no-js">
 	<head>
 		<title>Northwood Hotel</title>
-  		<meta charset="utf-8">
-  		<meta name="viewport" content="width=device-width, initial-scale=1">
       <?php
-        $links= '../';
+        $links='../';
+        require '../../files/meta.php';
         require '../../files/db.php';
         require '../../files/css_required.php';
       ;?>
 	</head>
-	<body><!-- 
-    <div class="se-pre-con"></div> -->
+	<body>
+    <div class="loadingIcon"></div>
     <div id="wrapper">
       <div class="overlay"></div>
       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
@@ -49,7 +48,7 @@
             </ul>
           </li>
           <li>
-            <a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            <a href="/nwh/login/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ul>
       </nav>
@@ -61,11 +60,11 @@
           <span class="hamb-bottom"></span>
         </button>
         <div class="well center-block" style="width:30%">
-          <form id="accountForm">
-            <div id="errorLogin">
+          <form id="frmAccount">
+            <div id="lblErrorDisplayAccount">
               <!-- error will be shown here ! -->
             </div>
-            Email Address: <select id="emailcombobox" class="form-control">
+            Email Address: <select id="cmbEmail" name="cmbEmail" class="form-control">
               <option></option>
               <?php
                 $query = "SELECT * FROM account";
@@ -77,24 +76,24 @@
               ?>
             </select>
             <br/> 
-            Account Type: <select id="accounttypecombobox" class="form-control">
+            Account Type: <select id="cmbAccountType" name="cmbAccountType" class="form-control">
               <option></option>
               <option>User</option>
               <option>Admin</option>
               <option>Owner</option>
             </select>
             <br/>
-            Profile Picture: <input type="text" id="profilepicture" name="profilepicture" class="form-control" required>
+            Profile Picture: <input type="text" id="txtProfilePicture" name="txtProfilePicture" class="form-control" required>
             <br/>
-            First Name: <input type="text" id="firstname" name="firstname" class="form-control" required>
+            First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" required>
             <br/>
-            Last Name: <input type="text" id="lastname" name="lastname" class="form-control" required>
+            Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" required>
             <br/>
-            isLogged: <input type="text" id="islogged" name="islogged" class="form-control" required>
+            isLogged: <input type="text" id="txtIsLogged" name="txtIsLogged" class="form-control" required>
             <br/>
             <div class="text-right">
-              <button id="edit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Edit</button>
-              <button id="delete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button>
+              <button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Edit</button>
+              <button id="btnDelete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button>
             </div>
           </form>
         </div>

@@ -2,7 +2,7 @@
   $fname = isset($_SESSION["fname"]) ? $_SESSION["fname"] : '';
   $lname = isset($_SESSION["lname"]) ? $_SESSION["lname"] : '';
   $picture = isset($_SESSION["picture"]) ? $_SESSION["picture"] : '';
-  $accounttype = isset($_SESSION["accounttype"]) ? $_SESSION["accounttype"] : '';
+  $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
 ?>
 <li class="dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
@@ -16,6 +16,6 @@
         if($accounttype == "Owner" || $accounttype == "Admin")
           echo "<li><a href='/nwh/admin/'>Admin Configuration</a></li>\n";
       ?>
-      <li><a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li><a href="/nwh/login/checklogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
   </ul>
 </li>

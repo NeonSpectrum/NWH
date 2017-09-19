@@ -1,23 +1,22 @@
 function submitLoginForm()
 {
-  var email = $('#email').val();
-  $("#errorLogin").html('');
-  var data = $("#loginform").serialize();
+  $("#lblDisplayErrorLogin").html('');
+  var data = $("#frmLogin").serialize();
   $.ajax({
     type : 'POST',
-    url  : '/nwh/login/check_login.php',
+    url  : '/nwh/login/checkLogin.php',
     data : data,
     success :  function(response)
     {
       if(response=="ok")
       {
-        $("#login").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
-        $("#login").prop('disabled',true);
+        $("#btnLogin").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
+        $("#btnLogin").prop('disabled',true);
         setTimeout('location.reload();',2000);
       }
       else
       {
-        $("#errorLogin").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+'</div>')
+        $("#lblDisplayErrorLogin").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+'</div>')
       }
     }
   });

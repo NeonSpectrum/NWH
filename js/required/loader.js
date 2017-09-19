@@ -1,5 +1,5 @@
 $(window).on("load", function() {
-  $(".se-pre-con").fadeOut("slow");
+  $(".loadingIcon").fadeOut("slow");
   $(this).scrollTop(0);
 });
 $(document).ready(function(){

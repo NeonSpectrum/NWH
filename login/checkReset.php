@@ -3,9 +3,9 @@
   if(!isset($root))
     $root='';
 	require_once $root.'../files/db.php';
-  if (isset($_POST['email'])){
+  if (isset($_POST)){
     try{
-      $email = stripslashes($_POST['email']); // removes backslashes
+      $email = stripslashes($_POST['txtEmail']); // removes backslashes
       $email = mysqli_real_escape_string($db,$email);
       $password = password_hash('1234', PASSWORD_DEFAULT);
       $query = "UPDATE account SET Password='$password' WHERE EmailAddress='$email'";

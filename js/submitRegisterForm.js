@@ -1,31 +1,30 @@
 function submitRegisterForm()
 {
-  var pass = $('#password').val();
-  var vpass = $('#verifypassword').val();
+  var pass = $('#txtPassword').val();
+  var vpass = $('#txtVerifyPassword').val();
   if(pass!=vpass)
   {
-    $("#errorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
+    $("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
     return false;
   }
-  var email = $('#email').val();
   $("#errorRegister").html('');
-  var data = $("#registerform").serialize();
+  var data = $("#frmRegister").serialize();
   $.ajax({
     type : 'POST',
-    url  : '/nwh/login/check_register.php',
+    url  : '/nwh/login/checkRegister.php',
     data : data,
     success :  function(response)
     {
       if(response=="ok")
       {
-        $("#register").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
-        $('#register').attr('disabled', true);
-        $("#errorRegister").html('');
+        $("#btnRegister").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+        $('#btnRegister').attr('disabled', true);
+        $("#lblDisplayErrorRegister").html('');
         setTimeout("alert('Registered Successfully!');$('#register').attr('disabled', false);document.getElementById('registerform').reset();$('#registrationModal').modal('hide');$('#register').html('Register')",2000);
       }
       else
       {
-        $("#errorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
+        $("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
       }
     }
   });

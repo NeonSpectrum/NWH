@@ -1,16 +1,15 @@
 <ul class="nav navbar-nav navbar-right">
 	<?php
-		$logged = isset($_SESSION["logged"]) ? $_SESSION["logged"] : false;
-		if($logged)
+		if(isset($_SESSION['email']))
 		{
-        include 'logout-dropdown.php';
+        include 'dropdownLogout.php';
     }
   	else
   	{
-        include 'registrationModal.php';
-        include 'forgotModal.php';
-        include 'changeModal.php';
-        include 'loginform.php';
+        include 'modalRegistration.php';
+        include 'modalForgot.php';
+        include 'modalChange.php';
+        include 'dropdownLogin.php';
     }
   ?>
 </ul>

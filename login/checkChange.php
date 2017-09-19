@@ -3,13 +3,13 @@
   if(!isset($root))
     $root='';
 	require_once $root.'../files/db.php';
-  if (isset($_POST['email'])){
+  if (isset($_POST)){
     try{
-      $email = stripslashes($_POST['email']); // removes backslashes
+      $email = stripslashes($_POST['txtEmail']); // removes backslashes
       $email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
-      $password = stripslashes($_POST['oldpass']);
+      $password = stripslashes($_POST['txtOldPass']);
       $password = mysqli_real_escape_string($db,$password);
-      $newpass = stripslashes($_POST['newpass']);
+      $newpass = stripslashes($_POST['txtNewPass']);
       $newpass = mysqli_real_escape_string($db,$newpass);
       $newpass = password_hash($newpass, PASSWORD_DEFAULT);
       $query = "SELECT * FROM `account` WHERE EmailAddress='$email'";

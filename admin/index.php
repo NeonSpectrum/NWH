@@ -1,6 +1,6 @@
 <?php 
   include '../files/autologin.php';
-  if($_SESSION['accounttype']=='User' || !isset($_SESSION['accounttype']))
+  if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
   {
     header('location: ../home');
     exit();
@@ -10,15 +10,14 @@
 <html lang="en" class="no-js">
 	<head>
 		<title>Northwood Hotel</title>
-  		<meta charset="utf-8">
-  		<meta name="viewport" content="width=device-width, initial-scale=1">
-      <?php 
+      <?php
+        require '../files/meta.php';
         require '../files/db.php';
         require '../files/css_required.php';
       ;?>
 	</head>
 	<body>
-    <div class="se-pre-con"></div>
+    <div class="loadingIcon"></div>
     <div id="wrapper">
     <div class="overlay"></div>
       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
@@ -47,7 +46,7 @@
             </ul>
           </li>
           <li>
-              <a href="/nwh/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+              <a href="/nwh/login/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ul>
       </nav>

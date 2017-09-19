@@ -15,7 +15,7 @@
       $_SESSION['fname'] = $row['FirstName'];
       $_SESSION['lname'] = $row['LastName'];
       $_SESSION['picture'] = $row['ProfilePicture'];
-      $_SESSION['accounttype'] = $row['AccountType'];
+      $_SESSION['accountType'] = $row['AccountType'];
     }
   }
 ?>

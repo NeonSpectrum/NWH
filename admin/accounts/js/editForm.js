@@ -1,24 +1,23 @@
 function submitEditForm()
 {		
-  var data = $("#editAccountForm").serialize();
-  var email = $('#emailcombobox option:selected').val();
-  var accounttype = $('#accounttypecombobox option:selected').val();
+  var data = $("#frmAccount").serialize();
+  console.log(data);
   $.ajax({
     type : 'POST',
     url  : 'editAccount.php',
-    data : "email=" + email +"&" + "accounttype=" + accounttype +"&"+ data,
+    data : data,
     success :  function(response)
     {
       if(response=="ok")
       {
-        $("#edit").html('<img src="../../images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
-        $("#edit").prop('disabled',true);
+        $("#btnEdit").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
+        $("#btnEdit").prop('disabled',true);
         setTimeout('alert("Records Updated Successfully!");location.reload();',500);
       }
       else
       {
-        $("#errorLogin").fadeIn(1000, function(){
-            $("#errorLogin").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+'</div>')
+        $("#lblErrorDisplayAccount").fadeIn(1000, function(){
+            $("#lblErrorDisplayAccount").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+'</div>')
         });
       }
     }

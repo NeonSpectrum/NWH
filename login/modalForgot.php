@@ -1,4 +1,4 @@
-<div id="forgotModal" class="modal fade" role="dialog" data-backdrop="false" >
+<div id="modalForgot" class="modal fade" role="dialog" data-backdrop="false">
   <div class="modal-dialog">
 	  <!-- Modal content-->
 	  <div class="modal-content">
@@ -7,18 +7,18 @@
 				<h4 class="modal-title text-center">Forgot Password</h4>
 			</div>
 			<div class="modal-body">
-				<form id="forgotform" method="post" class="form-horizontal">
-          <div id="errorForgot">
+				<form id="frmForgot" method="post" class="form-horizontal">
+          <div id="lblDisplayErrorForgot">
             <!-- error will be shown here ! -->
           </div>
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<input name="email" type="email" class="form-control" id="email" placeholder="Email" required/>
+							<input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="forgotreset" type="submit" class="btn btn-info" onclick="submitForgotForm();return false;">Reset</button>
+						<button id="btnReset" type="submit" class="btn btn-info" onclick="submitForgotForm();return false;">Reset</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

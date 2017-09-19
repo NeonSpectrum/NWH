@@ -1,15 +1,15 @@
 <?php
   session_start();
 	require_once '../../files/db.php';
-  if (isset($_POST['email'])){
+  if (isset($_POST)){
     try{
       $arr = array();
-      $email = stripslashes($_POST['email']); // removes backslashes
+      $email = stripslashes($_POST['cmbEmail']); // removes backslashes
       $email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
      
       $query = "DELETE FROM `account` WHERE EmailAddress='$email'";
       $result = mysqli_query($db,$query) or die(mysql_error());
-      if($result){
+      if(mysqli_affected_rows($db)!=0){
         echo "ok";
       }
       else
