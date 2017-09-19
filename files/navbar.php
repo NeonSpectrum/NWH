@@ -1,7 +1,7 @@
 <?php
   include 'active.php';
 ?>
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="650">
+<nav class="navbar navbar-default <?php if(!$home) echo 'navbar-fixed-top'?>">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="./"><img src="/nwh/favicon.ico" width="30px" style="float:left;margin-right:10px;margin-top:-4px;" class="white-border"/>Northwood Hotel</a>

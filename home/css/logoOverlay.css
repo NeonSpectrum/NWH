@@ -1,4 +1,7 @@
 /*northwood logo overlay*/
+.overlay{
+  background-color:white;
+}
 .overlay::after {
 	position: absolute;
 	background: url('../../images/below-logo.png') no-repeat;

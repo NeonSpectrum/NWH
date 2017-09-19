@@ -5,9 +5,9 @@
   foreach (glob("css/*.css") as $css) {
 		echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
   }
-  if(isset($links))
+  if($root!='')
   {
-    foreach (glob($links."css/*.css") as $css) {
+    foreach (glob($root."css/*.css") as $css) {
       echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
     }
   }

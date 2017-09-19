@@ -1,6 +1,7 @@
 body{
-	background: url('/nwh/images/background.jpg') no-repeat fixed;
+	background: url('/nwh/images/background.jpg') no-repeat center fixed;
   background-size: cover;
+  padding-right: 0 !important;
 }
 .login {
 	margin-bottom:5px;

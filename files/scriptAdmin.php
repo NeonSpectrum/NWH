@@ -5,9 +5,9 @@
   foreach (glob("js/*.js") as $js) {
     echo "<script src='".$js."'></script>\n";
   }
-  if(isset($links))
+  if($root!='')
   {
-    foreach (glob($links."js/*.js") as $js) {
+    foreach (glob($root."js/*.js") as $js) {
       echo "<script src='".$js."'></script>\n";
     }
   }
