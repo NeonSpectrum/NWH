@@ -17,21 +17,21 @@
       $from = '<neonspectrumph@gmail.com>';
       $to = '<'.$email.'>';
       $subject = 'Verify Email Confirmation';
-      $body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?".$data."\n\nYour new password will be: <b>".$randomNumber."</b>;
+      $body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?".$data."\n\nYour new password will be: ".$randomNumber;
 
       $headers = array(
-          'From' => $from,
-          'To' => $to,
-          'Subject' => $subject
+				'From' => $from,
+				'To' => $to,
+				'Subject' => $subject
       );
 
       $smtp = Mail::factory('smtp', array(
-              'host' => 'ssl://smtp.gmail.com',
-              'port' => '465',
-              'auth' => true,
-              'username' => 'neonspectrumph@gmail.com',
-              'password' => 'yuanhua12'
-          ));
+				'host' => 'ssl://smtp.gmail.com',
+				'port' => '465',
+				'auth' => true,
+				'username' => 'neonspectrumph@gmail.com',
+				'password' => 'yuanhua12'
+			));
 
       $mail = $smtp->send($to, $headers, $body);
 

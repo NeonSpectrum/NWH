@@ -15,7 +15,7 @@
         <a class="navbar-brand" href="../" style="line-height:40px">Northwood Hotel</a>
       </li>
       <li style="background-color: #ec1b5a;">
-          <a href="javascript.void(0)">Overview</a>
+          <a href="javascript:void(0)">Overview</a>
       </li>
       <li>
           <a href="accounts">Accounts</a>

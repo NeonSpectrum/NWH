@@ -20,7 +20,7 @@ function submitRegisterForm()
         $("#btnRegister").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
         $('#btnRegister').attr('disabled', true);
         $("#lblDisplayErrorRegister").html('');
-        setTimeout("alert('Registered Successfully!');$('#register').attr('disabled', false);document.getElementById('registerform').reset();$('#registrationModal').modal('hide');$('#register').html('Register')",2000);
+        setTimeout("alert('Registered Successfully!');$('#btnRegister').attr('disabled', false);document.getElementById('frmRegister').reset();$('#modalRegistration').modal('hide');$('#btnRegister').html('Register')",2000);
       }
       else
       {

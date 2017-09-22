@@ -5,10 +5,10 @@ function submitChangeForm()
   var vpass = $('#txtVerifyNewPass').val();
   if(pass!=vpass)
   {
-    $("#lblErrorDisplayChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
+    $("#lblDisplayErrorChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
     return false;
   }
-  $("#lblErrorDisplayChange").html('');
+  $("#lblDisplayErrorChange").html('');
   var data = $("#frmChange").serialize();
   console.log(data);
   $.ajax({
@@ -21,12 +21,12 @@ function submitChangeForm()
       {
         $("#btnUpdate").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
         $('#btnUpdate').attr('disabled', true);
-        $("#lblErrorDisplayChange").html('');
+        $("#lblDisplayErrorChange").html('');
         setTimeout("alert('Updated Successfully!');location.reload();",2000);
       }
       else
       {
-        $("#lblErrorDisplayChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
+        $("#lblDisplayErrorChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
       }
     }
   });

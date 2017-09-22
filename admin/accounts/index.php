@@ -16,16 +16,16 @@
         <a class="navbar-brand" href="../" style="line-height:40px">Northwood Hotel</a>
       </li>
       <li>
-          <a href="../">Overview</a>
+				<a href="../">Overview</a>
       </li>
       <li style="background-color: #79aefe;">
-          <a href="javascript.void(0)">Accounts</a>
+				<a href="javascript:void(0)">Accounts</a>
       </li>
       <li>
-          <a href="#">Database</a>
+				<a href="#">Database</a>
       </li>
       <li>
-          <a href="#">Reservation</a>
+				<a href="#">Reservation</a>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>

@@ -1,8 +1,9 @@
 {
-  "php.validate.run":"onType",
-  "workbench.startupEditor": "newUntitledFile",
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false,
-  "editor.minimap.enabled": false,
-  "git.enableSmartCommit": true
+    "php.validate.run": "onType",
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.minimap.enabled": false,
+    "git.enableSmartCommit": true,
+    "editor.insertSpaces": false,
 }
