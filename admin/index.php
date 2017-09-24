@@ -45,7 +45,7 @@
       <span class="hamb-middle"></span>
       <span class="hamb-bottom"></span>
     </button>
-    <div class="container">
+    <div class="well center-block" style="width:50%;border-radius:20px;">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 text-center">
             <h1>Welcome, <?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?><br/><br/>to the<br/><br/>Admin Page<br/><br/>of<br/><br/>Northwood Hotel</h1>

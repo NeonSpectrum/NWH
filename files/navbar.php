@@ -4,7 +4,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="./"><img src="/nwh/favicon.ico" width="30px" style="float:left;margin-right:10px;margin-top:-4px;" class="white-border"/>Northwood Hotel</a>
+			<a class="navbar-brand" href="/nwh/"><img src="/nwh/favicon.ico" width="30px" style="float:left;margin-right:10px;margin-top:-4px;" class="white-border"/>Northwood Hotel</a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
