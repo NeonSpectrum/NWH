@@ -45,6 +45,5 @@ $('#txtCheckOutDate').change(function() {
 	{
 		checkOut = '';
 	}
-	console.log(checkOut);
 	document.getElementsByName("txtCheckInDate")[0].setAttribute('max', checkOut);
 });
