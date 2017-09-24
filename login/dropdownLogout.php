@@ -11,7 +11,7 @@
         <?php echo $fname.' '.$lname;?>
       </div>
   <span class="caret"></span></a>
-  <ul class="dropdown-menu" style="color:white;width:200px;">
+  <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
       <?php
         if($accounttype == "Owner" || $accounttype == "Admin")
           echo "<li><a href='/nwh/admin/'>Admin Configuration</a></li>\n";

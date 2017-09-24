@@ -43,7 +43,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnRegister" type="submit" class="btn btn-info" onclick="submitRegisterForm();return false;">Register</button>
+						<button id="btnRegister" type="submit" class="btn btn-info">Register</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

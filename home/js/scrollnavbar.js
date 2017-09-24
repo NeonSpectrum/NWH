@@ -13,9 +13,9 @@
             }
         });
     });
-}); */
+});
 $('.navbar').affix({
   offset: {
     top: $(".overlay").height()
   }
-}); 
+});  */

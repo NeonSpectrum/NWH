@@ -1,6 +1,6 @@
 /*northwood logo overlay*/
 .overlay{
-  background-color:white;
+	background-color:white;
 }
 .overlay::after {
 	position: absolute;

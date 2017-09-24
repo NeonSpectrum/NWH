@@ -9,10 +9,11 @@
     $result = mysqli_query($db,$query) or die(mysql_error());
     if(mysqli_affected_rows($db)!=0)
     {
-      echo '<script>alert("Reset Successfully!");location.href = "../";</script>';
+      echo '<script>alert("Reset Successfully!");location.href = "/nwh/";</script>';
       exit();
     }
-    else{
+		else
+		{
       echo 'Error Occured!';
     }
   }

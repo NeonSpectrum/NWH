@@ -1,0 +1,22 @@
+.homeBody{
+	padding-top: 40px;
+}
+.booknow{
+	background-color:white;
+	opacity:0.9;
+	height:50px;
+	width: 75%;
+	margin-bottom: 40px;
+	border-radius: 10px;
+}
+.booknow-content{
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left:20px;
+	margin-right:20px;
+	display:inline-block;
+	position:relative;
+}
+input[type="date"]::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+}

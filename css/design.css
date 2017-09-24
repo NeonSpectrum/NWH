@@ -1,13 +1,13 @@
 body{
 	background: url('/nwh/images/background.jpg') no-repeat center fixed;
   background-size: cover;
-  padding-right: 0 !important;
+	padding-right: 0 !important;
 }
 .login {
 	margin-bottom:5px;
 }
 .dropdown-menu {
-    width: 300px;
+	width: 300px;
 }
 
 /* browse icon */

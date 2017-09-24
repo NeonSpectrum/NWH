@@ -13,7 +13,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
     <ul class="nav sidebar-nav">
       <li class="sidebar-brand">
-        <a class="navbar-brand" href="../" style="line-height:40px">Northwood Hotel</a>
+        <a class="navbar-brand" href="/nwh/" style="line-height:40px">Northwood Hotel</a>
       </li>
       <li>
 				<a href="../">Overview</a>
@@ -22,17 +22,17 @@
 				<a href="javascript:void(0)">Accounts</a>
       </li>
       <li>
-				<a href="#">Database</a>
+				<a href="../database">Database</a>
       </li>
       <li>
-				<a href="#">Reservation</a>
+				<a href="../reservation">Reservation</a>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
-          <li class="firstdropdownmenu"><a href="#">Amenities</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Transactions</a></li>
+          <li class="firstdropdownmenu"><a href="../amenities">Amenities</a></li>
+          <li><a href="../services">Services</a></li>
+          <li><a href="../transactions">Transactions</a></li>
         </ul>
       </li>
       <li>

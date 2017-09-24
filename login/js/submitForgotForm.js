@@ -1,14 +1,13 @@
-function submitForgotForm()
-{	
+$("#frmForgot").submit(function(e){
+	e.preventDefault();
   $("#btnReset").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
   $("#btnReset").prop('disabled',true);
 
-  var data = $("#frmForgot").serialize();
   $("#lblDisplayErrorForgot").html('');
   $.ajax({
     type : 'POST',
     url  : '/nwh/login/sendMail.php',
-    data : data,
+    data : $(this).serialize(),
     success :  function(response)
     {
       if(response=="ok")
@@ -25,4 +24,4 @@ function submitForgotForm()
     }
   });
   return false;
-}
+});

@@ -1,6 +1,6 @@
-<li class="dropdown">
+<li class="dropdown login-dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> Login</b> <span class="caret"></span></a>
-  <ul id="login-dp" class="dropdown-menu">
+  <ul id="login-dp" class="dropdown-menu" style="margin-top:-1px;margin-right:-1px;">
     <li>
       <div class="row">
         <div class="col-md-12">
@@ -10,7 +10,7 @@
             </div>
             <div class="form-group">
               <label class="sr-only">Email address</label>
-              <input type="email" class="form-control" name="txtEmail" placeholder="Email address" required>
+              <input type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
             </div>
             <div class="form-group">
               <label class="sr-only">Password</label>
@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button id="btnLogin" type="submit" class="btn btn-primary btn-block" onclick="submitLoginForm();return false;">Sign in</button>
+              <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
               <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
             </div>
             <div class="help-block text-right"><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change password ?</a></div>

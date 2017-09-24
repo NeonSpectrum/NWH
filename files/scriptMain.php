@@ -7,6 +7,9 @@
   foreach (glob($root."../js/*.js") as $js) {
     echo "<script src='".$js."'></script>\n";
 	}
+  foreach (glob($root."../login/js/*.js") as $js) {
+    echo "<script src='".$js."'></script>\n";
+	}
   foreach (glob("js/*.js") as $js) {
     echo "<script src='".$js."'></script>\n";
   }

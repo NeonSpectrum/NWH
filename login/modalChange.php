@@ -36,7 +36,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnUpdate" type="submit" class="btn btn-info" onclick="submitChangeForm();return false;">Update</button>
+						<button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

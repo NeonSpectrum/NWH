@@ -2,14 +2,14 @@
 	<?php
 		if(isset($_SESSION['email']))
 		{
-        include 'dropdownLogout.php';
+			include 'dropdownLogout.php';
     }
   	else
   	{
-        include 'modalRegistration.php';
-        include 'modalForgot.php';
-        include 'modalChange.php';
-        include 'dropdownLogin.php';
+			include 'modalRegistration.php';
+			include 'modalForgot.php';
+			include 'modalChange.php';
+			include 'dropdownLogin.php';
     }
   ?>
 </ul>
