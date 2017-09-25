@@ -1,17 +1,17 @@
 function submitEditForm()
 {
-	var data = $("#frmAccount").serialize();
 	$.ajax({
 		type: 'POST',
 		url: 'editAccount.php',
-		data: data,
+		data: $("#frmAccount").serialize(),
 		success: function (response)
 		{
 			if (response == "ok")
 			{
 				$("#btnEdit").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
 				$("#btnEdit").prop('disabled', true);
-				setTimeout('alert("Records Updated Successfully!");location.reload();', 500);
+				alert("Records Updated Successfully!");
+				location.reload();
 			}
 			else
 			{

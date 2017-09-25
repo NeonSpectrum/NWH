@@ -16,6 +16,7 @@
         if($accounttype == "Owner" || $accounttype == "Admin")
           echo "<li><a href='/nwh/admin/'>Admin Configuration</a></li>\n";
       ?>
+      <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
       <li><a href="/nwh/login/checklogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
   </ul>
 </li>

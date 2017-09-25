@@ -25,7 +25,7 @@
           echo "ok";
         }
       }
-      elseif(!strpos($email, '@') || !strpos($email, '.'))
+      /* elseif(!strpos($email, '@') || !strpos($email, '.'))
       {
         echo "Invalid Email Address!";
       }
@@ -35,11 +35,11 @@
       }
       elseif(!password_verify($password, $row['Password']))
       {
-        echo "Invalid Old Password!";
-      }
+        echo "Incorrect Email and/or Password";
+      } */
       else
       {
-        echo "Incorrect Details!";
+        echo "Incorrect Email and/or Password";
       }
     }
     catch(PDOException $e){

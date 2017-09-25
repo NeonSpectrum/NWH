@@ -18,14 +18,14 @@
       <li>
 				<a href="../">Overview</a>
       </li>
-      <li style="background-color: #79aefe;">
-				<a href="javascript:void(0)">Accounts</a>
+      <li>
+				<a href="../accounts">Accounts</a>
       </li>
       <li>
 				<a href="#">Database</a>
       </li>
-      <li>
-				<a href="#">Reservation</a>
+      <li style="background-color: #279636;">
+				<a href="javascript:void(0)">Reservation</a>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>

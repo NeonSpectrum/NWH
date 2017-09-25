@@ -10,7 +10,7 @@
 ?>
 <div class="homeBody">
 	<?php require 'bookNow.php';?>
-	<div class="well center-block" style="width:80%;border-radius: 10px;">
+	<div class="well center-block" style="width:80%;border-radius: 10px;opacity:0.9;">
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	</div>
 </div>

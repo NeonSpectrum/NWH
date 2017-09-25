@@ -11,7 +11,7 @@ $("#frmLogin").submit(function(e){
     {
       if(response=="ok")
       {
-        setTimeout('location.reload();',2000);
+        location.reload();
       }
       else
       {

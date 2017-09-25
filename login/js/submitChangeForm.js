@@ -10,7 +10,6 @@ $("#frmChange").submit(function(e){
     $("#lblDisplayErrorChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
     return false;
   }
-  $("#lblDisplayErrorChange").html('');
   $.ajax({
     type : 'POST',
     url  : '/nwh/login/checkChange.php',
@@ -19,7 +18,8 @@ $("#frmChange").submit(function(e){
     {
       if(response=="ok")
       {
-        setTimeout("alert('Updated Successfully!');location.reload();",2000);
+				alert('Updated Successfully!');
+				location.reload();
       }
       else
       {

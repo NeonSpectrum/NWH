@@ -52,6 +52,27 @@
         </div>
       </div>
     </div>
+		<div class="well" style="float:right;position:absolute;top:125px;right:0px;overflow:scroll;height:300px;width:250px;">
+			<?php
+				$online='';
+				$offline='';
+				$query = "SELECT * FROM account";
+				$result = mysqli_query($db,$query);
+				while($row = mysqli_fetch_assoc($result))
+				{
+					if($row['isLogged']=='1')
+					{
+						$online.=$row['FirstName']." ".$row['LastName']." is online.<br/><br/>";
+					}
+					else
+					{
+						$offline.=$row['FirstName']." ".$row['LastName']." is offline.<br/><br/>";
+					}
+				}
+				echo $online;
+				echo $offline;
+			?>
+		</div>
   </div>
 </div>
 <?php require '../files/footer.php';?>

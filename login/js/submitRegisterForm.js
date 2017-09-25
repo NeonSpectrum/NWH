@@ -18,7 +18,11 @@ $("#frmRegister").submit(function(e){
     {
       if(response=="ok")
       {
-        setTimeout("alert('Email sent to verify your email!');$('#btnRegister').attr('disabled', false);document.getElementById('frmRegister').reset();$('#modalRegistration').modal('hide');$('#btnRegister').html('Register')",2000);
+				alert('Email sent to verify your email!');
+				$('#btnRegister').attr('disabled', false);
+				document.getElementById('frmRegister').reset();
+				$('#modalRegistration').modal('hide');
+				$('#btnRegister').html('Register');
       }
       else
       {

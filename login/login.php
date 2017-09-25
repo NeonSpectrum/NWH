@@ -3,6 +3,7 @@
 		if(isset($_SESSION['email']))
 		{
 			include 'dropdownLogout.php';
+			include 'modalEditReservation.php';
     }
   	else
   	{

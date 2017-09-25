@@ -1,7 +1,9 @@
 <?php
+	define("EMAIL","neonspectrumph@gmail.com");
+	define("PASSWORD",openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB","northwoodhotel"));
   // Pear Mail Library
   require_once "Mail.php";
-  require_once "../files/db.php";
+	require_once "../files/db.php";
 	if(isset($_POST['txtFirstName']))
 	{
 		$fname = stripslashes($_POST['txtFirstName']); // removes backslashes
@@ -22,10 +24,10 @@
 		{
 			$data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
 			$data = openssl_encrypt($data,"AES-128-ECB","northwoodhotel");
-      $from = '<neonspectrumph@gmail.com>';
+      $from = '<'.EMAIL.'>';
       $to = '<'.$email.'>';
       $subject = 'Verify Email Confirmation';
-      $body = "Please proceed to this link to register your account:\nhttp://neonspectrum.ddns.net/nwh/login/register.php?".$data;
+      $body = "Please proceed to this link to register your account:\nhttp://neonspectrum.ddns.net/nwh/login/register.php?$data";
 
       $headers = array(
 				'From' => $from,
@@ -37,8 +39,8 @@
 				'host' => 'ssl://smtp.gmail.com',
 				'port' => '465',
 				'auth' => true,
-				'username' => 'neonspectrumph@gmail.com',
-				'password' => openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB","northwoodhotel")
+				'username' => EMAIL,
+				'password' => PASSWORD
 			));
 
       $mail = $smtp->send($to, $headers, $body);
@@ -70,10 +72,10 @@
     {
       $randomNumber = mt_rand(10000000, 99999999);
 			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB","northwoodhotel");
-      $from = '<neonspectrumph@gmail.com>';
+      $from = '<'.EMAIL.'>';
       $to = '<'.$email.'>';
       $subject = 'Forgot Password Confirmation';
-      $body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?".$data."\n\nYour new password will be: ".$randomNumber;
+      $body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?$data\n\nYour new password will be: $randomNumber";
 
       $headers = array(
 				'From' => $from,
@@ -85,8 +87,8 @@
 				'host' => 'ssl://smtp.gmail.com',
 				'port' => '465',
 				'auth' => true,
-				'username' => 'neonspectrumph@gmail.com',
-				'password' => openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB","northwoodhotel")
+				'username' => EMAIL,
+				'password' => PASSWORD
 			));
 
       $mail = $smtp->send($to, $headers, $body);
