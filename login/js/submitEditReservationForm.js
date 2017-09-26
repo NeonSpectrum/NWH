@@ -4,7 +4,6 @@ $("#frmEditReservation").submit(function(e){
 	$('#btnEditReservation').attr('disabled', true);
 	$("#lblDisplayErrorEditReservation").html('');
 	
-	console.log($(this).serialize());
   $.ajax({
     type : 'POST',
     url  : '/nwh/login/checkEditReservation.php',

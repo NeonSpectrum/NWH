@@ -1,6 +1,7 @@
 <?php
-  // Pear Mail Library
-  require_once "../files/db.php";
+	// Pear Mail Library
+  $root = isset($root) ? $root : '';
+  require_once $root."../files/db.php";
   if(isset($_SERVER['QUERY_STRING']))
   {
     parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB","northwoodhotel"));

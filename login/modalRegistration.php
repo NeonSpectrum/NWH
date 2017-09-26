@@ -12,14 +12,8 @@
             <!-- error will be shown here ! -->
           </div>
 					<div class="form-group">
-						<label for="email" class="col-sm-3 control-label">Profile Picture</label>
-						<div class="col-sm-8">
-							<input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="email" class="col-sm-3 control-label">Name</label>
-						<div class="col-sm-8">
+						<label for="email" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
 							<div class="row">
 								<div class="col-md-6">
 									<input name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
@@ -31,20 +25,20 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="email" class="col-sm-3 control-label">Email</label>
-						<div class="col-sm-8">
+						<label for="email" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
 							<input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-sm-3 control-label">Password</label>
-						<div class="col-sm-8">
+						<label for="password" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
 							<input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" required/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-sm-3 control-label"></label>
-						<div class="col-sm-8">
+						<label for="password" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
               <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" required/>
 						</div>
 					</div>

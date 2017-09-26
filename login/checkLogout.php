@@ -1,5 +1,6 @@
 <?php
   session_start();
+  $root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
   $email = $_SESSION['email'];
   //update isLogged

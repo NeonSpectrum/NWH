@@ -4,6 +4,7 @@
 		{
 			include 'dropdownLogout.php';
 			include 'modalEditReservation.php';
+			include 'modalEditProfile.php';
     }
   	else
   	{

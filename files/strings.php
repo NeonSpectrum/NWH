@@ -26,4 +26,10 @@
 	define("ALREADY_LOGGED","Already Logged In");
 
 	define("ALREADY_REGISTERED","Already registered! Please try a different one.");
+
+	define("OLD_PASSWORD_ERROR","Please check your password!");
+
+	define("VERIFY_PASSWORD_ERROR","Please reenter your new password!");
+
+	define("UPLOAD_ERROR","Sorry, there was an error uploading your file.");
 ?>

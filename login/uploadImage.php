@@ -1,6 +1,6 @@
 <?php
-	$target_dir = "uploads/";
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+	$target_dir = "../images/";
+	$target_file = $target_dir . "hi";
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	// Check if image file is a actual image or fake image
@@ -45,7 +45,7 @@
 	}
 	else
 	{
-		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "hi"))
 		{
 			echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 		}

@@ -1,7 +1,6 @@
 <?php
   session_start();
-  if(!isset($root))
-    $root='';
+  $root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
 	$adults = (int)$_POST['txtEditAdults'];
 	$childrens = (int)$_POST['txtEditChildrens'];

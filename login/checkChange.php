@@ -1,8 +1,15 @@
 <?php
   session_start();
-  if(!isset($root))
-    $root='';
+  $root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
+
+	$pass = $_POST['txtNewPass'];
+	$rpass = $_POST['txtRetypeNewPass'];
+	if($pass!=$rpass)
+	{
+		echo VERIFY_PASSWORD_ERROR;
+		return;
+	}
   if (isset($_POST)){
     try{
       $email = stripslashes($_POST['txtEmail']); // removes backslashes
@@ -39,7 +46,7 @@
       } */
       else
       {
-        echo INVALID_EMAIL_PASSWORD_CHANGE;
+        echo VERIFY_PASSWORD_ERROR;
       }
     }
     catch(PDOException $e){

@@ -1,7 +1,8 @@
 <?php
   // Pear Mail Library
+  $root = isset($root) ? $root : '';
   require_once "Mail.php";
-	require_once "../files/db.php";
+	require_once $root."../files/db.php";
 
 	//register
 	if(isset($_POST['txtFirstName']))
