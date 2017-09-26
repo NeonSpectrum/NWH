@@ -1,9 +1,9 @@
 <?php
-	define("EMAIL","neonspectrumph@gmail.com");
-	define("PASSWORD",openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB","northwoodhotel"));
   // Pear Mail Library
   require_once "Mail.php";
 	require_once "../files/db.php";
+
+	//register
 	if(isset($_POST['txtFirstName']))
 	{
 		$fname = stripslashes($_POST['txtFirstName']); // removes backslashes
@@ -53,13 +53,15 @@
 		}
 		elseif($count != 0)
 		{
-			echo "Already registered! Please try a different one.";
+			echo ALREADY_REGISTERED;
 		}
 		else
 		{
-			echo "Invalid Email Address!";
+			echo FORMAT_ERROR_EMAIL;
 		}
 	}
+
+	//forgot
 	else
   {
     $email = stripslashes($_POST['txtEmail']); // removes backslashes
@@ -101,10 +103,10 @@
     }
     elseif(!strpos($email, '@') || !strpos($email, '.'))
     {
-      echo "Invalid Format!";
+      echo FORMAT_ERROR_EMAIL;
     }
     else{
-      echo 'Invalid Email Address';
+      echo INVALID_EMAIL;
     }
   }
 ?>

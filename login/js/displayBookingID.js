@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	var tomorrow = new Date();
 	tomorrow.setDate(tomorrow.getDate() + 1);
-	tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
+	tomorrow = new Date(tomorrow).toISOString().split('T')[0];
 	document.getElementsByName("txtEditCheckInDate")[0].setAttribute('min', tomorrow);
 	document.getElementsByName("txtEditCheckOutDate")[0].setAttribute('min', tomorrow);
 	$('#txtEditCheckInDate').val(tomorrow);

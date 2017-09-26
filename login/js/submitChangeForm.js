@@ -1,11 +1,11 @@
 $("#frmChange").submit(function(e){
 	e.preventDefault();
   var pass = $('#txtNewPass').val();
-  var vpass = $('#txtVerifyNewPass').val();
+  var rpass = $('#txtRetypeNewPass').val();
 	$("#btnUpdate").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
 	$('#btnUpdate').attr('disabled', true);
 	$("#lblDisplayErrorChange").html('');
-  if(pass!=vpass)
+  if(pass!=rpass)
   {
     $("#lblDisplayErrorChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
     return false;

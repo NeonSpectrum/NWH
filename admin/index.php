@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-		<div class="well" style="float:right;position:absolute;top:125px;right:0px;overflow:scroll;height:300px;width:250px;">
+		<div class="well" style="float:right;position:absolute;top:125px;right:0px;overflow-y:scroll;overflow-x:hidden;height:300px;width:250px;">
 			<?php
 				$online='';
 				$offline='';

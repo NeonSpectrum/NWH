@@ -45,7 +45,7 @@
 					<div class="form-group">
 						<label for="password" class="col-sm-3 control-label"></label>
 						<div class="col-sm-8">
-              <input name="txtVerifyPassword" type="password" class="form-control" id="txtVerifyPassword" placeholder="Verify Password" required/>
+              <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" required/>
 						</div>
 					</div>
 					<div class="modal-footer">

@@ -33,17 +33,13 @@
         }
         echo "ok";
       }
-      elseif(!password_verify($password, $row['Password']))
-      {
-        echo "Invalid Username or Password!";
-      }
       elseif(!strpos($email, '@') || !strpos($email, '.'))
       {
-        echo "Invalid Email Address!";
+        echo FORMAT_ERROR_EMAIL;
       }
       elseif($row['isLogged']==1)
       {
-        echo "Already Logged In!";
+        echo ALREADY_LOGGED;
       }
       else{
         echo "Invalid Username or Password!";

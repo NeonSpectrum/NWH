@@ -1,6 +1,7 @@
 <?php
-  session_start();
-  require_once '../../files/db.php';
+	session_start();
+	$root='../';
+  require_once $root.'/../files/db.php';
 	if (isset($_POST))
 	{
 		try

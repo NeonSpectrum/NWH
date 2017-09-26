@@ -39,7 +39,7 @@
       } */
       else
       {
-        echo "Incorrect Email and/or Password";
+        echo INVALID_EMAIL_PASSWORD_CHANGE;
       }
     }
     catch(PDOException $e){

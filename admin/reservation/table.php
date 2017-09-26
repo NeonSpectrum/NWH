@@ -3,10 +3,7 @@
 		<thead>
 			<tr>
 				<?php
-					if(isset($_SERVER['QUERY_STRING']))
-					{
-						parse_str($_SERVER['QUERY_STRING']);
-					}
+					parse_str($_SERVER['QUERY_STRING']);
 					$page = isset($page) ? $page : 1;
 					$order = isset($order) ? $order : 'BookingID';
 					$sort = isset($sort) ? $sort=='ASC' ? 'DESC' : 'ASC' : 'ASC';
@@ -50,7 +47,8 @@
 							{
 								echo "<li><a href='index.php?page=$i&order=$order&sort=$sort&entries=$entries'><span>$i</span></a>";
 							}
-							?><li><a href="<?php $next = $page+1; if($next>$count) echo 'javascript:void(0);'; else echo 'index.php?page='.$next.'&order='.$order.'&sort='.$sort.'&entries='.$entries;?>"><span>Next</span></a></li>
+						?>
+						<li><a href="<?php $next = $page+1; if($next>$count) echo 'javascript:void(0);'; else echo 'index.php?page='.$next.'&order='.$order.'&sort='.$sort.'&entries='.$entries;?>"><span>Next</span></a></li>
 					</ul>
 				</div>
 			</tr>

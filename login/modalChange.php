@@ -12,7 +12,7 @@
             <!-- error will be shown here ! -->
           </div>
 					<div class="form-group">
-						<label for="email" class="col-sm-3 control-label">Email</label>
+						<label class="col-sm-3 control-label">Email</label>
 						<div class="col-sm-8">
 							<input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
 						</div>
@@ -24,15 +24,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="newpass" class="col-sm-3 control-label">New Password</label>
+						<label class="col-sm-3 control-label">New Password</label>
 						<div class="col-sm-8">
 							<input name="txtNewPass" type="password" class="form-control" id="txtNewPass" placeholder="New Password" required/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="verifynewpass" class="col-sm-3 control-label"></label>
+						<label class="col-sm-3 control-label"></label>
 						<div class="col-sm-8">
-							<input name="txtVerifyNewPass" type="password" class="form-control" id="txtVerifyNewPass" placeholder="Verify New Password" required/>
+							<input name="txtRetypeNewPass" type="password" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" required/>
 						</div>
 					</div>
 					<div class="modal-footer">

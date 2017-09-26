@@ -1,11 +1,10 @@
 $(document).ready(function () {
 	$("#cmbEmail").change(function () {
-		var data = $('#frmAccount').serialize();
 		$.ajax({
 			url: "displayAccount.php",
 			type: "POST",
 			dataType: "json",
-			data: data,
+			data: $('#frmAccount').serialize(),
 			success: function (data) {
 				if (data[0] == 'error') {
 					document.getElementById("cmbAccountType").value = '';

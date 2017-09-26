@@ -7,12 +7,12 @@
 	$childrens = (int)$_POST['txtEditChildrens'];
 	if($adults==0)
 	{
-		echo "1 Adult or more is required!";
+		echo NOT_ENOUGH_ADULTS;
 		return;
 	}
 	elseif($adults+$childrens==0)
 	{
-		echo "Please fill up the Adults or Childrens!";
+		echo INVALID_ADULTS_CHILDRENS;
 		return;
 	}
   if (isset($_POST)){
@@ -31,7 +31,7 @@
       }
       else
       {
-        echo "Nothing changed.";
+        echo NO_UPDATE;
       }
     }
     catch(PDOException $e){

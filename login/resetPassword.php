@@ -14,7 +14,7 @@
     }
 		else
 		{
-      echo 'Error Occured!';
+      echo ERROR_OCCURED;
     }
   }
 ?>
