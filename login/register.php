@@ -1,10 +1,10 @@
 <?php
 	session_start();
-  $root = isset($root) ? $root : '';
+	$root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
 	if(isset($_SERVER['QUERY_STRING']))
-  {
-    parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB","northwoodhotel"));
+	{
+		parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB",ENCRYPT_KEYWORD));
 		$fname = $txtFirstName;
 		$lname = $txtLastName;
 		$email = $txtEmail;
@@ -13,12 +13,12 @@
 		$result = mysqli_query($db,$query);
 		if(mysqli_affected_rows($db)!=0)
 		{
-			echo '<script>alert("Registered Successfully!");location.href = "/nwh/";</script>';
-      exit();
+			echo '<script>alertNotif("success","Registered Successfully!");location.href = "/nwh/";</script>';
+			exit();
 		}
 		else
 		{
-      echo 'Error Occured!';
-    }
-  }
+			echo 'Error Occured!';
+		}
+	}
 ?>

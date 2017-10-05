@@ -1,13 +1,15 @@
 <?php
-  if(!isset($root))
-    $root='';
-  echo "<link rel='shortcut icon' href='/nwh/favicon.ico'/>\n";
-  echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/bootstrap.min.css'>\n";
-  echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/loader.css'>\n";
-  foreach (glob($root."../css/*.css") as $css) {
+	$root = isset($root) ? $root : '';
+	echo "<link rel='shortcut icon' href='/nwh/favicon.ico'/>\n";
+	echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/bootstrap.min.css'>\n";
+	echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/animate.min.css'>\n";
+	echo "<link type='text/css' rel='stylesheet' href='/nwh/css/required/main.css'>\n";
+	foreach (glob($root."../css/*.css") as $css)
+	{
 		echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
 	}
-	foreach (glob("css/*.css") as $css) {
+	foreach (glob("css/*.css") as $css)
+	{
 		echo "<link type='text/css' rel='stylesheet' href='".$css."'>\n";
 	}
 ?>

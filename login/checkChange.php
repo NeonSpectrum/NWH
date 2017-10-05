@@ -12,7 +12,7 @@
 	}
   if (isset($_POST)){
     try{
-      $email = stripslashes($_POST['txtEmail']); // removes backslashes
+      $email = stripslashes($_SESSION['email']); // removes backslashes
       $email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
       $password = stripslashes($_POST['txtOldPass']);
       $password = mysqli_real_escape_string($db,$password);
@@ -32,21 +32,9 @@
           echo "ok";
         }
       }
-      /* elseif(!strpos($email, '@') || !strpos($email, '.'))
-      {
-        echo "Invalid Email Address!";
-      }
-      elseif($count==0)
-      {
-        echo "Invalid Account Details";
-      }
-      elseif(!password_verify($password, $row['Password']))
-      {
-        echo "Incorrect Email and/or Password";
-      } */
       else
       {
-        echo VERIFY_PASSWORD_ERROR;
+        echo OLD_PASSWORD_ERROR;
       }
     }
     catch(PDOException $e){

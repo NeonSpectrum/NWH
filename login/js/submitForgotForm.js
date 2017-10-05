@@ -12,8 +12,7 @@ $("#frmForgot").submit(function(e){
     {
       if(response=="ok")
       {
-        alert("Email sent!");
-        location.reload();
+        alertNotif('success',"Email sent!",true);
       }
       else
       {

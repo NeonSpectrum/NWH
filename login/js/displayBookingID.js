@@ -2,8 +2,8 @@ $(document).ready(function () {
 	var tomorrow = new Date();
 	tomorrow.setDate(tomorrow.getDate() + 1);
 	tomorrow = new Date(tomorrow).toISOString().split('T')[0];
-	document.getElementsByName("txtEditCheckInDate")[0].setAttribute('min', tomorrow);
-	document.getElementsByName("txtEditCheckOutDate")[0].setAttribute('min', tomorrow);
+	$('#txtEditCheckInDate').attr('min', tomorrow);
+	$('#txtEditCheckOutDate').attr('min', tomorrow);
 	$('#txtEditCheckInDate').val(tomorrow);
 	$('#txtEditCheckOutDate').val(tomorrow);
 	dateUpdate();
@@ -35,7 +35,7 @@ $(document).ready(function () {
 
 $('#txtEditCheckInDate').change(function() { 
 	checkIn = $(this).val();
-	document.getElementsByName("txtEditCheckOutDate")[0].setAttribute('min', checkIn);
+	$('#txtEditCheckOutDate').attr('min', checkIn);
 });
 
 $('#txtEditCheckOutDate').change(function() { 
@@ -45,15 +45,15 @@ $('#txtEditCheckOutDate').change(function() {
 	{
 		checkOut = '';
 	}
-	document.getElementsByName("txtEditCheckInDate")[0].setAttribute('max', checkOut);
+	$('#txtEditCheckInDate').attr('max', checkOut);
 });
 
 function dateUpdate(){
 	var tomorrow = new Date();
 	tomorrow.setDate(tomorrow.getDate() + 1);
 	tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
-	document.getElementsByName("txtEditCheckInDate")[0].setAttribute('min', tomorrow);
-	document.getElementsByName("txtEditCheckOutDate")[0].setAttribute('min', tomorrow);
+	$('#txtEditCheckInDate').attr('min', tomorrow);
+	$('#txtEditCheckOutDate').attr('min', tomorrow);
 	$('#txtEditCheckInDate').val(tomorrow);
 	$('#txtEditCheckOutDate').val(tomorrow);
 }

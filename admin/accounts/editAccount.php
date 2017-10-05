@@ -1,12 +1,12 @@
 <?php
-  session_start();
+	session_start();
 	$root='../';
-  require_once $root.'/../files/db.php';
+	require_once $root.'/../files/db.php';
 	if (isset($_POST))
 	{
 		try
 		{
-      $email = $_POST['cmbEmail'];
+			$email = $_POST['cmbEmail'];
 			$accounttype = $_POST['cmbAccountType'];
 			$query="SELECT * FROM account WHERE EmailAddress='$email'";
 			$result = mysqli_query($db,$query);
@@ -16,24 +16,24 @@
 				echo PRIVILEGE_EDIT_ACCOUNT;
 				return;
 			}
-      $profilepicture = $_POST['txtProfilePicture'];
-      $firstname = $_POST['txtFirstName'];
-      $lastname = $_POST['txtLastName'];
-      $islogged = $_POST['txtIsLogged'];
-      $query = "UPDATE `account` SET AccountType='".$accounttype."',ProfilePicture='".$profilepicture."',Firstname='".$firstname."',Lastname='".$lastname."',isLogged=".$islogged." WHERE EmailAddress='".$email."'";
-      $result = mysqli_query($db,$query);
+			$profilepicture = $_POST['txtProfilePicture'];
+			$firstname = $_POST['txtFirstName'];
+			$lastname = $_POST['txtLastName'];
+			$islogged = $_POST['txtIsLogged'];
+			$query = "UPDATE `account` SET AccountType='".$accounttype."',ProfilePicture='".$profilepicture."',Firstname='".$firstname."',Lastname='".$lastname."',isLogged=".$islogged." WHERE EmailAddress='".$email."'";
+			$result = mysqli_query($db,$query);
 			if(mysqli_affected_rows($db)!=0)
 			{
-        echo "ok";
-      }
+				echo "ok";
+			}
 			else
 			{
-        echo NO_UPDATE;
-      }
-    }
+				echo NO_UPDATE;
+			}
+		}
 		catch(PDOException $e)
 		{
 			echo $e->getMessage();
 		}
-  }
+	}
 ?>

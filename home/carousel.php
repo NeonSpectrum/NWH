@@ -1,7 +1,3 @@
-<?php
-    $query = "select * from carousel";
-    $result = mysqli_query($db, $query);
-?>
 <div class="overlay">
 	<div class="logo-overlay">
 		<div class="logo-text">
@@ -19,6 +15,8 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 						<?php
+							$query = "select * from carousel";
+							$result = mysqli_query($db, $query);
 							while ($row = mysqli_fetch_assoc($result))
 							{
 									echo "<div class='item'><img src='/nwh/images/".$row['Source']."' alt='".$row['Name']."'></div>\n";

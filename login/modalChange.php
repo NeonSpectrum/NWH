@@ -1,21 +1,15 @@
 <div id="modalChange" class="modal fade" role="dialog" data-backdrop="false">
-  <div class="modal-dialog">
-	  <!-- Modal content-->
-	  <div class="modal-content">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title text-center">Change Password</h4>
 			</div>
 			<div class="modal-body">
-        <form id="frmChange" method="post" class="form-horizontal">
-          <div id="lblDisplayErrorChange">
-            <!-- error will be shown here ! -->
-          </div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label">Email</label>
-						<div class="col-sm-8">
-							<input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
-						</div>
+				<form id="frmChange" method="post" class="form-horizontal">
+					<div id="lblDisplayErrorChange">
+						<!-- error will be shown here ! -->
 					</div>
 					<div class="form-group">
 						<label for="oldpass" class="col-sm-3 control-label">Old Password</label>

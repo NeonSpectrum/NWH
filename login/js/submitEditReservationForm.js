@@ -12,8 +12,7 @@ $("#frmEditReservation").submit(function(e){
     {
       if(response=="ok")
       {
-				alert('Updated Successfully!');
-				location.reload();
+				alertNotif('success','Updated Successfully!',false);
       }
       else
       {

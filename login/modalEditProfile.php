@@ -23,12 +23,6 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="email" class="col-sm-3 control-label">Email</label>
-					<div class="col-sm-8">
-						<input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" value="<?php echo $email;?>" readonly/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label for="email" class="col-sm-3 control-label">Name</label>
 					<div class="col-sm-8">
 						<div class="row">
@@ -39,24 +33,6 @@
 								<input name="txtLastName" type="text" class="form-control" placeholder="Last Name"value="<?php echo $lname;?>"  required/>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="password" class="col-sm-3 control-label">Old Password</label>
-					<div class="col-sm-8">
-						<input name="txtOldPassword" type="password" class="form-control" id="txtOldPassword" placeholder="Old Password"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="password" class="col-sm-3 control-label">Password</label>
-					<div class="col-sm-8">
-						<input name="txtNewPassword" type="password" class="form-control" id="txtNewPassword" placeholder="New Password"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="password" class="col-sm-3 control-label"></label>
-					<div class="col-sm-8">
-						<input name="txtRetypeNewPassword" type="password" class="form-control" id="txtRetypeNewPassword" placeholder="Retype New Password"/>
 					</div>
 				</div>
 				<div class="modal-footer">

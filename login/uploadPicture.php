@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  $root = isset($root) ? $root : '';
+	session_start();
+	$root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
 
 	// $incrementalFileName=1;

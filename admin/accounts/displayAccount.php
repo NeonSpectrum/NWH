@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	$root='../';
-  require_once $root.'/../files/db.php';
+	require_once $root.'/../files/db.php';
 	if (isset($_POST))
 	{
 		try
@@ -32,7 +32,7 @@
 		}
 		catch (PDOException $e)
 		{
-    	echo $e->getMessage();
-  	}
+			echo $e->getMessage();
+		}
 	}
 ?>

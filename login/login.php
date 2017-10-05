@@ -2,16 +2,16 @@
 	<?php
 		if(isset($_SESSION['email']))
 		{
-			include 'dropdownLogout.php';
-			include 'modalEditReservation.php';
-			include 'modalEditProfile.php';
-    }
-  	else
-  	{
-			include 'modalRegistration.php';
-			include 'modalForgot.php';
-			include 'modalChange.php';
-			include 'dropdownLogin.php';
-    }
-  ?>
+			require 'dropdownLogout.php';
+			require 'modalEditReservation.php';
+			require 'modalEditProfile.php';
+			require 'modalChange.php';
+		}
+		else
+		{
+			require 'dropdownLogin.php';
+			require 'modalRegistration.php';
+			require 'modalForgot.php';
+		}
+	?>
 </ul>

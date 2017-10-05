@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  $root = isset($root) ? $root : '';
+	session_start();
+	$root = isset($root) ? $root : '';
 	require_once $root.'../files/db.php';
 	$adults = (int)$_POST['txtEditAdults'];
 	$childrens = (int)$_POST['txtEditChildrens'];
@@ -14,27 +14,27 @@
 		echo INVALID_ADULTS_CHILDRENS;
 		return;
 	}
-  if (isset($_POST)){
-    try{
-      $bookingID = $_POST['cmbBookingID'];
-      $roomID = $_POST['txtEditRoomID'];
-      $checkInDate = $_POST['txtEditCheckInDate'];
-      $checkOutDate = $_POST['txtEditCheckOutDate'];
-      $adults = $_POST['txtEditAdults'];
+	if (isset($_POST)){
+		try{
+			$bookingID = $_POST['cmbBookingID'];
+			$roomID = $_POST['txtEditRoomID'];
+			$checkInDate = $_POST['txtEditCheckInDate'];
+			$checkOutDate = $_POST['txtEditCheckOutDate'];
+			$adults = $_POST['txtEditAdults'];
 			$childrens = $_POST['txtEditChildrens'];
 			$query = "UPDATE booking SET RoomID=$roomID,CheckInDate='$checkInDate',CheckOutDate='$checkOutDate',Adults=$adults,Childrens=$childrens WHERE BookingID=$bookingID";
-      $result = mysqli_query($db,$query) or die(mysql_error());
-      if(mysqli_affected_rows($db)!=0)
-      {
-        echo "ok";
-      }
-      else
-      {
-        echo NO_UPDATE;
-      }
-    }
-    catch(PDOException $e){
+			$result = mysqli_query($db,$query) or die(mysql_error());
+			if(mysqli_affected_rows($db)!=0)
+			{
+				echo "ok";
+			}
+			else
+			{
+				echo NO_UPDATE;
+			}
+		}
+		catch(PDOException $e){
 			echo $e->getMessage();
 		}
-  }
+	}
 ?>

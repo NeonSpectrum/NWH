@@ -1,7 +1,7 @@
 <?php
-  // Pear Mail Library
-  $root = isset($root) ? $root : '';
-  require_once "Mail.php";
+	// Pear Mail Library
+	$root = isset($root) ? $root : '';
+	require_once "Mail.php";
 	require_once $root."../files/db.php";
 
 	//register
@@ -24,19 +24,19 @@
 		if($count == 0 && strpos($email,'@') && strpos($email,'.'))
 		{
 			$data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
-			$data = openssl_encrypt($data,"AES-128-ECB","northwoodhotel");
-      $from = '<'.EMAIL.'>';
-      $to = '<'.$email.'>';
-      $subject = 'Verify Email Confirmation';
-      $body = "Please proceed to this link to register your account:\nhttp://neonspectrum.ddns.net/nwh/login/register.php?$data";
+			$data = openssl_encrypt($data,"AES-128-ECB",ENCRYPT_KEYWORD);
+			$from = '<'.EMAIL.'>';
+			$to = '<'.$email.'>';
+			$subject = 'Verify Email Confirmation';
+			$body = "Please proceed to this link to register your account:\nhttp://neonspectrum.ddns.net/nwh/login/register.php?$data";
 
-      $headers = array(
+			$headers = array(
 				'From' => $from,
 				'To' => $to,
 				'Subject' => $subject
-      );
+			);
 
-      $smtp = Mail::factory('smtp', array(
+			$smtp = Mail::factory('smtp', array(
 				'host' => 'ssl://smtp.gmail.com',
 				'port' => '465',
 				'auth' => true,
@@ -44,13 +44,13 @@
 				'password' => PASSWORD
 			));
 
-      $mail = $smtp->send($to, $headers, $body);
+			$mail = $smtp->send($to, $headers, $body);
 
-      if (PEAR::isError($mail)) {
-          echo('<p>' . $mail->getMessage() . '</p>');
-      } else {
-          echo('ok');
-      }
+			if (PEAR::isError($mail)) {
+					echo('<p>' . $mail->getMessage() . '</p>');
+			} else {
+					echo('ok');
+			}
 		}
 		elseif($count != 0)
 		{
@@ -64,29 +64,29 @@
 
 	//forgot
 	else
-  {
-    $email = stripslashes($_POST['txtEmail']); // removes backslashes
-    $email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
-    $query = "SELECT * FROM `account` WHERE EmailAddress='$email'";
-    $result = mysqli_query($db,$query) or die(mysql_error());
-    $row = $result->fetch_assoc();
-    $count = mysqli_num_rows($result);
-    if($count==1 && strpos($email,'@') && strpos($email,'.'))
-    {
-      $randomNumber = mt_rand(10000000, 99999999);
-			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB","northwoodhotel");
-      $from = '<'.EMAIL.'>';
-      $to = '<'.$email.'>';
-      $subject = 'Forgot Password Confirmation';
-      $body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?$data\n\nYour new password will be: $randomNumber";
+	{
+		$email = stripslashes($_POST['txtEmail']); // removes backslashes
+		$email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
+		$query = "SELECT * FROM `account` WHERE EmailAddress='$email'";
+		$result = mysqli_query($db,$query) or die(mysql_error());
+		$row = $result->fetch_assoc();
+		$count = mysqli_num_rows($result);
+		if($count==1 && strpos($email,'@') && strpos($email,'.'))
+		{
+			$randomNumber = mt_rand(10000000, 99999999);
+			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB",ENCRYPT_KEYWORD);
+			$from = '<'.EMAIL.'>';
+			$to = '<'.$email.'>';
+			$subject = 'Forgot Password Confirmation';
+			$body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?$data\n\nYour new password will be: $randomNumber";
 
-      $headers = array(
+			$headers = array(
 				'From' => $from,
 				'To' => $to,
 				'Subject' => $subject
-      );
+			);
 
-      $smtp = Mail::factory('smtp', array(
+			$smtp = Mail::factory('smtp', array(
 				'host' => 'ssl://smtp.gmail.com',
 				'port' => '465',
 				'auth' => true,
@@ -94,20 +94,20 @@
 				'password' => PASSWORD
 			));
 
-      $mail = $smtp->send($to, $headers, $body);
+			$mail = $smtp->send($to, $headers, $body);
 
-      if (PEAR::isError($mail)) {
-          echo('<p>' . $mail->getMessage() . '</p>');
-      } else {
-          echo('ok');
-      }
-    }
-    elseif(!strpos($email, '@') || !strpos($email, '.'))
-    {
-      echo FORMAT_ERROR_EMAIL;
-    }
-    else{
-      echo INVALID_EMAIL;
-    }
-  }
+			if (PEAR::isError($mail)) {
+					echo('<p>' . $mail->getMessage() . '</p>');
+			} else {
+					echo('ok');
+			}
+		}
+		elseif(!strpos($email, '@') || !strpos($email, '.'))
+		{
+			echo FORMAT_ERROR_EMAIL;
+		}
+		else{
+			echo INVALID_EMAIL;
+		}
+	}
 ?>

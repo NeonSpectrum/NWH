@@ -1,7 +1,9 @@
 <?php
+	define("ENCRYPT_KEYWORD","northwoodhotel");
+
 	define("EMAIL","neonspectrumph@gmail.com");
 	
-	define("PASSWORD",openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB","northwoodhotel"));
+	define("PASSWORD",openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==","AES-128-ECB",ENCRYPT_KEYWORD));
 
 	define("PRIVILEGE_DELETE_ACCOUNT","You do not have the privilege to delete this account.");
 

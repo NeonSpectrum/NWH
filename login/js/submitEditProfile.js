@@ -36,8 +36,7 @@ $("#frmEditProfile").submit(function(e){
 							{
 								if(responseUpload=="ok")
 								{
-									alert('Updated Successfully!');
-									location.reload();
+									alertNotif('success','Updated Successfully!',true);
 								}
 								else
 								{
@@ -51,8 +50,7 @@ $("#frmEditProfile").submit(function(e){
 				}
 				else
 				{
-					alert('Updated Successfully!');
-					location.reload();
+					alertNotif('success','Updated Successfully!',true);
 				}
       }
       else
@@ -65,7 +63,8 @@ $("#frmEditProfile").submit(function(e){
   });
 });
 
-var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]; 
+
 function ValidateSingleInput(oInput) {
 	var file_data = $('#imgProfilePic').prop('files')[0];
 	if(file_data.size > 2097152)

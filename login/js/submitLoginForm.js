@@ -11,7 +11,7 @@ $("#frmLogin").submit(function(e){
     {
       if(response=="ok")
       {
-        location.reload();
+        alertNotif("success","Login Successfully",false);
       }
       else
       {

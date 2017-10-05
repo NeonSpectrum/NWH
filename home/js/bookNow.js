@@ -10,11 +10,11 @@ $("#frmBookNow").submit(function(e){
     {
       if(response=="ok")
       {
-        setTimeout("alert('Booked Successfully!');location.reload();",2000);
+        setTimeout("alertNotif('success','Booked Successfully!');location.reload();",2000);
       }
       else
       {
-				alert(response);
+				alertNotif("error",response);
 				$("#btnBookNow").html('Book Now');
 				$("#btnBookNow").prop('disabled',false);
 				if(response.includes('login'))

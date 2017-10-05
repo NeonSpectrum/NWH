@@ -1,19 +1,21 @@
 <?php
-  session_start();
-  $root = isset($root) ? $root : '';
-  require_once $root.'../files/db.php';
+	session_start();
+	$root = isset($root) ? $root : '';
+	require_once $root.'../files/db.php';
 	if (isset($_POST))
 	{
 		try
 		{
 			$arr = array();
-			$bookingID=$_POST['cmbBookingID'];
-			$query = "SELECT * FROM `booking` WHERE BookingID=$bookingID";
+			$bookingID  = $_POST['cmbBookingID'];
+			$query = "SELECT * FROM `booking` WHERE BookingID = $bookingID";
 			$result = mysqli_query($db, $query) or die(mysql_error());
 			$row = $result->fetch_assoc();
 			$count = mysqli_num_rows($result);
+
 			if ($count==1)
 			{
+				// $arr[0] = $row['RoomID'];
 				$arr[0] = $row['RoomID'];
 				$arr[1] = $row['CheckInDate'];
 				$arr[2] = $row['CheckOutDate'];
@@ -30,7 +32,7 @@
 		}
 		catch (PDOException $e)
 		{
-    	echo $e->getMessage();
-  	}
+			echo $e->getMessage();
+		}
 	}
 ?>
