@@ -11,7 +11,10 @@ $("#frmChange").submit(function(e){
     {
       if(response=="ok")
       {
-				alertNotif("success","Updated Successfully!",false);
+				$('#modalChange').modal('hide');
+				$('#frmChange').trigger('reset');
+				$('#btnUpdate').attr('disabled', false);
+				alertNotif("success","Updated Successfully!");
       }
       else
       {

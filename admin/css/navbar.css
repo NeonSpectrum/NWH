@@ -2,14 +2,22 @@ body {
 	position: relative;
 	overflow-x: hidden;
 }
-body,
-html { height: 100%;}
-.nav .open > a, 
-.nav .open > a:hover, 
-.nav .open > a:focus {background-color: transparent;}
+
+body, html {
+	height: 100%;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+	background-color: transparent;
+}
+
 
 /*-------------------------------*/
+
+
 /*           Wrappers            */
+
+
 /*-------------------------------*/
 
 #wrapper {
@@ -40,7 +48,7 @@ html { height: 100%;}
 }
 
 #sidebar-wrapper::-webkit-scrollbar {
-display: none;
+	display: none;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -57,8 +65,13 @@ display: none;
 	margin-right: -220px;
 }
 
+
 /*-------------------------------*/
+
+
 /*     Sidebar nav styles        */
+
+
 /*-------------------------------*/
 
 .sidebar-nav {
@@ -71,13 +84,13 @@ display: none;
 }
 
 .sidebar-nav li {
-	position: relative; 
+	position: relative;
 	line-height: 20px;
 	display: inline-block;
 	width: 100%;
 }
 
-.sidebar-nav li:before{
+.sidebar-nav li:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -87,64 +100,67 @@ display: none;
 	width: 3px;
 	background-color: #1c1c1c;
 	-webkit-transition: width .2s ease-in;
-		-moz-transition:  width .2s ease-in;
-		 -ms-transition:  width .2s ease-in;
-					transition: width .2s ease-in;
+	-moz-transition: width .2s ease-in;
+	-ms-transition: width .2s ease-in;
+	transition: width .2s ease-in;
+}
 
-}
 .sidebar-nav li:nth-child(1):before {
-	background-color: #1a1a1a;   
+	background-color: #1a1a1a;
 }
+
 .sidebar-nav li:nth-child(2):before {
-	background-color: #ec1b5a;   
+	background-color: #ec1b5a;
 }
+
 .sidebar-nav li:nth-child(3):before {
-	background-color: #79aefe;   
+	background-color: #79aefe;
 }
+
 .sidebar-nav li:nth-child(4):before {
-	background-color: #314190;   
+	background-color: #314190;
 }
+
 .sidebar-nav li:nth-child(5):before {
-	background-color: #279636;   
+	background-color: #279636;
 }
+
 .sidebar-nav li:nth-child(6):before {
-	background-color: #7d5d81;   
+	background-color: #7d5d81;
 }
+
 .sidebar-nav li:nth-child(7):before {
-	background-color: #E100FF;   
+	background-color: #E100FF;
 }
+
 .sidebar-nav li:nth-child(8):before {
-	background-color: #2d2366;   
+	background-color: #2d2366;
 }
+
 .sidebar-nav li:nth-child(9):before {
-	background-color: #35acdf;   
+	background-color: #35acdf;
 }
+
 .sidebar-nav li.firstdropdownmenu:before {
-	background-color: #ead24c;   
+	background-color: #ead24c;
 }
-.sidebar-nav li:hover:before,
-.sidebar-nav li.open:hover:before {
+
+.sidebar-nav li:hover:before, .sidebar-nav li.open:hover:before {
 	width: 100%;
 	-webkit-transition: width .2s ease-in;
-		-moz-transition:  width .2s ease-in;
-		 -ms-transition:  width .2s ease-in;
-					transition: width .2s ease-in;
-
+	-moz-transition: width .2s ease-in;
+	-ms-transition: width .2s ease-in;
+	transition: width .2s ease-in;
 }
 
 .sidebar-nav li a {
 	display: block;
 	color: #ddd;
 	text-decoration: none;
-	padding: 10px 15px 10px 30px;    
+	padding: 10px 15px 10px 30px;
 }
 
-.sidebar-nav li a:hover,
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus,
-.sidebar-nav li.open a:hover,
-.sidebar-nav li.open a:active,
-.sidebar-nav li.open a:focus{
+.sidebar-nav li a:hover, .sidebar-nav li a:active, .sidebar-nav li a:focus, .sidebar-nav li.open a:hover, .sidebar-nav li.open a:active, .sidebar-nav li.open a:focus {
 	color: #fff;
 	text-decoration: none;
 	background-color: transparent;
@@ -155,6 +171,7 @@ display: none;
 	font-size: 20px;
 	line-height: 44px;
 }
+
 .sidebar-nav .dropdown-menu {
 	position: relative;
 	width: 100%;
@@ -166,138 +183,153 @@ display: none;
 	box-shadow: none;
 }
 
+
 /*-------------------------------*/
+
+
 /*       Hamburger-Cross         */
+
+
 /*-------------------------------*/
 
 .hamburger {
-position: fixed;
-top: 20px;  
-z-index: 999;
-display: block;
-width: 32px;
-height: 32px;
-margin-left: 15px;
-background: transparent;
-border: none;
-}
-.hamburger:hover,
-.hamburger:focus,
-.hamburger:active {
-outline: none;
-}
-.hamburger.is-closed:before {
-content: '';
-display: block;
-width: 100px;
-font-size: 14px;
-color: #fff;
-line-height: 32px;
-text-align: center;
-opacity: 0;
-transform: translate3d(0,0,0);
--webkit-transform: translate3d(0,0,0);
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-closed:hover:before {
-opacity: 1;
-display: block;
-transform: translate3d(-100px,0,0);
--webkit-transform: translate3d(-100px,0,0);
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
+	position: fixed;
+	top: 20px;
+	z-index: 999;
+	display: block;
+	width: 32px;
+	height: 32px;
+	margin-left: 15px;
+	background: transparent;
+	border: none;
 }
 
-.hamburger.is-closed .hamb-top,
-.hamburger.is-closed .hamb-middle,
-.hamburger.is-closed .hamb-bottom,
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-middle,
-.hamburger.is-open .hamb-bottom {
-position: absolute;
-left: 0;
-height: 4px;
-width: 100%;
+.hamburger:hover, .hamburger:focus, .hamburger:active {
+	outline: none;
 }
-.hamburger.is-closed .hamb-top,
-.hamburger.is-closed .hamb-middle,
-.hamburger.is-closed .hamb-bottom {
-background-color: #1a1a1a;
+
+.hamburger.is-closed:before {
+	content: '';
+	display: block;
+	width: 100px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 32px;
+	text-align: center;
+	opacity: 0;
+	transform: translate3d(0, 0, 0);
+	-webkit-transform: translate3d(0, 0, 0);
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
 }
-.hamburger.is-closed .hamb-top { 
-top: 5px; 
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
+
+.hamburger.is-closed:hover:before {
+	opacity: 1;
+	display: block;
+	transform: translate3d(-100px, 0, 0);
+	-webkit-transform: translate3d(-100px, 0, 0);
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
 }
+
+.hamburger.is-closed .hamb-top, .hamburger.is-closed .hamb-middle, .hamburger.is-closed .hamb-bottom, .hamburger.is-open .hamb-top, .hamburger.is-open .hamb-middle, .hamburger.is-open .hamb-bottom {
+	position: absolute;
+	left: 0;
+	height: 4px;
+	width: 100%;
+}
+
+.hamburger.is-closed .hamb-top, .hamburger.is-closed .hamb-middle, .hamburger.is-closed .hamb-bottom {
+	background-color: #1a1a1a;
+}
+
+.hamburger.is-closed .hamb-top {
+	top: 5px;
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
+}
+
 .hamburger.is-closed .hamb-middle {
-top: 50%;
-margin-top: -2px;
+	top: 50%;
+	margin-top: -2px;
 }
+
 .hamburger.is-closed .hamb-bottom {
-bottom: 5px;  
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
+	bottom: 5px;
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
 }
 
 .hamburger.is-closed:hover .hamb-top {
-top: 0;
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-closed:hover .hamb-bottom {
-bottom: 0;
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-middle,
-.hamburger.is-open .hamb-bottom {
-background-color: #1a1a1a;
-}
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-bottom {
-top: 50%;
-margin-top: -2px;  
-}
-.hamburger.is-open .hamb-top { 
-transform: rotate(45deg);
--webkit-transform: rotate(45deg);
-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
--webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
-}
-.hamburger.is-open .hamb-middle { display: none; }
-.hamburger.is-open .hamb-bottom {
-transform: rotate(-45deg);
--webkit-transform: rotate(-45deg);
-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
--webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
-}
-.hamburger.is-open:before {
-content: '';
-display: block;
-width: 100px;
-font-size: 14px;
-color: #fff;
-line-height: 32px;
-text-align: center;
-opacity: 0;
-transform: translate3d(0,0,0);
--webkit-transform: translate3d(0,0,0);
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-open:hover:before {
-opacity: 1;
-display: block;
-transform: translate3d(-100px,0,0);
--webkit-transform: translate3d(-100px,0,0);
-transition: all .35s ease-in-out;
--webkit-transition: all .35s ease-in-out;
+	top: 0;
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
 }
 
+.hamburger.is-closed:hover .hamb-bottom {
+	bottom: 0;
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
+}
+
+.hamburger.is-open .hamb-top, .hamburger.is-open .hamb-middle, .hamburger.is-open .hamb-bottom {
+	background-color: #1a1a1a;
+}
+
+.hamburger.is-open .hamb-top, .hamburger.is-open .hamb-bottom {
+	top: 50%;
+	margin-top: -2px;
+}
+
+.hamburger.is-open .hamb-top {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
+	-webkit-transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
+}
+
+.hamburger.is-open .hamb-middle {
+	display: none;
+}
+
+.hamburger.is-open .hamb-bottom {
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
+	-webkit-transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
+}
+
+.hamburger.is-open:before {
+	content: '';
+	display: block;
+	width: 100px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 32px;
+	text-align: center;
+	opacity: 0;
+	transform: translate3d(0, 0, 0);
+	-webkit-transform: translate3d(0, 0, 0);
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
+}
+
+.hamburger.is-open:hover:before {
+	opacity: 1;
+	display: block;
+	transform: translate3d(-100px, 0, 0);
+	-webkit-transform: translate3d(-100px, 0, 0);
+	transition: all .35s ease-in-out;
+	-webkit-transition: all .35s ease-in-out;
+}
+
+
 /*-------------------------------*/
+
+
 /*            Overlay            */
+
+
 /*-------------------------------*/
 
 .overlay {
@@ -309,6 +341,6 @@ transition: all .35s ease-in-out;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(250,250,250,.8);
+	background-color: rgba(250, 250, 250, .8);
 	z-index: 1;
 }

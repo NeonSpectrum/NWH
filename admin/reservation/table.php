@@ -1,5 +1,5 @@
-<div class="well center-block" style="width:80%">
-	<table id="table_id" class="display">
+<div class="well center-block animated fadeInDown" style="width:80%;">
+	<table id="tblReservation" style="display:none">
 		<thead>
 			<tr>
 				<?php

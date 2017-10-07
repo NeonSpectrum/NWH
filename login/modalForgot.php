@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<form id="frmForgot" method="post" class="form-horizontal">
-					<div id="lblDisplayErrorForgot">
+					<div id="lblDisplayErrorForgot" class="lblDisplayError">
 						<!-- error will be shown here ! -->
 					</div>
 					<div class="form-group">

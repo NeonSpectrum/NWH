@@ -10,8 +10,7 @@ function submitDeleteForm()
 		success: function (response)
 		{
 			if (response == "ok") {
-				alert("Records Deleted Successfully!");
-				location.reload();
+				alertNotif("success","Records Deleted Successfully!",false);
 			}
 			else
 			{

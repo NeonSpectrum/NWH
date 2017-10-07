@@ -1,7 +1,7 @@
 function submitEditForm()
 {
 	$("#btnEdit").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
-	$("#btnEdit").prop('disabled', true);
+	$("#btnEdit").attr('disabled', true);
 	$.ajax({
 		type: 'POST',
 		url: 'editAccount.php',
@@ -10,13 +10,12 @@ function submitEditForm()
 		{
 			if (response == "ok")
 			{
-				alert("Records Updated Successfully!");
-				location.reload();
+				alertNotif("success","Records Updated Successfully!",false);
 			}
 			else
 			{
 				$("#btnEdit").html('Edit');
-				$("#btnEdit").prop('disabled', false);
+				$("#btnEdit").attr('disabled', false);
 				$("#lblErrorDisplayAccount").fadeIn(1000, function () {
 					$("#lblErrorDisplayAccount").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
 				});

@@ -8,6 +8,7 @@ $("#frmRegister").submit(function(e){
   if(pass!=rpass)
   {
 		$("#btnRegister").html('Register');
+		$('#btnRegister').attr('disabled', false);
     $("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
     return false;
   }
@@ -22,7 +23,6 @@ $("#frmRegister").submit(function(e){
 				alertNotif('success','Email sent to verify your email!');
 				$('#btnRegister').attr('disabled', false);
 				$('#frmRegister').trigger('reset');
-				// document.getElementById('frmRegister').reset();
 				$('#modalRegistration').modal('hide');
 				$('#btnRegister').html('Register');
       }

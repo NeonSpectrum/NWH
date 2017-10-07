@@ -12,6 +12,7 @@ $("#frmForgot").submit(function(e){
     {
       if(response=="ok")
       {
+				$('#modalForgot').modal('hide');
         alertNotif('success',"Email sent!",true);
       }
       else

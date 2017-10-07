@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<form class="form" method="post" id="frmLogin">
-						<div id="lblDisplayErrorLogin">
+						<div id="lblDisplayErrorLogin" class="lblDisplayError">
 							<!-- error will be shown here ! -->
 						</div>
 						<div class="form-group">

@@ -5,6 +5,17 @@ $(window).on("load", function(){
 
 $(document).ready(function(){
 	$(this).scrollTop(0);
+	$('.modal').on('hidden.bs.modal', function(){
+		$(this).find('form')[0].reset();
+		$(this).find('button').attr('disabled',false);
+		$(this).find('.lblDisplayError').html('');
+	});
+	$("input[type=text]").change(function() {
+		if ($(this).val())
+		{
+			$(this).find('button').removeAttr('disabled');
+		}
+	});
 });
 
 function disableKey(evt,key)
@@ -43,25 +54,13 @@ function sendMsg(msg){
 	console.log(msg);
 }
 
-function wait(ms){
+/* function wait(ms){
 	var start = new Date().getTime();
 	var end = start;
 	while(end < start + ms) {
 		end = new Date().getTime();
  }
-}
-
-// function alertNotif(type,message){
-// 	if(type == "success")
-// 		type = "bg-success";
-// 	else if(type == "error")
-// 		type = "bg-danger";
-// 	$('#notifStatus').addClass(type);
-// 	$('#modalNotifMessage').html(message);
-// 	$('#modalNotif').modal('show');
-// 	sleep(2000);
-// 	$('#modalNotif').modal('hide');
-// }
+} */
 
 function alertNotif(type,message,reload){
 	if(type == "success")
@@ -73,7 +72,10 @@ function alertNotif(type,message,reload){
 	setTimeout(function(){
 		$('#alertBox').fadeOut();
 		$('#alertBox').html('');
-		if(typeof reload != 'undefined')
+		if(typeof reload == 'undefined') return;
+		if(reload || !reload)
 			location.reload(reload);
-	},3000);
+		else
+			location.href(reload);
+	},2000);
 }

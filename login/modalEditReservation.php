@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<form id="frmEditReservation" method="post" class="form-horizontal">
-					<div id="lblDisplayErrorEditReservation">
+					<div id="lblDisplayErrorEditReservation" class="lblDisplayError">
 						<!-- error will be shown here ! -->
 					</div>
 					<div class="form-group">

@@ -47,7 +47,7 @@
 			<span class="hamb-middle"></span>
 			<span class="hamb-bottom"></span>
 		</button>
-		<div class="well center-block" style="width:30%">
+		<div class="well center-block animated fadeInDown" style="width:30%">
 			<form id="frmAccount">
 				<div id="lblErrorDisplayAccount">
 					<!-- error will be shown here ! -->

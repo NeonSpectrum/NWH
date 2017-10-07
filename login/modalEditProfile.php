@@ -13,7 +13,7 @@
 		</div>
 		<div class="modal-body">
 			<form id="frmEditProfile" method="post" class="form-horizontal" enctype="multipart/form-data">
-				<div id="lblDisplayErrorEditProfile">
+				<div id="lblDisplayErrorEditProfile" class="lblDisplayError">
 					<!-- error will be shown here ! -->
 				</div>
 				<div class="form-group">

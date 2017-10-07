@@ -7,18 +7,18 @@ $(document).ready(function () {
 			data: $('#frmAccount').serialize(),
 			success: function (data) {
 				if (data[0] == 'error') {
-					document.getElementById("cmbAccountType").value = '';
-					document.getElementById("txtProfilePicture").value = '';
-					document.getElementById("txtFirstName").value = '';
-					document.getElementById("txtLastName").value = '';
-					document.getElementById("txtIsLogged").value = '';
+					$("cmbAccountType").val("");
+					$("txtProfilePicture").val("");
+					$("txtFirstName").val("");
+					$("txtLastName").val("");
+					$("txtIsLogged").val("");
 					return;
 				}
-				document.getElementById("cmbAccountType").value = data[0];
-				document.getElementById("txtProfilePicture").value = data[1];
-				document.getElementById("txtFirstName").value = data[2];
-				document.getElementById("txtLastName").value = data[3];
-				document.getElementById("txtIsLogged").value = data[4];
+				$("cmbAccountType").val(data[0]);
+				$("txtProfilePicture").val(data[1]);
+				$("txtFirstName").val(data[2]);
+				$("txtLastName").val(data[3]);
+				$("txtIsLogged").val(data[4]);
 			}
 		});
 	});

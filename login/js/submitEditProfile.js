@@ -36,13 +36,14 @@ $("#frmEditProfile").submit(function(e){
 							{
 								if(responseUpload=="ok")
 								{
-									alertNotif('success','Updated Successfully!',true);
+									$('#modalEditProfile').modal('hide');
+									alertNotif("success","Updated Successfully!",true);
 								}
 								else
 								{
 									$("#btnEditProfile").html('Update');
 									$('#btnEditProfile').attr('disabled', false);
-									$("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+responseUpload+'</div>');
+									$("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+responseUpload+'</div>');
 								}
 							}
 						});
@@ -50,14 +51,17 @@ $("#frmEditProfile").submit(function(e){
 				}
 				else
 				{
-					alertNotif('success','Updated Successfully!',true);
+					$('#modalEditProfile').modal('hide');
+					$('#frmEditProfile').trigger('reset');
+					$('#btnEditProfile').attr('disabled', false);
+					alertNotif("success","Updated Successfully!");
 				}
       }
       else
       {
 				$("#btnEditProfile").html('Update');
 				$('#btnEditProfile').attr('disabled', false);
-        $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
+        $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
       }
     }
   });
@@ -70,7 +74,7 @@ function ValidateSingleInput(oInput) {
 	if(file_data.size > 2097152)
 	{
 		$('#btnEditProfile').attr('disabled', true);
-		$("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
+		$("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
 		return false;
 	}
 	if (oInput.type == "file") {
@@ -80,14 +84,14 @@ function ValidateSingleInput(oInput) {
 			for (var j = 0; j < _validFileExtensions.length; j++) {
 				var sCurExtension = _validFileExtensions[j];
 				if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-					$("#lblDisplayErrorEditProfile").html('');
+					$("#lblDisplayErrorEditProfileEditProfile").html('');
 					$('#btnEditProfile').attr('disabled', false);
 					blnValid = true;
 					break;
 				}
 			}
 			if (!blnValid) {
-				$("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ")+'</div>');
+				$("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ")+'</div>');
 				$('#btnEditProfile').attr('disabled', true);
 				oInput.value = "";
 				return false;

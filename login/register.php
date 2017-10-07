@@ -13,7 +13,7 @@
 		$result = mysqli_query($db,$query);
 		if(mysqli_affected_rows($db)!=0)
 		{
-			echo '<script>alertNotif("success","Registered Successfully!");location.href = "/nwh/";</script>';
+			echo '<script>alertNotif("success","Registered Successfully!","/nwh/");</script>';
 			exit();
 		}
 		else
