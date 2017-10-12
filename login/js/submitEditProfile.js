@@ -3,14 +3,14 @@ $("#frmEditProfile").submit(function(e){
 	$("#btnEditProfile").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
 	$('#btnEditProfile').attr('disabled', true);
 	$("#lblDisplayErrorEditProfile").html('');
-  $.ajax({
-    type : 'POST',
-    url  : '/nwh/login/checkEditProfile.php',
-    data : $(this).serialize()+"&profilePic="+document.getElementById("imgProfilePic").files.length,
-    success :  function(response)
-    {
-      if(response=="ok")
-      {
+	$.ajax({
+		type : 'POST',
+		url  : '/nwh/login/checkEditProfile.php',
+		data : $(this).serialize()+"&profilePic="+document.getElementById("imgProfilePic").files.length,
+		success :  function(response)
+		{
+			if(response=="ok")
+			{
 				if(document.getElementById("imgProfilePic").files.length != 0)
 				{
 					var file_data = $('#imgProfilePic').prop('files')[0];   
@@ -56,15 +56,15 @@ $("#frmEditProfile").submit(function(e){
 					$('#btnEditProfile').attr('disabled', false);
 					alertNotif("success","Updated Successfully!");
 				}
-      }
-      else
-      {
+			}
+			else
+			{
 				$("#btnEditProfile").html('Update');
 				$('#btnEditProfile').attr('disabled', false);
-        $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
-      }
-    }
-  });
+				$("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;'+response+'</div>')
+			}
+		}
+	});
 });
 
 var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]; 
