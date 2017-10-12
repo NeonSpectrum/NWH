@@ -3,7 +3,6 @@ $("#frmEditReservation").submit(function(e){
 	$("#btnEditReservation").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
 	$('#btnEditReservation').attr('disabled', true);
 	$("#lblDisplayErrorEditReservation").html('');
-	
   $.ajax({
     type : 'POST',
     url  : '/nwh/login/checkEditReservation.php',

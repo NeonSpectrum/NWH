@@ -1,5 +1,5 @@
-<div class="well center-block animated fadeInDown" style="width:80%;">
-	<table id="tblReservation" style="display:none">
+<div class="well center-block" style="width:81%">
+	<table id="tblReservation" class="table table-striped table-bordered" cellspacing="0" style="display:none">
 		<thead>
 			<tr>
 				<?php
@@ -9,7 +9,8 @@
 					{
 						echo "<th>{$row['Field']}</th>\n";
 					}
-				?>
+				?>	
+				<th>Report</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,7 @@
 					echo "<td>{$row['CheckOutDate']}</td>";
 					echo "<td>{$row['Adults']}</td>";
 					echo "<td>{$row['Childrens']}</td>";
+					echo "<td><a href='/nwh/files/generateReservationConfirmation.php?BookingID={$row['BookingID']}'>View Reservation</a></td>";
 					echo "</tr>";
 				}
 			?>

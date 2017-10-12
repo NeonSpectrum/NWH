@@ -2,11 +2,10 @@ function submitDeleteForm()
 {
 	$("#btnDelete").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Deleting ...');
 	$("#btnDelete").prop('disabled', true);
-	var data = $('#frmAccount').serialize();
 	$.ajax({
 		type: 'POST',
 		url: 'deleteAccount.php',
-		data: data,
+		data: $('#frmAccount').serialize(),
 		success: function (response)
 		{
 			if (response == "ok") {

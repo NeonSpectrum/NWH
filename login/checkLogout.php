@@ -11,8 +11,8 @@
 		setcookie ('nwhAuth', '', time() - (60 * 60 * 24 * 7),'/');
 		unset($_COOKIE['nwhAuth']);
 	}
-	if(session_destroy()) // Destroying All Sessions
+	if(session_destroy())
 	{
-		header("location:".$_SERVER['HTTP_REFERER']); // Redirecting To Home Page
+		header("location:".$_SERVER['HTTP_REFERER']);
 	}
 ?>

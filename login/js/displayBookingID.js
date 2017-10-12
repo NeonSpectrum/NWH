@@ -14,9 +14,11 @@ $(document).ready(function () {
 			$("#txtEditAdults").val('0');
 			$("#txtEditChildrens").val('0');
 			$("#btnEditReservation").prop("disabled", true);
+			$("#btnPrint").prop("disabled", true);
 			return;
 		}
 		$("#btnEditReservation").prop("disabled", false);
+		$("#btnPrint").prop("disabled", false);
 		$.ajax({
 			url: "/nwh/login/displayEditReservation.php",
 			type: "POST",
