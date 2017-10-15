@@ -76,4 +76,10 @@
 		</div> -->
 	</div>
 </div>
+<div style="position:absolute;bottom:5px;right:5px;">
+	<?php if (isset($_POST['button'])) { shell_exec('test.pl'); } ?>
+	<form action="" method="post">
+			<button type="submit" name="button">Run Perl</button>
+	</form>
+</div>
 <?php require '../files/footer.php';?>
