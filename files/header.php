@@ -1,4 +1,5 @@
 <?php
+	shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1"); // auto update to git
 	session_start();
 	$root = isset($root) ? $root : '';
 	$adminPage = isset($adminPage) ? $adminPage : false;

@@ -76,7 +76,7 @@ function alertNotif(type,message,reload,timeout){
 		$('#alertBox').html('');
 		if(reload==null)
 			return;
-		if(reload || !reload)
+		else if(reload || !reload)
 			location.reload(reload);
 		else
 			location.href(reload);

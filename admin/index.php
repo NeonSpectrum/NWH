@@ -76,15 +76,4 @@
 		</div> -->
 	</div>
 </div>
-<div style="position:absolute;bottom:5px;right:5px;">
-		<button type="submit" class="btn btn-default" id="gitPull">Git Pull</button>
-</div>
 <?php require '../files/footer.php';?>
-<script>
-	$('#gitPull').click(function(){
-		<?php
-			$result = trim(preg_replace('/\s+/', ' ', nl2br(shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1"))));
-			echo "alertNotif('success','$result',null,10000);";
-		?>
-	})
-</script>
