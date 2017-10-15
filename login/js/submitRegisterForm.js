@@ -1,7 +1,7 @@
 $("#frmRegister").submit(function(e){
 	e.preventDefault();
-	var pass = $('#txtPassword').val();
-	var rpass = $('#txtRetypePassword').val();
+	var pass = $('#txtPassword',this).val();
+	var rpass = $('#txtRetypePassword',this).val();
 	$("#btnRegister").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
 	$('#btnRegister').attr('disabled', true);
 	$("#lblDisplayErrorRegister").html('');
@@ -9,7 +9,7 @@ $("#frmRegister").submit(function(e){
 	{
 		$("#btnRegister").html('Register');
 		$('#btnRegister').attr('disabled', false);
-		$("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is incorrect!</div>');
+		$("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
 		return false;
 	}
 	$.ajax({

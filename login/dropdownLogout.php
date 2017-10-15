@@ -19,6 +19,6 @@
 			<li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
 			<li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
 			<li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-			<li><a href="/nwh/login/checklogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			<li><a href="/nwh/login/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 	</ul>
 </li>
