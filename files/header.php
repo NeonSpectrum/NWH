@@ -13,20 +13,11 @@
 		$row = $result->fetch_assoc();
 		$count = mysqli_num_rows($result);
 		if($count==1){
-			if($cookie != $row['Cookies'])
-			{
-				$query = "UPDATE account SET Cookies='$cookie' WHERE EmailAddress='$email'";
-				$result = mysqli_query($db,$query) or die(mysql_error());
-				session_destroy();
-			}
-			else
-			{
-				$_SESSION['email'] = $row['EmailAddress'];
-				$_SESSION['fname'] = $row['FirstName'];
-				$_SESSION['lname'] = $row['LastName'];
-				$_SESSION['picture'] = $row['ProfilePicture'];
-				$_SESSION['accountType'] = $row['AccountType'];
-			}
+			$_SESSION['email'] = $row['EmailAddress'];
+			$_SESSION['fname'] = $row['FirstName'];
+			$_SESSION['lname'] = $row['LastName'];
+			$_SESSION['picture'] = $row['ProfilePicture'];
+			$_SESSION['accountType'] = $row['AccountType'];
 		}
 	}
 ?>

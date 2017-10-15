@@ -19,8 +19,7 @@
 			$profilepicture = $_POST['txtProfilePicture'];
 			$firstname = $_POST['txtFirstName'];
 			$lastname = $_POST['txtLastName'];
-			$islogged = $_POST['txtIsLogged'];
-			$query = "UPDATE `account` SET AccountType='".$accounttype."',ProfilePicture='".$profilepicture."',Firstname='".$firstname."',Lastname='".$lastname."',isLogged=".$islogged." WHERE EmailAddress='".$email."'";
+			$query = "UPDATE `account` SET AccountType='$accounttype',ProfilePicture='$profilepicture',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'";
 			$result = mysqli_query($db,$query);
 			if(mysqli_affected_rows($db)!=0)
 			{

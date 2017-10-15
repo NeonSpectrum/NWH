@@ -14,7 +14,7 @@ $("#frmChange").submit(function(e){
 				$('#modalChange').modal('hide');
 				$('#frmChange').trigger('reset');
 				$('#btnUpdate').attr('disabled', false);
-				alertNotif("success","Updated Successfully!");
+				alertNotif("success","Updated Successfully!",false);
 			}
 			else
 			{

@@ -77,8 +77,6 @@
 				<br/>
 				Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" required>
 				<br/>
-				isLogged: <input type="text" id="txtIsLogged" name="txtIsLogged" class="form-control" required>
-				<br/>
 				<div class="text-right">
 					<button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Edit</button>
 					<button id="btnDelete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button>

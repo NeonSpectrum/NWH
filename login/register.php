@@ -9,16 +9,16 @@
 		$lname = $txtLastName;
 		$email = $txtEmail;
 		$password = $txtPassword;
-		$query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname',0)";
+		$query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname')";
 		$result = mysqli_query($db,$query);
 		if(mysqli_affected_rows($db)!=0)
 		{
-			echo '<script>alertNotif("success","Registered Successfully!","/nwh/");';
+			echo '<script>alert("Registered Successfully!");location.href="/nwh/";</script>';
 			exit();
 		}
 		else
 		{
-			echo 'Error Occured!';
+			echo '<script>alert("Already Verified!")</script>';
 		}
 	}
 ?>

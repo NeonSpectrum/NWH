@@ -12,20 +12,16 @@
 			$result = mysqli_query($db,$query) or die(mysql_error());
 			$row = $result->fetch_assoc();
 			$count = mysqli_num_rows($result);
-			if($count==1 && password_verify($password, $row['Password']) && $row['isLogged']==0 && strpos($email,'@') && strpos($email,'.')){
+			if($count==1 && password_verify($password, $row['Password']) && strpos($email,'@') && strpos($email,'.')){
 				$_SESSION['email'] = $row['EmailAddress'];
 				$_SESSION['fname'] = $row['FirstName'];
 				$_SESSION['lname'] = $row['LastName'];
 				$_SESSION['picture'] = $row['ProfilePicture'];
 				$_SESSION['accountType'] = $row['AccountType'];
 				//update isLogged
-				$query = "UPDATE account SET isLogged=0 WHERE EmailAddress='$email'";
-				$result = mysqli_query($db,$query) or die(mysql_error());
 				$cookie = "email=".$email."&password=".$row['Password'];
 				if(!empty($_POST["cbxRemember"]))
 				{
-					$query = "UPDATE account SET Cookies='$cookie' WHERE EmailAddress='$email'";
-					$result = mysqli_query($db,$query) or die(mysql_error());
 					setcookie ("nwhAuth",$cookie,time()+ (60 * 60 * 24 * 7), "/");
 				}
 				else
