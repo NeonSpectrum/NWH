@@ -2,7 +2,7 @@
 	// Pear Mail Library
 	$root = isset($root) ? $root : '';
 	$domain = "neonspectrum.myftp.org";
-	require_once $root."../Mail/Mail.php";
+	require_once "Mail.php";
 	require_once $root."../files/db.php";
 
 	//register
