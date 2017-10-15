@@ -11,14 +11,13 @@
 		$password = $txtPassword;
 		$query = "INSERT INTO `account` VALUES ('$email', '$password', 'User', 'default.png', '$fname', '$lname')";
 		$result = mysqli_query($db,$query);
-		if(mysqli_affected_rows($db)!=0)
+		if(!$result)
+		{
+			echo '<script>alert("Already Registered!");location.href="/nwh/";</script>';
+		}
+		else if(mysqli_affected_rows($db)!=0)
 		{
 			echo '<script>alert("Registered Successfully!");location.href="/nwh/";</script>';
-			exit();
-		}
-		else
-		{
-			echo '<script>alert("Already Verified!")</script>';
 		}
 	}
 ?>

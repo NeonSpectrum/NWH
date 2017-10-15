@@ -50,7 +50,7 @@
 		
 				//Content
 				$mail->isHTML(true);
-				$mail->Subject = 'Northwood Hotel Email Confirmation';
+				$mail->Subject = 'Northwood Hotel Account Creation';
 				$mail->Body    = "Please proceed to this link to register your account:<br/>http://$domain/nwh/login/register.php?$data";
 		
 				$mail->send();
