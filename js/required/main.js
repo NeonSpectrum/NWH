@@ -74,10 +74,9 @@ function alertNotif(type,message,reload,timeout){
 	setTimeout(function(){
 		$('#alertBox').fadeOut();
 		$('#alertBox').html('');
-		if(typeof reload == 'undefined') return;
 		if(reload || !reload)
 			location.reload(reload);
-		else
+		else if(reload!=null)
 			location.href(reload);
 	},timeout);
 }
