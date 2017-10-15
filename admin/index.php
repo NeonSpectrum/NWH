@@ -65,7 +65,7 @@
 			url  : '/nwh/files/gitUpdate.php',
 			success :  function(response)
 			{
-				alertNotif("success",response,null,5000);
+				alertNotif("success",response,true,3000);
 			}
 		});
 	})
