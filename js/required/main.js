@@ -69,6 +69,8 @@ function alertNotif(type,message,reload,timeout){
 		type = "alert-danger";
 	if(timeout==null)
 		timeout=2000;
+	if(reload==null)
+		return;
 	$('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert animated fadeInDown text-center '+type+'" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">'+message+'</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
 	$('#alertBox').fadeIn();
 	setTimeout(function(){
@@ -76,7 +78,7 @@ function alertNotif(type,message,reload,timeout){
 		$('#alertBox').html('');
 		if(reload || !reload)
 			location.reload(reload);
-		else if(reload!=null)
+		else
 			location.href(reload);
 	},timeout);
 }
