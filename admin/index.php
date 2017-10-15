@@ -81,7 +81,7 @@
 		if (isset($_POST['gitpull']))
 		{
 			$result = shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1");
-			echo "<script>alertNotif('success','$result',false);<script>";
+			echo "<script>alertNotif('success','$result',false);</script>";
 		} 
 	?>
 	<form action="index.php" method="post">
