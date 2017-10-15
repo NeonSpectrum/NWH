@@ -77,7 +77,7 @@
 	</div>
 </div>
 <div style="position:absolute;bottom:5px;right:5px;">
-	<?php if (isset($_POST['button'])) { shell_exec('test.pl'); } ?>
+	<?php if (isset($_POST['button'])) { echo "<script>alertNotif('success','".shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1")."',false);<script>";} ?>
 	<form action="" method="post">
 			<button type="submit" name="button">Run Perl</button>
 	</form>
