@@ -77,8 +77,14 @@
 	</div>
 </div>
 <div style="position:absolute;bottom:5px;right:5px;">
-	<?php if (isset($_POST['gitpull'])) { echo "<script>alertNotif('success','".shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1")."',false);<script>";} ?>
-	<form action="" method="post">
+	<?php
+		if (isset($_POST['gitpull']))
+		{
+			$result = shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1");
+			echo "<script>alertNotif('success','$result',false);<script>";
+		} 
+	?>
+	<form action="index.php" method="post">
 			<button type="submit" name="gitpull">Git Pull</button>
 	</form>
 </div>
