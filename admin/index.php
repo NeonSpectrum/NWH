@@ -53,27 +53,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="well" style="float:right;position:absolute;top:0px;right:0px;overflow-y:scroll;overflow-x:hidden;height:100%;width:250px;">
-			<?php
-				/* $online='';
-				$offline='';
-				$query = "SELECT * FROM account";
-				$result = mysqli_query($db,$query);
-				while($row = mysqli_fetch_assoc($result))
-				{
-					if($row['isLogged']=='1')
-					{
-						$online.="<img src='/nwh/images/online.png' height='10px' width='10px' style='float:left;margin:5px;'>".$row['FirstName']." ".$row['LastName']."<br/><br/>";
-					}
-					else
-					{
-						$offline.="<img src='/nwh/images/offline.png' height='10px' width='10px' style='float:left;margin:5px;'>".$row['FirstName']." ".$row['LastName']."<br/><br/>";
-					}
-				}
-				echo $online;
-				echo $offline; */
-			?>
-		</div> -->
 	</div>
 </div>
 <div style="position:absolute;bottom:5px;right:5px;">
