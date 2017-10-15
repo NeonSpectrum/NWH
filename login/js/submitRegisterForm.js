@@ -1,7 +1,7 @@
 $("#frmRegister").submit(function(e){
 	e.preventDefault();
-	var pass = $(this).find('#txtPassword').val();
-	var rpass = $(this).find('#txtPassword').val();
+	var pass = $('#txtPassword',this).val();
+	var rpass = $('#txtRetypePassword',this).val();
 	$("#btnRegister").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
 	$('#btnRegister').attr('disabled', true);
 	$("#lblDisplayErrorRegister").html('');
