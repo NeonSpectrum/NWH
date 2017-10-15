@@ -1,7 +1,8 @@
 <?php
 	// Pear Mail Library
 	$root = isset($root) ? $root : '';
-	require_once "Mail.php";
+	$domain = "neonspectrum.myftp.org";
+	require_once $root."../Mail/Mail.php";
 	require_once $root."../files/db.php";
 
 	//register
@@ -26,9 +27,9 @@
 			$data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
 			$data = openssl_encrypt($data,"AES-128-ECB",ENCRYPT_KEYWORD);
 			$from = '<'.EMAIL.'>';
-			$to = '<'.$email.'>';
+			$to = "<$email>";
 			$subject = 'Verify Email Confirmation';
-			$body = "Please proceed to this link to register your account:\nhttp://neonspectrum.ddns.net/nwh/login/register.php?$data";
+			$body = "Please proceed to this link to register your account:\nhttp://$domain/nwh/login/register.php?$data";
 
 			$headers = array(
 				'From' => $from,
@@ -76,9 +77,9 @@
 			$randomNumber = mt_rand(10000000, 99999999);
 			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB",ENCRYPT_KEYWORD);
 			$from = '<'.EMAIL.'>';
-			$to = '<'.$email.'>';
+			$to = "<$email>";
 			$subject = 'Forgot Password Confirmation';
-			$body = "Please proceed to this link to reset your password:\nhttp://neonspectrum.ddns.net/nwh/login/resetPassword.php?$data\n\nYour new password will be: $randomNumber";
+			$body = "Please proceed to this link to reset your password:\nhttp://$domain/nwh/login/resetPassword.php?$data\n\nYour new password will be: $randomNumber";
 
 			$headers = array(
 				'From' => $from,
