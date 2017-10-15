@@ -13,7 +13,7 @@
 		$result = mysqli_query($db,$query);
 		if(mysqli_affected_rows($db)!=0)
 		{
-			echo '<script>alertNotif("success","Registered Successfully!","/nwh/");</script>';
+			echo '<script>alertNotif("success","Registered Successfully!","/nwh/");';
 			exit();
 		}
 		else
