@@ -42,7 +42,7 @@
 			$pdf->SetXY(135, 101.5);
 			$pdf->Write(0, "P5000.00");
 
-			$pdf->Output();
+			$pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf","I");
 		}
 	}
 ?>
