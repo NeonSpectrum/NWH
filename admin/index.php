@@ -76,4 +76,18 @@
 		</div> -->
 	</div>
 </div>
+<div style="position:absolute;bottom:5px;right:5px;">
+		<button type="submit" class="btn btn-default" id="btnGitUpdate">Update Website</button>
+</div>
 <?php require '../files/footer.php';?>
+<script>
+	$('#btnGitUpdate').click(function(){
+		$.ajax({
+			url  : '/nwh/files/gitUpdate.php',
+			success :  function(response)
+			{
+				alertNotif("success",response,null,5000);
+			}
+		});
+	})
+</script>
