@@ -12,6 +12,8 @@
 	// Check connection
 	if (!$db)
 	{
-		die("Connection failed: " . $db->connect_error);
+		$db = mysqli_connect("ec2-54-160-33-41.compute-1.amazonaws.com", "NeonSpectrum", $password, $database);
+		if(!db)
+			die("Connection failed: " . $db->connect_error);
 	}
 ?>
