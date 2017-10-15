@@ -84,7 +84,7 @@
 	$('#gitPull').click(function(){
 		<?php
 			$result = trim(preg_replace('/\s+/', ' ', nl2br(shell_exec("cd /var/www/html/nwh & git pull origin master 2>&1"))));
-			echo "alertNotif('success','$result',false,10000);";
+			echo "alertNotif('success','$result',null,10000);";
 		?>
 	})
 </script>
