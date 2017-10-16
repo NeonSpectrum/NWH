@@ -75,42 +75,50 @@
 	//forgot
 	else
 	{
-		$email = stripslashes($_POST['txtEmail']); // removes backslashes
-		$email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
-		$query = "SELECT * FROM `account` WHERE EmailAddress='$email'";
-		$result = mysqli_query($db,$query) or die(mysql_error());
-		$row = $result->fetch_assoc();
-		$count = mysqli_num_rows($result);
-		if($count==1 && strpos($email,'@') && strpos($email,'.'))
+		try
 		{
-			$randomNumber = mt_rand(10000000, 99999999);
-			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB",ENCRYPT_KEYWORD);
-			$mail->isSMTP();
-			$mail->Host = 'ssl://smtp.gmail.com';
-			$mail->SMTPAuth = true;
-			$mail->Username = EMAIL;
-			$mail->Password = PASSWORD;
-			$mail->SMTPSecure = 'tls';
-			$mail->Port = 465;          
-	
-			//Recipients
-			$mail->setFrom(EMAIL, 'Northwood Hotel');
-			$mail->addAddress($email);
-	
-			//Content
-			$mail->isHTML(true);
-			$mail->Subject = 'Northwood Hotel Forgot Password';
-			$mail->Body    = "Please proceed to this link to reset your password:<br/>http://$domain/nwh/login/resetPassword.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
-	
-			$mail->send();
-			echo 'ok';
+			$email = stripslashes($_POST['txtEmail']); // removes backslashes
+			$email = mysqli_real_escape_string($db,$email); //escapes special characters in a string
+			$query = "SELECT * FROM `account` WHERE EmailAddress='$email'";
+			$result = mysqli_query($db,$query) or die(mysql_error());
+			$row = $result->fetch_assoc();
+			$count = mysqli_num_rows($result);
+			if($count==1 && strpos($email,'@') && strpos($email,'.'))
+			{
+				$randomNumber = mt_rand(10000000, 99999999);
+				$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB",ENCRYPT_KEYWORD);
+				$mail->isSMTP();
+				$mail->Host = 'ssl://smtp.gmail.com';
+				$mail->SMTPAuth = true;
+				$mail->Username = EMAIL;
+				$mail->Password = PASSWORD;
+				$mail->SMTPSecure = 'tls';
+				$mail->Port = 465;          
+		
+				//Recipients
+				$mail->setFrom(EMAIL, 'Northwood Hotel');
+				$mail->addAddress($email);
+		
+				//Content
+				$mail->isHTML(true);
+				$mail->Subject = 'Northwood Hotel Forgot Password';
+				$mail->Body    = "Please proceed to this link to reset your password:<br/>http://$domain/nwh/login/resetPassword.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
+		
+				$mail->send();
+				echo 'ok';
+			}
+			elseif(!strpos($email, '@') || !strpos($email, '.'))
+			{
+				echo FORMAT_ERROR_EMAIL;
+			}
+			else{
+				echo INVALID_EMAIL;
+			}
 		}
-		elseif(!strpos($email, '@') || !strpos($email, '.'))
+		catch (Exception $e)
 		{
-			echo FORMAT_ERROR_EMAIL;
-		}
-		else{
-			echo INVALID_EMAIL;
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
 		}
 	}
 ?>
