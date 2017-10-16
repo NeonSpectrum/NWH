@@ -33,13 +33,13 @@
 					<div class="form-group">
 						<label for="password" class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
-							<input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" required/>
+							<input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" minlength="8" required/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="password" class="col-sm-2 control-label"></label>
 						<div class="col-sm-10">
-							<input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" required/>
+							<input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
 						</div>
 					</div>
 					<div class="modal-footer">

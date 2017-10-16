@@ -14,19 +14,19 @@
 					<div class="form-group">
 						<label for="oldpass" class="col-sm-3 control-label">Old Password</label>
 						<div class="col-sm-8">
-							<input name="txtOldPass" type="password" class="form-control" id="txtOldPass" placeholder="Old Password" required/>
+							<input name="txtOldPass" type="password" class="form-control" id="txtOldPass" placeholder="Old Password" minlength="8" required/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">New Password</label>
 						<div class="col-sm-8">
-							<input name="txtNewPass" type="password" class="form-control" id="txtNewPass" placeholder="New Password" required/>
+							<input name="txtNewPass" type="password" class="form-control" id="txtNewPass" placeholder="New Password" minlength="8" required/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label"></label>
 						<div class="col-sm-8">
-							<input name="txtRetypeNewPass" type="password" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" required/>
+							<input name="txtRetypeNewPass" type="password" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
 						</div>
 					</div>
 					<div class="modal-footer">
