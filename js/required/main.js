@@ -54,14 +54,6 @@ function sendMsg(msg){
 	console.log(msg);
 }
 
-/* function wait(ms){
-	var start = new Date().getTime();
-	var end = start;
-	while(end < start + ms) {
-		end = new Date().getTime();
- }
-} */
-
 function alertNotif(type,message,reload,timeout){
 	if(type == "success")
 		type = "alert-success";
@@ -81,4 +73,12 @@ function alertNotif(type,message,reload,timeout){
 		else
 			location.href(reload);
 	},timeout);
+}
+
+function capsLock(e){
+	var kc = e.keyCode ? e.keyCode : e.which;
+	var sk = e.shiftKey ? e.shiftKey : kc === 16;
+	var display = ((kc >= 65 && kc <= 90) && !sk) || 
+			((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
+	document.getElementById('caps').style.display = display;
 }
