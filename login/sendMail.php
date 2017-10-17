@@ -6,9 +6,9 @@
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
 	
-	require $root.'../PHPMailer/src/Exception.php';
-	require $root.'../PHPMailer/src/PHPMailer.php';
-	require $root.'../PHPMailer/src/SMTP.php';
+	require $root.'../packages/PHPMailer/src/Exception.php';
+	require $root.'../packages/PHPMailer/src/PHPMailer.php';
+	require $root.'../packages/PHPMailer/src/SMTP.php';
 	require_once $root."../files/db.php";
 
 	$mail = new PHPMailer(true); 

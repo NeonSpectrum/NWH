@@ -1,8 +1,8 @@
 <?php 
 	use setasign\Fpdi\Fpdi;
 	use setasign\Fpdi\PdfReader;
-	require '../fpdf/fpdf.php';
-	require '../fpdi/autoload.php';
+	require '../packages/fpdf/fpdf.php';
+	require '../packages/fpdi/autoload.php';
 	require_once '../files/db.php';
 	if(isset($_GET['BookingID']))
 	{
