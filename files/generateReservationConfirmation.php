@@ -6,7 +6,7 @@
 	require_once '../files/db.php';
 	if(isset($_GET['BookingID']))
 	{
-	$query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,RoomID,CheckInDate,CheckOutDate FROM booking JOIN account ON booking.EmailAddress = account.EmailAddress WHERE BookingID={$_GET['BookingID']}";
+		$query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,RoomID,CheckInDate,CheckOutDate FROM booking JOIN account ON booking.EmailAddress = account.EmailAddress WHERE BookingID={$_GET['BookingID']}";
 		$result = mysqli_query($db,$query);
 		while($row = mysqli_fetch_assoc($result)){
 			$pdf = new Fpdi();

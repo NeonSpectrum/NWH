@@ -6,7 +6,7 @@
 	require_once $root.'../files/db.php';
 	if(isset($_COOKIE['nwhAuth']))
 	{
-		parse_str($_COOKIE['nwhAuth']);
+		parse_str(openssl_decrypt($_COOKIE['nwhAuth'],"AES-128-ECB",ENCRYPT_KEYWORD));
 		$cookie = $_COOKIE['nwhAuth'];
 		$query = "SELECT * FROM `account` WHERE EmailAddress='$email' AND Password='$password'";
 		$result = mysqli_query($db,$query) or die(mysql_error());
