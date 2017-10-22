@@ -5,7 +5,7 @@ $("#frmBookNow").submit(function(e){
   $.ajax({
     type : 'POST',
     url  : 'submitBookNow.php',
-    data : $("#frmBookNow").serialize(),
+    data : $(this).serialize(),
     success :  function(response)
     {
       if(response=="ok")
@@ -24,5 +24,4 @@ $("#frmBookNow").submit(function(e){
 			}
     }
   });
-  return false;
 });

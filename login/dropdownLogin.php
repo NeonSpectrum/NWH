@@ -10,11 +10,11 @@
 						</div>
 						<div class="form-group">
 							<label class="sr-only">Email address</label>
-							<input type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
+							<input id="txtLoginEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" autocomplete="off" required>
 						</div>
 						<div class="form-group">
 							<label class="sr-only">Password</label>
-							<input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+							<input id="txtLoginPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
 							<div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
 							<div class="checkbox">
 								<label>

@@ -1,0 +1,19 @@
+.form-control {
+	width: 300px;
+	margin: 0px 10px 0px 10px;
+}
+#header{
+	text-align:center;
+	margin-top:25px;
+}
+#account-body{
+	width:30%;
+}
+@media only screen and (max-width:768px){
+	#header{
+		font-size:25px;
+	}
+	#account-body{
+		width:80%;
+	}
+}

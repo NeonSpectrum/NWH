@@ -21,14 +21,10 @@
 						<label class="col-sm-3 control-label">New Password</label>
 						<div class="col-sm-8">
 							<input name="txtNewPass" type="password" class="form-control" id="txtNewPass" placeholder="New Password" minlength="8" required/>
+							<input name="txtRetypeNewPass" type="password" style="margin-top:15px" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label"></label>
-						<div class="col-sm-8">
-							<input name="txtRetypeNewPass" type="password" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
-						</div>
-					</div>
+						
 					<div class="modal-footer">
 						<button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

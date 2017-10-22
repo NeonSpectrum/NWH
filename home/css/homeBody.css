@@ -11,6 +11,10 @@
 }
 .booknow-content{
 	padding:10px;
+	padding-bottom:0px;
+}
+.booknow-content .form-group{
+	padding-bottom:10px;
 }
 .booknow-content label{
 	margin-left:20px;
@@ -40,6 +44,9 @@
 		display:block;
 		width:80%;
 		margin-bottom:10px;
+	}
+	.booknow-content .form-group{
+		padding-bottom:0px;
 	}
 }
 input[type="date"]::-webkit-inner-spin-button{

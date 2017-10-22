@@ -17,6 +17,16 @@ $(document).ready(function () {
 	});
 });
 
+if(screen.width <= 480){
+	$('#txtLoginEmail,#txtLoginPassword').click(function(){
+		$('.navbar').removeClass("navbar-fixed-top");
+		$('body').css("padding-top","0px");
+		$("html, body").animate({ scrollTop: 230 }, "slow");
+	});
+	$('.login-dropdown').on('hide.bs.dropdown', function () {
+		$('.navbar').addClass("navbar-fixed-top");
+	});
+}
 function disableKey(evt, key) {
 	var charCode = (evt.which) ? evt.which : event.keyCode
 	if (key == 'number') {

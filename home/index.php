@@ -1,7 +1,7 @@
 <?php
 	require '../files/header.php';
-	require 'carousel.php';
 	require '../files/navbar.php';
+	require 'carousel.php';
 	/* if(isset($_SESSION["picture"]))
 	{
 		echo '<style>body{background: url("../images/profilepics/'.$_SESSION["picture"].'") no-repeat fixed;background-size:cover;}</style>';

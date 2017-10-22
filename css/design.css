@@ -5,7 +5,7 @@ body{
 }
 @media only screen and (max-width:768px){
 	body{
-		background-position: 65% 35%;
+		background: url('/nwh/images/background-mobile.jpg') no-repeat center fixed;
 	}
 }
 .login {
@@ -15,7 +15,7 @@ body{
 	width: 300px;
 }
 
-/* browse icon */
+/* browse icon
 [hidden] {
 	display: none !important;
-}
+} */

@@ -6,7 +6,7 @@
 	position: absolute;
 	background: url('../../images/below-logo.png') no-repeat;
 	margin-top: -200px;
-	background-size: 100%;
+	background-size: cover;
 	height: 200px;
 	width: 100%;
 	content: '';
@@ -36,6 +36,7 @@
 	/* For mobile phones: */
 	.overlay::after{
 		margin-top:-65px;
+		height: 70px;
 	}
 	.logo-overlay::after{
 		margin-top: -85px;
