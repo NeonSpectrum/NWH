@@ -21,5 +21,4 @@ $("#frmEditReservation").submit(function(e){
 			}
 		}
 	});
-	return false;
 });

@@ -21,5 +21,4 @@ $("#frmLogin").submit(function(e){
 			}
 		}
 	});
-	return false;
 });

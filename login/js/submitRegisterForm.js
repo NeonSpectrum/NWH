@@ -34,5 +34,4 @@ $("#frmRegister").submit(function(e){
 			}
 		}
 	});
-	return false;
 });

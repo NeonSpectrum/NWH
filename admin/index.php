@@ -46,12 +46,8 @@
 			<span class="hamb-middle"></span>
 			<span class="hamb-bottom"></span>
 		</button>
-		<div class="well center-block" style="width:50%;border-radius:20px;">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 text-center">
-						<h1>Welcome, <?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?><br/><br/>to the<br/><br/>Admin Page<br/><br/>of<br/><br/>Northwood Hotel</h1>
-				</div>
-			</div>
+		<div class="well center-block text-center admin-body">
+			Welcome, <?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?><br/>to the<br/>Admin Page<br/>of<br/>Northwood Hotel
 		</div>
 	</div>
 </div>

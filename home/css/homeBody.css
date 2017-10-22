@@ -4,18 +4,43 @@
 .booknow{
 	background-color:white;
 	opacity:0.9;
-	height:53px;
+	height:auto;
 	width: 80%;
 	margin-bottom: 40px;
 	border-radius: 10px;
 }
 .booknow-content{
-	margin-top:10px;
-	margin-bottom:10px;
+	padding:10px;
+}
+.booknow-content label{
 	margin-left:20px;
-	margin-right:20px;
-	display:inline-block;
-	position:relative;
+}
+.booknow-content input{
+	width:15%;
+}
+@media only screen and (max-width: 768px) {
+	.booknow{
+		width: 100%;
+		border-radius: 0px;
+	}
+	.booknow-content{
+		display:block;
+		margin:10px;
+		margin-left:0px;
+		margin-right:0px;
+		padding:10px;
+	}
+	.booknow-content input{
+		width:80% !important;
+		margin:0 auto;
+		margin-bottom:10px;
+	}
+	.booknow-content button{
+		margin:0 auto;
+		display:block;
+		width:80%;
+		margin-bottom:10px;
+	}
 }
 input[type="date"]::-webkit-inner-spin-button{
 	-webkit-appearance: none;

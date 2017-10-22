@@ -1,3 +1,9 @@
+/* remove scrollbar in dropdown collapse */
+.navbar-collapse.in {
+	overflow: hidden;
+	max-height: none !important;
+	height: auto !important;
+}
 /* navbar */
 .navbar-default {
 		background-color: #032B49;

@@ -24,5 +24,4 @@ $("#frmChange").submit(function(e){
 			}
 		}
 	});
-	return false;
 });

@@ -22,5 +22,4 @@ $("#frmForgot").submit(function(e){
 			}
 		}
 	});
-	return false;
 });

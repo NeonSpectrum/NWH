@@ -38,7 +38,7 @@
 				}
 			;?>
 	</head>
-	<body style="<?php if(!$home && !$adminPage) echo 'padding-top:70px';?>;padding-right:0px !important">
+	<body style="<?php if(!$home && !$adminPage) echo 'padding-top:70px;';?>padding-right:0px !important">
 	<?php
 		if(!$adminPage)
 			echo "<div class='loadingIcon'></div>";
