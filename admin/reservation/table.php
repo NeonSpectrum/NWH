@@ -1,4 +1,4 @@
-<div class="well center-block" id="reservation-body" style="width:80%">
+<div class="well center-block" id="reservation-body" style="width:85%">
 	<table id="tblReservation" class="table table-striped table-bordered" cellspacing="0" style="display:none">
 		<thead>
 			<tr>
