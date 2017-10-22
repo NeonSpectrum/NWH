@@ -12,7 +12,7 @@
 	// Check connection
 	if (!$db)
 	{
-		$db = mysqli_connect("ns-database.cqlx1o0ayzo0.us-east-1.rds.amazonaws.com", "NeonSpectrum", $password, $database);
+		$db = mysqli_connect("neonspectrumdb.redirectme.net", "NeonSpectrum", $password, $database);
 		if(!db)
 			die("Connection failed: " . $db->connect_error);
 	}
