@@ -16,14 +16,3 @@
 	<button type="submit" class="btn btn-default" id="btnGitUpdate">Update Website</button>
 </div>
 <?php require '../files/footer.php';?>
-<script>
-	$('#btnGitUpdate').click(function(){
-		$.ajax({
-			url  : '/nwh/files/gitUpdate.php',
-			success :  function(response)
-			{
-				alertNotif("success",response,true,3000);
-			}
-		});
-	})
-</script>
