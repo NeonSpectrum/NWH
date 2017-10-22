@@ -43,14 +43,4 @@
 		if(!$adminPage)
 			echo "<div class='loadingIcon'></div>";
 	?>
-<!-- 	<div id="modalNotif" class="modal fade" role="dialog" data-backdrop="false" style="height:100px;width:598px;margin: 0 auto;overflow-y:hidden;z-index:9999;">
-		<div class="modal-dialog">
-			<div class="modal-content" style="border-radius:10px !important">
-				<div class="modal-header" id="notifStatus" style="border-bottom:0px;border-radius:10px !important;">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title text-center" id="modalNotifMessage"></h4>
-				</div>
-			</div>
-		</div>
-	</div> -->
 	<div id="alertBox" style="display:none"></div>
