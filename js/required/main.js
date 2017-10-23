@@ -1,5 +1,5 @@
 $(window).on("load", function () {
-	$(".loadingIcon").fadeOut("slow");
+	setTimeout('$(".loadingIcon").fadeOut("slow");',500);
 	$(this).scrollTop(0);
 });
 
