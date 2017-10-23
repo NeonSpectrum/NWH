@@ -27,6 +27,17 @@ $(window).on("load", function () {
 	},500);
 });
 
+$(window).scroll(function() {
+  $(".slideanim").each(function(){
+    var pos = $(this).offset().top;
+
+    var winTop = $(window).scrollTop();
+    if (pos < winTop + 600) {
+      $(this).addClass("slide-content");
+    }
+  });
+});
+
 if(screen.width <= 480){
 	$('#txtLoginEmail,#txtLoginPassword').click(function(){
 		$('.navbar').removeClass("navbar-fixed-top");
@@ -95,3 +106,4 @@ function capsLock(e) {
 		((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
 	document.getElementById('caps').style.display = display;
 }
+
