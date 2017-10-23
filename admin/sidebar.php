@@ -33,23 +33,23 @@
 				<a class="navbar-brand" href="/nwh/" style="line-height:40px">Northwood Hotel</a>
 			</li>
 			<li <?php echo $overview;?>>
-				<a href="/nwh/admin">Overview</a>
+				<a href="<?php echo $overview=='' ? '/nwh/admin' : 'javascript:void(0)';?>">Overview</a>
 			</li>
 			<li <?php echo $accounts;?>>
-				<a href="/nwh/admin/accounts">Accounts</a>
+				<a href="<?php echo $accounts=='' ? '/nwh/admin/accounts' : 'javascript:void(0)';?>">Accounts</a>
 			</li>
 			<li <?php echo $database;?>>
-				<a href="/nwh/admin/database">Database</a>
+				<a href="<?php echo $database=='' ? '/nwh/admin/database' : 'javascript:void(0)';?>">Database</a>
 			</li>
 			<li <?php echo $reservation;?>>
-				<a href="/nwh/admin/reservation">Reservation</a>
+				<a href="<?php echo $reservation=='' ? '/nwh/admin/reservation' : 'javascript:void(0)';?>">Reservation</a>
 			</li>
 			<li class="dropdown" <?php echo $reports;?>>
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-					<li <?php echo $amenities;?> class="firstdropdownmenu"><a href="../amenities">Amenities</a></li>
-					<li <?php echo $services;?>><a href="/nwh/admin/services">Services</a></li>
-					<li <?php echo $transactions;?>><a href="/nwh/admin/transactions">Transactions</a></li>
+					<li <?php echo $amenities;?> class="firstdropdownmenu"><a href="<?php echo $amenities=='' ? '/nwh/admin/amenities' : 'javascript:void(0)';?>">Amenities</a></li>
+					<li <?php echo $services;?>><a href="<?php echo $services=='' ? '/nwh/admin/services' : 'javascript:void(0)';?>">Services</a></li>
+					<li <?php echo $transactions;?>><a href="<?php echo $transactions=='' ? '/nwh/admin/transactions' : 'javascript:void(0)';?>">Transactions</a></li>
 				</ul>
 			</li>
 			<li>

@@ -11,7 +11,7 @@
 	}
 	if($root!='')
 	{
-		foreach (glob($root."css/*.css") as $css) {
+		foreach (glob("{$root}css/*.css") as $css) {
 			echo "<link type='text/css' rel='stylesheet' href='".$css."?v=".filemtime($css)."'>\n";
 		}
 	}

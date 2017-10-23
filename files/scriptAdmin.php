@@ -11,7 +11,7 @@
 	}
 	if($root!='')
 	{
-		foreach (glob($root."js/*.js") as $js) {
+		foreach (glob("{$root}js/*.js") as $js) {
 			echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 		}
 	}

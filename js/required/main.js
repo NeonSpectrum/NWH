@@ -48,6 +48,7 @@ if(screen.width <= 480){
 		$('.navbar').addClass("navbar-fixed-top");
 	});
 }
+
 function disableKey(evt, key) {
 	var charCode = (evt.which) ? evt.which : event.keyCode
 	if (key == 'number') {
@@ -63,19 +64,6 @@ function disableKey(evt, key) {
 	else {
 		return true;
 	}
-}
-
-// $('input[type="number"]').on('keyup keydown', function (e) {
-// 	console.log($(this).val()+" "+$(this).attr('max'));
-// 	var max = $(this).attr('max') != null ? $(this).attr('max') : 9999;
-// 	if ($(this).val() > max && e.keyCode != 46 && e.keyCode != 8) {
-// 		e.preventDefault();
-// 		$(this).val(max);
-// 	}
-// });
-
-function sendMsg(msg) {
-	console.log(msg);
 }
 
 function alertNotif(type, message, reload, timeout) {
@@ -106,4 +94,3 @@ function capsLock(e) {
 		((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
 	document.getElementById('caps').style.display = display;
 }
-
