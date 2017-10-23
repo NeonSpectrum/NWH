@@ -1,10 +1,10 @@
-$(window).on("load", function () {
-	setTimeout('$(".loadingIcon").fadeOut("slow");',500);
-	$(this).scrollTop(0);
-});
-
+var oldOverflow;
 $(document).ready(function () {
 	$(this).scrollTop(0);
+	oldOverflow = $('body').css('overflow');
+	if(window.location.href.indexOf("admin") == -1) {
+		$('body').css("overflow","hidden");
+	}
 	$('.modal').on('hidden.bs.modal', function () {
 		$(this).find('form')[0].reset();
 		$(this).find('button').attr('disabled', false);
@@ -15,6 +15,16 @@ $(document).ready(function () {
 			$(this).find('button').removeAttr('disabled');
 		}
 	});
+});
+
+$(window).on("load", function () {
+	setTimeout(function(){
+		$(".loadingIcon").fadeOut("slow");
+		if(window.location.href.indexOf("admin") == -1) {
+			$('body').css("overflow",oldOverflow);
+		}
+		$(this).scrollTop(0);
+	},500);
 });
 
 if(screen.width <= 480){
