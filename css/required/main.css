@@ -2,12 +2,11 @@
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
 .loadingIcon {
 	position: fixed;
-	left: 0px;
-	top: 0px;
 	width: 100%;
 	height: 100%;
-	z-index: 9999;
-	background: url("/nwh/images/loader.gif") center no-repeat #fff;
+	z-index: 9998;
+	background: url("/nwh/images/logo.jpg") 50% 40% no-repeat #fff;
+	background-size:25%;
 }
 img.white-border {
 	-webkit-filter: drop-shadow(0.5px 0.5px 0 white)

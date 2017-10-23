@@ -1,4 +1,5 @@
 <?php
+	$home = true;
 	require '../files/header.php';
 	require '../files/navbar.php';
 	require 'carousel.php';
@@ -13,5 +14,4 @@
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	</div>
 </div>
-<script>console.log('<?php ?>');</script>
 <?php require '../files/footer.php';?>
