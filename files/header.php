@@ -45,5 +45,5 @@
 		if(!$home && !$adminPage)
 			echo "<div style='height:70px'></div>";
 	?>
-	<a style="position:absolute;bottom:5px;left:5px;z-index:5;text-decoration:none" href="javascript:location.reload(true)">Reload</a>
+	<!-- <a style="position:absolute;bottom:5px;left:5px;z-index:5;text-decoration:none" href="javascript:location.reload(true)">Reload</a> -->
 	<div id="alertBox" style="display:none"></div>
