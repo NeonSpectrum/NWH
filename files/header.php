@@ -20,6 +20,7 @@
 			$_SESSION['accountType'] = $row['AccountType'];
 		}
 	}
+	require $root.'../files/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -27,7 +28,6 @@
 		<title>Northwood Hotel</title>
 			<?php 
 				require $root.'../files/meta.php';
-				require $root.'../files/db.php';
 				if($adminPage)
 				{
 					require $root.'../files/cssAdmin.php';
@@ -45,4 +45,5 @@
 		if(!$home && !$adminPage)
 			echo "<div style='height:70px'></div>";
 	?>
+	<a style="position:absolute;bottom:5px;left:5px;z-index:5;text-decoration:none" href="javascript:location.reload(true)">Reload</a>
 	<div id="alertBox" style="display:none"></div>
