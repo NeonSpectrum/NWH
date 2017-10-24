@@ -23,7 +23,7 @@
 									$result = mysqli_query($db,$query) or die(mysql_error());
 									while($row=mysqli_fetch_assoc($result))
 									{
-										$tomorrow = time()+86400;
+										$tomorrow = time()+86400; // +1 day
 										$checkInDate = strtotime($row['CheckInDate']);
 										if($tomorrow < $checkInDate)
 											echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";

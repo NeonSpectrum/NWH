@@ -5,7 +5,7 @@
 		if(strpos($css,"pace")) continue;
 		echo "<link type='text/css' rel='stylesheet' href='".$css."?v=".filemtime($css)."'>\n";
 	}
-	echo "<link type='text/css' rel='stylesheet' href='$root../css/required/pace-theme-minimal.css?v=".filemtime("$root../css/required/pace-theme-minimal.css")."'>\n";
+	echo "<link type='text/css' rel='stylesheet' href='$root../css/required/pace-theme-minimal.css'>\n";
 	foreach (glob("css/*.css") as $css) {
 		echo "<link type='text/css' rel='stylesheet' href='".$css."?v=".filemtime($css)."'>\n";
 	}

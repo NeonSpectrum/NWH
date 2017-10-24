@@ -6,7 +6,7 @@
 ?>
 <li class="dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
-		<div class="user-icon-navbar" style="background-image: url('/nwh/images/profilepics/<?php echo $picture;?>');background-position:center;"></div>
+		<div class="user-icon-navbar" style="background-image: url('/nwh/images/profilepics/<?php echo $picture;echo "?v=".filemtime("$root../images/profilepics/$picture");?>');background-position:center;"></div>
 			<div class="user-name-navbar">
 				<?php echo $fname.' '.$lname;?>
 			</div>

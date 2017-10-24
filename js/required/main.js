@@ -24,6 +24,9 @@ $(window).on("load", function () {
 			$('body').css("overflow",oldOverflow);
 		}
 		$(this).scrollTop(0);
+		$('pace').css("display","none");
+		var pace = $('#pace').attr("href").replace("center-simple","minimal");
+		$('#pace').attr("href",pace);
 	},500);
 });
 
