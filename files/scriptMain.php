@@ -16,4 +16,5 @@
 	foreach (glob("js/*.js") as $js) {
 		echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 	}
+	echo "<script src='https://www.google.com/recaptcha/api.js'></script>\n";
 ?>

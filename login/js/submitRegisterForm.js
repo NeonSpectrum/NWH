@@ -33,6 +33,6 @@ $("#frmRegister").submit(function(e){
 		}
 	});
 });
-function recaptchaCallback() {
+function recaptchaCallback(){
 	$('#btnRegister').removeAttr('disabled');
-};
+}

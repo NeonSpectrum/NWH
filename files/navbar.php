@@ -45,7 +45,7 @@
 				</li>
 				<li <?php echo $contact;?>><a href="<?php echo $contact=='' ? '/nwh/contactus' : 'javascript:void(0)';?>">Contact Us</a></li>
 			</ul>
-			<?php include $root.'../login/login.php';?>
+			<?php require $root.'../login/login.php';?>
 		</div>
 	</div>
 </nav>
