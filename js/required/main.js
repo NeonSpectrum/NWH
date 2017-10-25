@@ -9,6 +9,7 @@ $(document).ready(function () {
 		$(this).find('form')[0].reset();
 		$(this).find('button').attr('disabled', false);
 		$(this).find('.lblDisplayError').html('');
+		$(this).find('#g-recaptcha-response').val('');
 	});
 	$("input[type=text]").change(function () {
 		if ($(this).val()) {

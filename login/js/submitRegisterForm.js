@@ -1,20 +1,18 @@
 $("#frmRegister").submit(function(e){
 	e.preventDefault();
+	if(pass!=rpass)
+	{
+		$("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
+		return;
+	}
 	var pass = $('#txtPassword',this).val();
 	var rpass = $('#txtRetypePassword',this).val();
 	$("#btnRegister").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
 	$('#btnRegister').attr('disabled', true);
 	$("#lblDisplayErrorRegister").html('');
-	if(pass!=rpass)
-	{
-		$("#btnRegister").html('Register');
-		$('#btnRegister').attr('disabled', false);
-		$("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
-		return false;
-	}
 	$.ajax({
 		type : 'POST',
-		url  : '/nwh/login/sendMail.php',
+		url  : '/nwh/login/checkRegister.php',
 		data : $(this).serialize(),
 		success :  function(response)
 		{
@@ -35,3 +33,6 @@ $("#frmRegister").submit(function(e){
 		}
 	});
 });
+function recaptchaCallback() {
+	$('#btnRegister').removeAttr('disabled');
+};

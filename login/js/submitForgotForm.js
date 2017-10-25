@@ -5,7 +5,7 @@ $("#frmForgot").submit(function(e){
 	$("#lblDisplayErrorForgot").html('');
 	$.ajax({
 		type : 'POST',
-		url  : '/nwh/login/sendMail.php',
+		url  : '/nwh/login/checkForgot.php',
 		data : $(this).serialize(),
 		success :  function(response)
 		{

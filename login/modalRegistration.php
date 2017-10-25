@@ -42,8 +42,14 @@
 							<input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="captcha" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+							<div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+						</div>
+					</div>
 					<div class="modal-footer">
-						<button id="btnRegister" type="submit" class="btn btn-info">Register</button>
+						<br/><button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>
@@ -51,3 +57,4 @@
 		</div>
  	</div>
 </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
