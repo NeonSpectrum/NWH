@@ -25,7 +25,7 @@ $(document).ready(function () {
 $(window).on("load", function () {
 	setTimeout(function(){
 		$(".loadingIcon").fadeOut("slow");
-		
+
 		enableScrolling();
 		$(this).scrollTop(0);
 		
@@ -37,7 +37,7 @@ $(window).on("load", function () {
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
 				console.log(pos);
-				if (pos < winTop + 500) {
+				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideUp");
 					$(this).addClass("slideInUp");
 				}
@@ -47,7 +47,7 @@ $(window).on("load", function () {
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
 				console.log(pos);
-				if (pos < winTop + 500) {
+				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideDown");
 					$(this).addClass("slideInDown");
 				}
@@ -57,7 +57,7 @@ $(window).on("load", function () {
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
 				console.log(pos);
-				if (pos < winTop + 500) {
+				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideLeft");
 					$(this).addClass("slideInLeft");
 				}
@@ -67,7 +67,7 @@ $(window).on("load", function () {
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
 				console.log(pos);
-				if (pos < winTop + 500) {
+				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideRight");
 					$(this).addClass("slideInRight");
 				}
