@@ -6,7 +6,7 @@
 	require_once $root.'../files/functions.php';
 	require_once $root.'../files/db.php';
 
-	parse_str(nwh_encrypt($_SERVER['QUERY_STRING']));
+	parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 
 	if(isset($txtEmail))
 	{
@@ -14,7 +14,8 @@
 		$lname = $txtLastName;
 		$email = $txtEmail;
 		$password = $txtPassword;
-		$query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName) VALUES ('$email', '$password', '$fname', '$lname')";
+		$date = date("Y-m-d");
+		$query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$date')";
 		$result = mysqli_query($db,$query);
 		if(!$result)
 		{
