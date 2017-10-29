@@ -1,5 +1,3 @@
-var oldOverflow;
-
 if(screen.width > 480){
 	$(window).scroll(function () {
 		$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
@@ -7,17 +5,16 @@ if(screen.width > 480){
 }
 
 $(document).ready(function () {
+	disableScrolling();
 	$(this).scrollTop(0);
-	oldOverflow = $('body').css('overflow');
-	if(window.location.href.indexOf("admin") == -1) {
-		$('body').css("overflow","hidden");
-	}
+	
 	$('.modal').on('hidden.bs.modal', function () {
 		$(this).find('form')[0].reset();
 		$(this).find('button').attr('disabled', false);
 		$(this).find('.lblDisplayError').html('');
 		$(this).find('#g-recaptcha-response').val('');
 	});
+
 	$("input[type=text]").change(function () {
 		if ($(this).val()) {
 			$(this).find('button').removeAttr('disabled');
@@ -28,10 +25,10 @@ $(document).ready(function () {
 $(window).on("load", function () {
 	setTimeout(function(){
 		$(".loadingIcon").fadeOut("slow");
-		if(window.location.href.indexOf("admin") == -1) {
-			$('body').css("overflow",oldOverflow);
-		}
+		
+		enableScrolling();
 		$(this).scrollTop(0);
+		
 		$('pace').css("display","none");
 		$('#pace').attr("href",$('#pace').attr("href").replace("center-simple","minimal"));
 
@@ -134,4 +131,14 @@ function capsLock(e) {
 	var display = ((kc >= 65 && kc <= 90) && !sk) ||
 		((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
 	document.getElementById('caps').style.display = display;
+}
+
+function disableScrolling(){
+	$('body').bind('mousedown.prev DOMMouseScroll.prev mousewheel.prev keydown.prev keyup.prev', function(e, d){  
+		e.preventDefault();
+	});			
+}
+
+function enableScrolling(){
+	$('body').unbind('mousedown.prev DOMMouseScroll.prev mousewheel.prev keydown.prev keyup.prev');
 }

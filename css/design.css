@@ -2,7 +2,6 @@ body{
 	background: url('/nwh/images/background.jpg') no-repeat center fixed;
 	background-size: cover;
 	padding-right: 0 !important;
-	margin: 0 !important;
 	background-position: 50% -100px;
 	transition: 0s linear;
 	transition-property: background-position;
