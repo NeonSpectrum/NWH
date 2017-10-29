@@ -15,7 +15,7 @@
 		<div id="lblErrorDisplayAccount">
 			<!-- error will be shown here ! -->
 		</div>
-		Email Address: <select id="cmbEmail" name="cmbEmail" class="form-control" style="width:100%">
+		Email Address: <select id="cmbEmail" name="cmbEmail" class="form-control" style="width:95%">
 			<option></option>
 			<?php
 				$query = "SELECT * FROM account";
@@ -27,22 +27,20 @@
 			?>
 		</select>
 		<br/> 
-		Account Type: <select id="cmbAccountType" name="cmbAccountType" class="form-control" style="width:100%">
+		Account Type: <select id="cmbAccountType" name="cmbAccountType" class="form-control" style="width:95%">
 			<option></option>
 			<option>User</option>
 			<option>Admin</option>
 			<option>Owner</option>
 		</select>
 		<br/>
-		Profile Picture: <input type="text" id="txtProfilePicture" name="txtProfilePicture" class="form-control" style="width:100%" required>
+		First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:95%" required>
 		<br/>
-		First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:100%" required>
-		<br/>
-		Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:100%" required>
+		Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:95%" required>
 		<br/>
 		<div class="text-right">
-			<button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Edit</button>
-			<button id="btnDelete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button>
+			<button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Update</button>
+			<!-- <button id="btnDelete" type="submit" class="btn btn-primary" onclick="submitDeleteForm();return false;">Delete</button> -->
 		</div>
 	</form>
 </div>

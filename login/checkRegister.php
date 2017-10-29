@@ -3,10 +3,10 @@
 	$root = isset($root) ? $root : '';
 	$domain = $_SERVER['SERVER_NAME'];
 
-	require_once $root.'../login/mailer.php';
+	require_once $root.'../files/functions.php';
 	require_once $root.'../files/db.php';
 
-	parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB",ENCRYPT_KEYWORD));
+	parse_str(nwh_encrypt($_SERVER['QUERY_STRING']));
 
 	if(isset($txtEmail))
 	{
@@ -44,7 +44,7 @@
 		if($count == 0 && strpos($email,'@') && strpos($email,'.'))
 		{
 			$data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
-			$data = openssl_encrypt($data,"AES-128-ECB",ENCRYPT_KEYWORD);
+			$data = nwh_encrypt($data);
 			$subject = "Northwood Hotel Account Creation";
 			$body = "Please proceed to this link to register your account:<br/>http://$domain/nwh/login/checkRegister.php?$data";
 

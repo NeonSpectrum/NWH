@@ -1,0 +1,38 @@
+.hundredIslands{
+	background:url('../images/hundred-islands.jpg') no-repeat;
+	background-size:cover;
+	width:100%;
+}
+.box-content{
+	display:inline-block;
+	vertical-align:top;
+	background-color:white;
+	text-align:center;
+	width:30%;
+	height:320px;
+}
+.p-home{
+	font-size:22px;
+	padding:20px 50px 20px 50px;
+	width:50%;
+	display:inline-block;
+}
+.youtube-iframe{
+	margin:20px;
+	width:45%;
+	display:inline-block;
+}
+@media only screen and (max-width:768px){
+	.box-content{
+		width:100%;
+		margin-bottom:5px;
+	}
+	.p-home{
+		font-size:10px;
+		width:100%;
+		padding:10px;
+	}
+	.youtube-iframe{
+		width:auto;
+	}
+}

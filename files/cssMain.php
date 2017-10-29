@@ -15,4 +15,5 @@
 	{
 		echo "<link type='text/css' rel='stylesheet' href='".$css."?v=".filemtime($css)."'>\n";
 	}
+	// echo "<link href='http://fonts.googleapis.com/css?family=Museo+Slab' rel='stylesheet' type='text/css'>"
 ?>

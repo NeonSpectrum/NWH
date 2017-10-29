@@ -2,10 +2,16 @@ body{
 	background: url('/nwh/images/background.jpg') no-repeat center fixed;
 	background-size: cover;
 	padding-right: 0 !important;
+	margin-right: 0 !important;
+	background-position: 50% -100px;
+	transition: 0s linear;
+	transition-property: background-position;
 }
 @media only screen and (max-width:768px){
 	body{
-		background-image: url('/nwh/images/background-mobile.jpg');
+		height:960px;
+		background-size:cover;
+		background-position: 50% 50%;
 	}
 }
 .login {
@@ -14,7 +20,19 @@ body{
 .dropdown-menu {
 	width: 300px;
 }
-
+.footer-content{
+	display:inline-block;
+	vertical-align:top;
+	text-align:left;
+	width:30%;
+	height:200px;
+}
+@media only screen and (max-width:768px){
+	.footer-content{
+		width:100%;
+		margin-bottom:5px;
+	}
+}
 /* browse icon
 [hidden] {
 	display: none !important;

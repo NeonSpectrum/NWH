@@ -3,7 +3,36 @@
 	require '../files/navbar.php';
 ?>
 <div class="container-fluid">
-	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3832.3366038685053!2d119.98159901485965!3d16.15158288883011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3393dccfc08751e7%3A0x7c1d4eb8d67dd9fc!2sNorthwood+Hotel!5e0!3m2!1sen!2sph!4v1508862737842" style="width:100%;height:550px" frameborder="0" style="border:0" allowfullscreen></iframe>
-	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	<div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
+		<h3 style="margin-top:0px;">Contact Form</h3>
+		<hr style="border-color:black"/>
+		<div class="pull-left">
+			<h2>Northwood Hotel</h2><br/>
+			<i><b><font size="2px">21 Quezon Ave. Poblacion ,Alaminos City Pangasinan<br/>
+			For inquiries call or text .<br/>
+			TEL NOS. (075) 636-0910 / (075) 205-0647<br/>
+			MOBILE NOS. 09297890088 / 09954086292</font></b></i>
+		</div>
+		<div class="pull-right" style="width:55%">
+			<form class="form-horizontal" id="frmContact">
+				<div class="form-group">
+					<input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" required />
+				</div>
+				<div class="form-group">
+					<input style="width:90%" name="txtEmail" type="text" class="form-control" placeholder="Email" required />
+				</div>
+				<div class="form-group">
+					<input style="width:90%" name="txtSubject" type="text" class="form-control" placeholder="Subject" required />
+				</div>
+				<div class="form-group">
+					<textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>
+				</div>
+				<div class="form-group">
+					<button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>
+				</div>
+			</form>
+		</div>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3832.3366038685053!2d119.98159901485965!3d16.15158288883011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3393dccfc08751e7%3A0x7c1d4eb8d67dd9fc!2sNorthwood+Hotel!5e0!3m2!1sen!2sph!4v1508862737842" style="margin-top:10px;width:100%;height:550px" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div>
 </div>
 <?php require '../files/footer.php';?>

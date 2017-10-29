@@ -34,7 +34,7 @@
 				{
 					require $root.'../files/cssMain.php';
 				}
-			;?>
+			?>
 	</head>
 	<body style="padding-right:0px !important">
 	<?php

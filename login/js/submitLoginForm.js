@@ -11,7 +11,7 @@ $("#frmLogin").submit(function(e){
 		{
 			if(response=="ok")
 			{
-				alertNotif("success","Login Successfully",false);
+				alertNotif("success","Login Successfully",true);
 			}
 			else
 			{

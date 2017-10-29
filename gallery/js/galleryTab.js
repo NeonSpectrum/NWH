@@ -18,3 +18,7 @@ function openTab(evt, category) {
   document.getElementById(category).style.display = "block";
   evt.currentTarget.className += " active";
 }
+baguetteBox.run('.galleryContent',{
+	animation:'fadeIn',
+	fullscreen: true
+});

@@ -8,6 +8,8 @@
 		echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 	}
 	foreach (glob("../js/*.js") as $js) {
+		if(strpos($js,"verifyLoginSession") && !isset($_SESSION['email']))
+			continue;
 		echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 	}
 	foreach (glob($root."../login/js/*.js") as $js) {

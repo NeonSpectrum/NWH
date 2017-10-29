@@ -1,4 +1,11 @@
 var oldOverflow;
+
+if(screen.width > 480){
+	$(window).scroll(function () {
+		$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
+	});
+}
+
 $(document).ready(function () {
 	$(this).scrollTop(0);
 	oldOverflow = $('body').css('overflow');
@@ -82,10 +89,10 @@ function alertNotif(type, message, reload, timeout) {
 	setTimeout(function () {
 		$('#alertBox').fadeOut();
 		$('#alertBox').html('');
-		if (reload == null)
+		if (reload == null || !reload)
 			return;
-		else if (reload || !reload)
-			location.reload(reload);
+		else if (reload)
+			location.reload();
 		else
 			location.href(reload);
 	}, timeout);

@@ -15,9 +15,8 @@
 			if ($count==1)
 			{
 				$arr[0] = $row['AccountType'];
-				$arr[1] = $row['ProfilePicture'];
-				$arr[2] = $row['FirstName'];
-				$arr[3] = $row['LastName'];
+				$arr[1] = $row['FirstName'];
+				$arr[2] = $row['LastName'];
 				
 				echo json_encode($arr);
 			}

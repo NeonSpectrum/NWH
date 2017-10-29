@@ -3,14 +3,13 @@
 	$root = isset($root) ? $root : '';
 	$domain = $_SERVER['SERVER_NAME'];
 
-	require_once $root.'../login/mailer.php';
+	require_once $root.'../files/functions.php';
 	require_once $root."../files/db.php";
 
-	parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB",ENCRYPT_KEYWORD));
+	parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 
 	if(isset($newPass))
 	{
-		parse_str(openssl_decrypt($_SERVER['QUERY_STRING'],"AES-128-ECB",ENCRYPT_KEYWORD));
 		$newPass = password_hash($newPass, PASSWORD_DEFAULT);
 		$query = "UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'";
 		$result = mysqli_query($db,$query) or die(mysql_error());
@@ -35,7 +34,7 @@
 		if($count==1 && strpos($email,'@') && strpos($email,'.'))
 		{
 			$randomNumber = mt_rand(10000000, 99999999);
-			$data = openssl_encrypt("email=$email&newPass=$randomNumber","AES-128-ECB",ENCRYPT_KEYWORD);
+			$data = nwh_encrypt("email=$email&newPass=$randomNumber");
 			$subject = "Northwood Hotel Forgot Password";
 			$body = "Please proceed to this link to reset your password:<br/>http://$domain/nwh/login/checkForgot.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
 			
