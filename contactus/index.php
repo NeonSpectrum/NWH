@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid">
 	<div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
-		<h3 style="margin-top:0px;">Contact Form</h3>
+		<h2 style="margin-top:0px;">Contact Form</h2>
 		<hr style="border-color:black"/>
 		<div class="pull-left">
 			<h2>Northwood Hotel</h2><br/>

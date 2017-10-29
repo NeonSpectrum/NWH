@@ -1,7 +1,7 @@
 <?php 
 	$root = '../';
 	$adminPage=true;
-	require '../../files/header.php';
+	require $root.'../files/header.php';
 	if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
 	{
 		header('location: ../../home');
@@ -44,4 +44,4 @@
 		</div>
 	</form>
 </div>
-<?php require '../../files/footer.php';?>
+<?php require $root.'../files/footer.php';?>
