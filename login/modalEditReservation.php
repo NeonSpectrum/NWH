@@ -63,6 +63,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
+						<button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='/nwh/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
 						<button id="btnEditReservation" type="submit" class="btn btn-info" disabled>Update</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>

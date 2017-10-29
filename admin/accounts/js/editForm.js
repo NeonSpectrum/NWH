@@ -10,7 +10,7 @@ function submitEditForm()
 		{
 			if (response == "ok")
 			{
-				alertNotif("success","Records Updated Successfully!",false);
+				alertNotif("success","Records Updated Successfully!",true);
 			}
 			else
 			{
