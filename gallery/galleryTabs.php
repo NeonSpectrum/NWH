@@ -21,7 +21,7 @@
 				foreach (glob("images/rooms/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
 				{
 					$filename = str_replace("images/rooms/","",$image);
-					echo "<a href='$image' data-caption='$filename'><img src='$image' alt='$filename' class='zoom'></a>\n";
+					echo "<a href='$image' data-caption='$filename'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
 				}
 			?>
 		</div>
@@ -33,7 +33,7 @@
 				foreach (glob("images/function/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
 				{
 					$filename = str_replace("images/function/","",$image);
-					echo "<a href='$image' data-caption='$filename'><img src='$image' alt='$filename' class='zoom'></a>\n";
+					echo "<a href='$image' data-caption='$filename'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
 				}
 			?>
 		</div>
@@ -45,7 +45,7 @@
 				foreach (glob("images/bigbite/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
 				{
 					$filename = str_replace("images/bigbite/","",$image);
-					echo "<a href='$image' data-caption='$filename'><img src='$image' alt='$filename' class='zoom'></a>\n";
+					echo "<a href='$image' data-caption='$filename'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
 				}
 			?>
 		</div>
@@ -57,7 +57,7 @@
 				foreach (glob("images/pool/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
 				{
 					$filename = str_replace("images/pool/","",$image);
-					echo "<a href='$image' data-caption='$filename'><img src='$image' alt='$filename' class='zoom'></a>\n";
+					echo "<a href='$image' data-caption='$filename'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
 				}
 			?>
 		</div>
