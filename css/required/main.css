@@ -20,5 +20,5 @@ img.white-border {
 					drop-shadow(-0.5px -0.5px 0 white);
 }
 .scrollSlideUp,.scrollSlideLeft,.scrollSlideRight,.scrollSlideDown  {
-	visibility:hidden;
+	opacity: 0;
 }

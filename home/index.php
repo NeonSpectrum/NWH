@@ -20,7 +20,7 @@
 				</div>
 				<hr style="border-color:white;border-width:3px;width:10%"/>
 				<div class="center-block text-center">
-					<div class="box-content scrollSlideLeft" style="margin-left:0px">
+					<div class="box-content animated scrollSlideLeft" style="margin-left:0px">
 						<h2 style="color:#2389c9">Location</h2>
 						<p style="font-style:italic;padding:30px;font-size:15px;">
 							The Northwood Hotel is conveniently located at 21 Quezon Avenue, Poblacion Alaminos City, Pangasinan, the home of the famous “Hundred Islands National Park”.
@@ -28,14 +28,14 @@
 						</p>
 						<a style="text-decoration:none;vertical-align: text-bottom;" href="https://www.google.com.ph/maps/place/Northwood+Hotel/@16.1515829,119.9837877,15z/data=!4m2!3m1!1s0x0:0x7c1d4eb8d67dd9fc?sa=X&ved=0ahUKEwjE0K2wqpXXAhXFp5QKHYJdAowQ_BIIbTAK">Read More...</a>
 					</div>
-					<div class="box-content scrollSlideUp">
+					<div class="box-content animated scrollSlideUp">
 						<h2 style="color:#2389c9">Rooms & Rates</h2>
 						<p style="font-style:italic;padding:30px;font-size:15px;">
 							Time to relax and indulge. Choose from our most beautiful rooms for your enjoyment.
 						</p>
 						<a style="text-decoration:none;vertical-align: text-bottom;" href="/nwh/rates">Read More...</a>
 					</div>
-					<div class="box-content scrollSlideRight">
+					<div class="box-content animated scrollSlideRight">
 						<h2 style="color:#2389c9">Food</h2>
 						<p style="font-style:italic;padding:30px;font-size:15px;">
 							Enjoy our refreshing swimming pool, spa, and also our newly BigBite restaurant with out special brick oven pizza.

@@ -34,60 +34,49 @@ $(window).on("load", function () {
 		$(this).scrollTop(0);
 		$('pace').css("display","none");
 		$('#pace').attr("href",$('#pace').attr("href").replace("center-simple","minimal"));
+		$(window).scroll(function() {
+			$(".scrollSlideUp").each(function(){
+				var pos = $(this).offset().top;
+				var winTop = $(window).scrollTop();
+				console.log(pos);
+				if (pos < winTop + 500) {
+					$(this).removeClass("scrollSlideUp");
+					$(this).addClass("slideInUp");
+				}
+			});
+			
+			$(".scrollSlideDown").each(function(){
+				var pos = $(this).offset().top;
+				var winTop = $(window).scrollTop();
+				console.log(pos);
+				if (pos < winTop + 500) {
+					$(this).removeClass("scrollSlideDown");
+					$(this).addClass("slideInDown");
+				}
+			});
+			
+			$(".scrollSlideLeft").each(function(){
+				var pos = $(this).offset().top;
+				var winTop = $(window).scrollTop();
+				console.log(pos);
+				if (pos < winTop + 500) {
+					$(this).removeClass("scrollSlideLeft");
+					$(this).addClass("slideInLeft");
+				}
+			});
+			
+			$(".scrollSlideRight").each(function(){
+				var pos = $(this).offset().top;
+				var winTop = $(window).scrollTop();
+				console.log(pos);
+				if (pos < winTop + 500) {
+					$(this).removeClass("scrollSlideRight");
+					$(this).addClass("slideInRight");
+				}
+			});
+		});
 	},500);
 });
-
-setTimeout(function(){
-	$(window).scroll(function() {
-		$(".scrollSlideUp").each(function(){
-			var pos = $(this).offset().top;
-			console.log(pos);
-			var winTop = $(window).scrollTop();
-			console.log(winTop);
-			if (pos < winTop + 600) {
-				console.log("added");
-				$(this).removeClass("scrollSlideUp");
-				$(this).addClass("animated slideInUp");
-			}
-		});
-		
-		$(".scrollSlideDown").each(function(){
-			var pos = $(this).offset().top;
-			console.log(pos);
-			var winTop = $(window).scrollTop();
-			console.log(winTop);
-			if (pos < winTop + 600) {
-				console.log("added");
-				$(this).removeClass("scrollSlideDown");
-				$(this).addClass("animated slideInDown");
-			}
-		});
-		
-		$(".scrollSlideLeft").each(function(){
-			var pos = $(this).offset().top;
-			console.log(pos);
-			var winTop = $(window).scrollTop();
-			console.log(winTop);
-			if (pos < winTop + 600) {
-				console.log("added");
-				$(this).removeClass("scrollSlideLeft");
-				$(this).addClass("animated slideInLeft");
-			}
-		});
-		
-		$(".scrollSlideRight").each(function(){
-			var pos = $(this).offset().top;
-			console.log(pos);
-			var winTop = $(window).scrollTop();
-			console.log(winTop);
-			if (pos < winTop + 600) {
-				console.log("added");
-				$(this).removeClass("scrollSlideRight");
-				$(this).addClass("animated slideInRight");
-			}
-		});
-	});
-},1000);
 
 if(screen.width <= 480){
 	$('#txtLoginEmail,#txtLoginPassword').click(function(){
@@ -124,7 +113,7 @@ function alertNotif(type, message, reload, timeout) {
 		type = "alert-danger";
 	if (timeout == null)
 		timeout = 2000;
-	$('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert animated fadeInDown text-center ' + type + '" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">' + message + '</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
+	$('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert fadeInDown text-center ' + type + '" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">' + message + '</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
 	$('#alertBox').fadeIn();
 	setTimeout(function () {
 		$('#alertBox').fadeOut();
