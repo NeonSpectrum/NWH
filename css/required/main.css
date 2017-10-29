@@ -5,7 +5,7 @@
 	width: 100%;
 	height: 100%;
 	z-index: 9998;
-	background: url("/nwh/images/logo.jpg") 50% 40% no-repeat #fff;
+	background: url("/nwh/images/nwh-logo.png") 50% 40% no-repeat #fff;
 	background-size:25%;
 }
 @media only screen and (max-width:768px){
