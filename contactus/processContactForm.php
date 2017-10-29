@@ -1,5 +1,6 @@
 <?php
 	require '../files/functions.php';
+	
 	$name = $_POST['txtName'];
 	$email = $_POST['txtEmail'];
 	$subject = $_POST['txtSubject'];

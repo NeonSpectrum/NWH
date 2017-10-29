@@ -1,5 +1,11 @@
 $('#frmContact').submit(function(e){
 	e.preventDefault();
+	if(!$('#txtEmail').val().includes('@') || !$('#txtEmail').val().includes('.'))
+	{
+		alertNotif("error","Invalid Format of Email Address",false);
+		$('#txtEmail').focus();
+		return;
+	}
 	$("#btnSubmit").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
 	$("#btnSubmit").prop('disabled',true);
 	$.ajax({

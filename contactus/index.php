@@ -19,7 +19,7 @@
 					<input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" required />
 				</div>
 				<div class="form-group">
-					<input style="width:90%" name="txtEmail" type="text" class="form-control" placeholder="Email" required />
+					<input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" required />
 				</div>
 				<div class="form-group">
 					<input style="width:90%" name="txtSubject" type="text" class="form-control" placeholder="Subject" required />
