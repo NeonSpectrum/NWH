@@ -2,8 +2,8 @@
 	$root = isset($root) ? $root : '';
 	require_once $root.'../files/strings.php';
 	
-	$servername = "localhost";
-	$username = "root";
+	$servername = "neonspectrumdb.redirectme.net";
+	$username = "NeonSpectrum";
 	$password = PASSWORD;
 	$database = "nwh";
 	// Create connection
@@ -12,7 +12,7 @@
 	// Check connection
 	if (!$db)
 	{
-		$db = mysqli_connect("neonspectrumdb.redirectme.net", "NeonSpectrum", $password, $database);
+		$db = mysqli_connect("localhost", "root", $password, $database);
 		if(!db)
 			die("Connection failed: " . $db->connect_error);
 	}

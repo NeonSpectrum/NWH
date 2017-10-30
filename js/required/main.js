@@ -36,7 +36,6 @@ $(window).on("load", function () {
 			$(".scrollSlideUp").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				console.log(pos);
 				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideUp");
 					$(this).addClass("slideInUp");
@@ -46,7 +45,6 @@ $(window).on("load", function () {
 			$(".scrollSlideDown").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				console.log(pos);
 				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideDown");
 					$(this).addClass("slideInDown");
@@ -56,7 +54,6 @@ $(window).on("load", function () {
 			$(".scrollSlideLeft").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				console.log(pos);
 				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideLeft");
 					$(this).addClass("slideInLeft");
@@ -66,7 +63,6 @@ $(window).on("load", function () {
 			$(".scrollSlideRight").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				console.log(pos);
 				if (pos < winTop + 600) {
 					$(this).removeClass("scrollSlideRight");
 					$(this).addClass("slideInRight");
@@ -141,4 +137,30 @@ function disableScrolling(){
 
 function enableScrolling(){
 	$('body').unbind('mousedown.prev DOMMouseScroll.prev mousewheel.prev keydown.prev keyup.prev');
+}
+
+function centerSlideImages( event ) {
+	var $slide = $(event.target);
+	var $conts = $slide.find('.owl-item');
+	$conts.each(function() {
+		var img = $(this).children('img');
+		var conRatio = $(this).width() / $(this).height();
+		var imgRatio = img.width() / img.height();
+		var mode = (conRatio > imgRatio) ? 'portrait' : 'landscape';
+		if( mode === 'portrait') {
+			$(this).removeClass('landscape');
+			$(this).addClass('portrait');
+			img.css({
+				marginTop: ($(this).height() - img.height()) / 2,
+				marginLeft: 0,
+			});
+		} else {
+			$(this).removeClass('portrait');
+			$(this).addClass('landscape');
+			img.css({
+				marginTop: 0,
+				marginLeft: ($(this).width() - img.width()) / 2,
+			});
+		};
+	});
 }

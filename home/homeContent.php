@@ -8,7 +8,22 @@
 					<p style="font-style:italic;">One of the most exciting and amazing tourist destination in the Philippines, The Hundred Islands National Park in Alaminos, Pangasinan that covers 123 islands with 1,844 hectares. Northwood Hotel is just a few minutes away from Don Gonzalo Montemayor wharf in Barangay Lucap where you can rent a boat and start exploring the beautiful paradise of Governor’s Island, Quezon Island, Marcos Island, Children Island and some other islets.</p>
 				</div>
 				<div class="youtube-iframe">
+					<?php
+						if($_SERVER['SERVER_NAME']!="localhost")
+						{
+					?>
 					<iframe style="height:315px;width:100%" src="https://www.youtube.com/embed/izqnhjcyP0E" frameborder="0" gesture="media" allowfullscreen></iframe>
+					<?php
+						}
+						else
+						{
+					?>
+					<video width="100%" height="315" controls>
+						<source src="/nwh/videos/nwh.mp4" type="video/mp4">
+					</video>
+					<?php
+						}
+					?>
 				</div>
 			</div>
 			<hr style="border-color:white;border-width:3px;width:10%"/>
