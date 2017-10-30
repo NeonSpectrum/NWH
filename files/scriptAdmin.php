@@ -15,7 +15,7 @@
 	if($root!='')
 	{
 		foreach (glob("{$root}js/*.js") as $js) {
-			if(strpos($js,"verifyLoginSession") && (!isset($_SESSION['email']) || $_SERVER['SERVER_NAME'] == "localhost"))
+			if(strpos($js,"verifyLoginSession") && ((isset($_SESSION['accountType']) && $_SESSION['accountType']=="Owner") || !isset($_SESSION) || $_SERVER['SERVER_NAME']=="localhost"))
 				continue;
 			echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 		}
