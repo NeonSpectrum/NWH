@@ -30,7 +30,13 @@ $(window).on("load", function () {
 				scrollTop: $(window.location.hash).offset().top + 'px'
 			}, 1000, 'swing');
 		}
-
+		$('a[href^="#"]').click(function () {
+			$('html, body').animate({
+					scrollTop: $( $.attr(this, 'href') ).offset().top
+			}, 500);
+	
+			return false;
+		});
 		$(window).scroll(function() {
 			$(".scrollSlideUp").each(function(){
 				var pos = $(this).offset().top;
@@ -93,9 +99,6 @@ $(window).on('resize', function (){
 		});
 	}
 });
-
-
-
 
 function disableKey(evt, key) {
 	var charCode = (evt.which) ? evt.which : event.keyCode

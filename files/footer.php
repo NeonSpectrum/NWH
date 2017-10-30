@@ -10,7 +10,7 @@
 	<div class="center-block" style="width:80%;padding-left:10%;font-size:15px">
 		<div class="footer-content">
 			<hr style="border-color:white;border-width:3px;width:10%;" align="left"/>
-			<a href="/nwh/contactus/#googleMap" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
+			<a href="<?php echo strpos($_SERVER['PHP_SELF'],"contactus") ? '#googleMap' : '/nwh/contactus/#googleMap';?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
 		</div>
 		<div class="footer-content">
 			<hr style="border-color:white;border-width:3px;width:10%;" align="left"/>
