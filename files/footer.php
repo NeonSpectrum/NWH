@@ -6,11 +6,11 @@
 	else
 	{
 ?>
-<div style="background:rgba(142, 196, 231, 1);width:100%;height:auto;">
+<div class="footer">
 	<div class="center-block" style="width:80%;padding-left:10%;font-size:15px">
 		<div class="footer-content">
 			<hr style="border-color:white;border-width:3px;width:10%;" align="left"/>
-			<a href="/nwh/contactus/#googleMap">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
+			<a href="/nwh/contactus/#googleMap" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
 		</div>
 		<div class="footer-content">
 			<hr style="border-color:white;border-width:3px;width:10%;" align="left"/>

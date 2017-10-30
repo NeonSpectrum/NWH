@@ -3,22 +3,22 @@
 	$root = isset($root) ? $root : '';
 	$adminPage = isset($adminPage) ? $adminPage : false;
 	require_once $root.'../files/db.php';
-	// if(isset($_COOKIE['nwhAuth']))
-	// {
-	// 	parse_str(openssl_decrypt($_COOKIE['nwhAuth'],"AES-128-ECB",ENCRYPT_KEYWORD));
-	// 	$cookie = $_COOKIE['nwhAuth'];
-	// 	$query = "SELECT * FROM `account` WHERE EmailAddress='$email' AND Password='$password'";
-	// 	$result = mysqli_query($db,$query) or die(mysql_error());
-	// 	$row = $result->fetch_assoc();
-	// 	$count = mysqli_num_rows($result);
-	// 	if($count==1){
-	// 		$_SESSION['email'] = $row['EmailAddress'];
-	// 		$_SESSION['fname'] = $row['FirstName'];
-	// 		$_SESSION['lname'] = $row['LastName'];
-	// 		$_SESSION['picture'] = $row['ProfilePicture'];
-	// 		$_SESSION['accountType'] = $row['AccountType'];
-	// 	}
-	// }
+	if(isset($_COOKIE['nwhAuth']) && $_SERVER['SERVER_NAME'] == "localhost")
+	{
+		parse_str(openssl_decrypt($_COOKIE['nwhAuth'],"AES-128-ECB",ENCRYPT_KEYWORD));
+		$cookie = $_COOKIE['nwhAuth'];
+		$query = "SELECT * FROM `account` WHERE EmailAddress='$email' AND Password='$password'";
+		$result = mysqli_query($db,$query) or die(mysql_error());
+		$row = $result->fetch_assoc();
+		$count = mysqli_num_rows($result);
+		if($count==1){
+			$_SESSION['email'] = $row['EmailAddress'];
+			$_SESSION['fname'] = $row['FirstName'];
+			$_SESSION['lname'] = $row['LastName'];
+			$_SESSION['picture'] = $row['ProfilePicture'];
+			$_SESSION['accountType'] = $row['AccountType'];
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">

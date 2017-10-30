@@ -8,11 +8,6 @@
 	background: url("/nwh/images/logo-white-min.jpg") 50% 40% no-repeat #fff;
 	background-size:25%;
 }
-@media only screen and (max-width:768px){
-	.loadingIcon{
-		background-size:75%;
-	}
-}
 img.white-border {
 	-webkit-filter: drop-shadow(0.5px 0.5px 0 white)
 									drop-shadow(-0.5px -0.5px 0 white);
@@ -21,4 +16,9 @@ img.white-border {
 }
 .scrollSlideUp,.scrollSlideLeft,.scrollSlideRight,.scrollSlideDown  {
 	opacity: 0;
+}
+@media only screen and (max-width:768px){
+	.loadingIcon{
+		background-size:75%;
+	}
 }

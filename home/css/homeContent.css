@@ -16,8 +16,9 @@
 .p-home{
 	font-size:22px;
 	padding:20px 50px 20px 50px;
-	width:50%;
+	width:45%;
 	display:inline-block;
+	vertical-align: top;
 }
 .youtube-iframe{
 	margin:20px;

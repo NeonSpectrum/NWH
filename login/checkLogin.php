@@ -24,11 +24,11 @@
 				$_SESSION['lname'] = $row['LastName'];
 				$_SESSION['picture'] = $row['ProfilePicture'];
 				$_SESSION['accountType'] = $row['AccountType'];
-				//update isLogged
-				// $cookie = openssl_encrypt("email=".$email."&password=".$row['Password'],"AES-128-ECB",ENCRYPT_KEYWORD);
+				// update isLogged
+				$cookie = openssl_encrypt("email=".$email."&password=".$row['Password'],"AES-128-ECB",ENCRYPT_KEYWORD);
 				// if(!empty($_POST["cbxRemember"]))
 				// {
-				// 	setcookie ("nwhAuth",$cookie,time()+ (60 * 60 * 24 * 7), "/");
+					setcookie ("nwhAuth",$cookie,time()+ (60 * 60 * 24 * 7), "/");
 				// }
 				// else
 				// {

@@ -19,17 +19,28 @@ body{
 .dropdown-menu {
 	width: 300px;
 }
+.footer{
+	background:rgba(142, 196, 231, 1);
+	width:100%;
+}
 .footer-content{
 	display:inline-block;
 	vertical-align:top;
 	text-align:left;
 	width:30%;
 	height:200px;
+	line-height:30px;
 }
 @media only screen and (max-width:768px){
+	body{
+		background-position: 50% 0px;
+	}
 	.footer-content{
 		width:100%;
-		margin-bottom:5px;
+		height:100%;
+	}
+	.footer-content:last-child{
+		padding-bottom:20px;
 	}
 }
 /* browse icon

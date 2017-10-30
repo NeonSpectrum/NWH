@@ -15,12 +15,10 @@
 	if($root!='')
 	{
 		foreach (glob("{$root}js/*.js") as $js) {
+			if(strpos($js,"verifyLoginSession") && (!isset($_SESSION['email']) || $_SERVER['SERVER_NAME'] == "localhost"))
+				continue;
 			echo "<script src='".$js."?v=".filemtime($js)."'></script>\n";
 		}
-	}
-	if(isset($_SESSION['email']))
-	{
-		echo "<script src='{$root}../js/verifyLoginSession.js?v".filemtime("{$root}../js/verifyLoginSession.js")."'></script>\n";
 	}
 	echo "<script src='https://www.google.com/recaptcha/api.js'></script>\n";
 ?>

@@ -1,13 +1,13 @@
 <div class="homeContent">
 	<div style="background: rgba(255, 255, 255, 0.3);height:100%;width:100%;">
 		<div class="center-block" style="width:80%;margin-bottom:20px;padding-top:5px">
-			<h1 style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
+			<h1 class="animated scrollSlideUp" style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
 			<hr style="border-color:white;border-width:3px;width:10%"/>
 			<div style="background:rgba(255,255,255,0.6)">
-				<div class="p-home">
+				<div class="p-home animated scrollSlideLeft">
 					<p style="font-style:italic;">One of the most exciting and amazing tourist destination in the Philippines, The Hundred Islands National Park in Alaminos, Pangasinan that covers 123 islands with 1,844 hectares. Northwood Hotel is just a few minutes away from Don Gonzalo Montemayor wharf in Barangay Lucap where you can rent a boat and start exploring the beautiful paradise of Governor’s Island, Quezon Island, Marcos Island, Children Island and some other islets.</p>
 				</div>
-				<div class="youtube-iframe">
+				<div class="youtube-iframe animated scrollSlideRight">
 					<?php
 						if($_SERVER['SERVER_NAME']!="localhost")
 						{
@@ -18,7 +18,7 @@
 						else
 						{
 					?>
-					<video width="100%" height="315" controls>
+					<video width="100%" height="100%" controls>
 						<source src="/nwh/videos/nwh.mp4" type="video/mp4">
 					</video>
 					<?php

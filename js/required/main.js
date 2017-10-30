@@ -1,13 +1,6 @@
-if(screen.width > 480){
-	$(window).scroll(function () {
-		$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
-	});
-}
-
 $(document).ready(function () {
 	disableScrolling();
 	$(this).scrollTop(0);
-	
 	$('.modal').on('hidden.bs.modal', function () {
 		$(this).find('form')[0].reset();
 		$(this).find('button').attr('disabled', false);
@@ -42,7 +35,8 @@ $(window).on("load", function () {
 			$(".scrollSlideUp").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				if (pos < winTop + 600) {
+				var height = $(window).height()-40;
+				if (pos < winTop + height) {
 					$(this).removeClass("scrollSlideUp");
 					$(this).addClass("slideInUp");
 				}
@@ -51,7 +45,8 @@ $(window).on("load", function () {
 			$(".scrollSlideDown").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				if (pos < winTop + 600) {
+				var height = $(window).height()-40;
+				if (pos < winTop + height) {
 					$(this).removeClass("scrollSlideDown");
 					$(this).addClass("slideInDown");
 				}
@@ -60,7 +55,8 @@ $(window).on("load", function () {
 			$(".scrollSlideLeft").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				if (pos < winTop + 600) {
+				var height = $(window).height()-40;
+				if (pos < winTop + height) {
 					$(this).removeClass("scrollSlideLeft");
 					$(this).addClass("slideInLeft");
 				}
@@ -69,7 +65,8 @@ $(window).on("load", function () {
 			$(".scrollSlideRight").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
-				if (pos < winTop + 600) {
+				var height = $(window).height()-40;
+				if (pos < winTop + height) {
 					$(this).removeClass("scrollSlideRight");
 					$(this).addClass("slideInRight");
 				}
@@ -78,16 +75,27 @@ $(window).on("load", function () {
 	},500);
 });
 
-if(screen.width <= 480){
-	$('#txtLoginEmail,#txtLoginPassword').click(function(){
-		$('.navbar').removeClass("navbar-fixed-top");
-		$('body').css("padding-top","0px");
-		$("html, body").animate({ scrollTop: 230 }, "slow");
-	});
-	$('.login-dropdown').on('hide.bs.dropdown', function () {
-		$('.navbar').addClass("navbar-fixed-top");
-	});
-}
+$(window).on('resize', function (){
+	if(screen.width <= 480){
+		$('#txtLoginEmail,#txtLoginPassword').click(function(){
+			$('.navbar').removeClass("navbar-fixed-top");
+			$('body').css("padding-top","0px");
+			$("html, body").animate({ scrollTop: 230 }, "slow");
+		});
+		$('.login-dropdown').on('hide.bs.dropdown', function () {
+			$('.navbar').addClass("navbar-fixed-top");
+		});
+		$("body").css("background-position","50% 0px");
+	}
+	else if(screen.width > 480){
+		$(window).scroll(function () {
+			$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
+		});
+	}
+});
+
+
+
 
 function disableKey(evt, key) {
 	var charCode = (evt.which) ? evt.which : event.keyCode
@@ -105,6 +113,12 @@ function disableKey(evt, key) {
 		return true;
 	}
 }
+
+(function($) {
+	$.fn.hasVerticalScrollBar = function() {
+			return this.get(0) ? this.get(0).scrollHeight > this.innerheight() : false;
+	}
+})(jQuery);
 
 function alertNotif(type, message, reload, timeout) {
 	if (type == "success")
@@ -169,4 +183,20 @@ function centerSlideImages( event ) {
 			});
 		};
 	});
+}
+
+function hasVerticalScroll(node){
+  if(node == undefined){
+    if(window.innerHeight){
+      return document.body.offsetHeight> innerHeight;
+    }
+    else {
+      return  document.documentElement.scrollHeight > 
+        document.documentElement.offsetHeight ||
+        document.body.scrollHeight>document.body.offsetHeight;
+    }
+  }
+  else {
+    return node.scrollHeight> node.offsetHeight;
+  }
 }
