@@ -8,7 +8,7 @@
 		<hr style="border-color:black"/>
 		<div class="pull-left">
 			<h2>Northwood Hotel</h2><br/>
-			<i><b><font size="2px">21 Quezon Ave. Poblacion ,Alaminos City Pangasinan<br/>
+			<i><b><font size="2px">21 Quezon Ave. Poblacion, Alaminos City Pangasinan<br/>
 			For inquiries call or text .<br/>
 			TEL NOS. (075) 636-0910 / (075) 205-0647<br/>
 			MOBILE NOS. 09297890088 / 09954086292</font></b></i>
@@ -27,6 +27,7 @@
 				<div class="form-group">
 					<textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>
 				</div>
+				<a id="googleMap"/>
 				<div class="form-group">
 					<button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>
 				</div>

@@ -7,7 +7,7 @@
 .box-content{
 	display:inline-block;
 	vertical-align:top;
-	background-color:white;
+	background:rgba(255, 255, 255, 0.8);
 	text-align:center;
 	width:30%;
 	height:320px;

@@ -1,7 +1,7 @@
 <div class="homeContent">
 	<div style="background: rgba(255, 255, 255, 0.3);height:100%;width:100%;">
 		<div class="center-block" style="width:80%;margin-bottom:20px;padding-top:5px">
-			<h1 style="color:#2389c9;padding:10px;text-align:center;">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
+			<h1 style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
 			<hr style="border-color:white;border-width:3px;width:10%"/>
 			<div style="background:rgba(255,255,255,0.6)">
 				<div class="p-home">

@@ -32,6 +32,12 @@ $(window).on("load", function () {
 		$('pace').css("display","none");
 		$('#pace').attr("href",$('#pace').attr("href").replace("center-simple","minimal"));
 
+		if(window.location.hash) {
+			$('html, body').animate({
+				scrollTop: $(window.location.hash).offset().top + 'px'
+			}, 1000, 'swing');
+		}
+
 		$(window).scroll(function() {
 			$(".scrollSlideUp").each(function(){
 				var pos = $(this).offset().top;
