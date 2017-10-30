@@ -3,7 +3,7 @@
 	$root = isset($root) ? $root : '';
 	$adminPage = isset($adminPage) ? $adminPage : false;
 	require_once $root.'../files/db.php';
-	if(isset($_COOKIE['nwhAuth']) && $_SERVER['SERVER_NAME'] == "localhost")
+	if(isset($_COOKIE['nwhAuth']))
 	{
 		parse_str(openssl_decrypt($_COOKIE['nwhAuth'],"AES-128-ECB",ENCRYPT_KEYWORD));
 		$cookie = $_COOKIE['nwhAuth'];
