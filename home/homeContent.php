@@ -41,7 +41,7 @@
 					<p style="font-style:italic;padding:30px;font-size:15px;">
 						Time to relax and indulge. Choose from our most beautiful rooms for your enjoyment.
 					</p>
-					<a style="text-decoration:none;vertical-align: text-bottom;" href="/nwh/rates">Read More...</a>
+					<a style="text-decoration:none;vertical-align: text-bottom;" href="/nwh/roomandrates">Read More...</a>
 				</div>
 				<div class="box-content animated scrollSlideRight">
 					<h2 style="color:#2389c9">Food</h2>
