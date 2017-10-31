@@ -12,7 +12,9 @@
 						if($_SERVER['SERVER_NAME']!="localhost")
 						{
 					?>
-					<iframe style="height:315px;width:100%" src="https://www.youtube.com/embed/izqnhjcyP0E" frameborder="0" gesture="media" allowfullscreen></iframe>
+					<div class="youtube" data-embed="izqnhjcyP0E"> 
+						<div class="play-button"></div> 
+					</div>
 					<?php
 						}
 						else

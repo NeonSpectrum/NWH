@@ -16,7 +16,7 @@
 .p-home{
 	font-size:22px;
 	padding:20px 50px 20px 50px;
-	width:45%;
+	width:50%;
 	display:inline-block;
 	vertical-align: top;
 }
@@ -24,6 +24,7 @@
 	margin:20px;
 	width:45%;
 	display:inline-block;
+	vertical-align: bottom;
 }
 @media only screen and (max-width:768px){
 	.box-content{
