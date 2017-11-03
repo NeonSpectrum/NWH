@@ -117,12 +117,6 @@ function disableKey(evt, key) {
 	}
 }
 
-(function($) {
-	$.fn.hasVerticalScrollBar = function() {
-			return this.get(0) ? this.get(0).scrollHeight > this.innerheight() : false;
-	}
-})(jQuery);
-
 function alertNotif(type, message, reload, timeout) {
 	if (type == "success")
 		type = "alert-success";
@@ -160,46 +154,4 @@ function disableScrolling(){
 
 function enableScrolling(){
 	$('body').unbind('mousedown.prev DOMMouseScroll.prev mousewheel.prev keydown.prev keyup.prev');
-}
-
-function centerSlideImages( event ) {
-	var $slide = $(event.target);
-	var $conts = $slide.find('.owl-item');
-	$conts.each(function() {
-		var img = $(this).children('img');
-		var conRatio = $(this).width() / $(this).height();
-		var imgRatio = img.width() / img.height();
-		var mode = (conRatio > imgRatio) ? 'portrait' : 'landscape';
-		if( mode === 'portrait') {
-			$(this).removeClass('landscape');
-			$(this).addClass('portrait');
-			img.css({
-				marginTop: ($(this).height() - img.height()) / 2,
-				marginLeft: 0,
-			});
-		} else {
-			$(this).removeClass('portrait');
-			$(this).addClass('landscape');
-			img.css({
-				marginTop: 0,
-				marginLeft: ($(this).width() - img.width()) / 2,
-			});
-		};
-	});
-}
-
-function hasVerticalScroll(node){
-  if(node == undefined){
-    if(window.innerHeight){
-      return document.body.offsetHeight> innerHeight;
-    }
-    else {
-      return  document.documentElement.scrollHeight > 
-        document.documentElement.offsetHeight ||
-        document.body.scrollHeight>document.body.offsetHeight;
-    }
-  }
-  else {
-    return node.scrollHeight> node.offsetHeight;
-  }
 }

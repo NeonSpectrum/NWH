@@ -2,8 +2,7 @@
 	<div class="logo-overlay">
 		<div class="logo-text">
 			<div class="full-screen">
-				<div id="pictures" class="carousel slide carousel-fade" data-ride="carousel">
-
+				<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
 					<div class="carousel-inner" role="listbox">
 						<?php
 							foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
@@ -13,12 +12,11 @@
 							}
 						?>
 					</div>
-
-					<a class="left carousel-control" href="#pictures" role="button" data-slide="prev"  style="background:transparent !important">
+					<a class="left carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('prev')" style="background:transparent !important">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
 					</a>
-					<a class="right carousel-control" href="#pictures" role="button" data-slide="next"  style="background:transparent !important">
+					<a class="right carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('next')" style="background:transparent !important">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>

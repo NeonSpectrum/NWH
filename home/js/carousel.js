@@ -8,8 +8,8 @@ $('.carousel img').each(function() {
 	var $src = $(this).attr('src');
 	var $color = $(this).attr('data-color');
 	$(this).parent().css({
-			'background-image' : 'url(' + $src + ')',
-			'background-color' : $color
+		'background-image' : 'url(' + $src + ')',
+		'background-color' : $color
 	});
 	$(this).remove();
 });
@@ -19,10 +19,9 @@ $(window).on('resize', function (){
 	$item.height($wHeight);
 });
 
-$('.carousel').carousel({
-	pause: "hover",
-	swipe: 30
-});
+// $('.carousel').carousel({
+// 	pause: "hover"
+// });
 
 $('.carousel').hover(function(e){
 	clearInterval(timer);
