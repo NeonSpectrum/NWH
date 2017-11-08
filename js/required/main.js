@@ -38,6 +38,11 @@ $(window).on("load", function () {
 			return false;
 		});
 		$(window).scroll(function() {
+			if(screen.width > 480){
+				$(window).scroll(function () {
+					$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
+				});
+			}
 			$(".scrollSlideUp").each(function(){
 				var pos = $(this).offset().top;
 				var winTop = $(window).scrollTop();
@@ -92,11 +97,6 @@ $(window).on('resize', function (){
 			$('.navbar').addClass("navbar-fixed-top");
 		});
 		$("body").css("background-position","50% 0px");
-	}
-	else if(screen.width > 480){
-		$(window).scroll(function () {
-			$("body").css("background-position","50% " + (-($(this).scrollTop() / 10)-100) + "px");
-		});
 	}
 });
 
