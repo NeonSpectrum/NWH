@@ -8,6 +8,5 @@
 		require 'bookNow.php';
 		require 'homeContent.php';
 	?>
-	
 </div>
 <?php require '../files/footer.php';?>
