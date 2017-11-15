@@ -1,15 +1,15 @@
 .user-icon-navbar {
-	float:left;
-	width: 25px;
-	height: 25px;
-	margin-right: 5px;
-	background-size: cover;
-	display: block;
-	border-radius: 100px;
-	-webkit-border-radius: 100px;
-	-moz-border-radius: 100px;
+  float:left;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
 }
 .user-name-navbar {
-	float:left;
-	margin-right:5px;
+  float:left;
+  margin-right:5px;
 }

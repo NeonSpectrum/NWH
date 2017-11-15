@@ -1,43 +1,43 @@
 .homeContent{
-	background:url('../images/hundred-islands.jpg') no-repeat;
-	background-size:cover;
-	width:100%;
-	font-family:'Museo Slab',serif;
+  background:url('../images/hundred-islands.jpg') no-repeat;
+  background-size:cover;
+  width:100%;
+  font-family:'Museo Slab',serif;
 }
 .box-content{
-	display:inline-block;
-	vertical-align:top;
-	background:rgba(255, 255, 255, 0.8);
-	text-align:center;
-	width:30%;
-	height:320px;
-	margin-left:10px;
+  display:inline-block;
+  vertical-align:top;
+  background:rgba(255, 255, 255, 0.8);
+  text-align:center;
+  width:30%;
+  height:320px;
+  margin-left:10px;
 }
 .p-home{
-	font-size:22px;
-	padding:20px 50px 20px 50px;
-	width:50%;
-	display:inline-block;
-	vertical-align: top;
+  font-size:22px;
+  padding:20px 50px 20px 50px;
+  width:50%;
+  display:inline-block;
+  vertical-align: top;
 }
 .youtube-iframe{
-	margin:20px;
-	width:45%;
-	display:inline-block;
-	vertical-align: bottom;
+  margin:20px;
+  width:45%;
+  display:inline-block;
+  vertical-align: bottom;
 }
 @media only screen and (max-width:768px){
-	.box-content{
-		width:100%;
-		margin-bottom:5px;
-		margin-left:0px;
-	}
-	.p-home{
-		font-size:10px;
-		width:100%;
-		padding:10px;
-	}
-	.youtube-iframe{
-		width:auto;
-	}
+  .box-content{
+    width:100%;
+    margin-bottom:5px;
+    margin-left:0px;
+  }
+  .p-home{
+    font-size:10px;
+    width:100%;
+    padding:10px;
+  }
+  .youtube-iframe{
+    width:auto;
+  }
 }

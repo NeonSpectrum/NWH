@@ -1,15 +1,15 @@
 <?php
   session_start();
   $root = isset($root) ? $root : '';
-	require_once $root.'../files/db.php';
+  require_once $root.'../files/db.php';
 
-	$pass = $_POST['txtNewPass'];
-	$rpass = $_POST['txtRetypeNewPass'];
-	if($pass!=$rpass)
-	{
-		echo VERIFY_PASSWORD_ERROR;
-		return;
-	}
+  $pass = $_POST['txtNewPass'];
+  $rpass = $_POST['txtRetypeNewPass'];
+  if($pass!=$rpass)
+  {
+    echo VERIFY_PASSWORD_ERROR;
+    return;
+  }
   if (isset($_POST)){
     try{
       $email = stripslashes($_SESSION['email']); // removes backslashes
@@ -38,7 +38,7 @@
       }
     }
     catch(PDOException $e){
-			echo $e->getMessage();
-		}
+      echo $e->getMessage();
+    }
   }
 ?>

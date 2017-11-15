@@ -19,6 +19,6 @@ function openTab(evt, category) {
   evt.currentTarget.className += " active";
 }
 baguetteBox.run('.galleryContent',{
-	animation:'fadeIn',
-	fullscreen: true
+  animation:'fadeIn',
+  fullscreen: true
 });

@@ -1,9 +1,9 @@
 $(document).ready(function()
 {
-	$('.zoom').hover(function()
-	{
-		$(this).addClass('transition');
+  $('.zoom').hover(function()
+  {
+    $(this).addClass('transition');
   }, function() {
-		$(this).removeClass('transition');
+    $(this).removeClass('transition');
   });
 });

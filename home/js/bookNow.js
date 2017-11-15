@@ -1,7 +1,7 @@
 $("#frmBookNow").submit(function(e){
-	e.preventDefault();
+  e.preventDefault();
   $("#btnBookNow").html('<img src="/nwh/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
-	$("#btnBookNow").prop('disabled',true);
+  $("#btnBookNow").prop('disabled',true);
   $.ajax({
     type : 'POST',
     url  : 'submitBookNow.php',
@@ -14,14 +14,14 @@ $("#frmBookNow").submit(function(e){
       }
       else
       {
-				alertNotif("error",response);
-				$("#btnBookNow").html('Book Now');
-				$("#btnBookNow").prop('disabled',false);
-				if(response.includes('login'))
-				{
-					$(".login-dropdown").addClass("open");
-				}
-			}
+        alertNotif("error",response);
+        $("#btnBookNow").html('Book Now');
+        $("#btnBookNow").prop('disabled',false);
+        if(response.includes('login'))
+        {
+          $(".login-dropdown").addClass("open");
+        }
+      }
     }
   });
 });
