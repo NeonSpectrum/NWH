@@ -1,27 +1,20 @@
 <?php
   $overview = $accounts = $database = $reservation = $reports = $amenities = $services = $transactions = '';
-  if(strpos($_SERVER['PHP_SELF'],'accounts')){
+  if (strpos($_SERVER['PHP_SELF'],'accounts')){
     $accounts = 'style="background-color: #79aefe;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'database')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'database')) {
     $database = 'style="background-color: #314190;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'reports')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'reports')) {
     $reports = 'style="background-color: #7d5d81"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'reservation')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'reservation')) {
     $reservation = 'style="background-color: #279636;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'amenities')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'amenities')) {
     $amenities = 'style="background-color: #E100FF;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'services')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'services')) {
     $services = 'style="background-color: #2d2366;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'transactions')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'transactions')) {
     $transactions = 'style="background-color: #35acdf;"';
-  }
-  elseif(strpos($_SERVER['PHP_SELF'],'admin')){
+  } elseif (strpos($_SERVER['PHP_SELF'],'admin')) {
     $overview = 'style="background-color: #ec1b5a;"';
   }
 ?>

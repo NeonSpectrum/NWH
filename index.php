@@ -1,4 +1,4 @@
 <?php
-  header('location: home');
+  header('location: home'); //redirect to home
   exit();
 ?>

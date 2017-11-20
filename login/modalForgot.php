@@ -1,4 +1,4 @@
-<div id="modalForgot" class="modal fade" role="dialog" data-backdrop="false">
+<div id="modalForgot" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">

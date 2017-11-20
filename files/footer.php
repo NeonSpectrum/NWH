@@ -1,10 +1,7 @@
 <?php
-  if($adminPage == true)
-  {
+  if ($adminPage == true) {
     require $root.'../files/scriptAdmin.php';
-  }
-  else
-  {
+  } else {
 ?>
 <div class="footer">
   <div class="center-block" style="width:80%;padding-left:10%;font-size:15px">
@@ -23,7 +20,7 @@
       &copy; 2017 Northwood Hotel
       <br/><br/>
       (075) 636-0910 / (075) 205-0647<br/>
-      09297890088 / 09954086292
+      0929-789-0088 / 0995-408-6292
     </div>
   </div>
 </div>

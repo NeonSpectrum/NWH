@@ -20,8 +20,9 @@
       <?php
         foreach (glob("images/rooms/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
         {
-          $filename = str_replace("images/rooms/","",$image);
-          echo "<a href='$image' data-caption='$filename'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
+					$filename = str_replace("images/rooms/","",$image);
+					$caption = str_replace([".jpg",".bmp",".jpeg",".png"],"",$filename);
+          echo "<a href='$image' data-caption='$caption'><img src='$image?v=".filemtime("$image")."' alt='$filename' class='zoom'></a>\n";
         }
       ?>
     </div>

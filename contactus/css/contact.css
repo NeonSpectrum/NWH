@@ -1,24 +1,30 @@
-.box-content{
-  display:inline-block;
-  vertical-align:top;
-  width:45%;
+.box-content {
+	display: inline-block;
+	vertical-align: top;
+	width: 45%;
 }
-.box-content input,textarea,button{
-  margin-left:70px;
-  margin-right:auto;
+
+.box-content input,
+textarea,
+button#btnSubmit {
+	margin-left: 70px;
+	margin-right: auto;
 }
-@media only screen and (max-width:768px){
-  .box-content{
-    width:100%;
-    margin-bottom:5px;
-    margin-left:0px;
-    padding-bottom:20px;
-  }
-  .well{
-    width:90% !important;
-  }
-  .box-content input,textarea,button{
-    margin-left:auto;
-    margin-right:auto;
-  }
+
+@media only screen and (max-width:768px) {
+	.box-content {
+		width: 100%;
+		margin-bottom: 5px;
+		margin-left: 0px;
+		padding-bottom: 20px;
+	}
+	.well {
+		width: 90% !important;
+	}
+	.box-content input,
+	textarea,
+	button {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }

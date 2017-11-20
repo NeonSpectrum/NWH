@@ -149,7 +149,7 @@ function capsLock(e) {
 function disableScrolling(){
   $('body').bind('mousedown.prev DOMMouseScroll.prev mousewheel.prev keydown.prev keyup.prev', function(e, d){  
     e.preventDefault();
-  });			
+  });
 }
 
 function enableScrolling(){

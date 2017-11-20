@@ -49,3 +49,16 @@
     </div>
   </div>
 </nav>
+<?php
+	if(isset($_SESSION['email']))
+	{
+		require $root.'../login/modalEditReservation.php';
+		require $root.'../login/modalEditProfile.php';
+		require $root.'../login/modalChange.php';
+	}
+	else
+	{
+		require $root.'../login/modalRegistration.php';
+		require $root.'../login/modalForgot.php';
+	}
+?>

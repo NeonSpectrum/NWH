@@ -1,8 +1,8 @@
 <?php
-  session_start();
-  $root = isset($root) ? $root : '';
-  $adminPage = isset($adminPage) ? $adminPage : false;
-  require_once $root.'../files/db.php';
+  session_start(); //this is the login session
+  $root = isset($root) ? $root : ''; //directory issues
+  $adminPage = isset($adminPage) ? $adminPage : false; //directory issues
+  require_once $root.'../files/db.php'; //link to database php
   if(isset($_COOKIE['nwhAuth']))
   {
     parse_str(openssl_decrypt($_COOKIE['nwhAuth'],"AES-128-ECB",ENCRYPT_KEYWORD));
