@@ -1,9 +1,8 @@
 <?php 
-  $root = '../';
-  require '../../files/header.php';
-  require '../../files/navbar.php';
+  require_once '../../header.php';
+  require_once '../../files/navbar.php';
 ?>
 <div class="container-fluid">
   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </div>
-<?php require '../../files/footer.php';?>
+<?php require_once '../../footer.php';?>

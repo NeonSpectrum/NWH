@@ -1,23 +1,19 @@
 <?php
-  $root = isset($root) ? $root : '';
   
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\Exception;
   
-  require_once $root.'../files/db.php';
-  require_once $root.'../files/strings.php';
+  require_once 'db.php';
 
-  require $root.'../packages/PHPMailer/src/Exception.php';
-  require $root.'../packages/PHPMailer/src/PHPMailer.php';
-  require $root.'../packages/PHPMailer/src/SMTP.php';
+  require '../packages/PHPMailer/src/Exception.php';
+  require '../packages/PHPMailer/src/PHPMailer.php';
+  require '../packages/PHPMailer/src/SMTP.php';
 
-  function sendMail($email,$subject,$body)
-  {
+  function sendMail($email, $subject, $body) {
     $email = (string)$email;
     $subject = (string)$subject;
     $body = (string)$body;
-    try
-    {
+    try {
       $mail = new PHPMailer(true); 
       $mail->isSMTP();
       $mail->Host = "ssl://smtp.gmail.com";
@@ -36,20 +32,16 @@
   
       $mail->send();
       return "ok";
-    }
-    catch(Exception $e)
-    {
+    } catch(Exception $e) {
       return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
     }
   }
 
-  function nwh_encrypt($string)
-  {
-    return openssl_encrypt($string,"AES-128-ECB",ENCRYPT_KEYWORD);
+  function nwh_encrypt($string) {
+    return openssl_encrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
   }
   
-  function nwh_decrypt($string)
-  {
-    return openssl_decrypt($string,"AES-128-ECB",ENCRYPT_KEYWORD);
+  function nwh_decrypt($string) {
+    return openssl_decrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
   }
 ?>

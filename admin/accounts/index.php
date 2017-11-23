@@ -1,14 +1,12 @@
 <?php 
-  $root = '../';
-  $adminPage=true;
-  require $root.'../files/header.php';
+  require_once '../../header.php';
   if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
   {
-    header('location: ../../home');
+    header('location: ../../');
     exit();
   }
 ?>
-<?php require '../sidebar.php';?>
+<?php require_once '../../files/sidebar.php';?>
 <h2 id="header">Account Management</h2>
 <div class="well center-block" id="account-body">
   <form id="frmAccount">
@@ -34,9 +32,9 @@
       <option>Owner</option>
     </select>
     <br/>
-    First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:95%" required>
+    First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:95%" require_onced>
     <br/>
-    Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:95%" required>
+    Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:95%" require_onced>
     <br/>
     <div class="text-right">
       <button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Update</button>
@@ -44,4 +42,4 @@
     </div>
   </form>
 </div>
-<?php require $root.'../files/footer.php';?>
+<?php require_once '../../footer.php';?>

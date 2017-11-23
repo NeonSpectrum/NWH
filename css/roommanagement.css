@@ -1,0 +1,18 @@
+#body {
+	width: 80%;
+}
+
+#header {
+	text-align: center;
+	margin-top: 25px;
+}
+
+@media only screen and (max-width:768px) {
+	#header {
+		font-size: 25px;
+	}
+}
+
+td {
+	vertical-align: middle;
+}

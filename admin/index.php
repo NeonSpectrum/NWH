@@ -1,13 +1,12 @@
 <?php
-  $adminPage = true;
-  require '../files/header.php';
+  require_once '../header.php';
   if ($_SESSION['accountType']=='User' || !isset($_SESSION['accountType'])) {
-    header('location: ../home');
+    header('location: ../');
     exit();
   }
 ?>
 <style>body{overflow-y:hidden}</style>
-<?php require 'sidebar.php';?>
+<?php require_once '../files/sidebar.php';?>
 <div class="well center-block text-center" id="admin-body">
   Welcome, <?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?><br/>to the<br/>Admin Page<br/>of<br/>Northwood Hotel
 </div>
@@ -19,5 +18,5 @@
 </div>
 <?php 
   }
-  require '../files/footer.php';
+  require_once '../footer.php';
 ?>
