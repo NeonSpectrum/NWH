@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
-    <h2 style="margin-top:0px;">Contact Form</h2>
+    <h1 style="margin-top:0px;text-align:center">Contact Form</h1>
     <hr style="border-color:black"/>
     <div class="box-content">
       <h2>Northwood Hotel</h2><br/>
@@ -27,13 +27,12 @@
         <div class="form-group">
           <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" require_onced></textarea>
         </div>
-        <a id="googleMap"/>
         <div class="form-group">
           <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>
         </div>
       </form>
     </div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3832.3366038685053!2d119.98159901485965!3d16.15158288883011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3393dccfc08751e7%3A0x7c1d4eb8d67dd9fc!2sNorthwood+Hotel!5e0!3m2!1sen!2sph!4v1508862737842" style="margin-top:10px;width:100%;height:550px" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <iframe id="googleMap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3832.3366038685053!2d119.98159901485965!3d16.15158288883011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3393dccfc08751e7%3A0x7c1d4eb8d67dd9fc!2sNorthwood+Hotel!5e0!3m2!1sen!2sph!4v1508862737842" style="margin-top:10px;width:100%;height:550px" frameborder="0" style="border:0" allowfullscreen></iframe>
   </div>
 </div>
 <?php require_once '../footer.php';?>

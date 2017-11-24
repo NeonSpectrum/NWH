@@ -85,3 +85,12 @@ div.tab button.active {
 		opacity: 1;
 	}
 }
+
+@media only screen and (max-width:768px) {
+	img.zoom {
+		width: 100%;
+	}
+	div.tab button {
+		width: 100%;
+	}
+}

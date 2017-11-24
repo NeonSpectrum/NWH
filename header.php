@@ -41,9 +41,9 @@
 			} else {
 				echo "<link type='text/css' rel='stylesheet' href='/assets/css/main.css?v=".filemtime(__DIR__."/assets/css/main.css")."'>\n";
 			}
-			// if (file_exists(__DIR__."/assets/css/$currentDirectory.css") && $currentDirectory != 'admin') {
+			if (file_exists(__DIR__."/assets/css/$currentDirectory.css") && $currentDirectory != 'admin') {
 				echo "<link type='text/css' rel='stylesheet' href='/assets/css/$currentDirectory.css?v=".filemtime(__DIR__."/assets/css/$currentDirectory.css")."'>\n";
-			// }
+			}
 			if (strpos($_SERVER['PHP_SELF'],"admin")) {
 				echo "<link type='text/css' rel='stylesheet' href='/assets/css/pace-theme-minimal.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-minimal.css') . "'>\n";
 			} else {
@@ -55,7 +55,7 @@
   <?php
     if (!strpos($_SERVER['PHP_SELF'],"admin")) {
       echo "<div class='loadingIcon'></div>";
-      echo "<div style='height:70px'></div>";
+      echo "<div class='height-navbar'></div>";
 			echo "<a href='#' class='back-to-top'>Back to Top</a>";
     }
   ?>

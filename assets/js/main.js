@@ -1,6 +1,10 @@
 $(document).ready(function () {
 	scrolling(false);
 
+	if (screen.width > 480) {
+		$('.navbar').addClass("navbar-fixed-top");
+	}
+	// reset form if exists if modal is exited
 	$('.modal').on('hidden.bs.modal', function () {
 		$(this).find('form')[0].reset();
 		$(this).find('button').attr('disabled', false);
@@ -9,16 +13,19 @@ $(document).ready(function () {
 		scrolling(true);
 	});
 
+	// disable scroll if modal is shown
 	$('.modal').on('shown.bs.modal', function () {
 		scrolling(false);
 	});
 
+	// auto enable disabled button if the textbox has value
 	$("input[type=text]").change(function () {
 		if ($(this).val()) {
 			$(this).find('button').removeAttr('disabled');
 		}
 	});
 
+	// make number reset to min or max when leave
 	$('input[type=number]').change(function () {
 		var min = parseInt($(this).attr("min"));
 		var max = parseInt($(this).attr("max"));
@@ -38,16 +45,6 @@ $(document).ready(function () {
 		return false;
 	});
 
-});
-
-$(window).on("load", function () {
-	scrolling(true);
-
-	if (window.location.hash) {
-		$('html, body').animate({
-			scrollTop: $(window.location.hash).offset().top + 'px'
-		}, 1000, 'swing');
-	}
 	$('a[href^="#"]').click(function () {
 		$('html, body').animate({
 			scrollTop: $($.attr(this, 'href')).offset().top
@@ -55,6 +52,11 @@ $(window).on("load", function () {
 
 		return false;
 	});
+});
+
+$(window).on("load", function () {
+	scrolling(true);
+
 	$(window).scroll(function () {
 		if ($(window).scrollTop() > 300) {
 			$('a.back-to-top').fadeIn('slow');
@@ -112,6 +114,7 @@ $(window).on("load", function () {
 
 $(window).on('resize', function () {
 	if (screen.width <= 480) {
+		$('.navbar').removeClass("navbar-fixed-top");
 		$('#txtLoginEmail,#txtLoginPassword').click(function () {
 			$('.navbar').removeClass("navbar-fixed-top");
 			$('body').css("padding-top", "0px");
@@ -123,6 +126,8 @@ $(window).on('resize', function () {
 			$('.navbar').addClass("navbar-fixed-top");
 		});
 		$("body").css("background-position", "50% 0px");
+	} else {
+		$('.navbar').addClass("navbar-fixed-top");
 	}
 });
 
@@ -131,6 +136,12 @@ Pace.on('done', function () {
 	$(".loadingIcon").fadeOut("slow");
 	$('#pace').attr("href", "/css/pace-theme-minimal.css");
 	$("html,body").scrollTop(0);
+
+	if (window.location.hash) {
+		$('html, body').animate({
+			scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
+		}, 1000, 'swing');
+	}
 });
 
 // RUN BAGUETTEBOX

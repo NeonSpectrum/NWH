@@ -3,9 +3,9 @@
   require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
-  <div class="room-rates center-block">
-		<h1>Room and Rates</h1>
-		<hr/>
+  <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.9)">
+		<h1 style="text-align:center">Room and Rates</h1>
+    <hr style="border-color:black"/>
 		<table>
 			<?php
 				$query = "SELECT * FROM room_type";

@@ -73,7 +73,7 @@
 				</div>
 				<hr style="border-color:white;border-width:3px;width:10%"/>
 				<div class="center-block text-center">
-					<div class="box-content animated scrollSlideLeft" style="margin-left:0px">
+					<div class="box-content animated scrollSlideLeft">
 						<h2 style="color:#2389c9">Location</h2>
 						<p style="font-style:italic;padding:30px;font-size:15px;">
 							The Northwood Hotel is conveniently located at 21 Quezon Avenue, Poblacion Alaminos City, Pangasinan, the home of the famous “Hundred Islands National Park”.

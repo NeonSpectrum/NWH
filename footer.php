@@ -16,12 +16,14 @@
 			</div>
 			<div class="footer-content">
 				<hr style="border-color:white;border-width:3px;width:10%;" align="left"/>
-				&copy; 2017 Northwood Hotel
-				<br/><br/>
+				Contact Us:<br/>
 				(075) 636-0910 / (075) 205-0647<br/>
 				0929-789-0088 / 0995-408-6292
 			</div>
 		</div>
+	</div>
+	<div class="footer-copyright">
+		&copy; 2017 Northwood Hotel
 	</div>
 	<?php
 		}

@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:90%;background:rgba(245,245,245,0.8)">
-    <h1>Gallery</h1>
+    <h1 style="text-align:center">Gallery</h1>
     <hr style="border-color:black"/>
     <div class="galleryDiv">
 			<div class="tab">
