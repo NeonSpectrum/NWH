@@ -195,6 +195,10 @@ input[type="date"]::-webkit-inner-spin-button {
   text-align: center;
   width: 30%;
   height: 320px;
+  overflow: hidden;
+}
+
+.box-content:not(:first-child) {
   margin-left: 10px;
 }
 

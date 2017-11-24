@@ -1,10 +1,12 @@
 $(document).ready(function () {
   scrolling(false);
 
+  // MAKE NAVBAR FIXED IF NOT MOBILE
   if (screen.width > 480) {
     $('.navbar').addClass("navbar-fixed-top");
   }
-  // reset form if exists if modal is exited
+
+  // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function () {
     $(this).find('form')[0].reset();
     $(this).find('button').attr('disabled', false);
@@ -13,19 +15,19 @@ $(document).ready(function () {
     scrolling(true);
   });
 
-  // disable scroll if modal is shown
+  // DISABLE SCROLL IF MODAL IS SHOWN
   $('.modal').on('shown.bs.modal', function () {
     scrolling(false);
   });
 
-  // auto enable disabled button if the textbox has value
+  // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
   $("input[type=text]").change(function () {
     if ($(this).val()) {
       $(this).find('button').removeAttr('disabled');
     }
   });
 
-  // make number reset to min or max when leave
+  // MAKE NUMBER RESET TO MIN OR MAX WHEN LEAVE
   $('input[type=number]').change(function () {
     var min = parseInt($(this).attr("min"));
     var max = parseInt($(this).attr("max"));
@@ -45,6 +47,7 @@ $(document).ready(function () {
     return false;
   });
 
+  // CLICKING ON HREF WITH # WILL ANIMATE TO THAT HASH
   $('a[href^="#"]').click(function () {
     $('html, body').animate({
       scrollTop: $($.attr(this, 'href')).offset().top
@@ -58,53 +61,43 @@ $(window).on("load", function () {
   scrolling(true);
 
   $(window).scroll(function () {
+
+    // BACK TO TOP
     if ($(window).scrollTop() > 300) {
       $('a.back-to-top').fadeIn('slow');
     } else {
       $('a.back-to-top').fadeOut('slow');
     }
 
+    // SCROLL EFFECT ON DESKTOP AND LAPTOP DEVICES
     if (screen.width > 480) {
-      $(window).scroll(function () {
-        $("body").css("background-position", "50% " + (-($(this).scrollTop() / 10) - 100) + "px");
-      });
+      $("body").css("background-position", "50% " + (-($(this).scrollTop() / 10) - 100) + "px");
     }
 
+    // SCROLL ANIMATION
+    var winTop = $(window).scrollTop();
+    var height = $(window).height() - 40;
+
     $(".scrollSlideUp").each(function () {
-      var pos = $(this).offset().top;
-      var winTop = $(window).scrollTop();
-      var height = $(window).height() - 40;
-      if (pos < winTop + height) {
+      if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideUp");
         $(this).addClass("slideInUp");
       }
     });
-
     $(".scrollSlideDown").each(function () {
-      var pos = $(this).offset().top;
-      var winTop = $(window).scrollTop();
-      var height = $(window).height() - 40;
-      if (pos < winTop + height) {
+      if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideDown");
         $(this).addClass("slideInDown");
       }
     });
-
     $(".scrollSlideLeft").each(function () {
-      var pos = $(this).offset().top;
-      var winTop = $(window).scrollTop();
-      var height = $(window).height() - 40;
-      if (pos < winTop + height) {
+      if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideLeft");
         $(this).addClass("slideInLeft");
       }
     });
-
     $(".scrollSlideRight").each(function () {
-      var pos = $(this).offset().top;
-      var winTop = $(window).scrollTop();
-      var height = $(window).height() - 40;
-      if (pos < winTop + height) {
+      if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideRight");
         $(this).addClass("slideInRight");
       }
@@ -115,16 +108,6 @@ $(window).on("load", function () {
 $(window).on('resize', function () {
   if (screen.width <= 480) {
     $('.navbar').removeClass("navbar-fixed-top");
-    $('#txtLoginEmail,#txtLoginPassword').click(function () {
-      $('.navbar').removeClass("navbar-fixed-top");
-      $('body').css("padding-top", "0px");
-      $("html, body").animate({
-        scrollTop: 230
-      }, "slow");
-    });
-    $('.login-dropdown').on('hide.bs.dropdown', function () {
-      $('.navbar').addClass("navbar-fixed-top");
-    });
     $("body").css("background-position", "50% 0px");
   } else {
     $('.navbar').addClass("navbar-fixed-top");
