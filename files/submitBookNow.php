@@ -3,8 +3,8 @@
   require_once 'db.php';
 
   $adults = (int)$_POST['txtBookAdults'];
-	$childrens = (int)$_POST['txtBookChildrens'];
-	
+  $childrens = (int)$_POST['txtBookChildrens'];
+  
   if ($adults + $childrens == 0) {
     echo "Please fill up the Adults or Childrens!";
   } elseif (!isset($_SESSION['email'])) {

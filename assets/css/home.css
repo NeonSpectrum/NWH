@@ -1,294 +1,293 @@
 /* CAROUSEL FADE */
 
 .carousel-fade .carousel-inner .item {
-	opacity: 0;
-	transition-property: opacity;
+  opacity: 0;
+  transition-property: opacity;
 }
 
 .carousel-fade .carousel-inner .active {
-	opacity: 1;
+  opacity: 1;
 }
 
 .carousel-fade .carousel-inner .active.left,
 .carousel-fade .carousel-inner .active.right {
-	left: 0;
-	opacity: 0;
-	z-index: 1;
+  left: 0;
+  opacity: 0;
+  z-index: 1;
 }
 
 .carousel-fade .carousel-inner .next.left,
 .carousel-fade .carousel-inner .prev.right {
-	opacity: 1;
+  opacity: 1;
 }
 
 .carousel-fade .carousel-control {
-	z-index: 2;
+  z-index: 2;
 }
 
 @media all and (transform-3d),
 (-webkit-transform-3d) {
-	.carousel-fade .carousel-inner>.item.next,
-	.carousel-fade .carousel-inner>.item.active.right {
-		opacity: 0;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
-	.carousel-fade .carousel-inner>.item.prev,
-	.carousel-fade .carousel-inner>.item.active.left {
-		opacity: 0;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
-	.carousel-fade .carousel-inner>.item.next.left,
-	.carousel-fade .carousel-inner>.item.prev.right,
-	.carousel-fade .carousel-inner>.item.active {
-		opacity: 1;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
+  .carousel-fade .carousel-inner>.item.next,
+  .carousel-fade .carousel-inner>.item.active.right {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  .carousel-fade .carousel-inner>.item.prev,
+  .carousel-fade .carousel-inner>.item.active.left {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  .carousel-fade .carousel-inner>.item.next.left,
+  .carousel-fade .carousel-inner>.item.prev.right,
+  .carousel-fade .carousel-inner>.item.active {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 
 /* BOOK NOW CONTENT */
 
 .booknow {
-	background-color: rgba(255, 255, 255, 0.9);
-	height: auto;
-	width: 80%;
-	margin-bottom: 40px;
-	border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: auto;
+  width: 80%;
+  margin-bottom: 40px;
+  border-radius: 10px;
 }
 
 .booknow-content {
-	padding: 10px;
-	padding-bottom: 0px;
+  padding: 10px;
+  padding-bottom: 0px;
 }
 
 .booknow-content .form-group {
-	padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .booknow-content label {
-	margin-left: 20px;
+  margin-left: 20px;
 }
 
 .booknow-content input {
-	width: 15%;
+  width: 15%;
 }
 
 @media only screen and (max-width: 768px) {
-	.booknow {
-		width: 100%;
-		border-radius: 0px;
-	}
-	.booknow-content {
-		display: block;
-		margin: 10px;
-		margin-left: 0px;
-		margin-right: 0px;
-		padding: 10px;
-	}
-	.booknow-content input {
-		width: 80% !important;
-		margin: 0 auto;
-		margin-bottom: 10px;
-	}
-	.booknow-content button {
-		margin: 0 auto;
-		display: block;
-		width: 80%;
-		margin-bottom: 10px;
-	}
-	.booknow-content .form-group {
-		padding-bottom: 0px;
-	}
+  .booknow {
+    width: 100%;
+    border-radius: 0px;
+  }
+  .booknow-content {
+    display: block;
+    margin: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 10px;
+  }
+  .booknow-content input {
+    width: 80% !important;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  .booknow-content button {
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+    margin-bottom: 10px;
+  }
+  .booknow-content .form-group {
+    padding-bottom: 0px;
+  }
 }
 
 input[type="date"]::-webkit-inner-spin-button {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
 
 /* CAROUSEL */
 
 .full-screen {
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .item img {
-	background-position: 50% 50%;
+  background-position: 50% 50%;
 }
 
 
 /* LOGO OVERLAY */
 
 .logo-overlay::after {
-	position: absolute;
-	background: url('/images/logo-overlay.png') no-repeat center center;
-	margin-top: -200px;
-	height: 200px;
-	width: 100%;
-	content: '';
-	z-index: 2;
-	background-size: contain;
+  position: absolute;
+  background: url('/images/logo-overlay.png') no-repeat center center;
+  margin-top: -200px;
+  height: 200px;
+  width: 100%;
+  content: '';
+  z-index: 2;
+  background-size: contain;
 }
 
 .logo-text::after {
-	position: absolute;
-	text-align: center;
-	margin-top: -27px;
-	height: 30px;
-	color: white;
-	width: 100%;
-	content: '21 Quezon Ave. Poblacion, Alaminos City Pangasinan';
-	z-index: 3;
+  position: absolute;
+  text-align: center;
+  margin-top: -27px;
+  height: 30px;
+  color: white;
+  width: 100%;
+  content: '21 Quezon Ave. Poblacion, Alaminos City Pangasinan';
+  z-index: 3;
 }
 
 .overlay {
-	background-color: white;
-	margin-top: -70px;
+  background-color: white;
+  margin-top: -70px;
 }
 
 .overlay::after {
-	position: absolute;
-	background: url('/images/below-logo.png') no-repeat;
-	margin-top: -200px;
-	background-size: cover;
-	height: 200px;
-	width: 100%;
-	content: '';
-	z-index: 1;
+  position: absolute;
+  background: url('/images/below-logo.png') no-repeat;
+  margin-top: -200px;
+  background-size: cover;
+  height: 200px;
+  width: 100%;
+  content: '';
+  z-index: 1;
 }
 
 @media only screen and (max-width: 768px) {
-	.overlay::after {
-		margin-top: -65px;
-		height: 70px;
-	}
-	.logo-overlay::after {
-		margin-top: -85px;
-		height: 65px;
-	}
-	.logo-text::after {
-		margin-top: -20px;
-		height: 40px;
-		font-size: x-small;
-	}
+  .overlay::after {
+    margin-top: -65px;
+    height: 70px;
+  }
+  .logo-overlay::after {
+    margin-top: -85px;
+    height: 65px;
+  }
+  .logo-text::after {
+    margin-top: -20px;
+    height: 40px;
+    font-size: x-small;
+  }
 }
 
 
 /* HOME CONTENT */
 
 .homeContent {
-	background: url('/images/hundred-islands.jpg') no-repeat;
-	background-size: cover;
-	width: 100%;
-	font-family: 'Museo Slab', serif;
+  background: url('/images/hundred-islands.jpg') no-repeat;
+  background-size: cover;
+  width: 100%;
+  font-family: 'Museo Slab', serif;
 }
 
 .box-content {
-	display: inline-block;
-	vertical-align: top;
-	background: rgba(255, 255, 255, 0.8);
-	text-align: center;
-	width: 30%;
-	height: 320px;
-	margin-left: 10px;
+  display: inline-block;
+  vertical-align: top;
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  width: 30%;
+  height: 320px;
+  margin-left: 10px;
 }
 
 .p-home {
-	font-size: 22px;
-	padding: 20px 50px 20px 50px;
-	width: 50%;
-	display: inline-block;
-	vertical-align: top;
+  font-size: 22px;
+  padding: 20px 50px 20px 50px;
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .youtube-iframe {
-	margin: 20px;
-	width: 45%;
-	display: inline-block;
-	vertical-align: bottom;
+  margin: 20px;
+  width: 45%;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 @media only screen and (max-width:768px) {
-	.box-content {
-		width: 100%;
-		margin-bottom: 5px;
-		margin-left: 0px;
-		padding-bottom: 5px;
-	}
-	.p-home {
-		font-size: 18px;
-		width: 100%;
-		padding: 15px;
-		text-align: center;
-	}
-	.youtube-iframe {
-		width: -webkit-fill-available;
-	}
+  .box-content {
+    width: 100%;
+    margin-bottom: 5px;
+    margin-left: 0px;
+  }
+  .p-home {
+    font-size: 18px;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+  }
+  .youtube-iframe {
+    width: -webkit-fill-available;
+  }
 }
 
 
 /* YOUTUBE */
 
 .youtube {
-	background-color: #000;
-	margin-bottom: 30px;
-	position: relative;
-	padding-top: 56.25%;
-	overflow: hidden;
-	cursor: pointer;
+  background-color: #000;
+  margin-bottom: 30px;
+  position: relative;
+  padding-top: 56.25%;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .youtube img {
-	width: 100.5%;
-	top: -16.84%;
-	left: 0;
-	opacity: 0.7;
+  width: 100.5%;
+  top: -16.84%;
+  left: 0;
+  opacity: 0.7;
 }
 
 .youtube .play-button {
-	width: 90px;
-	height: 60px;
-	background-color: #333;
-	box-shadow: 0 0 30px rgba( 0, 0, 0, 0.6);
-	z-index: 1;
-	opacity: 0.8;
-	border-radius: 6px;
+  width: 90px;
+  height: 60px;
+  background-color: #333;
+  box-shadow: 0 0 30px rgba( 0, 0, 0, 0.6);
+  z-index: 1;
+  opacity: 0.8;
+  border-radius: 6px;
 }
 
 .youtube .play-button:before {
-	content: "";
-	border-style: solid;
-	border-width: 15px 0 15px 26.0px;
-	border-color: transparent transparent transparent #fff;
+  content: "";
+  border-style: solid;
+  border-width: 15px 0 15px 26.0px;
+  border-color: transparent transparent transparent #fff;
 }
 
 .youtube img,
 .youtube .play-button {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .youtube img,
 .youtube iframe,
 .youtube .play-button,
 .youtube .play-button:before {
-	position: absolute;
+  position: absolute;
 }
 
 .youtube .play-button,
 .youtube .play-button:before {
-	top: 50%;
-	left: 50%;
-	transform: translate3d( -50%, -50%, 0);
+  top: 50%;
+  left: 50%;
+  transform: translate3d( -50%, -50%, 0);
 }
 
 .youtube iframe {
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
 }

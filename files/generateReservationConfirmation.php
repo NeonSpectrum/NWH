@@ -1,7 +1,7 @@
 <?php 
   use setasign\Fpdi\Fpdi;
-	use setasign\Fpdi\PdfReader;
-	
+  use setasign\Fpdi\PdfReader;
+  
   require '../assets/fpdf/fpdf.php';
   require '../assets/fpdi/autoload.php';
   require_once '../files/db.php';
@@ -44,6 +44,6 @@
       $pdf->Write(0, "P5000.00");
 
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf","I");
-			}
-		}
-	?>
+      }
+    }
+  ?>
