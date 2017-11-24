@@ -4,7 +4,8 @@
 	if ($_SERVER['REQUEST_URI'] == '/') {
 		$currentDirectory = 'home';
 	} else {
-		$currentDirectory = substr($_SERVER['REQUEST_URI'], 0, -1);
+		$currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQUEST_URI']);
+		$currentDirectory = substr($currentDirectory, 0, -1);
 		$currentDirectory = substr($currentDirectory, strrpos($currentDirectory, "/") + 1);
 	}
   // if (isset($_COOKIE['nwhAuth'])) {
@@ -31,22 +32,22 @@
 		<?php 
 			require_once 'files/meta.php';
 			echo "\n";
-			foreach (glob(__DIR__."/css/required/*.css") as $css) {
+			foreach (glob(__DIR__."/assets/css/required/*.css") as $css) {
 				$file = str_replace(__DIR__, "", $css);
 				echo "<link type='text/css' rel='stylesheet' href='$file?v=" . filemtime($css) . "'>\n";
 			}
 			if (strpos($_SERVER['PHP_SELF'],"admin")) {
-				echo "<link type='text/css' rel='stylesheet' href='/css/admin.css?v=".filemtime(__DIR__."/css/admin.css")."'>\n";
+				echo "<link type='text/css' rel='stylesheet' href='/assets/css/admin.css?v=".filemtime(__DIR__."/assets/css/admin.css")."'>\n";
 			} else {
-				echo "<link type='text/css' rel='stylesheet' href='/css/main.css?v=".filemtime(__DIR__."/css/main.css")."'>\n";
+				echo "<link type='text/css' rel='stylesheet' href='/assets/css/main.css?v=".filemtime(__DIR__."/assets/css/main.css")."'>\n";
 			}
-			if (file_exists(__DIR__."/css/$currentDirectory.css") && $currentDirectory != 'admin') {
-				echo "<link type='text/css' rel='stylesheet' href='/css/$currentDirectory.css?v=".filemtime(__DIR__."/css/$currentDirectory.css")."'>\n";
-			}
+			// if (file_exists(__DIR__."/assets/css/$currentDirectory.css") && $currentDirectory != 'admin') {
+				echo "<link type='text/css' rel='stylesheet' href='/assets/css/$currentDirectory.css?v=".filemtime(__DIR__."/assets/css/$currentDirectory.css")."'>\n";
+			// }
 			if (strpos($_SERVER['PHP_SELF'],"admin")) {
-				echo "<link type='text/css' rel='stylesheet' href='/css/pace-theme-minimal.css?v=".filemtime(__DIR__.'/css/pace-theme-minimal.css') . "'>\n";
+				echo "<link type='text/css' rel='stylesheet' href='/assets/css/pace-theme-minimal.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-minimal.css') . "'>\n";
 			} else {
-				echo "<link type='text/css' rel='stylesheet' id='pace' href='/css/pace-theme-center-simple.css?v=".filemtime(__DIR__.'/css/pace-theme-center-simple.css') . "'>\n";
+				echo "<link type='text/css' rel='stylesheet' id='pace' href='/assets/css/pace-theme-center-simple.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-center-simple.css') . "'>\n";
 			}
 		?>
 	</head>
@@ -58,4 +59,4 @@
 			echo "<a href='#' class='back-to-top'>Back to Top</a>";
     }
   ?>
-	<div id="alertBox" style="display:none"></div>
+	<div id="alertBox"></div>

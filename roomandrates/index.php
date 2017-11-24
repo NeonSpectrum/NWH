@@ -24,7 +24,7 @@
 					} else {
 						$price = $row['DiscountedRate'];
 					}
-					echo "<td><center>From<br/><br/><span style='text-style:bold;font-size:20px;'>₱&nbsp;$price</span></center></td>";
+					echo "<td><center>From<br/><br/><span style='text-style:bold;font-size:20px;'>₱&nbsp;".number_format($price)."</span></center></td>";
 					echo "</tr>";
 				}
 			?>

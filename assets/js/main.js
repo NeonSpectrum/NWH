@@ -216,7 +216,6 @@ $(document).ready(function () {
 			$("#btnEditReservation").prop("disabled", true);
 			$("#btnPrint").prop("disabled", true);
 			return;
-			f
 		}
 		$("#btnEditReservation").prop("disabled", false);
 		$("#btnPrint").prop("disabled", false);
@@ -236,18 +235,15 @@ $(document).ready(function () {
 	});
 });
 
+// UPDATE DATE
 $('#txtEditCheckInDate').change(function () {
-	checkIn = $(this).val();
-	$('#txtEditCheckOutDate').attr('min', checkIn);
+	$('#txtEditCheckOutDate').attr('min', $(this).val());
+	$('#txtEditCheckOutDate').val($(this).val());
 });
 
 $('#txtEditCheckOutDate').change(function () {
 	checkIn = $('#txtEditCheckInDate').val();
-	checkOut = $(this).val();
-	if (checkIn == checkOut) {
-		checkOut = '';
-	}
-	$('#txtEditCheckInDate').attr('max', checkOut);
+	$('#txtEditCheckInDate').attr('max', checkIn == checkOut ? checkOut = '' : $(this).val());
 });
 
 function dateUpdate() {
@@ -386,6 +382,7 @@ $("#frmEditReservation").submit(function (e) {
 		data: $(this).serialize(),
 		success: function (response) {
 			if (response == "ok") {
+				$('#modalEditReservation').modal('hide');
 				alertNotif('success', 'Updated Successfully!', false);
 			} else {
 				$("#btnEditReservation").html('Update');

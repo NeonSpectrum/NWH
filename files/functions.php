@@ -5,9 +5,9 @@
   
   require_once 'db.php';
 
-  require '../packages/PHPMailer/src/Exception.php';
-  require '../packages/PHPMailer/src/PHPMailer.php';
-  require '../packages/PHPMailer/src/SMTP.php';
+  require '../assets/PHPMailer/src/Exception.php';
+  require '../assets/PHPMailer/src/PHPMailer.php';
+  require '../assets/PHPMailer/src/SMTP.php';
 
   function sendMail($email, $subject, $body) {
     $email = (string)$email;

@@ -1,5 +1,5 @@
 body {
-	background: url('../images/background-admin.jpg') fixed;
+	background: url('/images/background-admin.jpg') fixed;
 	background-size: cover;
 	position: relative;
 	overflow-x: hidden;

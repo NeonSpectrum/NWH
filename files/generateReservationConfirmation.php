@@ -1,18 +1,18 @@
 <?php 
   use setasign\Fpdi\Fpdi;
-  use setasign\Fpdi\PdfReader;
-  require '../packages/fpdf/fpdf.php';
-  require '../packages/fpdi/autoload.php';
+	use setasign\Fpdi\PdfReader;
+	
+  require '../assets/fpdf/fpdf.php';
+  require '../assets/fpdi/autoload.php';
   require_once '../files/db.php';
   
-  if(isset($_GET['BookingID']))
-  {
+  if (isset($_GET['BookingID'])) {
     $query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,RoomID,CheckInDate,CheckOutDate FROM booking JOIN account ON booking.EmailAddress = account.EmailAddress WHERE BookingID={$_GET['BookingID']}";
     $result = mysqli_query($db,$query);
-    while($row = mysqli_fetch_assoc($result)){
+    while ($row = mysqli_fetch_assoc($result)) {
       $pdf = new Fpdi();
       $pdf->AddPage();
-      $pdf->setSourceFile('reservation.pdf');
+      $pdf->setSourceFile('../assets/reservation.pdf');
       $tpl = $pdf->importPage(1);
       $pdf->useTemplate($tpl, 5, 10, 200);
       $pdf->SetFont('Arial');
@@ -44,6 +44,6 @@
       $pdf->Write(0, "P5000.00");
 
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf","I");
-    }
-  }
-?>
+			}
+		}
+	?>
