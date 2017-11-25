@@ -317,7 +317,7 @@ $("#frmEditProfile").submit(function (e) {
                 } else {
                   $("#btnEditProfile").html('Update');
                   $('#btnEditProfile').attr('disabled', false);
-                  $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
+                  $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
                 }
               }
             });
@@ -331,7 +331,7 @@ $("#frmEditProfile").submit(function (e) {
       } else {
         $("#btnEditProfile").html('Update');
         $('#btnEditProfile').attr('disabled', false);
-        $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
       }
     }
   });
@@ -343,7 +343,7 @@ function ValidateSingleInput(oInput) {
   var file_data = $('#imgProfilePic').prop('files')[0];
   if (file_data.size > 2097152) {
     $('#btnEditProfile').attr('disabled', true);
-    $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
+    $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
     return false;
   }
   if (oInput.type == "file") {
@@ -353,14 +353,14 @@ function ValidateSingleInput(oInput) {
       for (var j = 0; j < _validFileExtensions.length; j++) {
         var sCurExtension = _validFileExtensions[j];
         if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-          $("#lblDisplayErrorEditProfileEditProfile").html('');
+          $("#lblDisplayErrorEditProfile").html('');
           $('#btnEditProfile').attr('disabled', false);
           blnValid = true;
           break;
         }
       }
       if (!blnValid) {
-        $("#lblDisplayErrorEditProfileEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
+        $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
         $('#btnEditProfile').attr('disabled', true);
         oInput.value = "";
         return false;

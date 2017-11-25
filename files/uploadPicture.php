@@ -4,7 +4,8 @@
 
   $name = $_SESSION['fname'].$_SESSION['lname'];
   $email = $_SESSION['email'];
-  $target_dir = $_SERVER['DOCUMENT_ROOT']."/images/profilepics/";
+  $host = strpos($_SERVER['REQUEST_URI'],"nwh") ? "/nwh" : "/";
+  $target_dir = $_SERVER['DOCUMENT_ROOT']."$host/images/profilepics/";
   $target_file = basename($_FILES["file"]["name"]);
   $imageFileType = pathinfo($target_dir.$target_file,PATHINFO_EXTENSION);
   $target_file = basename($name) . "." . $imageFileType;
