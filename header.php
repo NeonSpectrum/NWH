@@ -31,7 +31,7 @@
   // }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <title>Northwood Hotel</title>
 		<link rel='shortcut icon' href='<?php echo $root;?>/favicon.ico'/>
@@ -61,7 +61,7 @@
   <body>
   <?php
     if (!strpos($_SERVER['PHP_SELF'],"admin")) {
-      echo "<div class='loadingIcon'></div>";
+      echo "<div class='loadingIcon'><noscript><span style='position:fixed;z-index:9999'>Please enable Javascript to continue.</span></noscript></div>";
       if ($requestURI != '/' && $requestURI != '/nwh/')
         echo "<div class='height-navbar'></div>";
 			echo "<a href='#' class='back-to-top'>Back to Top</a>";

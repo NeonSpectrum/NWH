@@ -18,17 +18,6 @@ body {
   z-index: 9999;
 }
 
-.no-js #loader {
-  display: none;
-}
-
-.js #loader {
-  display: block;
-  position: absolute;
-  left: 100px;
-  top: 0;
-}
-
 .loadingIcon {
   position: fixed;
   width: 100%;

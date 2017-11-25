@@ -1,10 +1,9 @@
 <?php
   // Pear Mail Library
-  $root = isset($root) ? $root : '';
   $domain = $_SERVER['SERVER_NAME'];
 
-  require_once $root.'../files/functions.php';
-  require_once $root.'../files/db.php';
+  require_once 'db.php';
+  require_once 'functions.php';
 
   parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 
@@ -47,7 +46,7 @@
       $data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
       $data = nwh_encrypt($data);
       $subject = "Northwood Hotel Account Creation";
-      $body = "Please proceed to this link to register your account:<br/>http://$domain/login/checkRegister.php?$data";
+      $body = "Please proceed to this link to register your account:<br/>http://$domain/files/checkRegister.php?$data";
 
       echo sendMail("$email","$subject","$body");
     }
