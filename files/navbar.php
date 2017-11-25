@@ -20,7 +20,7 @@
           <li class="dropdown" style="cursor:pointer">
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
             <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
-              <div style="padding:20px;width:350px">
+              <div style="padding:10px 20px 0px 20px;width:350px">
                 <form class="form" method="post" id="frmBookNow">
                   <div id="lblDisplayErrorLogin" class="lblDisplayError">
                     <!-- error will be shown here ! -->
@@ -68,7 +68,7 @@
         ?>
         <li class="dropdown login-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
-          <ul id="login-dp" class="dropdown-menu" style="margin-top:-1px;margin-right:-1px;">
+          <ul class="dropdown-menu" style="width:300px;padding:20px 20px 0px 20px">
             <li>
               <div class="row">
                 <div class="col-md-12">
@@ -93,8 +93,8 @@
                     <div class="form-group">
                       <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
                       <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
+                    <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
                     </div>
-                    <div class="help-block text-right"><a style="cursor:pointer" data-toggle="modal" data-target="#modalForgot">Forgot the password ?</a></div>
                   </form>
                 </div>
               </div>
@@ -181,7 +181,7 @@
           <div class="form-group">
             <label for="captcha" class="col-sm-2 control-label"></label>
             <div class="col-sm-10">
-              <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+              <div class="g-recaptcha" style="width:100%" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
             </div>
           </div>
           <div class="modal-footer">
