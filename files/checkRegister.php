@@ -1,7 +1,6 @@
 <?php
   // Pear Mail Library
-  $domain = $_SERVER['SERVER_NAME'];
-
+  $domain = strpos($_SERVER['REQUEST_URI'],"nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
   require_once 'db.php';
   require_once 'functions.php';
 
@@ -16,13 +15,14 @@
     $date = date("Y-m-d");
     $query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$date')";
     $result = mysqli_query($db,$query);
+    $link = strpos($_SERVER['REQUEST_URI'],"nwh") ? "/nwh" : "/";
     if(!$result)
     {
-      echo '<script>alert("Already Registered!");location.href="/";</script>';
+      echo "<script>alert('Already Registered!');location.href='$link';</script>";
     }
     else if(mysqli_affected_rows($db)!=0)
     {
-      echo '<script>alert("Registered Successfully!");location.href="/";</script>';
+      echo "<script>alert('Registered Successfully!');location.href='$link';</script>";
     }
   }
   else if(isset($_POST))
