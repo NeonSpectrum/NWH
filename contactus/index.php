@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
-    <h1 style="margin-top:0px;text-align:center">Contact Form</h1>
+    <h1 style="margin-top:0px;text-align:center">Contact Us</h1>
     <hr style="border-color:black"/>
     <div class="box-content">
       <h2>Northwood Hotel</h2><br/>
@@ -16,16 +16,13 @@
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
         <div class="form-group">
-          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" require_onced />
+          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" require />
         </div>
         <div class="form-group">
-          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" require_onced />
+          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" require />
         </div>
         <div class="form-group">
-          <input style="width:90%" name="txtSubject" type="text" class="form-control" placeholder="Subject" require_onced />
-        </div>
-        <div class="form-group">
-          <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" require_onced></textarea>
+          <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" require></textarea>
         </div>
         <div class="form-group">
           <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>

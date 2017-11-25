@@ -1,3 +1,5 @@
+var currentDirectory = location.pathname.includes("nwh") ? "/nwh/" : "/";
+
 $(document).ready(function () {
   var trigger = $('.hamburger'),
     overlay = $('.overlay'),
@@ -29,7 +31,7 @@ $(document).ready(function () {
 // GIT UPDATE
 $('#btnGitUpdate').click(function () {
   $.ajax({
-    url: '/files/gitUpdate.php',
+    url: currentDirectory + 'files/gitUpdate.php',
     success: function (response) {
       alertNotif("success", response, true, 3000);
     }

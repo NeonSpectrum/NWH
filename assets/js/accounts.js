@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#cmbEmail").change(function () {
     $.ajax({
-      url: "/files/displayAccount.php",
+      url: "../../files/displayAccount.php",
       type: "POST",
       dataType: "json",
       data: $('#frmAccount').serialize(),
@@ -25,7 +25,7 @@ function submitEditForm() {
   $("#btnEdit").attr('disabled', true);
   $.ajax({
     type: 'POST',
-    url: '/files/editAccount.php',
+    url: '../../files/editAccount.php',
     data: $("#frmAccount").serialize(),
     success: function (response) {
       if (response == "ok") {

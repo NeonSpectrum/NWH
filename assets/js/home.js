@@ -1,29 +1,3 @@
-// BOOK FORM SUBMIT
-$("#frmBookNow").submit(function (e) {
-  e.preventDefault();
-  $("#btnBookNow").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
-  $("#btnBookNow").prop('disabled', true);
-  setTimeout("location.href='/roomandrates?" + $(this).serialize() + "'", 2000);
-});
-
-// DATE UPDATE
-$(document).ready(function () {
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
-  $("#txtBookCheckInDate").attr('min', tomorrow);
-  $('#txtBookCheckInDate').val(tomorrow);
-  $("#txtBookCheckOutDate").attr('min', tomorrow);
-  $('#txtBookCheckOutDate').val(tomorrow);
-});
-$('#txtBookCheckInDate').change(function () {
-  $("#txtBookCheckOutDate").attr('min', $(this).val());
-  $("#txtBookCheckOutDate").val($(this).val());
-});
-$('#txtBookCheckOutDate').change(function () {
-  $("#txtBookCheckInDate").attr('max', $(this).val());
-});
-
 // CAROUSEL
 var $item = $('.carousel .item');
 var $wHeight = $(window).height();
@@ -100,7 +74,7 @@ $(".carousel").on("mouseup", function (event) {
   for (var i = 0; i < youtube.length; i++) {
 
     var image = new Image();
-    image.src = "/images/nwh-sddefault.jpg";
+    image.src = currentDirectory + "images/nwh-sddefault.jpg";
     image.addEventListener("load", function () {
       youtube[i].appendChild(image);
     }(i));

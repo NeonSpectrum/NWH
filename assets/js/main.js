@@ -1,3 +1,5 @@
+var currentDirectory = location.pathname.includes("nwh") ? "/nwh/" : "/";
+
 $(document).ready(function () {
   scrolling(false);
 
@@ -5,6 +7,19 @@ $(document).ready(function () {
   if (screen.width > 480) {
     $('.navbar').addClass("navbar-fixed-top");
   }
+
+  // UPDATE ALL DATES
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
+  $(".checkInDate, .checkOutDate").each(function () {
+    $(this).attr('min', tomorrow);
+    $(this).val(tomorrow);
+  });
+  $('.checkInDate').change(function () {
+    $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
+    $(this).closest("form").find(".checkOutDate").val($(this).val());
+  });
 
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function () {
@@ -26,17 +41,31 @@ $(document).ready(function () {
       $(this).find('button').removeAttr('disabled');
     }
   });
+  // FOCUS ON SELECT
+  $('input').focus(function () {
+    $(this).select();
+  });
 
   // MAKE NUMBER RESET TO MIN OR MAX WHEN LEAVE
-  $('input[type=number]').change(function () {
+  $('input[type=number]').on('keyup keydown', function (e) {
     var min = parseInt($(this).attr("min"));
     var max = parseInt($(this).attr("max"));
 
-    if ($(this).val() > max) {
+    if ($(this).val() > max &&
+      e.keyCode != 46 &&
+      e.keyCode != 8
+    ) {
+      e.preventDefault();
       $(this).val(max);
-    } else if ($(this).val() < min) {
-      $(this).val(min);
     }
+  });
+
+  // CONTACT BOX
+  $('.contactbox__title').on('click', function () {
+    $('.contactbox').toggleClass('contactbox--tray');
+  });
+  $('.contactbox').on('transitionend', function () {
+    if ($(this).hasClass('contactbox--closed')) $(this).remove();
   });
 
   // BACK TO TOP
@@ -56,9 +85,19 @@ $(document).ready(function () {
     return false;
   });
 });
-
-$(window).on("load", function () {
+// PACE DONE
+Pace.on('done', function () {
   scrolling(true);
+
+  $(".loadingIcon").fadeOut("slow");
+  $('#pace').attr("href", "/css/pace-theme-minimal.css");
+  $("html,body").scrollTop(0);
+
+  if (window.location.hash) {
+    $('html, body').animate({
+      scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
+    }, 1000, 'swing');
+  }
 
   $(window).scroll(function () {
 
@@ -111,19 +150,6 @@ $(window).on('resize', function () {
     $("body").css("background-position", "50% 0px");
   } else {
     $('.navbar').addClass("navbar-fixed-top");
-  }
-});
-
-// PACE DONE
-Pace.on('done', function () {
-  $(".loadingIcon").fadeOut("slow");
-  $('#pace').attr("href", "/css/pace-theme-minimal.css");
-  $("html,body").scrollTop(0);
-
-  if (window.location.hash) {
-    $('html, body').animate({
-      scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
-    }, 1000, 'swing');
   }
 });
 
@@ -192,73 +218,42 @@ function scrolling(enable) {
 }
 
 // DISPLAY BOOKING ID
-$(document).ready(function () {
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = new Date(tomorrow).toISOString().split('T')[0];
-  $('#txtEditCheckInDate').attr('min', tomorrow);
-  $('#txtEditCheckOutDate').attr('min', tomorrow);
-  $('#txtEditCheckInDate').val(tomorrow);
-  $('#txtEditCheckOutDate').val(tomorrow);
-  dateUpdate();
-  $("#cmbBookingID").change(function () {
-    if ($("#cmbBookingID").val() == '') {
-      dateUpdate();
-      $("#txtEditRoomID").val('');
-      $("#txtEditAdults").val('0');
-      $("#txtEditChildrens").val('0');
-      $("#btnEditReservation").prop("disabled", true);
-      $("#btnPrint").prop("disabled", true);
-      return;
+$("#cmbBookingID").change(function () {
+  if ($("#cmbBookingID").val() == '') {
+    dateUpdate();
+    $("#txtEditRoomID").val('');
+    $("#txtEditAdults").val('0');
+    $("#txtEditChildrens").val('0');
+    $("#btnEditReservation").prop("disabled", true);
+    $("#btnPrint").prop("disabled", true);
+    return;
+  }
+  $("#btnEditReservation").prop("disabled", false);
+  $("#btnPrint").prop("disabled", false);
+  $.ajax({
+    url: currentDirectory + "files/displayEditReservation.php",
+    type: "POST",
+    dataType: "json",
+    data: $(this).serialize(),
+    success: function (data) {
+      $("#txtEditRoomID").val(data[0]);
+      $("#txtEditCheckInDate").val(data[1]);
+      $("#txtEditCheckOutDate").val(data[2]);
+      $("#txtEditAdults").val(data[3]);
+      $("#txtEditChildrens").val(data[4]);
     }
-    $("#btnEditReservation").prop("disabled", false);
-    $("#btnPrint").prop("disabled", false);
-    $.ajax({
-      url: "/files/displayEditReservation.php",
-      type: "POST",
-      dataType: "json",
-      data: $(this).serialize(),
-      success: function (data) {
-        $("#txtEditRoomID").val(data[0]);
-        $("#txtEditCheckInDate").val(data[1]);
-        $("#txtEditCheckOutDate").val(data[2]);
-        $("#txtEditAdults").val(data[3]);
-        $("#txtEditChildrens").val(data[4]);
-      }
-    });
   });
 });
-
-// UPDATE DATE
-$('#txtEditCheckInDate').change(function () {
-  $('#txtEditCheckOutDate').attr('min', $(this).val());
-  $('#txtEditCheckOutDate').val($(this).val());
-});
-
-$('#txtEditCheckOutDate').change(function () {
-  checkIn = $('#txtEditCheckInDate').val();
-  $('#txtEditCheckInDate').attr('max', checkIn == checkOut ? checkOut = '' : $(this).val());
-});
-
-function dateUpdate() {
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
-  $('#txtEditCheckInDate').attr('min', tomorrow);
-  $('#txtEditCheckOutDate').attr('min', tomorrow);
-  $('#txtEditCheckInDate').val(tomorrow);
-  $('#txtEditCheckOutDate').val(tomorrow);
-}
 
 // CHANGE PASSWORD
 $("#frmChange").submit(function (e) {
   e.preventDefault();
-  $("#btnUpdate").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $("#btnUpdate").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
   $('#btnUpdate').attr('disabled', true);
   $("#lblDisplayErrorChange").html('');
   $.ajax({
     type: 'POST',
-    url: '/files/checkChange.php',
+    url: currentDirectory + 'files/checkChange.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
@@ -278,12 +273,12 @@ $("#frmChange").submit(function (e) {
 // EDIT PROFILE
 $("#frmEditProfile").submit(function (e) {
   e.preventDefault();
-  $("#btnEditProfile").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $("#btnEditProfile").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
   $('#btnEditProfile').attr('disabled', true);
   $("#lblDisplayErrorEditProfile").html('');
   $.ajax({
     type: 'POST',
-    url: '/files/checkEditProfile.php',
+    url: currentDirectory + 'files/checkEditProfile.php',
     data: $(this).serialize() + "&profilePic=" + document.getElementById("imgProfilePic").files.length,
     success: function (response) {
       if (response == "ok") {
@@ -297,7 +292,7 @@ $("#frmEditProfile").submit(function (e) {
             $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
           } else {
             $.ajax({
-              url: '/files/uploadPicture.php',
+              url: currentDirectory + 'files/uploadPicture.php',
               dataType: 'text',
               cache: false,
               contentType: false,
@@ -367,12 +362,12 @@ function ValidateSingleInput(oInput) {
 // EDIT RESERVATION
 $("#frmEditReservation").submit(function (e) {
   e.preventDefault();
-  $("#btnEditReservation").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $("#btnEditReservation").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
   $('#btnEditReservation').attr('disabled', true);
   $("#lblDisplayErrorEditReservation").html('');
   $.ajax({
     type: 'POST',
-    url: '/files/checkEditReservation.php',
+    url: currentDirectory + 'files/checkEditReservation.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
@@ -390,12 +385,12 @@ $("#frmEditReservation").submit(function (e) {
 // FORGOT PASSWORD
 $("#frmForgot").submit(function (e) {
   e.preventDefault();
-  $("#btnReset").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $("#btnReset").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
   $("#btnReset").prop('disabled', true);
   $("#lblDisplayErrorForgot").html('');
   $.ajax({
     type: 'POST',
-    url: '/files/checkForgot.php',
+    url: currentDirectory + 'files/checkForgot.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
@@ -420,12 +415,12 @@ $("#frmRegister").submit(function (e) {
   }
   var pass = $('#txtPassword', this).val();
   var rpass = $('#txtRetypePassword', this).val();
-  $("#btnRegister").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+  $("#btnRegister").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
   $('#btnRegister').attr('disabled', true);
   $("#lblDisplayErrorRegister").html('');
   $.ajax({
     type: 'POST',
-    url: '/files/checkRegister.php',
+    url: currentDirectory + 'files/checkRegister.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
@@ -454,11 +449,11 @@ function recaptchaCallback() {
 $("#frmLogin").submit(function (e) {
   e.preventDefault();
   $("#lblDisplayErrorLogin").html('');
-  $("#btnLogin").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
+  $("#btnLogin").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
   $("#btnLogin").prop('disabled', true);
   $.ajax({
     type: 'POST',
-    url: '/files/checkLogin.php',
+    url: currentDirectory + 'files/checkLogin.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
@@ -472,6 +467,14 @@ $("#frmLogin").submit(function (e) {
   });
 });
 
+// BOOK NOW FORM
+$("#frmBookNow").submit(function (e) {
+  e.preventDefault();
+  $(this).closest("form").find("#btnBookNow").html('<img src=images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
+  $(this).closest("form").find("#btnBookNow").prop('disabled', true);
+  setTimeout("location.href='roomandrates?" + $(this).serialize() + "'", 2000);
+});
+
 // CONTACT US FORM
 $('#frmContact').submit(function (e) {
   e.preventDefault();
@@ -480,16 +483,17 @@ $('#frmContact').submit(function (e) {
     $('#txtEmail').focus();
     return;
   }
-  $("#btnSubmit").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $("#btnSubmit").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
   $("#btnSubmit").prop('disabled', true);
   $.ajax({
     type: 'POST',
-    url: 'processContactForm.php',
+    url: currentDirectory + 'files/processContactForm.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
         alertNotif("success", "Sent Successfully", false);
         $('#frmContact').trigger("reset");
+        $('.contactbox').toggleClass('contactbox--tray');
       } else {
         alertNotif("error", response, false);
       }

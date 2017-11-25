@@ -3,10 +3,10 @@
   require_once 'db.php';
 
   $adults = (int)$_POST['txtBookAdults'];
-  $childrens = (int)$_POST['txtBookChildrens'];
+  $children = (int)$_POST['txtBookChildren'];
   
-  if ($adults + $childrens == 0) {
-    echo "Please fill up the Adults or Childrens!";
+  if ($adults + $children == 0) {
+    echo "Please fill up the Adults or Children!";
   } elseif (!isset($_SESSION['email'])) {
     echo "Please login first before booking.";
   } else {
@@ -22,9 +22,9 @@
         $checkIn = $_POST['txtBookCheckInDate'];
         $checkOut = $_POST['txtBookCheckOutDate'];
         $adults = $_POST['txtBookAdults'];
-        $childrens = $_POST['txtBookChildrens'];
+        $children = $_POST['txtBookChildren'];
         
-        $query = "INSERT INTO booking VALUES(NULL, '$email', '101', '$checkIn', '$checkOut', $adults, $childrens)";
+        $query = "INSERT INTO booking VALUES(NULL, '$email', '101', '$checkIn', '$checkOut', $adults, $children)";
         $result = mysqli_query($db,$query) or die(mysql_error());
         if(mysqli_affected_rows($db)!=0) {
           echo "ok";

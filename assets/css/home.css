@@ -54,9 +54,12 @@
 .booknow {
   background-color: rgba(255, 255, 255, 0.9);
   height: auto;
-  width: 80%;
-  margin-bottom: 40px;
-  border-radius: 10px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 0px 10px 0px;
+  border-color: rgb(214, 214, 214);
+  border-style: solid;
+  border-width: 1px 0px 1px 0px;
 }
 
 .booknow-content {
@@ -122,115 +125,21 @@ input[type="date"]::-webkit-inner-spin-button {
 }
 
 
-/* LOGO OVERLAY */
-
-.logo-overlay::after {
-  position: absolute;
-  background: url('/images/logo-overlay.png') no-repeat center center;
-  margin-top: -200px;
-  height: 200px;
-  width: 100%;
-  content: '';
-  z-index: 2;
-  background-size: contain;
-}
-
-.logo-text::after {
-  position: absolute;
-  text-align: center;
-  margin-top: -27px;
-  height: 30px;
-  color: white;
-  width: 100%;
-  content: '21 Quezon Ave. Poblacion, Alaminos City Pangasinan';
-  z-index: 3;
-}
-
-.overlay {
-  background-color: white;
-  margin-top: -70px;
-}
-
-.overlay::after {
-  position: absolute;
-  background: url('/images/below-logo.png') no-repeat;
-  margin-top: -200px;
-  background-size: cover;
-  height: 200px;
-  width: 100%;
-  content: '';
-  z-index: 1;
-}
-
-@media only screen and (max-width: 768px) {
-  .overlay::after {
-    margin-top: -65px;
-    height: 70px;
-  }
-  .logo-overlay::after {
-    margin-top: -85px;
-    height: 65px;
-  }
-  .logo-text::after {
-    margin-top: -20px;
-    height: 40px;
-    font-size: x-small;
-  }
-}
-
-
 /* HOME CONTENT */
 
 .homeContent {
-  background: url('/images/hundred-islands.jpg') no-repeat;
+  background: url('../../images/hundred-islands.jpg') no-repeat;
   background-size: cover;
   width: 100%;
-  font-family: 'Museo Slab', serif;
-}
-
-.box-content {
-  display: inline-block;
-  vertical-align: top;
-  background: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  width: 30%;
-  height: 320px;
-  overflow: hidden;
-}
-
-.box-content:not(:first-child) {
-  margin-left: 10px;
-}
-
-.p-home {
-  font-size: 22px;
-  padding: 20px 50px 20px 50px;
-  width: 50%;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.youtube-iframe {
-  margin: 20px;
-  width: 45%;
-  display: inline-block;
-  vertical-align: bottom;
+  text-align: justify;
 }
 
 @media only screen and (max-width:768px) {
-  .box-content {
-    width: 100%;
-    margin-bottom: 5px;
-    margin-left: 0px;
-  }
-  .p-home {
-    font-size: 18px;
+  p {
+    font-size: 15px !important;
     width: 100%;
     padding: 15px;
     text-align: center;
-  }
-  .youtube-iframe {
-    width: -webkit-fill-available;
   }
 }
 

@@ -32,9 +32,9 @@
       <option>Owner</option>
     </select>
     <br/>
-    First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:95%" require_onced>
+    First Name: <input type="text" id="txtFirstName" name="txtFirstName" class="form-control" style="width:95%" require>
     <br/>
-    Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:95%" require_onced>
+    Last Name: <input type="text" id="txtLastName" name="txtLastName" class="form-control" style="width:95%" require>
     <br/>
     <div class="text-right">
       <button id="btnEdit" type="submit" class="btn btn-primary" onclick="submitEditForm();return false;">Update</button>

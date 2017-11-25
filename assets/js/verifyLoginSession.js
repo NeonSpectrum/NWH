@@ -1,7 +1,7 @@
 setInterval(function () {
   Pace.ignore(function () {
     $.ajax({
-      url: '/files/verifyLoginSession.php',
+      url: currentDirectory + 'files/verifyLoginSession.php',
       success: function (response) {
         if (!response) {
           $.ajax({
