@@ -82,10 +82,15 @@ $(document).ready(function () {
 
   // CLICKING ON HREF WITH # WILL ANIMATE TO THAT HASH
   $('a[href^="#"]').click(function () {
-    $('html, body').animate({
-      scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-
+    if (window.width > 480) {
+      $('html, body').animate({
+        scrollTop: $($.attr(this, 'href')).offset().top - 60
+      }, 500);
+    } else {
+      $('html, body').animate({
+        scrollTop: $($.attr(this, 'href')).offset().top - 10
+      }, 500);
+    }
     return false;
   });
 
