@@ -196,10 +196,18 @@ function disableKey(evt, key) {
 
 // ALERTNOTIF FUNCTION
 function alertNotif(type, message, reload, timeout) {
-  $.notify(message, {
-    autoHide: timeout == 0 ? false : true,
-    autoHideDelay: timeout == null ? 3000 : timeout,
-    className: type
+  $.notify({
+    icon: "glyphicon glyphicon-exclamation-sign",
+    message: "<div style='text-align:center;margin-top:-20px'>" + message + "</div>"
+  }, {
+    type: type == 'error' ? 'danger' : type,
+    placement: {
+      from: "top",
+      align: "center"
+    },
+    newest_on_top: true,
+    mouse_over: true,
+    delay: 3000
   });
   setTimeout(function () {
     if (reload == null || !reload)
