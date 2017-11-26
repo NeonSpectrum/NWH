@@ -1,9 +1,12 @@
 <?php 
+  if (!isset($_SESSION['email'])) {
+    header("location: ../");
+    exit();
+  }
+  
   require_once '../header.php';
   require_once '../files/navbar.php';
-
-  if (!isset($_SESSION['email'])) header("location: $root");
-
+  
   $step = isset($_GET['step']) ? $_GET['step'] : '';
   $checkInDate = isset($_GET['txtCheckInDate']) ? $_GET['txtCheckInDate'] : '';
   $checkOutDate = isset($_GET['txtCheckOutDate']) ? $_GET['txtCheckOutDate'] : '';
