@@ -8,35 +8,18 @@ $(document).ready(function () {
     $('.navbar').addClass("navbar-fixed-top");
   }
 
-  // UPDATE ALL DATES
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
-  $(".checkInDate, .checkOutDate").each(function () {
-    if (!$(this).attr("value")) {
-      $(this).attr('min', tomorrow);
-      $(this).val(tomorrow);
-    }
-  });
-  $('.checkInDate').change(function () {
-    if (!$(this).attr("value")) {
-      $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
-      $(this).closest("form").find(".checkOutDate").val($(this).val());
-    }
-  });
-
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function () {
     $(this).find('form')[0].reset();
     $(this).find('button').attr('disabled', false);
     $(this).find('.lblDisplayError').html('');
     $(this).find('#g-recaptcha-response').val('');
-    scrolling(true);
+    // scrolling(true);
   });
 
   // DISABLE SCROLL IF MODAL IS SHOWN
   $('.modal').on('shown.bs.modal', function () {
-    scrolling(false);
+    // scrolling(false);
   });
 
   // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
@@ -103,11 +86,18 @@ $(document).ready(function () {
   // Add slideUp animation to Bootstrap dropdown when collapsing.
   $('.dropdown').on('hide.bs.dropdown', function () {
     $(this).find('.dropdown-menu').first().stop(true, true).slideUp("fast");
+    $(this).find("form").trigger("reset");
+    $(this).find(".lblDisplayError").html("");
+    updateDate();
   });
 });
 // PACE DONE
 Pace.on('done', function () {
   scrolling(true);
+
+  $("form").trigger("reset");
+  updateDate();
+
   $(".loadingIcon").fadeOut("slow");
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   $("html,body").scrollTop(0);
@@ -178,6 +168,24 @@ baguetteBox.run('.img-baguette', {
   fullscreen: true
 });
 
+// UPDATE ALL DATES
+function updateDate() {
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
+  $(".checkInDate, .checkOutDate").each(function () {
+    if (!$(this).attr("value")) {
+      $(this).attr('min', tomorrow);
+      $(this).val(tomorrow);
+    }
+  });
+  $('.checkInDate').change(function () {
+    if (!$(this).attr("value")) {
+      $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
+      $(this).closest("form").find(".checkOutDate").val($(this).val());
+    }
+  });
+}
 // DISABLEKEY FUNCTION
 function disableKey(evt, key) {
   var charCode = (evt.which) ? evt.which : event.keyCode
@@ -283,11 +291,13 @@ $("#frmChange").submit(function (e) {
         $('#modalChange').modal('hide');
         $(this).find('#frmChange').trigger('reset');
         $(this).find('#btnUpdate').attr('disabled', false);
-        alertNotif("success", "Updated Successfully!", false);
+        alertNotif("success", "Updated Successfully!");
       } else {
         $(this).find("#btnUpdate").html('Update');
         $(this).find('#btnUpdate').attr('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
       }
     }
   });
@@ -313,7 +323,9 @@ $("#frmEditProfile").submit(function (e) {
           if (file_data.size > 2097152) {
             $(this).find("#btnEditProfile").html('Update');
             $(this).find('#btnEditProfile').attr('disabled', false);
-            $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
+            $(this).find(".lblDisplayError").show(function () {
+              $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
+            });
           } else {
             $.ajax({
               url: root + 'files/uploadPicture.php',
@@ -331,7 +343,9 @@ $("#frmEditProfile").submit(function (e) {
                 } else {
                   $(this).find("#btnEditProfile").html('Update');
                   $(this).find('#btnEditProfile').attr('disabled', false);
-                  $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
+                  $(this).find(".lblDisplayError").show(function () {
+                    $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
+                  });
                 }
               }
             });
@@ -339,13 +353,14 @@ $("#frmEditProfile").submit(function (e) {
         } else {
           $('#modalEditProfile').modal('hide');
           $(this).find('#frmEditProfile').trigger('reset');
-          $(this).find('#btnEditProfile').attr('disabled', false);
-          alertNotif("success", "Updated Successfully!");
+          alertNotif("success", "Updated Successfully!", true);
         }
       } else {
         $(this).find("#btnEditProfile").html('Update');
         $(this).find('#btnEditProfile').attr('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
       }
     }
   });
@@ -357,7 +372,9 @@ function ValidateSingleInput(oInput) {
   var file_data = $('#imgProfilePic').prop('files')[0];
   if (file_data.size > 2097152) {
     $(this).find('#btnEditProfile').attr('disabled', true);
-    $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
+    $(this).find(".lblDisplayError").show(function () {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
+    });
     return false;
   }
   if (oInput.type == "file") {
@@ -374,7 +391,9 @@ function ValidateSingleInput(oInput) {
         }
       }
       if (!blnValid) {
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
+        });
         $(this).find('#btnEditProfile').attr('disabled', true);
         oInput.value = "";
         return false;
@@ -402,7 +421,9 @@ $("#frmEditReservation").submit(function (e) {
       } else {
         $(this).find("#btnEditReservation").html('Update');
         $(this).find('#btnEditReservation').attr('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        })
       }
     }
   });
@@ -427,7 +448,9 @@ $("#frmForgot").submit(function (e) {
       } else {
         $(this).find("#btnReset").html('Submit');
         $(this).find("#btnReset").prop('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
+        });
       }
     }
   });
@@ -437,7 +460,9 @@ $("#frmForgot").submit(function (e) {
 $("#frmRegister").submit(function (e) {
   e.preventDefault();
   if (pass != rpass) {
-    $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
+    $(this).find(".lblDisplayError").show(function () {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
+    });
     return;
   }
   var pass = $(this).find('#txtPassword', this).val();
@@ -463,7 +488,9 @@ $("#frmRegister").submit(function (e) {
       } else {
         $(this).find("#btnRegister").html('Register');
         $(this).find('#btnRegister').attr('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
       }
     }
   });
@@ -478,7 +505,7 @@ $("#frmLogin").submit(function (e) {
   e.preventDefault();
   $(this).find(".lblDisplayError").html('');
   $(this).find("#btnLogin").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
-  $(this).find("#btnLogin").prop('disabled', true);
+  $(this).find("#btnLogin").attr('disabled', true);
   $.ajax({
     context: this,
     type: 'POST',
@@ -489,8 +516,10 @@ $("#frmLogin").submit(function (e) {
         alertNotif("success", "Login Successfully", true);
       } else {
         $(this).find("#btnLogin").html('Sign In');
-        $(this).find("#btnLogin").prop('disabled', false);
-        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
+        $(this).find("#btnLogin").attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
+        });
       }
     }
   });

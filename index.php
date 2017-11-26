@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <label>Adults: </label>
-        <input class="form-control" type="number" id="txtAdults" name="txtAdults" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="10" required/>
+        <input class="form-control" type="number" id="txtAdults" name="txtAdults" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="10" required/>
       </div>
       <div class="form-group">
         <label>Children: </label>
@@ -44,7 +44,7 @@
       </div>
       <div class="form-group">
         <label></label>
-        <button class="btn btn-primary" id="btnCheck">Book Now</button>
+        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
       </div>
     </form>
   </div>

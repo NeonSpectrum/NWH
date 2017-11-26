@@ -1,43 +1,50 @@
 $(document).ready(function () {
-  $("#cmbEmail").change(function () {
-    $.ajax({
-      url: "../../files/displayAccount.php",
-      type: "POST",
-      dataType: "json",
-      data: $('#frmAccount').serialize(),
-      success: function (data) {
-        if (data[0] == 'error') {
-          $("#cmbAccountType").val("");
-          $("#txtFirstName").val("");
-          $("#txtLastName").val("");
-          return;
-        }
-        $("#cmbAccountType").val(data[0]);
-        $("#txtFirstName").val(data[1]);
-        $("#txtLastName").val(data[2]);
-      }
-    });
+  $.ajax({
+    url: "../../files/displayAccount.php",
+    type: "POST",
+    dataType: "json",
+    data: $('#frmAccount').serialize(),
+    success: function (data) {
+      $("#cmbAccountType").val(data[0]);
+      $("#txtFirstName").val(data[1]);
+      $("#txtLastName").val(data[2]);
+    }
+  });
+});
+$("#cmbEmail").change(function () {
+  $.ajax({
+    url: "../../files/displayAccount.php",
+    type: "POST",
+    dataType: "json",
+    data: $('#frmAccount').serialize(),
+    success: function (data) {
+      $("#cmbAccountType").val(data[0]);
+      $("#txtFirstName").val(data[1]);
+      $("#txtLastName").val(data[2]);
+    }
   });
 });
 
-function submitEditForm() {
-  $("#btnEdit").html('<img src="/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Editing ...');
-  $("#btnEdit").attr('disabled', true);
+$('#frmAccount').submit(function (e) {
+  e.preventDefault();
+  $(this).find("#btnEdit").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
+  $(this).find("#btnEdit").attr('disabled', true);
   $.ajax({
+    context: this,
     type: 'POST',
-    url: '../../files/editAccount.php',
-    data: $("#frmAccount").serialize(),
+    url: root + 'files/editAccount.php',
+    data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
         alertNotif("success", "Records Updated Successfully!");
+        $(this).find("#lblDisplayError").html('');
       } else {
-        $("#btnEdit").html('Edit');
-        $("#btnEdit").attr('disabled', false);
-        $("#lblErrorDisplayAccount").fadeIn(1000, function () {
-          $("#lblErrorDisplayAccount").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
+        $(this).find("#btnEdit").html('Update');
+        $(this).find("#btnEdit").attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
         });
       }
     }
   });
-  return false;
-}
+});

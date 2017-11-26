@@ -18,9 +18,6 @@
         $arr[4] = $row['Childrens'];
         
         echo json_encode($arr);
-      } else {
-        $arr[0] = 'error';
-        echo json_encode($arr);
       }
     } catch (PDOException $e) {
       echo $e->getMessage();
