@@ -13,9 +13,35 @@ body {
   }
 }
 
-#alertBox {
-  display: none;
-  z-index: 9999;
+a[disabled],
+a[disabled]:hover {
+  pointer-events: none;
+}
+
+
+/* CUSTOM ALERT BOX */
+
+.notifyjs-corner {
+  margin: 0px auto !important;
+  right: 0px;
+  top: 10px !important;
+  width: 33.33333333% !important;
+  left: 0px;
+}
+
+@media only screen and (max-width:768px) {
+  .notifyjs-corner {
+    width: 91.66666667% !important;
+    font-size: 12px;
+  }
+}
+
+.notifyjs-corner .notifyjs-wrapper,
+.notifyjs-corner .notifyjs-container {
+  text-align: center;
+  width: 100% !important;
+  margin: 0px !important;
+  margin-top: 5px !important;
 }
 
 .loadingIcon {

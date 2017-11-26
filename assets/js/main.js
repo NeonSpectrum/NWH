@@ -1,4 +1,4 @@
-var currentDirectory = location.pathname.includes("nwh") ? "/nwh/" : "/";
+var root = location.pathname.includes("nwh") ? "/nwh/" : "/";
 
 $(document).ready(function () {
   scrolling(false);
@@ -13,12 +13,16 @@ $(document).ready(function () {
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
   $(".checkInDate, .checkOutDate").each(function () {
-    $(this).attr('min', tomorrow);
-    $(this).val(tomorrow);
+    if (!$(this).attr("value")) {
+      $(this).attr('min', tomorrow);
+      $(this).val(tomorrow);
+    }
   });
   $('.checkInDate').change(function () {
-    $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
-    $(this).closest("form").find(".checkOutDate").val($(this).val());
+    if (!$(this).attr("value")) {
+      $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
+      $(this).closest("form").find(".checkOutDate").val($(this).val());
+    }
   });
 
   // RESET FORM IF EXISTS IF MODAL IS EXITED
@@ -99,12 +103,11 @@ $(document).ready(function () {
 // PACE DONE
 Pace.on('done', function () {
   scrolling(true);
-
   $(".loadingIcon").fadeOut("slow");
-  $('#pace').attr("href", "/css/pace-theme-minimal.css");
+  $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   $("html,body").scrollTop(0);
 
-  if (window.location.hash) {
+  if (window.location.hash && $(window.location.hash).offset() != null) {
     $('html, body').animate({
       scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
     }, 1000, 'swing');
@@ -188,24 +191,36 @@ function disableKey(evt, key) {
 
 // ALERTNOTIF FUNCTION
 function alertNotif(type, message, reload, timeout) {
-  if (type == "success")
-    type = "alert-success";
-  else if (type == "error")
-    type = "alert-danger";
-  if (timeout == null)
-    timeout = 2000;
-  $('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert animated fadeInDown text-center ' + type + '" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">' + message + '</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
-  $('#alertBox').fadeIn();
-  setTimeout(function () {
-    $('#alertBox').fadeOut();
-    $('#alertBox').html('');
-    if (reload == null || !reload)
-      return;
-    else if (reload)
-      location.reload();
-    else
-      location.href(reload);
-  }, timeout);
+  // if (type == "success")
+  //   type = "alert-success";
+  // else if (type == "error")
+  //   type = "alert-danger";
+  // if (timeout == null)
+  //   timeout = 2000;
+  // $('#alertBox').stop();
+  // $('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert animated fadeInDown text-center ' + type + '" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">' + message + '</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
+  // $('#alertBox').fadeIn();
+  // setTimeout(function () {
+  //   $('#alertBox').fadeOut();
+  //   $('#alertBox').html('');
+  //   if (reload == null || !reload)
+  //     return;
+  //   else if (reload)
+  //     location.reload();
+  //   else
+  //     location.href(reload);
+  // }, timeout);
+  $.notify(message, {
+    autoHide: false,
+    autoHideDelay: timeout == null ? 5000 : timeout,
+    className: type
+  });
+  if (reload == null || !reload)
+    return;
+  else if (reload)
+    location.reload();
+  else
+    location.href(reload);
 }
 
 // CAPSLOCK FUNCTION
@@ -231,27 +246,26 @@ function scrolling(enable) {
 // DISPLAY BOOKING ID
 $("#cmbBookingID").change(function () {
   if ($("#cmbBookingID").val() == '') {
-    dateUpdate();
-    $("#txtEditRoomID").val('');
-    $("#txtEditAdults").val('0');
-    $("#txtEditChildrens").val('0');
-    $("#btnEditReservation").prop("disabled", true);
-    $("#btnPrint").prop("disabled", true);
+    $(this).closest("form").find("#txtRoomID").val('');
+    $(this).closest("form").find("#txtAdults").val('0');
+    $(this).closest("form").find("#txtChildrens").val('0');
+    $(this).closest("form").find("#btnEditReservation").prop("disabled", true);
+    $(this).closest("form").find("#btnPrint").prop("disabled", true);
     return;
   }
-  $("#btnEditReservation").prop("disabled", false);
-  $("#btnPrint").prop("disabled", false);
+  $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
+  $(this).closest("form").find("#btnPrint").prop("disabled", false);
   $.ajax({
-    url: currentDirectory + "files/displayEditReservation.php",
+    url: root + "files/displayEditReservation.php",
     type: "POST",
     dataType: "json",
     data: $(this).serialize(),
     success: function (data) {
-      $("#txtEditRoomID").val(data[0]);
-      $("#txtEditCheckInDate").val(data[1]);
-      $("#txtEditCheckOutDate").val(data[2]);
-      $("#txtEditAdults").val(data[3]);
-      $("#txtEditChildrens").val(data[4]);
+      $(this).closest("form").find("#txtRoomID").val(data[0]);
+      $(this).closest("form").find("#txtCheckInDate").val(data[1]);
+      $(this).closest("form").find("#txtCheckOutDate").val(data[2]);
+      $(this).closest("form").find("#txtAdults").val(data[3]);
+      $(this).closest("form").find("#txtChildrens").val(data[4]);
     }
   });
 });
@@ -259,23 +273,23 @@ $("#cmbBookingID").change(function () {
 // CHANGE PASSWORD
 $("#frmChange").submit(function (e) {
   e.preventDefault();
-  $("#btnUpdate").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
-  $('#btnUpdate').attr('disabled', true);
-  $("#lblDisplayErrorChange").html('');
+  $(this).find("#btnUpdate").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
+  $(this).find('#btnUpdate').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkChange.php',
+    url: root + 'files/checkChange.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $('#modalChange').modal('hide');
-        $('#frmChange').trigger('reset');
-        $('#btnUpdate').attr('disabled', false);
+        $(this).find('#modalChange').modal('hide');
+        $(this).find('#frmChange').trigger('reset');
+        $(this).find('#btnUpdate').attr('disabled', false);
         alertNotif("success", "Updated Successfully!", false);
       } else {
-        $("#btnUpdate").html('Update');
-        $('#btnUpdate').attr('disabled', false);
-        $("#lblDisplayErrorChange").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find('#btnUpdate').attr('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
       }
     }
   });
@@ -284,12 +298,12 @@ $("#frmChange").submit(function (e) {
 // EDIT PROFILE
 $("#frmEditProfile").submit(function (e) {
   e.preventDefault();
-  $("#btnEditProfile").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
-  $('#btnEditProfile').attr('disabled', true);
-  $("#lblDisplayErrorEditProfile").html('');
+  $(this).find("#btnEditProfile").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $(this).find('#btnEditProfile').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkEditProfile.php',
+    url: root + 'files/checkEditProfile.php',
     data: $(this).serialize() + "&profilePic=" + document.getElementById("imgProfilePic").files.length,
     success: function (response) {
       if (response == "ok") {
@@ -298,12 +312,12 @@ $("#frmEditProfile").submit(function (e) {
           var form_data = new FormData();
           form_data.append('file', file_data);
           if (file_data.size > 2097152) {
-            $("#btnEditProfile").html('Update');
-            $('#btnEditProfile').attr('disabled', false);
-            $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
+            $(this).find("#btnEditProfile").html('Update');
+            $(this).find('#btnEditProfile').attr('disabled', false);
+            $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
           } else {
             $.ajax({
-              url: currentDirectory + 'files/uploadPicture.php',
+              url: root + 'files/uploadPicture.php',
               dataType: 'text',
               cache: false,
               contentType: false,
@@ -312,26 +326,26 @@ $("#frmEditProfile").submit(function (e) {
               type: 'POST',
               success: function (responseUpload) {
                 if (responseUpload == "ok") {
-                  $('#modalEditProfile').modal('hide');
+                  $(this).find('#modalEditProfile').modal('hide');
                   alertNotif("success", "Updated Successfully!", true);
                 } else {
-                  $("#btnEditProfile").html('Update');
-                  $('#btnEditProfile').attr('disabled', false);
-                  $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
+                  $(this).find("#btnEditProfile").html('Update');
+                  $(this).find('#btnEditProfile').attr('disabled', false);
+                  $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
                 }
               }
             });
           }
         } else {
-          $('#modalEditProfile').modal('hide');
-          $('#frmEditProfile').trigger('reset');
-          $('#btnEditProfile').attr('disabled', false);
+          $(this).find('#modalEditProfile').modal('hide');
+          $(this).find('#frmEditProfile').trigger('reset');
+          $(this).find('#btnEditProfile').attr('disabled', false);
           alertNotif("success", "Updated Successfully!");
         }
       } else {
-        $("#btnEditProfile").html('Update');
-        $('#btnEditProfile').attr('disabled', false);
-        $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find("#btnEditProfile").html('Update');
+        $(this).find('#btnEditProfile').attr('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
       }
     }
   });
@@ -342,8 +356,8 @@ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 function ValidateSingleInput(oInput) {
   var file_data = $('#imgProfilePic').prop('files')[0];
   if (file_data.size > 2097152) {
-    $('#btnEditProfile').attr('disabled', true);
-    $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
+    $(this).find('#btnEditProfile').attr('disabled', true);
+    $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
     return false;
   }
   if (oInput.type == "file") {
@@ -353,15 +367,15 @@ function ValidateSingleInput(oInput) {
       for (var j = 0; j < _validFileExtensions.length; j++) {
         var sCurExtension = _validFileExtensions[j];
         if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-          $("#lblDisplayErrorEditProfile").html('');
-          $('#btnEditProfile').attr('disabled', false);
+          $(this).find(".lblDisplayError").html('');
+          $(this).find('#btnEditProfile').attr('disabled', false);
           blnValid = true;
           break;
         }
       }
       if (!blnValid) {
-        $("#lblDisplayErrorEditProfile").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
-        $('#btnEditProfile').attr('disabled', true);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
+        $(this).find('#btnEditProfile').attr('disabled', true);
         oInput.value = "";
         return false;
       }
@@ -373,21 +387,21 @@ function ValidateSingleInput(oInput) {
 // EDIT RESERVATION
 $("#frmEditReservation").submit(function (e) {
   e.preventDefault();
-  $("#btnEditReservation").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
-  $('#btnEditReservation').attr('disabled', true);
-  $("#lblDisplayErrorEditReservation").html('');
+  $(this).find("#btnEditReservation").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $(this).find('#btnEditReservation').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkEditReservation.php',
+    url: root + 'files/checkEditReservation.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $('#modalEditReservation').modal('hide');
+        $(this).find('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', false);
       } else {
-        $("#btnEditReservation").html('Update');
-        $('#btnEditReservation').attr('disabled', false);
-        $("#lblDisplayErrorEditReservation").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find("#btnEditReservation").html('Update');
+        $(this).find('#btnEditReservation').attr('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
       }
     }
   });
@@ -396,22 +410,22 @@ $("#frmEditReservation").submit(function (e) {
 // FORGOT PASSWORD
 $("#frmForgot").submit(function (e) {
   e.preventDefault();
-  $("#btnReset").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
-  $("#btnReset").prop('disabled', true);
-  $("#lblDisplayErrorForgot").html('');
+  $(this).find("#btnReset").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $(this).find("#btnReset").prop('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkForgot.php',
+    url: root + 'files/checkForgot.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $('#modalForgot').modal('hide');
-        $('#frmForgot').trigger('reset');
+        $(this).find('#modalForgot').modal('hide');
+        $(this).find('#frmForgot').trigger('reset');
         alertNotif('success', "Email sent!", true);
       } else {
-        $("#btnReset").html('Submit');
-        $("#btnReset").prop('disabled', false);
-        $("#lblDisplayErrorForgot").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
+        $(this).find("#btnReset").html('Submit');
+        $(this).find("#btnReset").prop('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
       }
     }
   });
@@ -421,32 +435,32 @@ $("#frmForgot").submit(function (e) {
 $("#frmRegister").submit(function (e) {
   e.preventDefault();
   if (pass != rpass) {
-    $("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
+    $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
     return;
   }
-  var pass = $('#txtPassword', this).val();
-  var rpass = $('#txtRetypePassword', this).val();
-  $("#btnRegister").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
-  $('#btnRegister').attr('disabled', true);
-  $("#lblDisplayErrorRegister").html('');
+  var pass = $(this).find('#txtPassword', this).val();
+  var rpass = $(this).find('#txtRetypePassword', this).val();
+  $(this).find("#btnRegister").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+  $(this).find('#btnRegister').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkRegister.php',
+    url: root + 'files/checkRegister.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
         alertNotif('success', 'Email sent to verify your email!', false, 10000);
-        $('#btnRegister').attr('disabled', false);
-        $('#frmRegister').trigger('reset');
-        $('#modalRegistration').modal('hide');
-        $('#btnRegister').html('Register');
-        if ($('#txtEmail').val().includes("gmail")) {
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find('#frmRegister').trigger('reset');
+        $(this).find('#modalRegistration').modal('hide');
+        $(this).find('#btnRegister').html('Register');
+        if ($(this).find('#txtEmail').val().includes("gmail")) {
           location.href = "gmail.com";
         }
       } else {
-        $("#btnRegister").html('Register');
-        $('#btnRegister').attr('disabled', false);
-        $("#lblDisplayErrorRegister").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
+        $(this).find("#btnRegister").html('Register');
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>')
       }
     }
   });
@@ -459,57 +473,86 @@ function recaptchaCallback() {
 // LOGIN
 $("#frmLogin").submit(function (e) {
   e.preventDefault();
-  $("#lblDisplayErrorLogin").html('');
-  $("#btnLogin").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
-  $("#btnLogin").prop('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $(this).find("#btnLogin").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
+  $(this).find("#btnLogin").prop('disabled', true);
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/checkLogin.php',
+    url: root + 'files/checkLogin.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
         alertNotif("success", "Login Successfully", true);
       } else {
-        $("#btnLogin").html('Sign In');
-        $("#btnLogin").prop('disabled', false);
-        $("#lblDisplayErrorLogin").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
+        $(this).find("#btnLogin").html('Sign In');
+        $(this).find("#btnLogin").prop('disabled', false);
+        $(this).find(".lblDisplayError").html('<div class="alert alert-danger fade in"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>')
       }
     }
   });
 });
 
+// BOOK NOW BUTTON
+$('#frmBookCheck').submit(function (e) {
+  e.preventDefault();
+  var checkIn = new Date($(this).find("#txtCheckInDate").val());
+  var checkOut = new Date($(this).find("#txtCheckOutDate").val());
+
+  if (checkIn > checkOut) {
+    alertNotif("error", "Check Out date must be greater than Check In date.");
+    return;
+  }
+  if (parseInt($(this).find('#txtAdults').val()) + parseInt($(this).find('#txtAdults').val()) == 0) {
+    alertNotif("error", "Please enter a valid number of guests!");
+    return;
+  }
+
+  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
+  $(this).find("#btnBookNow").prop('disabled', true);
+
+  location.href = root + "reservation/?" + $(this).serialize();
+});
+
 // BOOK NOW FORM
 $("#frmBookNow").submit(function (e) {
   e.preventDefault();
-  $(this).closest("form").find("#btnBookNow").html('<img src=images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
-  $(this).closest("form").find("#btnBookNow").prop('disabled', true);
-  setTimeout("location.href='roomandrates?" + $(this).serialize() + "'", 2000);
+  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
+  $(this).find("#btnBookNow").prop('disabled', true);
+  $.ajax({
+    type: 'POST',
+    url: root + 'files/submitBookNow.php',
+    data: $(this).serialize(),
+    success: function (response) {
+      $('#stepID').val('4');
+      location.href = root + "reservation/?" + $("#frmBookNow").serialize() + "&txtBookingID=" + response;
+    }
+  });
 });
 
 // CONTACT US FORM
 $('#frmContact').submit(function (e) {
   e.preventDefault();
-  if (!$('#txtEmail').val().includes('@') || !$('#txtEmail').val().includes('.')) {
+  if (!$(this).find('#txtEmail').val().includes('@') || !$(this).find('#txtEmail').val().includes('.')) {
     alertNotif("error", "Invalid Format of Email Address", false);
     $('#txtEmail').focus();
     return;
   }
-  $("#btnSubmit").html('<img src="' + currentDirectory + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
-  $("#btnSubmit").prop('disabled', true);
+  $(this).find("#btnSubmit").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $(this).find("#btnSubmit").prop('disabled', true);
   $.ajax({
     type: 'POST',
-    url: currentDirectory + 'files/processContactForm.php',
+    url: root + 'files/processContactForm.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
         alertNotif("success", "Sent Successfully", false);
-        $('#frmContact').trigger("reset");
-        $('.contactbox').toggleClass('contactbox--tray');
+        $(this).trigger("reset");
+        $(this).find('.contactbox').toggleClass('contactbox--tray');
       } else {
         alertNotif("error", response, false);
       }
-      $("#btnSubmit").html('Send');
-      $("#btnSubmit").prop('disabled', false);
+      $(this).find("#btnSubmit").html('Send');
+      $(this).find("#btnSubmit").prop('disabled', false);
     }
   });
 })

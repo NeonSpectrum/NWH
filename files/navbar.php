@@ -7,7 +7,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root;?>/"><img src="<?php echo $root;?>/images/logo-rendered.png" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root;?>"><img src="<?php echo $root;?>images/logo-rendered.png" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -21,32 +21,29 @@
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
             <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
               <div style="padding:10px 20px 0px 20px;width:350px">
-                <form class="form" method="post" id="frmBookNow">
-                  <div id="lblDisplayErrorLogin" class="lblDisplayError">
-                    <!-- error will be shown here ! -->
-                  </div>
+                <form class="form" method="post" id="frmBookCheck">
                   <div class="form-group">
                     <label>Check In Date:</label>
-                    <input id="txtBookCheckInDate" type="date" class="form-control checkInDate" name="txtBookCheckInDate" onkeypress="return disableKey(event,'number')" required>
+                    <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
                   </div>
                   <div class="form-group">
                     <label>Check Out Date:</label>
-                    <input id="txtBookCheckOutDate" type="date" class="form-control checkOutDate" name="txtBookCheckOutDate" onkeypress="return disableKey(event,'number')" required>
+                    <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
                   </div>
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-6">
                         <label>Adults:</label>
-                        <input id="txtBookAdults" type="number" class="form-control" name="txtBookAdults" value="0" max="10" required>
+                        <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" max="10" required>
                       </div>
                       <div class="col-md-6">
                         <label>Children:</label>
-                        <input id="txtBookChildren" type="number" class="form-control" name="txtBookChildren" value="0" max="10" required>
+                        <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" max="10" required>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <button id="btnBookNow" type="submit" class="btn btn-primary btn-block">Book Now</button>
+                    <button id="btnCheck" type="submit" class="btn btn-primary btn-block">Book Now</button>
                   </div>
                 </form>
               </div>
@@ -56,10 +53,10 @@
         <li class="dropdown" style="cursor:pointer">
           <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="margin-top:-1px;margin-left:-1px">
-            <li><a href="<?php echo $root;?>/">Home</a></li>
-            <li><a href="<?php echo $root;?>/gallery">Gallery</a></li>
-            <li><a href="<?php echo $root;?>/roomandrates">Room & Rates</a></li>
-            <li><a href="<?php echo $root;?>/contactus">Contact Us</a></li>
+            <li><a href="<?php echo $root;?>">Home</a></li>
+            <li><a href="<?php echo $root;?>gallery">Gallery</a></li>
+            <li><a href="<?php echo $root;?>roomandrates">Room & Rates</a></li>
+            <li><a href="<?php echo $root;?>contactus">Contact Us</a></li>
           </ul>
         </li>
         <?php
@@ -73,7 +70,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <form class="form" method="post" id="frmLogin">
-                    <div id="lblDisplayErrorLogin" class="lblDisplayError">
+                    <div class="lblDisplayError">
                       <!-- error will be shown here ! -->
                     </div>
                     <div class="form-group">
@@ -108,7 +105,7 @@
         ?>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>/images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
               <div class="user-name-navbar">
                 <?php echo $fname.' '.$lname;?>
               </div>
@@ -116,12 +113,12 @@
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
               <?php
                 if ($accounttype == "Owner" || $accounttype == "Admin")
-                  echo "<li><a href='$root/admin/'>Admin Configuration</a></li>\n";
+                  echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
               ?>
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-              <li><a href="<?php echo $root;?>/files/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              <li><a href="<?php echo $root;?>files/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
         <?php
@@ -144,7 +141,7 @@
       </div>
       <div class="modal-body">
         <form id="frmRegister" method="post" class="form-horizontal">
-          <div id="lblDisplayErrorRegister" class="lblDisplayError">
+          <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
@@ -202,7 +199,7 @@
       </div>
       <div class="modal-body">
         <form id="frmForgot" method="post" class="form-horizontal">
-          <div id="lblDisplayErrorForgot" class="lblDisplayError">
+          <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
@@ -234,7 +231,7 @@
       </div>
       <div class="modal-body">
         <form id="frmChange" method="post" class="form-horizontal">
-          <div id="lblDisplayErrorChange" class="lblDisplayError">
+          <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
@@ -269,7 +266,7 @@
       </div>
       <div class="modal-body">
         <form id="frmEditProfile" method="post" class="form-horizontal" enctype="multipart/form-data">
-          <div id="lblDisplayErrorEditProfile" class="lblDisplayError">
+          <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
@@ -309,7 +306,7 @@
       </div>
       <div class="modal-body">
         <form id="frmEditReservation" method="post" class="form-horizontal">
-          <div id="lblDisplayErrorEditReservation" class="lblDisplayError">
+          <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
@@ -334,36 +331,36 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-3">
-              <input name="txtEditRoomID" type="text" class="form-control" id="txtEditRoomID" placeholder="RoomID" required/>
+              <input name="RoomID" type="text" class="form-control" id="RoomID" placeholder="RoomID" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Check In Date</label>
             <div class="col-sm-7">
-              <input name="txtEditCheckInDate" type="date" class="form-control checkInDate" id="txtEditCheckInDate" onkeydown="return disableKey(event,'number')" required/>
+              <input name="CheckInDate" type="date" class="form-control checkInDate" id="CheckInDate" onkeydown="return disableKey(event,'number')" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Check Out Date</label>
             <div class="col-sm-7">
-              <input name="txtEditCheckOutDate" type="date" class="form-control checkOutDate" id="txtEditCheckOutDate" onkeydown="return disableKey(event,'number')" required/>
+              <input name="CheckOutDate" type="date" class="form-control checkOutDate" id="CheckOutDate" onkeydown="return disableKey(event,'number')" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="txtEditAdults" type="number" class="form-control" id="txtEditAdults" placeholder="Adults" onkeypress="disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="Adults" type="number" class="form-control" id="Adults" placeholder="Adults" onkeypress="disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Childrens</label>
             <div class="col-sm-3">
-              <input name="txtEditChildrens" type="number" class="form-control" id="txtEditChildrens" placeholder="Childrens" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="Childrens" type="number" class="form-control" id="Childrens" placeholder="Childrens" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
-            <button id="btnEditReservation" type="submit" class="btn btn-info" disabled>Update</button>
+            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root;?>/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
+            <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>
