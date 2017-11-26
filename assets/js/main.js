@@ -211,8 +211,8 @@ function alertNotif(type, message, reload, timeout) {
   //     location.href(reload);
   // }, timeout);
   $.notify(message, {
-    autoHide: false,
-    autoHideDelay: timeout == null ? 5000 : timeout,
+    autoHide: timeout == 0 ? false : true,
+    autoHideDelay: timeout == null ? 3000 : timeout,
     className: type
   });
   if (reload == null || !reload)
@@ -493,7 +493,7 @@ $("#frmLogin").submit(function (e) {
 });
 
 // BOOK NOW BUTTON
-$('#frmBookCheck').submit(function (e) {
+$('.frmBookCheck').submit(function (e) {
   e.preventDefault();
   var checkIn = new Date($(this).find("#txtCheckInDate").val());
   var checkOut = new Date($(this).find("#txtCheckOutDate").val());

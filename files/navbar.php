@@ -21,7 +21,7 @@
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
             <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
               <div style="padding:10px 20px 0px 20px;width:350px">
-                <form class="form" method="post" id="frmBookCheck">
+                <form class="form frmBookCheck" method="post">
                   <div class="form-group">
                     <label>Check In Date:</label>
                     <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
