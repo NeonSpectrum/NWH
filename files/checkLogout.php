@@ -9,6 +9,10 @@
     unset($_COOKIE['nwhAuth']);
   }
   if (session_destroy()) {
-    header("location:".$_SERVER['HTTP_REFERER']);
+    if (strpos($_SERVER['HTTP_REFERER'], "/reservation")) {
+      header("location: ../");
+    } else {
+      header("location:".$_SERVER['HTTP_REFERER']);
+    }
   }
 ?>

@@ -215,12 +215,14 @@ function alertNotif(type, message, reload, timeout) {
     autoHideDelay: timeout == null ? 3000 : timeout,
     className: type
   });
-  if (reload == null || !reload)
-    return;
-  else if (reload)
-    location.reload();
-  else
-    location.href(reload);
+  setTimeout(function () {
+    if (reload == null || !reload)
+      return;
+    else if (reload)
+      location.reload();
+    else
+      location.href(reload);
+  }, 2000);
 }
 
 // CAPSLOCK FUNCTION
