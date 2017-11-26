@@ -4,7 +4,7 @@
   
   require '../assets/fpdf/fpdf.php';
   require '../assets/fpdi/autoload.php';
-  require_once '../files/db.php';
+  require_once 'db.php';
   
   if (isset($_GET['BookingID'])) {
     $query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,room.RoomID,CheckInDate,CheckOutDate,PeakRate,LeanRate,DiscountedRate FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN room ON booking.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE BookingID={$_GET['BookingID']}";
