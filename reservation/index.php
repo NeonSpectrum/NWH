@@ -1,9 +1,8 @@
 <?php 
+  session_start();
   if (!isset($_SESSION['email'])) {
-    header("location: ../");
-    exit();
+    echo "<script>alert('Login First!');location.href='../';</script>";
   }
-  
   require_once '../header.php';
   require_once '../files/navbar.php';
   

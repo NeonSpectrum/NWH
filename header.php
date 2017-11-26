@@ -1,5 +1,5 @@
 <?php
-  session_start(); //this is the login session
+  if(!isset($_SESSION)) session_start(); //this is the login session
   require_once 'files/db.php'; //link to database php
 
   $currentDirectory = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'],"/") + 1);
