@@ -18,32 +18,6 @@ a[disabled]:hover {
   pointer-events: none;
 }
 
-
-/* CUSTOM ALERT BOX */
-
-.notifyjs-corner {
-  margin: 0px auto !important;
-  right: 0px;
-  top: 10px !important;
-  width: 33.33333333% !important;
-  left: 0px;
-}
-
-@media only screen and (max-width:768px) {
-  .notifyjs-corner {
-    width: 91.66666667% !important;
-    font-size: 12px;
-  }
-}
-
-.notifyjs-corner .notifyjs-wrapper,
-.notifyjs-corner .notifyjs-container {
-  text-align: center;
-  width: 100% !important;
-  margin: 0px !important;
-  margin-top: 5px !important;
-}
-
 .loadingIcon {
   position: fixed;
   width: 100%;
@@ -432,6 +406,16 @@ a:hover.back-to-top {
   display: flex;
   -webkit-align-items: center;
   align-items: center;
+}
+
+.contactbox--tray>.contactbox__title {
+  background-color: rgba(3, 43, 73, 0.9);
+  transition: all 0.3s ease-in-out;
+}
+
+.contactbox--tray>.contactbox__title:hover {
+  background-color: rgb(3, 43, 73);
+  transition: all 0.3s ease-in-out;
 }
 
 .contactbox__title h5 {
