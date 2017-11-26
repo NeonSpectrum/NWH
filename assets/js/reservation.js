@@ -18,9 +18,15 @@ $(document).ready(function () {
     var step = $(this).closest(".setup-content").attr("id");
     $('#stepID').val(parseInt(step[step.length - 1]) + 1);
     if ($(this).closest(".setup-content").attr("id") == 'step-1' && !validateStep1()) {
+      $(this).html('Next');
+      $(this).prop('disabled', false);
       return;
     } else if ($(this).closest(".setup-content").attr("id") == 'step-2') {
-      if (!validateStep2) return;
+      if (!validateStep2()) {
+        $(this).html('Next');
+        $(this).prop('disabled', false);
+        return;
+      }
       $.ajax({
         type: 'POST',
         url: root + 'files/checkRoomAvailability.php',
@@ -71,7 +77,7 @@ function validateStep1() {
     alertNotif("error", "Check Out date must be greater than Check In date.");
     return false;
   }
-  if (parseInt($('#frmBookNow').find('#txtAdults').val()) > 0) {
+  if (parseInt($('#frmBookNow').find('#txtAdults').val()) <= 0) {
     alertNotif("error", "An adult is a must!");
     return false;
   } else if (parseInt($('#frmBookNow').find('#txtAdults').val()) + parseInt($('#frmBookNow').find('#txtAdults').val()) == 0) {

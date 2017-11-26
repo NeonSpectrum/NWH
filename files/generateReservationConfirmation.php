@@ -7,7 +7,7 @@
   require_once 'db.php';
   
   if (isset($_GET['BookingID'])) {
-    $query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,room.RoomID,CheckInDate,CheckOutDate,PeakRate,LeanRate,DiscountedRate FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN room ON booking.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE BookingID={$_GET['BookingID']}";
+    $query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,RoomType,CheckInDate,CheckOutDate,PeakRate,LeanRate,DiscountedRate FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN room ON booking.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE BookingID={$_GET['BookingID']}";
     $result = mysqli_query($db,$query);
     while ($row = mysqli_fetch_assoc($result)) {
       if (mktime(0, 0, 0, 10, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 5, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
@@ -46,7 +46,7 @@
       $pdf->SetXY(135, 92);
       $pdf->Write(0, "12:00nn");
       $pdf->SetXY(135, 97);
-      $pdf->Write(0, "{$row['RoomID']}");
+      $pdf->Write(0, str_replace("_"," ",$row['RoomType']));
       $pdf->SetXY(135, 101.5);
       $pdf->Write(0, "P".number_format($price));
 
