@@ -545,7 +545,7 @@ $('#frmContact').submit(function (e) {
       if (response == "ok") {
         alertNotif("success", "Sent Successfully", false);
         $(this).trigger("reset");
-        $(this).find('.contactbox').toggleClass('contactbox--tray');
+        $(this).parent().toggleClass('contactbox--tray');
       } else {
         alertNotif("error", response, false);
       }

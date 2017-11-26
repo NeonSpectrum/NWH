@@ -1,4 +1,5 @@
 <?php
+  require '../files/strings.php';
   require '../files/functions.php';
   
   $name = $_POST['txtName'];

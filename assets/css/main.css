@@ -417,10 +417,6 @@ a:hover.back-to-top {
   bottom: -350px;
 }
 
-.contactbox .form-control:focus {
-  border-color: #1f2836;
-}
-
 .contactbox__title,
 .contactbox__body {
   border-bottom: none;

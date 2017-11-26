@@ -1,6 +1,7 @@
 	<?php
 		if (!strpos($_SERVER['PHP_SELF'],"admin")) 
 		{
+      if ($currentDirectory != 'contactus') {
   ?>
   <div class="contactbox contactbox--tray contactbox--empty">
     <div class="contactbox__title">
@@ -25,6 +26,9 @@
         <button id="btnSubmit" type="submit" class="btn btn-primary btn-block">Send Message</button>
     </form>
   </div>
+  <?php
+      }
+  ?>
 	<div class="footer">
 		<div class="center-block" style="width:80%;padding-left:5%;font-size:15px">
     <div class="row" style="padding:20px 0px 80px 0px">
