@@ -1,4 +1,4 @@
-var currentDirectory = location.pathname.includes("nwh") ? "/nwh/" : "/";
+var root = location.pathname.includes("nwh") ? "/nwh/" : "/";
 
 $(document).ready(function () {
   var trigger = $('.hamburger'),
