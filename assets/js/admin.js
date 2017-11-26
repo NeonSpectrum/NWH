@@ -37,3 +37,19 @@ $('#btnGitUpdate').click(function () {
     }
   });
 })
+
+function alertNotif(type, message, reload, timeout) {
+  $.notify(message, {
+    autoHide: timeout == 0 ? false : true,
+    autoHideDelay: timeout == null ? 3000 : timeout,
+    className: type
+  });
+  setTimeout(function () {
+    if (reload == null || !reload)
+      return;
+    else if (reload)
+      location.reload();
+    else
+      location.href(reload);
+  }, 2000);
+}
