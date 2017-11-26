@@ -74,7 +74,7 @@ $(".carousel").on("mouseup", function (event) {
   for (var i = 0; i < youtube.length; i++) {
 
     var image = new Image();
-    image.src = currentDirectory + "images/nwh-sddefault.jpg";
+    image.src = root + "images/nwh-sddefault.jpg";
     image.addEventListener("load", function () {
       youtube[i].appendChild(image);
     }(i));

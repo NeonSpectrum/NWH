@@ -34,11 +34,11 @@
                     <div class="row">
                       <div class="col-md-6">
                         <label>Adults:</label>
-                        <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" max="10" required>
+                        <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
                       </div>
                       <div class="col-md-6">
                         <label>Children:</label>
-                        <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" max="10" required>
+                        <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
                       </div>
                     </div>
                   </div>

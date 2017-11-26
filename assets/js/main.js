@@ -259,6 +259,7 @@ $("#cmbBookingID").change(function () {
   $(this).closest("form").find("#btnPrint").prop("disabled", false);
   $.ajax({
     url: root + "files/displayEditReservation.php",
+    context: this,
     type: "POST",
     dataType: "json",
     data: $(this).serialize(),
@@ -279,6 +280,7 @@ $("#frmChange").submit(function (e) {
   $(this).find('#btnUpdate').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkChange.php',
     data: $(this).serialize(),
@@ -304,6 +306,7 @@ $("#frmEditProfile").submit(function (e) {
   $(this).find('#btnEditProfile').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkEditProfile.php',
     data: $(this).serialize() + "&profilePic=" + document.getElementById("imgProfilePic").files.length,
@@ -325,6 +328,7 @@ $("#frmEditProfile").submit(function (e) {
               contentType: false,
               processData: false,
               data: form_data,
+              context: this,
               type: 'POST',
               success: function (responseUpload) {
                 if (responseUpload == "ok") {
@@ -393,6 +397,7 @@ $("#frmEditReservation").submit(function (e) {
   $(this).find('#btnEditReservation').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkEditReservation.php',
     data: $(this).serialize(),
@@ -416,6 +421,7 @@ $("#frmForgot").submit(function (e) {
   $(this).find("#btnReset").prop('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkForgot.php',
     data: $(this).serialize(),
@@ -446,6 +452,7 @@ $("#frmRegister").submit(function (e) {
   $(this).find('#btnRegister').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkRegister.php',
     data: $(this).serialize(),
@@ -479,6 +486,7 @@ $("#frmLogin").submit(function (e) {
   $(this).find("#btnLogin").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
   $(this).find("#btnLogin").prop('disabled', true);
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/checkLogin.php',
     data: $(this).serialize(),
@@ -521,6 +529,7 @@ $("#frmBookNow").submit(function (e) {
   $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
   $(this).find("#btnBookNow").prop('disabled', true);
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/submitBookNow.php',
     data: $(this).serialize(),
@@ -542,6 +551,7 @@ $('#frmContact').submit(function (e) {
   $(this).find("#btnSubmit").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
   $(this).find("#btnSubmit").prop('disabled', true);
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'files/processContactForm.php',
     data: $(this).serialize(),
