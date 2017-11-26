@@ -33,7 +33,7 @@ $('#btnGitUpdate').click(function () {
   $.ajax({
     url: currentDirectory + 'files/gitUpdate.php',
     success: function (response) {
-      alertNotif("success", response, true, 3000);
+      alert(response);
     }
   });
 })
