@@ -272,7 +272,7 @@ $("#frmChange").submit(function (e) {
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $(this).find('#modalChange').modal('hide');
+        $('#modalChange').modal('hide');
         $(this).find('#frmChange').trigger('reset');
         $(this).find('#btnUpdate').attr('disabled', false);
         alertNotif("success", "Updated Successfully!", false);
@@ -318,7 +318,7 @@ $("#frmEditProfile").submit(function (e) {
               type: 'POST',
               success: function (responseUpload) {
                 if (responseUpload == "ok") {
-                  $(this).find('#modalEditProfile').modal('hide');
+                  $('#modalEditProfile').modal('hide');
                   alertNotif("success", "Updated Successfully!", true);
                 } else {
                   $(this).find("#btnEditProfile").html('Update');
@@ -329,7 +329,7 @@ $("#frmEditProfile").submit(function (e) {
             });
           }
         } else {
-          $(this).find('#modalEditProfile').modal('hide');
+          $('#modalEditProfile').modal('hide');
           $(this).find('#frmEditProfile').trigger('reset');
           $(this).find('#btnEditProfile').attr('disabled', false);
           alertNotif("success", "Updated Successfully!");
@@ -389,7 +389,7 @@ $("#frmEditReservation").submit(function (e) {
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $(this).find('#modalEditReservation').modal('hide');
+        $('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', false);
       } else {
         $(this).find("#btnEditReservation").html('Update');
@@ -413,8 +413,8 @@ $("#frmForgot").submit(function (e) {
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {
-        $(this).find('#modalForgot').modal('hide');
-        $(this).find('#frmForgot').trigger('reset');
+        $('#modalForgot').modal('hide');
+        $('#frmForgot').trigger('reset');
         alertNotif('success', "Email sent!", true);
       } else {
         $(this).find("#btnReset").html('Submit');
@@ -447,7 +447,7 @@ $("#frmRegister").submit(function (e) {
         alertNotif('success', 'Email sent to verify your email!', false, 10000);
         $(this).find('#btnRegister').attr('disabled', false);
         $(this).find('#frmRegister').trigger('reset');
-        $(this).find('#modalRegistration').modal('hide');
+        $('#modalRegistration').modal('hide');
         $(this).find('#btnRegister').html('Register');
         if ($(this).find('#txtEmail').val().includes("gmail")) {
           location.href = "gmail.com";

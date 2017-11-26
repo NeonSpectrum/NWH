@@ -12,9 +12,6 @@
       $row = $result->fetch_assoc();
       $count = mysqli_num_rows($result);
       if($count==1 && password_verify($password, $row['Password']) && strpos($email,'@') && strpos($email,'.')) {
-        $session_id = session_id();
-        $query = "UPDATE account SET SessionID='$session_id' WHERE EmailAddress='$email'";
-        mysqli_query($db,$query);
         $_SESSION['email'] = $row['EmailAddress'];
         $_SESSION['fname'] = $row['FirstName'];
         $_SESSION['lname'] = $row['LastName'];
@@ -34,6 +31,10 @@
         // 		unset($_COOKIE['nwhAuth']);
         // 	}
         // }
+        $session_id = session_id();
+        $query = "UPDATE account SET SessionID='$session_id' WHERE EmailAddress='$email'";
+        mysqli_query($db,$query);
+        
         echo "ok";
       } elseif(!strpos($email, '@') || !strpos($email, '.')) {
         echo FORMAT_ERROR_EMAIL;
