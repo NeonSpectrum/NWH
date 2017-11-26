@@ -207,7 +207,7 @@ function alertNotif(type, message, reload, timeout) {
     },
     newest_on_top: true,
     mouse_over: true,
-    delay: 3000
+    delay: message.length > 100 ? 0 : 3000
   });
   setTimeout(function () {
     if (reload == null || !reload)

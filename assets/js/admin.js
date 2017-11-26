@@ -33,12 +33,13 @@ $('#btnGitUpdate').click(function () {
   $.ajax({
     url: root + 'files/gitUpdate.php',
     success: function (response) {
-      alertNotif("success", response, true, 3000);
+      alertNotif("success", response, true, 10000);
     }
   });
 })
 
 function alertNotif(type, message, reload, timeout) {
+  console.log(message.length / 50 * 1000);
   $.notify({
     icon: "glyphicon glyphicon-exclamation-sign",
     message: "<div style='text-align:center;margin-top:-20px'>" + message + "</div>"
@@ -49,8 +50,8 @@ function alertNotif(type, message, reload, timeout) {
       align: "center"
     },
     newest_on_top: true,
-    mouse_over: pause,
-    delay: 3000
+    mouse_over: true,
+    delay: message.length > 100 ? 0 : 3000
   });
   setTimeout(function () {
     if (reload == null || !reload)
