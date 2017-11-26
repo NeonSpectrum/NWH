@@ -21,6 +21,24 @@ body {
 }
 
 
+/* CUSTOM ALERT BOX */
+
+.notifyjs-corner {
+  margin: 0px auto !important;
+  right: 0px;
+  top: 10px !important;
+  width: 33.33333333% !important;
+  left: 0px;
+}
+
+@media only screen and (max-width:768px) {
+  .notifyjs-corner {
+    width: 91.66666667% !important;
+    font-size: 12px;
+  }
+}
+
+
 /* SIDEBAR */
 
 .nav .open>a,
