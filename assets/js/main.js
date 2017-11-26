@@ -196,25 +196,6 @@ function disableKey(evt, key) {
 
 // ALERTNOTIF FUNCTION
 function alertNotif(type, message, reload, timeout) {
-  // if (type == "success")
-  //   type = "alert-success";
-  // else if (type == "error")
-  //   type = "alert-danger";
-  // if (timeout == null)
-  //   timeout = 2000;
-  // $('#alertBox').stop();
-  // $('#alertBox').html('<div data-notify="container" class="col-xs-11 col-sm-4 alert animated fadeInDown text-center ' + type + '" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 0px auto; position: fixed; z-index: 1031; top: 20px; left: 0px; right: 0px;"><span data-notify="icon"></span><span data-notify="title"></span><span data-notify="message">' + message + '</span><button type="button" aria-hidden="true" class="close" data-dismiss = "alert" style="position: absolute; right: 10px; top: 20px; margin-top: -13px; z-index: 1033;">×</button></div>');
-  // $('#alertBox').fadeIn();
-  // setTimeout(function () {
-  //   $('#alertBox').fadeOut();
-  //   $('#alertBox').html('');
-  //   if (reload == null || !reload)
-  //     return;
-  //   else if (reload)
-  //     location.reload();
-  //   else
-  //     location.href(reload);
-  // }, timeout);
   $.notify(message, {
     autoHide: timeout == 0 ? false : true,
     autoHideDelay: timeout == null ? 3000 : timeout,
@@ -227,7 +208,7 @@ function alertNotif(type, message, reload, timeout) {
       location.reload();
     else
       location.href(reload);
-  }, 2000);
+  }, timeout != null ? timeout : 2000);
 }
 
 // CAPSLOCK FUNCTION

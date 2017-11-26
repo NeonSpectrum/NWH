@@ -38,6 +38,14 @@ body {
   }
 }
 
+.notifyjs-corner .notifyjs-wrapper,
+.notifyjs-corner .notifyjs-container {
+  text-align: center;
+  width: 100% !important;
+  margin: 0px !important;
+  margin-top: 5px !important;
+}
+
 
 /* SIDEBAR */
 

@@ -31,9 +31,9 @@ $(document).ready(function () {
 // GIT UPDATE
 $('#btnGitUpdate').click(function () {
   $.ajax({
-    url: currentDirectory + 'files/gitUpdate.php',
+    url: root + 'files/gitUpdate.php',
     success: function (response) {
-      alert(response);
+      alertNotif("success", response, true, 3000);
     }
   });
 })
@@ -51,5 +51,5 @@ function alertNotif(type, message, reload, timeout) {
       location.reload();
     else
       location.href(reload);
-  }, 2000);
+  }, timeout != null ? timeout : 2000);
 }

@@ -29,7 +29,7 @@ function submitEditForm() {
     data: $("#frmAccount").serialize(),
     success: function (response) {
       if (response == "ok") {
-        alertNotif("success", "Records Updated Successfully!", true);
+        alertNotif("success", "Records Updated Successfully!");
       } else {
         $("#btnEdit").html('Edit');
         $("#btnEdit").attr('disabled', false);

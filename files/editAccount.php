@@ -13,10 +13,9 @@
         echo PRIVILEGE_EDIT_ACCOUNT;
         return;
       }
-      $profilepicture = $_POST['txtProfilePicture'];
       $firstname = $_POST['txtFirstName'];
       $lastname = $_POST['txtLastName'];
-      $query = "UPDATE `account` SET AccountType='$accounttype',ProfilePicture='$profilepicture',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'";
+      $query = "UPDATE `account` SET AccountType='$accounttype',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'";
       $result = mysqli_query($db,$query);
       if (mysqli_affected_rows($db)!=0) {
         echo "ok";
