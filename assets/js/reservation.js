@@ -71,7 +71,10 @@ function validateStep1() {
     alertNotif("error", "Check Out date must be greater than Check In date.");
     return false;
   }
-  if (parseInt($('#frmBookNow').find('#txtAdults').val()) + parseInt($('#frmBookNow').find('#txtAdults').val()) == 0) {
+  if (parseInt($('#frmBookNow').find('#txtAdults').val()) > 0) {
+    alertNotif("error", "An adult is a must!");
+    return false;
+  } else if (parseInt($('#frmBookNow').find('#txtAdults').val()) + parseInt($('#frmBookNow').find('#txtAdults').val()) == 0) {
     alertNotif("error", "Please enter a valid number of guests!");
     return false;
   }
