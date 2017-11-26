@@ -1,6 +1,6 @@
 <?php
   // Pear Mail Library
-  $domain = $_SERVER['SERVER_NAME'];
+  $domain = strpos($_SERVER['REQUEST_URI'],"nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
 
   require_once 'functions.php';
   require_once 'db.php';
@@ -12,7 +12,7 @@
     $query = "UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'";
     $result = mysqli_query($db,$query) or die(mysql_error());
     if (mysqli_affected_rows($db)!=0) {
-      echo '<script>alert("Reset Successfully!");location.href="/";</script>';
+      echo '<script>alert("Reset Successfully!");location.href="../";</script>';
       exit();
     } else {
       echo ERROR_OCCURED;
@@ -28,7 +28,7 @@
       $randomNumber = mt_rand(10000000, 99999999);
       $data = nwh_encrypt("email=$email&newPass=$randomNumber");
       $subject = "Northwood Hotel Forgot Password";
-      $body = "Please proceed to this link to reset your password:<br/>http://$domain/login/checkForgot.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
+      $body = "Please proceed to this link to reset your password:<br/>http://$domain/files/checkForgot.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
       
       echo sendMail("$email","$subject","$body");
     } elseif(!strpos($email, '@') || !strpos($email, '.')) {
