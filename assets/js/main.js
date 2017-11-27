@@ -1,5 +1,3 @@
-var root = location.pathname.includes("nwh") ? "/nwh/" : "/";
-
 $(document).ready(function () {
   scrolling(false);
 
@@ -65,7 +63,7 @@ $(document).ready(function () {
 
   // CLICKING ON HREF WITH # WILL ANIMATE TO THAT HASH
   $('a[href^="#"]').click(function () {
-    if (window.width > 480) {
+    if ($(window).width() > 480) {
       $('html, body').animate({
         scrollTop: $($.attr(this, 'href')).offset().top - 60
       }, 500);
@@ -78,14 +76,21 @@ $(document).ready(function () {
   });
 
   // ANIMATE DROPDOWN
-  // Add slideDown animation to Bootstrap dropdown when expanding.
-  $('.dropdown').on('show.bs.dropdown', function () {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
+  // ADD SLIDEDOWN ANIMATION TO DROPDOWN //
+  $('.dropdown').on('show.bs.dropdown', function (e) {
+    if ($(window).width() > 480)
+      $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
   });
 
-  // Add slideUp animation to Bootstrap dropdown when collapsing.
-  $('.dropdown').on('hide.bs.dropdown', function () {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideUp("fast");
+  // ADD SLIDEUP ANIMATION TO DROPDOWN //
+  $('.dropdown').on('hidden.bs.dropdown', function (e) {
+    if ($(window).width() > 480) {
+      var me = this;
+      $(this).find('.dropdown-menu').first().stop(true, true).slideUp("fast", function () {
+        $(me).removeClass('open');
+        $(me).find('.dropdown-toggle').attr('aria-expanded', 'false');
+      });
+    }
     $(this).find("form").trigger("reset");
     $(this).find(".lblDisplayError").html("");
     updateDate();
@@ -94,10 +99,19 @@ $(document).ready(function () {
 // PACE DONE
 Pace.on('done', function () {
   scrolling(true);
-
-  $("form").trigger("reset");
+  $('.checkInDate, .checkOutDate').datepicker({
+    format: "yyyy-mm-dd",
+    startDate: '+1d',
+    autoclose: true,
+    todayHighlight: true
+  });
   updateDate();
-
+  $('.checkInDate').change(function () {
+    if (!$(this).attr("value")) {
+      $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
+      $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val());
+    }
+  });
   $(".loadingIcon").fadeOut("slow");
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   $("html,body").scrollTop(0);
@@ -129,25 +143,25 @@ Pace.on('done', function () {
     $(".scrollSlideUp").each(function () {
       if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideUp");
-        $(this).addClass("slideInUp");
+        $(this).addClass("fadeInUp");
       }
     });
     $(".scrollSlideDown").each(function () {
       if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideDown");
-        $(this).addClass("slideInDown");
+        $(this).addClass("fadeInDown");
       }
     });
     $(".scrollSlideLeft").each(function () {
       if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideLeft");
-        $(this).addClass("slideInLeft");
+        $(this).addClass("fadeInLeft");
       }
     });
     $(".scrollSlideRight").each(function () {
       if ($(this).offset().top < winTop + height) {
         $(this).removeClass("scrollSlideRight");
-        $(this).addClass("slideInRight");
+        $(this).addClass("fadeInRight");
       }
     });
   });
@@ -170,19 +184,11 @@ baguetteBox.run('.img-baguette', {
 
 // UPDATE ALL DATES
 function updateDate() {
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow = new Date(tomorrow).toISOString().split('T')[0];;
+  var date = new Date();
+  var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   $(".checkInDate, .checkOutDate").each(function () {
     if (!$(this).attr("value")) {
-      $(this).attr('min', tomorrow);
-      $(this).val(tomorrow);
-    }
-  });
-  $('.checkInDate').change(function () {
-    if (!$(this).attr("value")) {
-      $(this).closest("form").find(".checkOutDate").attr('min', $(this).val());
-      $(this).closest("form").find(".checkOutDate").val($(this).val());
+      $(this).datepicker("setDate", tomorrow);
     }
   });
 }
@@ -200,31 +206,6 @@ function disableKey(evt, key) {
   } else {
     return true;
   }
-}
-
-// ALERTNOTIF FUNCTION
-function alertNotif(type, message, reload, timeout) {
-  $.notify({
-    icon: "glyphicon glyphicon-exclamation-sign",
-    message: "<div style='text-align:center;margin-top:-20px'>" + message + "</div>"
-  }, {
-    type: type == 'error' ? 'danger' : type,
-    placement: {
-      from: "top",
-      align: "center"
-    },
-    newest_on_top: true,
-    mouse_over: true,
-    delay: message.length > 100 ? 0 : 3000
-  });
-  setTimeout(function () {
-    if (reload == null || !reload)
-      return;
-    else if (reload)
-      location.reload();
-    else
-      location.href(reload);
-  }, timeout != null ? timeout : 2000);
 }
 
 // CAPSLOCK FUNCTION
@@ -260,10 +241,9 @@ $("#cmbBookingID").change(function () {
   $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
   $(this).closest("form").find("#btnPrint").prop("disabled", false);
   $.ajax({
-    url: root + "files/displayEditReservation.php",
     context: this,
+    url: root + 'ajax/cmbBookingIdDisplay.php',
     type: "POST",
-    dataType: "json",
     data: $(this).serialize(),
     success: function (data) {
       $(this).closest("form").find("#txtRoomID").val(data[0]);
@@ -284,10 +264,10 @@ $("#frmChange").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkChange.php',
+    url: root + 'ajax/changePassword.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         $('#modalChange').modal('hide');
         $(this).find('#frmChange').trigger('reset');
         $(this).find('#btnUpdate').attr('disabled', false);
@@ -312,10 +292,10 @@ $("#frmEditProfile").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkEditProfile.php',
+    url: root + 'ajax/editProfile.php',
     data: $(this).serialize() + "&profilePic=" + document.getElementById("imgProfilePic").files.length,
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         if (document.getElementById("imgProfilePic").files.length != 0) {
           var file_data = $('#imgProfilePic').prop('files')[0];
           var form_data = new FormData();
@@ -328,7 +308,7 @@ $("#frmEditProfile").submit(function (e) {
             });
           } else {
             $.ajax({
-              url: root + 'files/uploadPicture.php',
+              url: root + 'ajax/uploadPicture.php',
               dataType: 'text',
               cache: false,
               contentType: false,
@@ -412,10 +392,10 @@ $("#frmEditReservation").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkEditReservation.php',
+    url: root + 'ajax/editReservation.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         $('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', false);
       } else {
@@ -438,10 +418,10 @@ $("#frmForgot").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkForgot.php',
+    url: root + 'ajax/forgotPassword.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         $('#modalForgot').modal('hide');
         $('#frmForgot').trigger('reset');
         alertNotif('success', "Email sent!", true);
@@ -473,10 +453,10 @@ $("#frmRegister").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkRegister.php',
+    url: root + 'ajax/register.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         alertNotif('success', 'Email sent to verify your email!', false, 10000);
         $(this).find('#btnRegister').attr('disabled', false);
         $(this).find('#frmRegister').trigger('reset');
@@ -509,10 +489,10 @@ $("#frmLogin").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/checkLogin.php',
+    url: root + 'ajax/login.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         alertNotif("success", "Login Successfully", true);
       } else {
         $(this).find("#btnLogin").html('Sign In');
@@ -554,7 +534,7 @@ $("#frmBookNow").submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/submitBookNow.php',
+    url: root + 'ajax/bookNow.php',
     data: $(this).serialize(),
     success: function (response) {
       $('#stepID').val('4');
@@ -576,10 +556,10 @@ $('#frmContact').submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/processContactForm.php',
+    url: root + 'ajax/contactForm.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         alertNotif("success", "Sent Successfully", false);
         $(this).trigger("reset");
         $(this).parent().toggleClass('contactbox--tray');

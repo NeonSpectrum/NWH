@@ -1,6 +1,7 @@
 <?php
   require_once 'strings.php'; //link strings php
-  
+  require_once 'functions.php';
+
   $servername = "neonspectrumdb.redirectme.net";
   $username = "NeonSpectrum";
   $password = PASSWORD;

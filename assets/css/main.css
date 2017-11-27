@@ -18,6 +18,10 @@ a[disabled]:hover {
   pointer-events: none;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
 .loadingIcon {
   position: fixed;
   width: 100%;
@@ -97,9 +101,6 @@ img.white-border {
   padding-left: 5px;
   margin-bottom: 10px;
 }
-
-
-/*---- Genral classes end -------*/
 
 
 /*Change icons size here*/
@@ -241,36 +242,35 @@ img.white-border {
 
 /* ADDED CARET UP */
 
-.navbar-nav>li>.dropdown-menu:before {
-  border-bottom: 11px solid rgba(0, 0, 0, 0.2);
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  content: "";
-  display: inline-block;
-  position: absolute;
-  left: 12px;
-  top: -11px;
-}
-
-.navbar-nav>li>.dropdown-menu:after {
-  border-bottom: 11px solid rgba(255, 255, 255, 1);
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  content: "";
-  display: inline-block;
-  position: absolute;
-  left: 12px;
-  top: -10px;
-}
-
-.navbar-nav.navbar-right>li>.dropdown-menu:before {
-  left: auto;
-  right: 12px;
-}
-
-.navbar-nav.navbar-right>li>.dropdown-menu:after {
-  left: auto;
-  right: 12px;
+@media only screen and (min-width:769px) {
+  .navbar-nav>li>.dropdown-menu:before {
+    border-bottom: 11px solid rgba(0, 0, 0, 0.2);
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 12px;
+    top: -11px;
+  }
+  .navbar-nav>li>.dropdown-menu:after {
+    border-bottom: 11px solid rgba(255, 255, 255, 1);
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 12px;
+    top: -10px;
+  }
+  .navbar-nav.navbar-right>li>.dropdown-menu:before {
+    left: auto;
+    right: 12px;
+  }
+  .navbar-nav.navbar-right>li>.dropdown-menu:after {
+    left: auto;
+    right: 12px;
+  }
 }
 
 .dropdown-menu {
@@ -287,7 +287,19 @@ img.white-border {
 .dropdown-menu>.active>a:focus,
 .dropdown-menu>.active>a:hover {
   background-color: rgb(255, 255, 255);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+@media only screen and (max-width:768px) {
+  .dropdown-menu {
+    border-radius: 0px !important;
+  }
+  .dropdown button {
+    width: 100%;
+  }
+  .dropdown+.open {
+    transition: all 0.3s ease-in-out;
+  }
 }
 
 .navbar.navbar-default {
@@ -484,4 +496,14 @@ a:hover.back-to-top {
 
 .contactbox--empty .contactbox__credentials {
   display: block;
+}
+
+
+/* CUSTOM IMAGEHOVER CSS */
+
+[class*=" imghvr-"],
+[class^=imghvr-],
+[class*=" imghvr-"] figcaption,
+[class^=imghvr-] figcaption {
+  background-color: rgb(235, 235, 235);
 }

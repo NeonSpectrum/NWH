@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require_once 'db.php';
+  require_once '../files/db.php';
 
   $name = $_SESSION['fname'].$_SESSION['lname'];
   $email = $_SESSION['email'];

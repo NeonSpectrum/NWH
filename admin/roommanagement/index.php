@@ -56,8 +56,8 @@
             while ($row = mysqli_fetch_assoc($result)) {
               echo "<tr>";
               echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-              echo "<td style='width:60%'>{$row['RoomDescription']}</td>";
-              echo "<td style='width:20%'><button class='btn btn-primary'>Edit</button></td>";
+              echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
+              echo "<td style='width:20%'><button class='btn btn-primary btnEditRoom' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'>Edit</button></td>";
               echo "</tr>";
             }
           ?>
@@ -66,5 +66,33 @@
       </div>
     </div>
   </div>
+</div>
+<div id="modalEditRoom" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmChangeRoom" class="form-horizontal">
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea id="txtDescription" name="txtDescription" type="text" class="form-control" style="resize:none" placeholder="Description" rows="10" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+   </div>
 </div>
 <?php require_once '../../footer.php';?>

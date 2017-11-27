@@ -37,14 +37,14 @@
       <li class="dropdown" <?php echo $reports;?>>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
-          <li <?php echo $reservation;?>><a href="<?php echo $reservation=='' ? "{$root}admin/reservation" : 'javascript:void(0)';?>">Reservation</a></li>
-          <li <?php echo $amenities;?> class="firstdropdownmenu"><a href="<?php echo $amenities=='' ? '{$root}admin/amenities' : 'javascript:void(0)';?>">Amenities</a></li>
-          <li <?php echo $services;?>><a href="<?php echo $services=='' ? '{$root}admin/services' : 'javascript:void(0)';?>">Services</a></li>
-          <li <?php echo $transactions;?>><a href="<?php echo $transactions=='' ? '{$root}admin/transactions' : 'javascript:void(0)';?>">Transactions</a></li>
+          <li <?php echo $reservation;?>><a href="<?php echo $reservation=='' ? "{$root}admin/reports/book" : 'javascript:void(0)';?>">Reservation</a></li>
+          <li <?php echo $amenities;?> class="firstdropdownmenu"><a href="<?php echo $amenities=='' ? '{$root}admin/reports/amenities' : 'javascript:void(0)';?>">Amenities</a></li>
+          <li <?php echo $services;?>><a href="<?php echo $services=='' ? '{$root}admin/reports/services' : 'javascript:void(0)';?>">Services</a></li>
+          <li <?php echo $transactions;?>><a href="<?php echo $transactions=='' ? '{$root}admin/reports/transactions' : 'javascript:void(0)';?>">Transactions</a></li>
         </ul>
       </li>
       <li>
-        <a href="<?php echo $root;?>files/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        <a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
       </li>
     </ul>
   </nav>

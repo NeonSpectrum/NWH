@@ -29,7 +29,6 @@
     <div class="form-group">
       <label>Account Type: </label>
       <select id="cmbAccountType" name="cmbAccountType" class="form-control" style="width:95%">
-        <option></option>
         <option>User</option>
         <option>Admin</option>
         <option>Owner</option>

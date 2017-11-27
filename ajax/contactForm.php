@@ -1,6 +1,5 @@
 <?php
-  require '../files/strings.php';
-  require '../files/functions.php';
+  require_once '../files/db.php';
   
   $name = $_POST['txtName'];
   $email = $_POST['txtEmail'];
@@ -8,5 +7,5 @@
 
   $body = "Name: $name<br/>Email: $email<br/>Message: $message";
   $subject = "Message from $email";
-  echo sendMail(EMAIL,$subject,$body);
+  echo sendMail(EMAIL, $subject, $body);
 ?>

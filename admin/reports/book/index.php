@@ -1,12 +1,12 @@
 <?php 
-  require_once '../..//header.php';
+  require_once '../../../header.php';
   if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
   {
-    header('location: ../../');
+    header('location: ../../../');
     exit();
   }
 ?>
-<?php require_once '../../files/sidebar.php';?>
+<?php require_once '../../../files/sidebar.php';?>
 <h2 class="text-center">Reservation</h2>
 <div class="well center-block" id="reservation-body" style="width:85%">
   <table id="tblReservation" class="table table-striped table-bordered" cellspacing="0" style="display:none">
@@ -45,4 +45,4 @@
     </tbody>
   </table>
 </div>
-<?php require_once '../../footer.php';?>
+<?php require_once '../../../footer.php';?>

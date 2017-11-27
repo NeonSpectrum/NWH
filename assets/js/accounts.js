@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $.ajax({
-    url: "../../files/displayAccount.php",
+    url: root + 'ajax/displayAccount.php',
     type: "POST",
     dataType: "json",
     data: $('#frmAccount').serialize(),
@@ -13,7 +13,7 @@ $(document).ready(function () {
 });
 $("#cmbEmail").change(function () {
   $.ajax({
-    url: "../../files/displayAccount.php",
+    url: root + 'ajax/cmbEmailDisplay.php',
     type: "POST",
     dataType: "json",
     data: $('#frmAccount').serialize(),
@@ -32,7 +32,7 @@ $('#frmAccount').submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/editAccount.php',
+    url: root + 'ajax/editAccount.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response == "ok") {

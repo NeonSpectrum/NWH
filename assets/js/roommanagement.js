@@ -9,6 +9,31 @@ $('.cbxRoom').change(function () {
   });
 });
 
+$('.btnEditRoom').click(function () {
+  var roomType = $(this).attr("id").replace("_", " ");
+  var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html();
+  $('.modal-title').html(roomType);
+  $("#txtDescription").val(roomDescription);
+});
+
+$('#frmChangeRoom').submit(function (e) {
+  e.preventDefault();
+  $("#btnUpdate").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
+  $('#btnUpdate').attr('disabled', true);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'files/changeRoomDescription.php',
+    data: $(this).serialize() + "&txtRoomType=" + $(".modal-title").html().replace(" ", "_"),
+    success: function (response) {
+      if (response == 'ok') {
+        $('#modalEditRoom').modal('hide');
+        alertNotif("success", "Updated Successfully!", true, 3000);
+      }
+    }
+  });
+});
+
 function openTab(evt, category) {
   // Declare all variables
   var i, tabcontent, tablinks;

@@ -1,7 +1,6 @@
 <?php
   session_start();
-  require_once 'db.php';
-  require_once 'functions.php';
+  require_once '../files/db.php';
   
   if (isset($_POST)) {
     $guests = $_POST['txtAdults'];

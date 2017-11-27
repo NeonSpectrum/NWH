@@ -1,8 +1,7 @@
 <?php
   // Pear Mail Library
   $domain = strpos($_SERVER['REQUEST_URI'],"nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
-  require_once 'db.php';
-  require_once 'functions.php';
+  require_once '../files/db.php';
 
   parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 

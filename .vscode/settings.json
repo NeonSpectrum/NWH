@@ -10,7 +10,7 @@
 	"workbench.activityBar.visible": true,
 	"files.autoSave": "off",
 	"workbench.colorTheme": "Abyss",
-	"window.zoomLevel": 0,
+  "window.zoomLevel": 0,
 	"editor.formatOnSave": true,
 	"phpformatter.composer": true
 }

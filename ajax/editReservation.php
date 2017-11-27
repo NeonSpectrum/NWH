@@ -1,6 +1,6 @@
 <?php
   session_start();
-	require_once 'db.php';
+	require_once '../files/db.php';
 	
   $adults = (int)$_POST['txtEditAdults'];
 	$childrens = (int)$_POST['txtEditChildrens'];

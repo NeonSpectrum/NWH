@@ -1,7 +1,6 @@
 <?php
   session_start();
-  require_once 'db.php';
-  require_once 'functions.php';
+  require_once '../files/db.php';
 
   if (isset($_POST)) {
     try {
@@ -21,10 +20,12 @@
       $result = mysqli_query($db, $query);
       if(mysqli_affected_rows($db)!=0) {
         unset($_SESSION['roomID']);
-        echo "$bookingID";
+        echo true;
       } else {
         echo "There's something wrong in your book!";
       }
+      $query = "UPDATE room SET Status='Occupied' WHERE RoomID=$roomID";
+      mysqli_query($db, $query);
     } catch(PDOException $e) {
       echo $e->getMessage();
     }

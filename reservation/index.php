@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="row setup-content" id="step-2">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-8 col-md-offset-2  ">
         <div class="col-md-12">
           <h3> Step 2 - Room</h3>
           <div class="row" style="padding-left:0px">
@@ -80,7 +80,7 @@
                 $result = mysqli_query($db, $query);
                 $x = 1;
                 while ($row = mysqli_fetch_assoc($result)) {
-                  if ((int)$row['Capacity'] > $adults) {
+                  if ((int)$row['Capacity'] >= $adults) {
                     $checked = $room == $row['RoomType'] ? 'checked' : '';
                     echo "<li class='col-md-6'><input type='checkbox' id='cb".$x."' name='rdbRoom' value='{$row['RoomType']}' $checked/>
                     <label class='room-label' for='cb".$x++."'>";

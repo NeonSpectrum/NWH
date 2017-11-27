@@ -64,7 +64,6 @@ input[type="checkbox"][id^="cb"] {
 
 .room-label {
   border: 1px solid #fff;
-  padding: 10px;
   display: block;
   position: relative;
   margin: 10px;
@@ -92,7 +91,7 @@ input[type="checkbox"][id^="cb"] {
 .room-label figure {
   transition-duration: 0.2s;
   transform-origin: 50% 50%;
-  width: 250px;
+  width: 360px;
 }
 
 :checked+.room-label {

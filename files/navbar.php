@@ -16,39 +16,37 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" style="margin-top:12px">
-        <li>
-          <li class="dropdown" style="cursor:pointer">
+        <li class="dropdown">
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
-            <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
-              <div style="padding:10px 20px 0px 20px;width:350px">
-                <form class="form frmBookCheck" method="post">
-                  <div class="form-group">
-                    <label>Check In Date:</label>
-                    <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Check Out Date:</label>
-                    <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
-                  </div>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Adults:</label>
-                        <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
-                      </div>
-                      <div class="col-md-6">
-                        <label>Children:</label>
-                        <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
-                      </div>
+          <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
+            <div style="padding:10px 20px 0px 20px;width:350px">
+              <form class="form frmBookCheck" method="post">
+                <div class="form-group">
+                  <label>Check In Date:</label>
+                  <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
+                </div>
+                <div class="form-group">
+                  <label>Check Out Date:</label>
+                  <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Adults:</label>
+                      <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Children:</label>
+                      <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <button id="btnCheck" type="submit" class="btn btn-primary btn-block">Book Now</button>
-                  </div>
-                </form>
-              </div>
-            </ul>
-          </li>
+                </div>
+                <div class="form-group">
+                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
+                </div>
+              </form>
+            </div>
+          </ul>
         </li>
         <li class="dropdown" style="cursor:pointer">
           <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
@@ -59,10 +57,10 @@
             <li><a href="<?php echo $root;?>contactus">Contact Us</a></li>
           </ul>
         </li>
-        <?php
-          if (!isset($_SESSION['email']))
-          {
-        ?>
+<?php
+  if (!isset($_SESSION['email']))
+  {
+?>
         <li class="dropdown login-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="width:300px;padding:20px 20px 0px 20px">
@@ -98,11 +96,11 @@
             </li>
           </ul>
         </li>
-        <?php
-          }
-          else
-          {
-        ?>
+<?php
+  }
+  else
+  {
+?>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
@@ -118,12 +116,12 @@
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
               <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-              <li><a href="<?php echo $root;?>files/checkLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
-        <?php
-          }
-        ?>
+<?php
+  }
+?>
       </ul>
     </div>
   </div>

@@ -1,0 +1,61 @@
+[{
+    "name": "PRIVILEGE_DELETE_ACCOUNT",
+    "value": "You do not have the privilege to delete this account."
+  },
+  {
+    "name": "UNABLE_DELETE_EMAIL_ACCOUNT",
+    "value": "Unable to delete this account"
+  },
+  {
+    "name": "PRIVILEGE_EDIT_ACCOUNT",
+    "value": "You do not have the privilege to modify this account."
+  },
+  {
+    "name": "ERROR_OCCURED",
+    "value": "Something went wrong!"
+  },
+  {
+    "name": "INVALID_EMAIL_PASSWORD",
+    "value": "Incorrect Email and/or Password"
+  },
+  {
+    "name": "NOT_ENOUGH_ADULTS",
+    "value": "asdasdasdasdas"
+  },
+  {
+    "name": "INVALID_ADULTS_CHILDRENS",
+    "value": "Please fill up the Adults or Childrens!"
+  },
+  {
+    "name": "NO_UPDATE",
+    "value": "Nothing Changed"
+  },
+  {
+    "name": "FORMAT_ERROR_EMAIL",
+    "value": "Invalid Format of Email Address"
+  },
+  {
+    "name": "INVALID_EMAIL",
+    "value": "Invalid Email Address"
+  },
+  {
+    "name": "ALREADY_LOGGED",
+    "value": "Already Logged In"
+  },
+  {
+    "name": "ALREADY_REGISTERED",
+    "value": "Already registered! Please try a different one."
+  },
+  {
+    "name": "OLD_PASSWORD_ERROR",
+    "value": "Please check your password!"
+  },
+  {
+    "name": "VERIFY_PASSWORD_ERROR",
+    "value": "Please reenter your new password!"
+  },
+  {
+    "name": "UPLOAD_ERROR",
+    "value": "Sorry, there was an error uploading your file."
+  }
+]

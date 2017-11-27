@@ -5,13 +5,14 @@
 <div class="full-screen">
   <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
-      <?php
-        foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
-        {
-          $filename = str_replace("images/carousel/","",$image);
-          echo "<div class='item'><img src='$image?v=".filemtime("$image")."' alt='$filename'></div>\n";
-        }
-      ?>
+<?php
+  // GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
+  foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
+  {
+    $filename = str_replace("images/carousel/","",$image);
+    echo "      <div class='item'><img src='$image?v=".filemtime("$image")."' alt='$filename'></div>\n";
+  }
+?>
     </div>
     <a class="left carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('prev')" style="background:transparent !important">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -53,21 +54,22 @@
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">ROOM TYPES</h1></div>
   <div class="panel-body center-block" style="width:80%">
     <div class="row">
-      <?php
-        $query = "SELECT * FROM room_type";
-        $result = mysqli_query($db, $query);
-        while ($row = mysqli_fetch_assoc($result)) {
-          echo "<div class='col-sm-4 animated scrollSlideUp' style='margin-bottom:20px'>";
-          echo "<figure class='imghvr-push-up' style='box-shadow: 1px 1px 1px #888888'>
-                  <img src='gallery/images/rooms/{$row['RoomType']}.jpg'>
-                  <figcaption style='background-color:rgb(235,235,235);text-align:center;color:black;padding-top:0px'>
-                      <h3 style='color:black'>".str_replace("_"," ",$row['RoomType'])."</h3><br/>
-                      <p>{$row['RoomDescription']}</p>
-                  </figcaption>
-                </figure>";
-          echo "</div>";
-        }
-      ?>
+<?php
+  // USE DATABASE TO SUPPLY ROOM INFORMATION
+  $query = "SELECT * FROM room_type";
+  $result = mysqli_query($db, $query);
+  while ($row = mysqli_fetch_assoc($result)) {
+    echo "      <div class='col-sm-4 animated scrollSlideUp' style='margin-bottom:20px'>\n";
+    echo "        <figure class='imghvr-push-up' style='box-shadow: 1px 1px 1px #888888'>
+          <img src='gallery/images/rooms/{$row['RoomType']}.jpg'>
+          <figcaption style='background-color:rgb(235,235,235);text-align:center;color:black;padding-top:0px'>
+            <h3 style='color:black'>".str_replace("_"," ",$row['RoomType'])."</h3><br/>
+            <p>{$row['RoomDescription']}</p>
+          </figcaption>
+        </figure>\n";
+    echo "      </div>\n";
+  }
+?>
       </div>
     </div>
   </div>

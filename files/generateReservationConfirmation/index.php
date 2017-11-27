@@ -2,9 +2,9 @@
   use setasign\Fpdi\Fpdi;
   use setasign\Fpdi\PdfReader;
   
-  require '../assets/fpdf/fpdf.php';
-  require '../assets/fpdi/autoload.php';
-  require_once 'db.php';
+  require '../../assets/fpdf/fpdf.php';
+  require '../../assets/fpdi/autoload.php';
+  require_once '../db.php';
   
   if (isset($_GET['BookingID'])) {
     $query = "SELECT FirstName,LastName,BookingID,account.EmailAddress,RoomType,CheckInDate,CheckOutDate,PeakRate,LeanRate,DiscountedRate FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN room ON booking.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE BookingID={$_GET['BookingID']}";
@@ -19,7 +19,7 @@
       }
       $pdf = new Fpdi();
       $pdf->AddPage();
-      $pdf->setSourceFile('../assets/reservation.pdf');
+      $pdf->setSourceFile('../../assets/reservation.pdf');
       $tpl = $pdf->importPage(1);
       $pdf->useTemplate($tpl, 5, 10, 200);
       $pdf->SetFont('Arial');
