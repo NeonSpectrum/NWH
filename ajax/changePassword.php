@@ -25,7 +25,7 @@
         $query = "UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'";
         $result = mysqli_query($db,$query) or die(mysql_error());
         if (mysqli_affected_rows($db)!=0) {
-          echo "ok";
+          echo true;
         }
       } else {
         echo OLD_PASSWORD_ERROR;

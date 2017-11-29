@@ -80,7 +80,7 @@
     }
     echo ",{$string['name']}=\"{$string['value']}\"";
   }
-  echo ",root=\"$root\";";
+  echo ";const root=\"$root\";";
   echo trim(preg_replace('/\s\s+/', ' ', "function alertNotif(type, message, reload, timeout) {
     $.notify({
       icon:'glyphicon glyphicon-exclamation-sign',

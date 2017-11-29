@@ -10,7 +10,7 @@
       $result = mysqli_query($db, $query) or die(mysql_error());
       $row = $result->fetch_assoc();
       $count = mysqli_num_rows($result);
-      if ($count==1) {
+      if ($count == 1) {
         $arr[0] = $row['AccountType'];
         $arr[1] = $row['FirstName'];
         $arr[2] = $row['LastName'];

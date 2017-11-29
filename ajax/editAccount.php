@@ -18,7 +18,7 @@
       $query = "UPDATE `account` SET AccountType='$accounttype',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'";
       $result = mysqli_query($db,$query);
       if (mysqli_affected_rows($db)!=0) {
-        echo "ok";
+        echo true;
       } else {
         echo NO_UPDATE;
       }

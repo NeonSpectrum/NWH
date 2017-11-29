@@ -10,7 +10,7 @@
     mysqli_query($db, $query);
     
     if (mysqli_affected_rows($db) != 0) {
-      echo "ok";
+      echo true;
     }
   }
 ?>

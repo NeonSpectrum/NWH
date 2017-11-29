@@ -244,13 +244,14 @@ $("#cmbBookingID").change(function () {
     context: this,
     url: root + 'ajax/cmbBookingIdDisplay.php',
     type: "POST",
+    dataType: "json",
     data: $(this).serialize(),
-    success: function (data) {
-      $(this).closest("form").find("#txtRoomID").val(data[0]);
-      $(this).closest("form").find("#txtCheckInDate").val(data[1]);
-      $(this).closest("form").find("#txtCheckOutDate").val(data[2]);
-      $(this).closest("form").find("#txtAdults").val(data[3]);
-      $(this).closest("form").find("#txtChildrens").val(data[4]);
+    success: function (response) {
+      $(this).closest("form").find("#txtRoomID").val(response[0]);
+      $(this).closest("form").find("#txtCheckInDate").val(response[1]);
+      $(this).closest("form").find("#txtCheckOutDate").val(response[2]);
+      $(this).closest("form").find("#txtAdults").val(response[3]);
+      $(this).closest("form").find("#txtChildrens").val(response[4]);
     }
   });
 });
@@ -524,23 +525,6 @@ $('.frmBookCheck').submit(function (e) {
   $(this).find("#btnBookNow").prop('disabled', true);
 
   location.href = root + "reservation/?" + $(this).serialize();
-});
-
-// BOOK NOW FORM
-$("#frmBookNow").submit(function (e) {
-  e.preventDefault();
-  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
-  $(this).find("#btnBookNow").prop('disabled', true);
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/bookNow.php',
-    data: $(this).serialize(),
-    success: function (response) {
-      $('#stepID').val('4');
-      location.href = root + "reservation/?" + $("#frmBookNow").serialize() + "&txtBookingID=" + response;
-    }
-  });
 });
 
 // CONTACT US FORM

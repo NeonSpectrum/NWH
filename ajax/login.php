@@ -35,7 +35,7 @@
         $query = "UPDATE account SET SessionID='$session_id' WHERE EmailAddress='$email'";
         mysqli_query($db,$query);
         
-        echo "ok";
+        echo true;
       } elseif(!strpos($email, '@') || !strpos($email, '.')) {
         echo FORMAT_ERROR_EMAIL;
       } else {

@@ -1,73 +1,149 @@
 $(document).ready(function () {
-  $('.setup-content').hide();
+  if ($('#btn-step2').hasClass("active")) {
+    $.ajax({
+      type: 'POST',
+      url: root + 'ajax/getRooms.php',
+      data: $('#frmBookNow').serialize(),
+      success: function (response) {
+        $('span#txtRooms').html(response);
+        $('input[type="checkbox"]').change(function () {
+          $('input[type="checkbox"]').not(this).prop('checked', false);
+        });
+      }
+    });
+  }
+});
 
-  $('div.setup-panel div a').click(function (e) {
-    e.preventDefault();
-    if (!$(this).hasClass('disabled')) {
-      $('div.setup-panel div a').removeClass('btn-primary').addClass('btn-default');
-      $(this).addClass('btn-primary');
-      $('.setup-content').hide();
-      $($(this).attr('href')).fadeIn();
-      $($(this).attr('href')).find('input:eq(0)').focus();
-    }
+// NEXT BUTTON
+// $('.btnNext').click(function () {
+//   var step = parseInt($('#stepID').val());
+//   $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
+//   $(this).prop('disabled', true);
+//   $('#stepID').val(parseInt($('#stepID').val()) + 1);
+
+//   if (step == 1 && !validateStep1()) {
+//     $(this).html('Next');
+//     $(this).prop('disabled', false);
+//     return;
+//   } else if (step == 2) {
+//     if (!validateStep2()) {
+//       $(this).html('Next');
+//       $(this).prop('disabled', false);
+//       return;
+//     }
+//     $.ajax({
+//       type: 'POST',
+//       url: root + 'ajax/getRoomID.php',
+//       data: $('#frmBookNow').serialize(),
+//       success: function (response) {
+//         $('#txtRoomID').val(response);
+//         location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
+//       }
+//     });
+//     return;
+//   }
+//   location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
+// });
+
+$('.btnPrev').click(function () {
+  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
+  prev(step);
+  $(this).each(function () {
+    $(this).prop('disabled', false);
   });
+});
 
-  $('.nextBtn').click(function () {
-    $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
-    $(this).prop('disabled', true);
-    var step = $(this).closest(".setup-content").attr("id");
-    $('#stepID').val(parseInt(step[step.length - 1]) + 1);
-    if ($(this).closest(".setup-content").attr("id") == 'step-1' && !validateStep1()) {
+$('.btnNext').click(function () {
+  $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+  $(this).attr('disabled', true);
+  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
+  if (step == 1) {
+    if (!validateStep1()) {
       $(this).html('Next');
       $(this).prop('disabled', false);
       return;
-    } else if ($(this).closest(".setup-content").attr("id") == 'step-2') {
-      if (!validateStep2()) {
-        $(this).html('Next');
-        $(this).prop('disabled', false);
-        return;
+    }
+    $.ajax({
+      type: 'POST',
+      url: root + 'ajax/getRooms.php',
+      data: $('#frmBookNow').serialize(),
+      success: function (response) {
+        $('span#txtRooms').html(response);
+        $('input[type="checkbox"]').change(function () {
+          $('input[type="checkbox"]').not(this).prop('checked', false);
+        });
       }
-      $.ajax({
-        type: 'POST',
-        url: root + 'files/checkRoomAvailability.php',
-        data: $('#frmBookNow').serialize(),
-        success: function (response) {
-          $('#txtRoomID').val(response);
-          location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
-        }
-      });
+    });
+  } else if (step == 2) {
+    if (!validateStep2()) {
+      $(this).html('Next');
+      $(this).prop('disabled', false);
       return;
     }
-    location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
-  });
-
-  if (location.href.includes("step=3")) {
-    $('div.setup-panel div a[href="#step-3"]').click();
-    $('a[href="#step-2"').attr("disabled", false);
-  } else if (location.href.includes("txtBookingID")) {
-    $('div.setup-panel div a[href="#step-4"]').click();
-    $('a[href="#step-1"').attr("disabled", true);
-    $('a[href="#step-2"').attr("disabled", true);
-    $('a[href="#step-3"').attr("disabled", true);
-  } else if (location.href.includes("step=2") || location.href.includes("txtCheckInDate") || location.href.includes("txtCheckOutDate")) {
-    $('div.setup-panel div a[href="#step-2"]').click();
-  } else {
-    $('#step-1').fadeIn();
+    $.ajax({
+      type: 'POST',
+      url: root + 'ajax/getRoomPrice.php',
+      data: $('#frmBookNow').serialize(),
+      success: function (response) {
+        $('span#txtRoomPrice').html(response);
+      }
+    });
   }
-
-  $('#step-1 input').keydown(function () {
-    $('a[href="#step-2"').attr("disabled", true);
-    $('a[href="#step-3"').attr("disabled", true);
-    $('a[href="#step-4"').attr("disabled", true);
-  });
-  $('#step-2 input').keydown(function () {
-    $('a[href="#step-3"').attr("disabled", true);
-    $('a[href="#step-4"').attr("disabled", true);
-  });
-  $('#step-3 input').keydown(function () {
-    $('a[href="#step-4"').attr("disabled", true);
+  next(step);
+  $(this).each(function () {
+    $(this).prop('disabled', false);
+    $(this).html("Next");
   });
 });
+// BOOK NOW FORM
+$("#btnSubmit").click(function (e) {
+  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
+  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
+  $(this).find("#btnBookNow").prop('disabled', true);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/bookNow.php',
+    dataType: "json",
+    data: $(this).closest('form').serialize(),
+    success: function (response) {
+      if (!response) {
+        alertNotif("error", "Full");
+        return;
+      }
+      $('span#txtBookingID').html(response[0]);
+      $('span#txtRoomID').html(response[1]);
+      $(this).closest('form').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response);
+      next(step);
+    }
+  });
+});
+
+function prev(step) {
+  $('.step').each(function () {
+    $(this).css("display", "none");
+  });
+  $('.btn-stepwizard').each(function () {
+    $(this).removeClass("active");
+  });
+  $('#step' + (step)).css("display", "none");
+  $('#step' + (step - 1)).css("display", "");
+  $('#btn-step' + (step - 1)).addClass("active");
+  $(window).scrollTop(0);
+}
+
+function next(step) {
+  $('.step').each(function () {
+    $(this).css("display", "none");
+  });
+  $('.btn-stepwizard').each(function () {
+    $(this).removeClass("active");
+  });
+  $('#step' + (step)).css("display", "none");
+  $('#step' + (step + 1)).css("display", "");
+  $('#btn-step' + (step + 1)).addClass("active");
+  $(window).scrollTop(0);
+}
 
 function validateStep1() {
   var checkIn = new Date($('#frmBookNow').find("#txtCheckInDate").val());
@@ -94,6 +170,3 @@ function validateStep2() {
   }
   return true;
 }
-$('input[type="checkbox"]').on('change', function () {
-  $('input[type="checkbox"]').not(this).prop('checked', false);
-});

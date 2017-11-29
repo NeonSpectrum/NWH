@@ -14,7 +14,7 @@
     $query = "UPDATE account SET ProfilePicture='$target_file' WHERE EmailAddress='$email'";
     $result = mysqli_query($db,$query) or die(mysql_error());
     $_SESSION["picture"]=$target_file;
-    echo "ok";
+    echo true;
   } else {
     echo UPLOAD_ERROR;
   }

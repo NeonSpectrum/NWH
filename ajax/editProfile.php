@@ -13,7 +13,7 @@
       {
         $_SESSION['fname']=$fname;
         $_SESSION['lname']=$lname;
-        echo "ok";
+        echo true;
       }
       else
       {
