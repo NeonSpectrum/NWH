@@ -22,21 +22,21 @@
             <form class="form frmBookCheck" method="post">
               <div class="form-group">
                 <label>Check In Date:</label>
-                <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
+                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
               </div>
               <div class="form-group">
                 <label>Check Out Date:</label>
-                <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
+                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <label>Adults:</label>
-                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="10" required>
                   </div>
                   <div class="col-md-6">
                     <label>Children:</label>
-                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
+                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="10" required>
                   </div>
                 </div>
               </div>
@@ -46,8 +46,8 @@
             </form> 
           </ul>
         </li>
-        <li class="dropdown" style="cursor:pointer">
-          <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
+        <li class="dropdown">
+          <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="margin-top:-1px;margin-left:-1px">
             <li><a href="<?php echo $root;?>">Home</a></li>
             <li><a href="<?php echo $root;?>gallery">Gallery</a></li>
@@ -59,8 +59,8 @@
   if (!isset($_SESSION['email']))
   {
 ?>
-        <li class="dropdown" style="cursor:pointer">
-          <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
+        <li class="dropdown">
+          <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
           <ul class="dropdown-menu login-dropdown" style="padding:20px 20px 0px 20px">
             <div class="row">
               <div class="col-md-12">
@@ -70,7 +70,7 @@
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Email address</label>
-                    <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required>
+                    <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Password</label>
@@ -98,7 +98,7 @@
   {
 ?>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
+          <a class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo "$fname $lname";?>
@@ -110,9 +110,9 @@
   if ($accounttype == "Owner" || $accounttype == "Admin")
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
 ?>
-            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
-            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
-            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
+            <li><a data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
+            <li><a data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
+            <li><a data-toggle="modal" data-target="#modalChange">Change Password</a></li>
             <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>

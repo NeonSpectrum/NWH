@@ -79,7 +79,7 @@ $(document).ready(function () {
   $('.dropdown').on('show.bs.dropdown', function (e) {
     if ($(window).width() > 480)
       $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
-    $(this).find("input").first().focus();
+    $(this).find("#txtEmail").focus();
   });
 
   // ADD SLIDEUP ANIMATION TO DROPDOWN //
@@ -91,7 +91,6 @@ $(document).ready(function () {
         $(me).find('.dropdown-toggle').attr('aria-expanded', 'false');
       });
     }
-    $(this).find("form").trigger("reset");
     $(this).find(".lblDisplayError").html("");
     updateDate();
   });

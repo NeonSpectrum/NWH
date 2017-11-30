@@ -41,11 +41,11 @@
             <h3> Step 1 - Check</h3>
             <div class="form-group">
               <label>Check In Date:</label>
-              <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate;?>" onkeypress="return disableKey(event,'number')" required>
+              <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate;?>" onkeypress="return disableKey(event,'number')" required>
             </div>
             <div class="form-group">
               <label>Check Out Date:</label>
-              <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate;?>" onkeypress="return disableKey(event,'number')" required>
+              <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate;?>" onkeypress="return disableKey(event,'number')" required>
             </div>
             <div class="form-group">
               <div class="row">

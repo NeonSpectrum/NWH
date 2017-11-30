@@ -29,11 +29,11 @@
     <form class="form-inline frmBookCheck">
       <div class="form-group">
         <label>Check In Date: </label>
-        <input class="form-control checkInDate" type="date" id="txtCheckInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required/>
+        <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required/>
       </div>
       <div class="form-group">
         <label>Check Out Date: </label>
-        <input class="form-control checkOutDate" type="date" id="txtCheckOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required/>
+        <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required/>
       </div>
       <div class="form-group">
         <label>Adults: </label>
