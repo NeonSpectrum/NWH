@@ -62,36 +62,33 @@
         <li class="dropdown login-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
           <ul class="dropdown-menu login-dropdown" style="padding:20px 20px 0px 20px">
-            <li>
-              <div class="row">
-                <div class="col-md-12">
-                  <form class="form" method="post" id="frmLogin">
-                    <div class="lblDisplayError">
-                      <!-- error will be shown here ! -->
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only">Email address</label>
-                      <input id="txtLoginEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" autocomplete="off" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="sr-only">Password</label>
-                      <input id="txtLoginPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
-                      <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
-                      <!-- <div class="checkbox">
-                        <label>
-                          <input type="checkbox" name="cbxRemember" checked> Keep me logged-in
-                        </label>
-                      </div> -->
-                    </div>
-                    <div class="form-group">
-                      <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
-                      <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
-                    <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
-                    </div>
-                  </form>
-                </div>
+            <div class="row">
+              <div class="col-md-12">
+                <form id="frmLogin">
+                  <div class="lblDisplayError">
+                    <!-- error will be shown here ! -->
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only">Email address</label>
+                    <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only">Password</label>
+                    <input id="txt]Password" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                    <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
+                    <!-- <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="cbxRemember" checked> Keep me logged-in
+                      </label>
+                    </div> -->
+                  </div>
+                  <div class="form-group">
+                    <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
+                  <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
+                </form>
               </div>
-            </li>
+            </div>
           </ul>
         </li>
 <?php
