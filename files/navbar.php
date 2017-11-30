@@ -59,8 +59,8 @@
   if (!isset($_SESSION['email']))
   {
 ?>
-        <li class="dropdown login-dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
+        <li class="dropdown" style="cursor:pointer">
+          <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
           <ul class="dropdown-menu login-dropdown" style="padding:20px 20px 0px 20px">
             <div class="row">
               <div class="col-md-12">
@@ -74,7 +74,7 @@
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Password</label>
-                    <input id="txt]Password" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                    <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
                     <!-- <div class="checkbox">
                       <label>
@@ -85,8 +85,8 @@
                   <div class="form-group">
                     <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
                     <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
-                  </div>
                   <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -101,14 +101,15 @@
           <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo $fname.' '.$lname;?>
+              <?php echo "$fname $lname";?>
             </div>
-          <span class="caret"></span></a>
+	          <span class="caret"></span>
+		      </a>
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
-            <?php
-              if ($accounttype == "Owner" || $accounttype == "Admin")
-                echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
-            ?>
+<?php
+  if ($accounttype == "Owner" || $accounttype == "Admin")
+    echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
+?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>

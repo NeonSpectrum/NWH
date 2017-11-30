@@ -1,6 +1,9 @@
 $(document).ready(function () {
   scrolling(false);
 
+  if (screen.width <= 480) {
+    $('.contactbox').fadeOut();
+  }
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function () {
     $(this).find('form')[0].reset();
@@ -76,6 +79,7 @@ $(document).ready(function () {
   $('.dropdown').on('show.bs.dropdown', function (e) {
     if ($(window).width() > 480)
       $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
+    $(this).find("input").first().focus();
   });
 
   // ADD SLIDEUP ANIMATION TO DROPDOWN //
@@ -94,19 +98,9 @@ $(document).ready(function () {
 });
 // PACE DONE
 Pace.on('done', function () {
-  var wow = new WOW({
-    boxClass: 'wow', // animated element css class (default is wow)
-    animateClass: 'animated', // animation css class (default is animated)
-    offset: 40, // distance to the element when triggering the animation (default is 0)
-    mobile: false, // trigger animations on mobile devices (default is true)
-    live: true, // act on asynchronously loaded content (default is true)
-    callback: function (box) {
-      // the callback is fired every time an animation is started
-      // the argument that is passed in is the DOM node being animated
-    },
-    scrollContainer: null // optional scroll container selector, otherwise use window
-  });
-  wow.init();
+  new WOW({
+    offset: 40
+  }).init();
   scrolling(true);
   $('.checkInDate, .checkOutDate').datepicker({
     format: "yyyy-mm-dd",
@@ -142,24 +136,15 @@ Pace.on('done', function () {
     // SCROLL EFFECT ON DESKTOP AND LAPTOP DEVICES
     if (screen.width > 480) {
       $("body").css("background-position", "50% " + (-($(this).scrollTop() / 10) - 100) + "px");
-    } else {
-      var winTop = $(window).scrollTop();
-      var height = $(window).height();
-      if ($('.footer-copyright').offset().top < winTop + height) {
-        $('.contactbox').fadeOut();
-      } else {
-        $('.contactbox').fadeIn();
-      }
     }
   });
 });
 
 $(window).on('resize', function () {
-  $("body").trigger("click");
   if (screen.width <= 480) {
-    $('.dropdown.open .dropdown-toggle').dropdown('toggle');
     $('.navbar').removeClass("navbar-fixed-top");
     $("body").css("background-position", "50% 0px");
+    $('.contactbox').fadeOut();
   } else {
     $('.navbar').addClass("navbar-fixed-top");
     $('.contactbox').fadeIn();
