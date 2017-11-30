@@ -18,8 +18,7 @@
       <ul class="nav navbar-nav navbar-right" style="margin-top:12px">
         <li class="dropdown">
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
-          <ul class="dropdown-menu" style="margin-top:10px;margin-left:-1px">
-            <div style="padding:10px 20px 0px 20px;width:350px">
+          <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
               <form class="form frmBookCheck" method="post">
                 <div class="form-group">
                   <label>Check In Date:</label>
@@ -44,8 +43,7 @@
                 <div class="form-group">
                 <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
                 </div>
-              </form>
-            </div>
+              </form> 
           </ul>
         </li>
         <li class="dropdown" style="cursor:pointer">
@@ -63,7 +61,7 @@
 ?>
         <li class="dropdown login-dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
-          <ul class="dropdown-menu" style="width:300px;padding:20px 20px 0px 20px">
+          <ul class="dropdown-menu login-dropdown" style="padding:20px 20px 0px 20px">
             <li>
               <div class="row">
                 <div class="col-md-12">

@@ -116,7 +116,7 @@
   if (file_exists(__DIR__."/assets/js/$currentDirectory.js") && $currentDirectory != 'admin') {
     echo "<script src='{$root}assets/js/$currentDirectory.js?v=".filemtime(__DIR__."/assets/js/$currentDirectory.js")."'></script>\n";
   }
-  if ((isset($_SESSION['accountType']) && $_SESSION['accountType']!="Owner") || isset($_SESSION) || $_SERVER['SERVER_NAME'] != "localhost") {
+  if ((isset($_SESSION['accountType']) && $_SESSION['accountType']!="Owner") && $_SERVER['SERVER_NAME'] != "localhost") {
     echo "<script src='{$root}assets/js/verifyLoginSession.js?v=" . filemtime(__DIR__."/assets/js/verifyLoginSession.js") . "'></script>\n";
   }
 ?>

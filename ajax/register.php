@@ -45,7 +45,7 @@
       $data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
       $data = nwh_encrypt($data);
       $subject = "Northwood Hotel Account Creation";
-      $body = "Please proceed to this link to register your account:<br/>http://$domain/files/checkRegister.php?$data";
+      $body = "Please proceed to this link to register your account:<br/>http://$domain/ajax/register.php?$data";
 
       echo sendMail("$email","$subject","$body");
     }

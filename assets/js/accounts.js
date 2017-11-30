@@ -35,7 +35,7 @@ $('#frmAccount').submit(function (e) {
     url: root + 'ajax/editAccount.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response == "ok") {
+      if (response) {
         alertNotif("success", "Records Updated Successfully!");
         $(this).find("#lblDisplayError").html('');
       } else {

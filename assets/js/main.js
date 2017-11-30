@@ -1,10 +1,6 @@
 $(document).ready(function () {
+  new WOW().init();
   scrolling(false);
-
-  // MAKE NAVBAR FIXED IF NOT MOBILE
-  if (screen.width > 480) {
-    $('.navbar').addClass("navbar-fixed-top");
-  }
 
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function () {
@@ -123,8 +119,7 @@ Pace.on('done', function () {
   }
 
   $(window).scroll(function () {
-
-    // BACK TO TOP
+    // BACK TO TOP  
     if ($(window).scrollTop() > 300) {
       $('a.back-to-top').fadeIn('slow');
     } else {
@@ -134,45 +129,52 @@ Pace.on('done', function () {
     // SCROLL EFFECT ON DESKTOP AND LAPTOP DEVICES
     if (screen.width > 480) {
       $("body").css("background-position", "50% " + (-($(this).scrollTop() / 10) - 100) + "px");
+    } else {
+      var winTop = $(window).scrollTop();
+      var height = $(window).height();
+      if ($('.footer-copyright').offset().top < winTop + height) {
+        $('.contactbox').fadeOut();
+      } else {
+        $('.contactbox').fadeIn();
+      }
     }
 
-    // SCROLL ANIMATION
-    var winTop = $(window).scrollTop();
-    var height = $(window).height() - 40;
-
-    $(".scrollSlideUp").each(function () {
-      if ($(this).offset().top < winTop + height) {
-        $(this).removeClass("scrollSlideUp");
-        $(this).addClass("fadeInUp");
-      }
-    });
-    $(".scrollSlideDown").each(function () {
-      if ($(this).offset().top < winTop + height) {
-        $(this).removeClass("scrollSlideDown");
-        $(this).addClass("fadeInDown");
-      }
-    });
-    $(".scrollSlideLeft").each(function () {
-      if ($(this).offset().top < winTop + height) {
-        $(this).removeClass("scrollSlideLeft");
-        $(this).addClass("fadeInLeft");
-      }
-    });
-    $(".scrollSlideRight").each(function () {
-      if ($(this).offset().top < winTop + height) {
-        $(this).removeClass("scrollSlideRight");
-        $(this).addClass("fadeInRight");
-      }
-    });
+    // // SCROLL ANIMATION
+    // $(".scrollSlideUp").each(function () {
+    //   if ($(this).offset().top < winTop + height) {
+    //     $(this).removeClass("scrollSlideUp");
+    //     $(this).addClass("fadeInUp");
+    //   }
+    // });
+    // $(".scrollSlideDown").each(function () {
+    //   if ($(this).offset().top < winTop + height) {
+    //     $(this).removeClass("scrollSlideDown");
+    //     $(this).addClass("fadeInDown");
+    //   }
+    // });
+    // $(".scrollSlideLeft").each(function () {
+    //   if ($(this).offset().top < winTop + height) {
+    //     $(this).removeClass("scrollSlideLeft");
+    //     $(this).addClass("fadeInLeft");
+    //   }
+    // });
+    // $(".scrollSlideRight").each(function () {
+    //   if ($(this).offset().top < winTop + height) {
+    //     $(this).removeClass("scrollSlideRight");
+    //     $(this).addClass("fadeInRight");
+    //   }
+    // });
   });
 });
 
 $(window).on('resize', function () {
   if (screen.width <= 480) {
+    $('.dropdown.open .dropdown-toggle').dropdown('toggle');
     $('.navbar').removeClass("navbar-fixed-top");
     $("body").css("background-position", "50% 0px");
   } else {
     $('.navbar').addClass("navbar-fixed-top");
+    $('.contactbox').fadeIn();
   }
 });
 
@@ -318,7 +320,7 @@ $("#frmEditProfile").submit(function (e) {
               context: this,
               type: 'POST',
               success: function (responseUpload) {
-                if (responseUpload == "ok") {
+                if (responseUpload) {
                   $('#modalEditProfile').modal('hide');
                   alertNotif("success", "Updated Successfully!", true);
                 } else {
@@ -463,9 +465,9 @@ $("#frmRegister").submit(function (e) {
         $(this).find('#frmRegister').trigger('reset');
         $('#modalRegistration').modal('hide');
         $(this).find('#btnRegister').html('Register');
-        if ($(this).find('#txtEmail').val().includes("gmail")) {
-          location.href = "gmail.com";
-        }
+        // if ($(this).find('#txtEmail').val().includes("gmail")) {
+        //   location.href = "gmail.com";
+        // }
       } else {
         $(this).find("#btnRegister").html('Register');
         $(this).find('#btnRegister').attr('disabled', false);

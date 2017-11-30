@@ -98,14 +98,14 @@ $('.btnNext').click(function () {
 // BOOK NOW FORM
 $("#btnSubmit").click(function (e) {
   var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
-  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
-  $(this).find("#btnBookNow").prop('disabled', true);
+  $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
+  $(this).prop('disabled', true);
   $.ajax({
     context: this,
     type: 'POST',
     url: root + 'ajax/bookNow.php',
     dataType: "json",
-    data: $(this).closest('form').serialize(),
+    data: $('#frmBookNow').serialize(),
     success: function (response) {
       if (!response) {
         alertNotif("error", "Full");
@@ -113,7 +113,7 @@ $("#btnSubmit").click(function (e) {
       }
       $('span#txtBookingID').html(response[0]);
       $('span#txtRoomID').html(response[1]);
-      $(this).closest('form').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response);
+      $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
       next(step);
     }
   });

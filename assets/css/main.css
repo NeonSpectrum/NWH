@@ -13,6 +13,15 @@ body {
   }
 }
 
+@media only screen and (min-width:768px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
 a[disabled],
 a[disabled]:hover {
   pointer-events: none;
@@ -128,10 +137,13 @@ img.white-border {
   margin-bottom: 5px;
 }
 
+.dropdown-menu.login-dropdown {
+  width: 250px;
+}
 
-/* .dropdown-menu {
-  width: 300px;
-} */
+.dropdown-menu.book-dropdown {
+  width: 350px;
+}
 
 .height-navbar {
   height: 100px;
@@ -140,6 +152,10 @@ img.white-border {
 @media only screen and (max-width:768px) {
   .height-navbar {
     height: 0px;
+  }
+  .dropdown-menu.login-dropdown,
+  .dropdown-menu.book-dropdown {
+    width: 100%;
   }
 }
 
