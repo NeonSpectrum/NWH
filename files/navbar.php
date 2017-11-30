@@ -85,6 +85,7 @@
                   <div class="form-group">
                     <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
                     <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
+                  </div>
                   <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
                 </form>
               </div>

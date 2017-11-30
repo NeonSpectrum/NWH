@@ -23,9 +23,9 @@ $(document).ready(function () {
   });
 
   // FOCUS ON SELECT
-  // $('input').focus(function () {
-  //   $(this).select();
-  // });
+  $('input').focus(function () {
+    $(this).select();
+  });
 
   // MAKE NUMBER RESET TO MIN OR MAX WHEN LEAVE
   $('input[type=number]').on('keyup keydown', function (e) {
