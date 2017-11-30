@@ -7,7 +7,7 @@
 ?>
 <div class="contactbox contactbox--tray contactbox--empty">
   <div class="contactbox__title">
-      <h5>Contact Us</h5>
+      <h5><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;Contact Us</h5>
       <button class="contactbox__title__tray">
           <span></span>
       </button>
