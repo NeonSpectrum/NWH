@@ -21,7 +21,7 @@
 <title>Northwood Hotel</title>
 
 <!-- WEBSITE ICON -->
-<link rel='shortcut icon' href='<?php echo $root;?>favicon.ico'/>
+<link rel='shortcut icon' href='<?php echo $root;?>favicon.ico?<?php echo filemtime(__DIR__."/favicon.ico")?>'/>
 
 <!-- META -->
 <?php 

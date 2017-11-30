@@ -7,7 +7,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root;?>"><img src="<?php echo $root;?>images/logo-rendered.png" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root;?>"><img src="<?php echo $root;?>images/logo-rendered.png?<?php echo filemtime(__DIR__."/../images/logo-rendered.png");?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
