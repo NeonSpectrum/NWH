@@ -98,7 +98,7 @@
   {
 ?>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">
+          <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo "$fname $lname";?>
