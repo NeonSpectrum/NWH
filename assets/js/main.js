@@ -21,6 +21,7 @@ $(document).ready(function () {
       $(this).find('button').removeAttr('disabled');
     }
   });
+
   // FOCUS ON SELECT
   $('input').focus(function () {
     $(this).select();
@@ -154,6 +155,7 @@ Pace.on('done', function () {
 });
 
 $(window).on('resize', function () {
+  $("body").trigger("click");
   if (screen.width <= 480) {
     $('.dropdown.open .dropdown-toggle').dropdown('toggle');
     $('.navbar').removeClass("navbar-fixed-top");

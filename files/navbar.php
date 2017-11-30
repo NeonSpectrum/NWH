@@ -19,31 +19,31 @@
         <li class="dropdown">
           <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
-              <form class="form frmBookCheck" method="post">
-                <div class="form-group">
-                  <label>Check In Date:</label>
-                  <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
-                </div>
-                <div class="form-group">
-                  <label>Check Out Date:</label>
-                  <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label>Adults:</label>
-                      <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
-                    </div>
-                    <div class="col-md-6">
-                      <label>Children:</label>
-                      <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
-                    </div>
+            <form class="form frmBookCheck" method="post">
+              <div class="form-group">
+                <label>Check In Date:</label>
+                <input id="txtCheckInDate" type="date" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
+              </div>
+              <div class="form-group">
+                <label>Check Out Date:</label>
+                <input id="txtCheckOutDate" type="date" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Adults:</label>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="0" min="0" max="10" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Children:</label>
+                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="0" min="0" max="10" required>
                   </div>
                 </div>
-                <div class="form-group">
+              </div>
+              <div class="form-group">
                 <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
-                </div>
-              </form> 
+              </div>
+            </form> 
           </ul>
         </li>
         <li class="dropdown" style="cursor:pointer">
@@ -102,19 +102,19 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
-              <div class="user-name-navbar">
-                <?php echo $fname.' '.$lname;?>
-              </div>
+            <div class="user-name-navbar">
+              <?php echo $fname.' '.$lname;?>
+            </div>
           <span class="caret"></span></a>
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
-              <?php
-                if ($accounttype == "Owner" || $accounttype == "Admin")
-                  echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
-              ?>
-              <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
-              <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
-              <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-              <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <?php
+              if ($accounttype == "Owner" || $accounttype == "Admin")
+                echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
+            ?>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
+            <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
 <?php
