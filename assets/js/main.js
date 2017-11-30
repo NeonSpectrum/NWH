@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  new WOW().init();
   scrolling(false);
 
   // RESET FORM IF EXISTS IF MODAL IS EXITED
@@ -94,6 +93,19 @@ $(document).ready(function () {
 });
 // PACE DONE
 Pace.on('done', function () {
+  var wow = new WOW({
+    boxClass: 'wow', // animated element css class (default is wow)
+    animateClass: 'animated', // animation css class (default is animated)
+    offset: 40, // distance to the element when triggering the animation (default is 0)
+    mobile: true, // trigger animations on mobile devices (default is true)
+    live: true, // act on asynchronously loaded content (default is true)
+    callback: function (box) {
+      // the callback is fired every time an animation is started
+      // the argument that is passed in is the DOM node being animated
+    },
+    scrollContainer: null // optional scroll container selector, otherwise use window
+  });
+  wow.init();
   scrolling(true);
   $('.checkInDate, .checkOutDate').datepicker({
     format: "yyyy-mm-dd",
@@ -138,32 +150,6 @@ Pace.on('done', function () {
         $('.contactbox').fadeIn();
       }
     }
-
-    // // SCROLL ANIMATION
-    // $(".scrollSlideUp").each(function () {
-    //   if ($(this).offset().top < winTop + height) {
-    //     $(this).removeClass("scrollSlideUp");
-    //     $(this).addClass("fadeInUp");
-    //   }
-    // });
-    // $(".scrollSlideDown").each(function () {
-    //   if ($(this).offset().top < winTop + height) {
-    //     $(this).removeClass("scrollSlideDown");
-    //     $(this).addClass("fadeInDown");
-    //   }
-    // });
-    // $(".scrollSlideLeft").each(function () {
-    //   if ($(this).offset().top < winTop + height) {
-    //     $(this).removeClass("scrollSlideLeft");
-    //     $(this).addClass("fadeInLeft");
-    //   }
-    // });
-    // $(".scrollSlideRight").each(function () {
-    //   if ($(this).offset().top < winTop + height) {
-    //     $(this).removeClass("scrollSlideRight");
-    //     $(this).addClass("fadeInRight");
-    //   }
-    // });
   });
 });
 
