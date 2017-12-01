@@ -45,7 +45,7 @@
       $data = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password");
       $subject = "Northwood Hotel Account Creation";
       $body = "Please proceed to this link to register your account:<br/>http://$domain/ajax/register.php?$data";
-      echo sendMail("$email","$subject","$body");
+      echo sendMail("Northwood Hotel Registration","$email","$subject","$body");
     } else if($count != 0) {
       echo ALREADY_REGISTERED;
     } else {

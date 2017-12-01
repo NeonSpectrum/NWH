@@ -527,7 +527,7 @@ $('#frmContact').submit(function (e) {
     url: root + 'ajax/contactForm.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response) {
+      if (response == true) {
         alertNotif("success", "Sent Successfully", false);
         $(this).trigger("reset");
         $(this).parent().toggleClass('contactbox--tray');

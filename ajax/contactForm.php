@@ -5,7 +5,7 @@
   $email = $_POST['txtEmail'];
   $message = $_POST['txtMessage'];
 
-  $body = "Name: $name<br/>Email: $email<br/>Message: $message";
   $subject = "Message from $email";
-  echo sendMail(EMAIL, $subject, $body);
+  $body = "Name: $name<br/>Email: $email<br/>Message: $message";
+  echo sendMail("Northwood Hotel Support",SUPPORT_EMAIL, $subject, $body);
 ?>

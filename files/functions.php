@@ -6,21 +6,18 @@
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\Exception;
 
-  function sendMail($email, $subject, $body) {
-    $email = (string)$email;
-    $subject = (string)$subject;
-    $body = (string)$body;
+  function sendMail($head, $email, $subject, $body) {
     try {
       $mail = new PHPMailer(true); 
       $mail->isSMTP();
       $mail->Host = "ssl://cpanel02wh.sin1.cloud.z.com";
       $mail->SMTPAuth = true;
-      $mail->Username = EMAIL;
+      $mail->Username = NOREPLY_EMAIL;
       $mail->Password = PASSWORD;
       $mail->SMTPSecure = 'tls';
       $mail->Port = 465;          
   
-      $mail->setFrom(EMAIL, "Northwood Hotel");
+      $mail->setFrom(NOREPLY_EMAIL, $head);
       $mail->addAddress($email);
   
       $mail->isHTML(true);
