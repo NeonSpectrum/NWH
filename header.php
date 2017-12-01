@@ -39,7 +39,6 @@
 
 <!-- CUSTOM CSS -->
 <?php
-echo $_SERVER['PHP_SELF'];
   // GET MAIN OR ADMIN CSS
   if (strpos($_SERVER['PHP_SELF'],"admin")) {
     echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/admin.css?v=".filemtime(__DIR__."/assets/css/admin.css")."'>\n";
