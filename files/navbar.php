@@ -325,6 +325,8 @@
   $email = $_SESSION['email'];
   $query = "SELECT * FROM booking WHERE EmailAddress = '$email'";
   $result = mysqli_query($db, $query) or die(mysql_error());
+  $roomID = $checkInDate = $checkOutDate = $adults = $children = "";
+  $first = true;
   while ($row = mysqli_fetch_assoc($result)) {
     $tomorrow = time() + 86400; // +1 day
     if ($tomorrow < strtotime($row['CheckInDate'])) {

@@ -21,7 +21,7 @@ $(document).ready(function () {
 
   // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
   $("input[type=text]").change(function () {
-    if ($(this).val()) {
+    if ($(this).val() && !$(this).closest("form").hasClass("frmBookCheck")) {
       $(this).closest('form').find("button").removeAttr('disabled');
     }
   });

@@ -31,14 +31,14 @@
         <label>Check In Date: </label>
         <div class="input-group">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required readonly/>
+          <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" required readonly/>
         </div>
       </div>
       <div class="form-group">
         <label>Check Out Date: </label>
         <div class="input-group">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required readonly/>
+          <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" required readonly/>
         </div>
       </div>
       <div class="form-group">
@@ -51,7 +51,7 @@
       </div>
       <div class="form-group">
         <label></label>
-        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
+        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo !isset($_SESSION['email']) ? 'Login First!' : 'Book Now';?></button>
       </div>
     </form>
   </div>
