@@ -126,7 +126,7 @@
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-            <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="<?php echo $root;?>account/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
 <?php
@@ -325,7 +325,6 @@
   $email = $_SESSION['email'];
   $query = "SELECT * FROM booking WHERE EmailAddress = '$email'";
   $result = mysqli_query($db, $query) or die(mysql_error());
-  $first = true;
   while ($row = mysqli_fetch_assoc($result)) {
     $tomorrow = time() + 86400; // +1 day
     if ($tomorrow < strtotime($row['CheckInDate'])) {

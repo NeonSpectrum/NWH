@@ -18,7 +18,7 @@ $('.btnEditRoom').click(function () {
 
 $('#frmChangeRoom').submit(function (e) {
   e.preventDefault();
-  $("#btnUpdate").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
+  $("#btnUpdate").html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i>  Updating...');
   $('#btnUpdate').attr('disabled', true);
   $.ajax({
     context: this,

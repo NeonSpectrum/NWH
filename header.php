@@ -40,7 +40,7 @@
 <!-- CUSTOM CSS -->
 <?php
   // GET MAIN OR ADMIN CSS
-  if (strpos($_SERVER['PHP_SELF'],"admin")) {
+  if (strpos($_SERVER['PHP_SELF'],"/admin")) {
     echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/admin.css?v=".filemtime(__DIR__."/assets/css/admin.css")."'>\n";
   } else {
     echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/main.css?v=".filemtime(__DIR__."/assets/css/main.css")."'>\n";
@@ -52,7 +52,7 @@
   }
 
   // IF ADMIN USE MINIMAL PACE
-  if (strpos($_SERVER['PHP_SELF'],"admin")) {
+  if (strpos($_SERVER['PHP_SELF'],"/admin")) {
     echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/pace-theme-minimal.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-minimal.css') . "'>\n";
   } else {
     echo "<link type='text/css' rel='stylesheet' id='pace' href='{$root}assets/css/pace-theme-center-simple.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-center-simple.css') . "'>\n";
@@ -62,7 +62,7 @@
 
 </head>
 
-<body>
+<body<?php echo strpos($_SERVER['PHP_SELF'],"/admin") ? ' class="sidebar-is-reduced"' : ''?>>
 
 <?php
   // IF NOT ADMIN DISPLAY LOADING ANIMATION

@@ -6,16 +6,15 @@
   <div class="well center-block" style="width:90%;background:rgba(245,245,245,0.8)">
     <h1 style="text-align:center">Gallery</h1>
     <hr style="border-color:black"/>
-    <div class="galleryDiv">
-      <div class="tab">
-        <button class="tablinks active" onclick="openTab(event, 'room')">Rooms</button>
-        <button class="tablinks" onclick="openTab(event, 'function')">Function Hall</button>
-        <button class="tablinks" onclick="openTab(event, 'bigbite')">BigBite</button>
-        <button class="tablinks" onclick="openTab(event, 'pool')">Swimming Pool</button>
-      </div>
-
-      <div id="room" class="tabcontent" style="display:block">
-        <div class="galleryContent">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active"><a data-toggle="tab" href="#room">Rooms</a></li>
+      <li><a data-toggle="tab" href="#function">Function Hall</a></li>
+      <li><a data-toggle="tab" href="#bigbite">BigBite</a></li>
+      <li><a data-toggle="tab" href="#pool">Swimming Pool</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="room" class="tab-pane fade in active">
+        <div class="img-baguette">
           <?php
             foreach (glob("images/rooms/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
             {
@@ -26,9 +25,8 @@
           ?>
         </div>
       </div>
-
-      <div id="function" class="tabcontent">
-        <div class="galleryContent">
+      <div id="function" class="tab-pane fade">
+        <div class="img-baguette">
           <?php
             foreach (glob("images/function/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
             {
@@ -38,9 +36,8 @@
           ?>
         </div>
       </div>
-
-      <div id="bigbite" class="tabcontent">
-        <div class="galleryContent">
+      <div id="bigbite" class="tab-pane fade">
+        <div class="img-baguette">
           <?php
             foreach (glob("images/bigbite/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
             {
@@ -50,9 +47,8 @@
           ?>
         </div>
       </div>
-
-      <div id="pool" class="tabcontent">
-        <div class="galleryContent">
+      <div id="pool" class="tab-pane fade">
+        <div class="img-baguette">
           <?php
             foreach (glob("images/pool/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
             {

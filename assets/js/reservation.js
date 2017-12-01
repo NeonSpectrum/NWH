@@ -14,37 +14,6 @@ $(document).ready(function () {
   }
 });
 
-// NEXT BUTTON
-// $('.btnNext').click(function () {
-//   var step = parseInt($('#stepID').val());
-//   $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
-//   $(this).prop('disabled', true);
-//   $('#stepID').val(parseInt($('#stepID').val()) + 1);
-
-//   if (step == 1 && !validateStep1()) {
-//     $(this).html('Next');
-//     $(this).prop('disabled', false);
-//     return;
-//   } else if (step == 2) {
-//     if (!validateStep2()) {
-//       $(this).html('Next');
-//       $(this).prop('disabled', false);
-//       return;
-//     }
-//     $.ajax({
-//       type: 'POST',
-//       url: root + 'ajax/getRoomID.php',
-//       data: $('#frmBookNow').serialize(),
-//       success: function (response) {
-//         $('#txtRoomID').val(response);
-//         location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
-//       }
-//     });
-//     return;
-//   }
-//   location.href = root + 'reservation/?' + $('#frmBookNow').serialize();
-// });
-
 $('.btnPrev').click(function () {
   var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
   prev(step);
@@ -54,7 +23,7 @@ $('.btnPrev').click(function () {
 });
 
 $('.btnNext').click(function () {
-  $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+  $(this).html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i> Submitting...');
   $(this).attr('disabled', true);
   var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
   if (step == 1) {
@@ -98,7 +67,7 @@ $('.btnNext').click(function () {
 // BOOK NOW FORM
 $("#btnSubmit").click(function (e) {
   var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
-  $(this).html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting ...');
+  $(this).html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i> Submitting ...');
   $(this).prop('disabled', true);
   $.ajax({
     context: this,

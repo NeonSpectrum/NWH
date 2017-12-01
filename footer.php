@@ -37,7 +37,7 @@
     <div class="col-md-4 footer-content">
       <span class="glyphicon glyphicon-map-marker"></span> LOCATION<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
-      <a href="<?php echo strpos($_SERVER['PHP_SELF'],"contactus") ? '#googleMap' : '/contactus/#googleMap';?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
+      <a class="anchor-animate" href="<?php echo strpos($_SERVER['PHP_SELF'],"contactus") ? '#googleMap' : '/contactus/#googleMap';?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
     </div>
     <div class="col-md-4 footer-content">
       <span class="glyphicon glyphicon-search"></span> FOLLOW US<br/>

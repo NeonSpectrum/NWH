@@ -1,5 +1,7 @@
 $(document).ready(function () {
   scrolling(false);
+
+  // HIDE CONTACT BOX IF MOBILE
   if (screen.width <= 480) {
     $('.contactbox').fadeOut();
   }
@@ -62,7 +64,7 @@ $(document).ready(function () {
   });
 
   // CLICKING ON HREF WITH # WILL ANIMATE TO THAT HASH
-  $('a[href^="#"]').click(function () {
+  $('a[href^="#"].anchor-animate').click(function () {
     if ($(window).width() > 480) {
       $('html, body').animate({
         scrollTop: $($.attr(this, 'href')).offset().top - 60
@@ -97,6 +99,7 @@ $(document).ready(function () {
     updateDate();
   });
 });
+
 // PACE DONE
 Pace.on('done', function () {
   scrolling(true);
@@ -271,7 +274,7 @@ $("#frmChange").submit(function (e) {
 // EDIT PROFILE
 $("#frmEditProfile").submit(function (e) {
   e.preventDefault();
-  $(this).find("#btnEditProfile").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $(this).find("#btnEditProfile").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnEditProfile').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
@@ -371,7 +374,7 @@ function ValidateSingleInput(oInput) {
 // EDIT RESERVATION
 $("#frmEditReservation").submit(function (e) {
   e.preventDefault();
-  $(this).find("#btnEditReservation").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating...');
+  $(this).find("#btnEditReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnEditReservation').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
@@ -397,7 +400,7 @@ $("#frmEditReservation").submit(function (e) {
 // FORGOT PASSWORD
 $("#frmForgot").submit(function (e) {
   e.preventDefault();
-  $(this).find("#btnReset").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $(this).find("#btnReset").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
   $(this).find("#btnReset").prop('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
@@ -433,14 +436,14 @@ $("#frmRegister").submit(function (e) {
     $(this).find("#txtPassword").focus();
     return;
   }
-  $(this).find("#btnRegister").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
+  $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
   $(this).find('#btnRegister').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   console.log("hello");
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'ajax/register.php',
+    url: root + 'account/register.php',
     data: $(this).serialize(),
     success: function (response) {
       console.log("hi");
@@ -469,12 +472,12 @@ function recaptchaCallback() {
 $("#frmLogin").submit(function (e) {
   e.preventDefault();
   $(this).find(".lblDisplayError").html('');
-  $(this).find("#btnLogin").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Signing In ...');
+  $(this).find("#btnLogin").html('<i class="fa fa-spinner fa-pulse"></i> Signing In ...');
   $(this).find("#btnLogin").attr('disabled', true);
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'ajax/login.php',
+    url: root + 'account/login.php',
     data: $(this).serialize(),
     success: function (response) {
       if (response) {
@@ -505,7 +508,7 @@ $('.frmBookCheck').submit(function (e) {
     return;
   }
 
-  $(this).find("#btnBookNow").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Booking...');
+  $(this).find("#btnBookNow").html('<i class="fa fa-spinner fa-pulse"></i> Booking...');
   $(this).find("#btnBookNow").prop('disabled', true);
 
   location.href = root + "reservation/?" + $(this).serialize();
@@ -519,7 +522,7 @@ $('#frmContact').submit(function (e) {
     $('#txtEmail').focus();
     return;
   }
-  $(this).find("#btnSubmit").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Sending ...');
+  $(this).find("#btnSubmit").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
   $(this).find("#btnSubmit").prop('disabled', true);
   $.ajax({
     context: this,

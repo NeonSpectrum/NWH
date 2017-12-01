@@ -1,30 +1,47 @@
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-    overlay = $('.overlay'),
-    isClosed = false;
+var Dashboard = function () {
 
-  trigger.click(function () {
-    hamburger_cross();
-  });
-
-  function hamburger_cross() {
-    if (isClosed == true) {
-      overlay.hide();
-      trigger.removeClass('is-open');
-      trigger.addClass('is-closed');
-      isClosed = false;
-    } else {
-      overlay.show();
-      trigger.removeClass('is-closed');
-      trigger.addClass('is-open');
-      isClosed = true;
+  var menuChangeActive = function menuChangeActive(el) {
+    if ($(el).hasClass("has-submenu")) {
+      $('.c-menu__submenu.u-list').slideUp();
+      if ($(el).find("ul").css("display") == "none")
+        $(el).find("ul").slideDown();
+      else if ($(el).find("ul").css("display") == "block")
+        $(el).find("ul").slideUp();
     }
-  }
+  };
 
-  $('[data-toggle="offcanvas"]').click(function () {
-    $('#wrapper').toggleClass('toggled');
-  });
-});
+  var sidebarChangeWidth = function sidebarChangeWidth() {
+    var $menuItemsTitle = $("li .menu-item__title");
+
+    $("body").toggleClass("sidebar-is-reduced sidebar-is-expanded");
+    $(".hamburger-toggle").toggleClass("is-opened");
+
+    if ($("body").hasClass("sidebar-is-expanded")) {
+      setTimeout(function () {
+        $('.logo__txt').hide();
+        $('.logo__txt').html("Northwood Hotel");
+        $('.logo__txt').fadeIn("slow");
+      }, 400);
+    } else {
+      $('.c-menu__submenu.u-list').slideUp();
+      $('.logo__txt').hide();
+      $('.logo__txt').html("NH");
+      $('.logo__txt').fadeIn("slow");
+    }
+  };
+
+  return {
+    init: function init() {
+      $(".js-hamburger").on("click", sidebarChangeWidth);
+
+      $(".js-menu li").on("click", function (e) {
+        menuChangeActive(e.currentTarget);
+      });
+    }
+  };
+}();
+
+Dashboard.init();
 
 // GIT UPDATE
 $('#btnGitUpdate').click(function () {
