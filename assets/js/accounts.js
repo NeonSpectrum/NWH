@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $.ajax({
-    url: root + 'ajax/displayAccount.php',
+    url: root + 'ajax/cmbEmailDisplay.php',
     type: "POST",
     dataType: "json",
     data: $('#frmAccount').serialize(),

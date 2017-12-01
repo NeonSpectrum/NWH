@@ -37,8 +37,8 @@
           echo "<td>{$row['CheckInDate']}</td>";
           echo "<td>{$row['CheckOutDate']}</td>";
           echo "<td>{$row['Adults']}</td>";
-          echo "<td>{$row['Childrens']}</td>";
-          echo "<td><a href='/files/generateReservationConfirmation.php?BookingID={$row['BookingID']}'>View Reservation</a></td>";
+          echo "<td>{$row['Children']}</td>";
+          echo "<td><a href='{$root}files/generateReservationConfirmation/?BookingID={$row['BookingID']}'>View Reservation</a></td>";
           echo "</tr>";
         }
       ?>

@@ -13,7 +13,7 @@
     try {
       $mail = new PHPMailer(true); 
       $mail->isSMTP();
-      $mail->Host = "ssl://smtp.gmail.com";
+      $mail->Host = "ssl://cpanel02wh.sin1.cloud.z.com";
       $mail->SMTPAuth = true;
       $mail->Username = EMAIL;
       $mail->Password = PASSWORD;
@@ -28,7 +28,7 @@
       $mail->Body = "$body";
   
       $mail->send();
-      return "ok";
+      return true;
     } catch(Exception $e) {
       return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
     }

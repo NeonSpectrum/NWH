@@ -40,21 +40,15 @@
     $query = "SELECT * FROM account WHERE EmailAddress='$email'";
     $result = mysqli_query($db,$query);
     $count = mysqli_num_rows($result);
-    if($count == 0 && strpos($email,'@') && strpos($email,'.'))
-    {
-      $data = "txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password";
-      $data = nwh_encrypt($data);
+
+    if ($count == 0 && strpos($email,'@') && strpos($email,'.')) {
+      $data = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password");
       $subject = "Northwood Hotel Account Creation";
       $body = "Please proceed to this link to register your account:<br/>http://$domain/ajax/register.php?$data";
-
       echo sendMail("$email","$subject","$body");
-    }
-    else if($count != 0)
-    {
+    } else if($count != 0) {
       echo ALREADY_REGISTERED;
-    }
-    else
-    {
+    } else {
       echo FORMAT_ERROR_EMAIL;
     }
   }

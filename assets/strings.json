@@ -52,7 +52,7 @@
   },
   {
     "name": "VERIFY_PASSWORD_ERROR",
-    "value": "Please reenter your new password!"
+    "value": "Incorrect Password!"
   },
   {
     "name": "UPLOAD_ERROR",

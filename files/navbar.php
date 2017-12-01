@@ -22,11 +22,17 @@
             <form class="form frmBookCheck" method="post">
               <div class="form-group">
                 <label>Check In Date:</label>
-                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required readonly>
+                </div>
               </div>
               <div class="form-group">
                 <label>Check Out Date:</label>
-                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required readonly>
+                </div>
               </div>
               <div class="form-group">
                 <div class="row">
@@ -60,6 +66,7 @@
   {
 ?>
         <li class="dropdown">
+          <!-- <a data-toggle="dropdown" style="cursor:pointer;user-select:none;position:fixed;left:2%;top:25%;z-index:10;background-color:white;padding:200px;font-size:300px">LOGIN</a> -->
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
           <ul class="dropdown-menu login-dropdown" style="padding:20px 20px 0px 20px">
             <div class="row">
@@ -70,11 +77,17 @@
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Email address</label>
-                    <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                      <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Password</label>
-                    <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                      <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                    </div>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
                     <!-- <div class="checkbox">
                       <label>
@@ -110,9 +123,9 @@
   if ($accounttype == "Owner" || $accounttype == "Admin")
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
 ?>
-            <li><a data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
-            <li><a data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
-            <li><a data-toggle="modal" data-target="#modalChange">Change Password</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
             <li><a href="<?php echo $root;?>ajax/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
@@ -308,49 +321,64 @@
             <label class="col-sm-3 control-label">Booking ID</label>
             <div class="col-sm-2">
               <select class="form-control" id="cmbBookingID" name="cmbBookingID">
-                <option></option>
-                <?php
-                  $email = $_SESSION['email'];
-                  $query = "SELECT * FROM booking WHERE EmailAddress = '$email'";
-                  $result = mysqli_query($db,$query) or die(mysql_error());
-                  while ($row=mysqli_fetch_assoc($result)) {
-                    $tomorrow = time()+86400; // +1 day
-                    $checkInDate = strtotime($row['CheckInDate']);
-                    if ($tomorrow < $checkInDate)
-                      echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";
-                  }
-                ?>
+<?php
+  $email = $_SESSION['email'];
+  $query = "SELECT * FROM booking WHERE EmailAddress = '$email'";
+  $result = mysqli_query($db, $query) or die(mysql_error());
+  $first = true;
+  while ($row = mysqli_fetch_assoc($result)) {
+    $tomorrow = time() + 86400; // +1 day
+    if ($tomorrow < strtotime($row['CheckInDate'])) {
+      if ($first) {
+        $roomID = $row['RoomID'];
+        $checkInDate = $row['CheckInDate'];
+        $checkOutDate = $row['CheckOutDate'];
+        $adults = $row['Adults'];
+        $children = $row['Children'];
+        $first = false;
+      }
+      echo "                ";
+      echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";
+    }
+  }
+?>
               </select>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-3">
-              <input name="RoomID" type="text" class="form-control" id="RoomID" placeholder="RoomID" required/>
+              <input name="RoomID" type="text" class="form-control" id="RoomID" placeholder="RoomID" value="<?php echo $roomID;?>" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Check In Date</label>
             <div class="col-sm-7">
-              <input name="CheckInDate" type="date" class="form-control checkInDate" id="CheckInDate" onkeydown="return disableKey(event,'number')" required/>
+              <div class="input-group date">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                <input name="CheckInDate" type="text" class="form-control checkInDate" id="CheckInDate" value="<?php echo $checkInDate;?>" required readonly/>
+              </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Check Out Date</label>
             <div class="col-sm-7">
-              <input name="CheckOutDate" type="date" class="form-control checkOutDate" id="CheckOutDate" onkeydown="return disableKey(event,'number')" required/>
+              <div class="input-group date">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                <input name="CheckOutDate" type="text" class="form-control checkOutDate" id="CheckOutDate" value="<?php echo $checkOutDate;?>" required readonly/>
+              </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="Adults" type="number" class="form-control" id="Adults" placeholder="Adults" onkeypress="disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="Adults" type="number" class="form-control" id="Adults" placeholder="Adults" value="<?php echo $adults;?>" onkeypress="disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Childrens</label>
             <div class="col-sm-3">
-              <input name="Childrens" type="number" class="form-control" id="Childrens" placeholder="Childrens" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="Childrens" type="number" class="form-control" id="Childrens" placeholder="Childrens" value="<?php echo $children;?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="modal-footer">

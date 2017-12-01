@@ -35,12 +35,12 @@
   <div class="center-block" style="width:80%;padding-left:5%;font-size:15px">
   <div class="row" style="padding:20px 0px 80px 0px">
     <div class="col-md-4 footer-content">
-      <span class="glyphicon glyphicon-map-marker"></span> ADDRESS<br/>
+      <span class="glyphicon glyphicon-map-marker"></span> LOCATION<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
       <a href="<?php echo strpos($_SERVER['PHP_SELF'],"contactus") ? '#googleMap' : '/contactus/#googleMap';?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
     </div>
     <div class="col-md-4 footer-content">
-      <span class="	glyphicon glyphicon-search"></span> FOLLOW US<br/>
+      <span class="glyphicon glyphicon-search"></span> FOLLOW US<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
       <div class="social-icon">
         <a href="https://www.facebook.com/Northwoodhotel/"><i class="fa fa-3x fa-facebook-square"></i></a>
@@ -50,8 +50,8 @@
     <div class="col-md-4 footer-content">
       <span class="	glyphicon glyphicon-envelope"></span> CONTACT US<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
-      (075) 636-0910 / (075) 205-0647<br/>
-      0929-789-0088 / 0995-408-6292
+      <span class="glyphicon glyphicon-phone-alt"></span> (075) 636-0910 / (075) 205-0647<br/>
+      <span class="glyphicon glyphicon-phone"></span> 0929-789-0088 / 0995-408-6292
     </div>
   </div>
   </div>

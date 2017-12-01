@@ -45,13 +45,6 @@ img.white-border {
   filter: drop-shadow(0.5px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white);
 }
 
-.scrollSlideUp,
-.scrollSlideLeft,
-.scrollSlideRight,
-.scrollSlideDown {
-  opacity: 0;
-}
-
 @media only screen and (max-width:768px) {
   .loadingIcon {
     background-size: 75%;
@@ -63,6 +56,18 @@ img.white-border {
 .modal-open {
   overflow-y: scroll;
 } */
+
+
+/* DISABLE SELECTION */
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 
 /* FOOTER */
@@ -133,12 +138,8 @@ img.white-border {
 
 /* NAVBAR */
 
-.login {
-  margin-bottom: 5px;
-}
-
 .dropdown-menu.login-dropdown {
-  width: 250px;
+  width: 300px;
 }
 
 .dropdown-menu.book-dropdown {

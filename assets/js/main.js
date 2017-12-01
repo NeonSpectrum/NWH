@@ -1,6 +1,5 @@
 $(document).ready(function () {
   scrolling(false);
-
   if (screen.width <= 480) {
     $('.contactbox').fadeOut();
   }
@@ -21,13 +20,15 @@ $(document).ready(function () {
   // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
   $("input[type=text]").change(function () {
     if ($(this).val()) {
-      $(this).find('button').removeAttr('disabled');
+      $(this).closest('form').find("button").removeAttr('disabled');
     }
   });
 
   // FOCUS ON SELECT
   $('input').focus(function () {
-    $(this).select();
+    if (!($(this).attr("class").includes("check") && $(this).attr("class").includes("Date"))) {
+      $(this).select();
+    }
   });
 
   // MAKE NUMBER RESET TO MIN OR MAX WHEN LEAVE
@@ -74,11 +75,11 @@ $(document).ready(function () {
     return false;
   });
 
-  // ANIMATE DROPDOWN
   // ADD SLIDEDOWN ANIMATION TO DROPDOWN //
   $('.dropdown').on('show.bs.dropdown', function (e) {
-    if ($(window).width() > 480)
+    if ($(window).width() > 480) {
       $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
+    }
     $(this).find("#txtEmail").focus();
   });
 
@@ -92,38 +93,50 @@ $(document).ready(function () {
       });
     }
     $(this).find(".lblDisplayError").html("");
+    $(this).find("form").trigger("reset");
     updateDate();
   });
 });
 // PACE DONE
 Pace.on('done', function () {
+  scrolling(true);
+  $("html,body").scrollTop(0);
+  $(".loadingIcon").fadeOut("slow");
+  $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
+
+  // WOW SETTINGS
   new WOW({
     offset: 40
   }).init();
-  scrolling(true);
-  $('.checkInDate, .checkOutDate').datepicker({
+
+  // DATE PICKER SETTINGS
+  $('input.checkInDate, input.checkOutDate').datepicker({
     format: "yyyy-mm-dd",
     startDate: '+1d',
     autoclose: true,
     todayHighlight: true
   });
+
+  // DATE PICKER SCRIPTS
   updateDate();
-  $('.checkInDate').change(function () {
-    if (!$(this).attr("value")) {
-      $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
-      $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val());
+  $('input.checkInDate, input.checkOutDate').each(function () {
+    if ($(this).val()) {
+      $(this).datepicker('update', $(this).val());
     }
   });
-  $(".loadingIcon").fadeOut("slow");
-  $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
-  $("html,body").scrollTop(0);
+  $('input.checkInDate').change(function () {
+    $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
+    $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val())
+  });
 
+  // ANIMATE TO HASH
   if (window.location.hash && $(window.location.hash).offset() != null) {
     $('html, body').animate({
       scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
     }, 1000, 'swing');
   }
 
+  // BACK TO TOP
   $(window).scroll(function () {
     // BACK TO TOP  
     if ($(window).scrollTop() > 300) {
@@ -131,15 +144,11 @@ Pace.on('done', function () {
     } else {
       $('a.back-to-top').fadeOut('slow');
     }
-
-    // SCROLL EFFECT ON DESKTOP AND LAPTOP DEVICES
-    if (screen.width > 480) {
-      $("body").css("background-position", "50% " + (-($(this).scrollTop() / 10) - 100) + "px");
-    }
   });
 });
 
 $(window).on('resize', function () {
+  $('.loadingIcon').height($(window).height());
   if (screen.width <= 480) {
     $('.navbar').removeClass("navbar-fixed-top");
     $("body").css("background-position", "50% 0px");
@@ -221,6 +230,7 @@ $("#cmbBookingID").change(function () {
     dataType: "json",
     data: $(this).serialize(),
     success: function (response) {
+      console.log("hi");
       $(this).closest("form").find("#txtRoomID").val(response[0]);
       $(this).closest("form").find("#txtCheckInDate").val(response[1]);
       $(this).closest("form").find("#txtCheckOutDate").val(response[2]);
@@ -414,32 +424,32 @@ $("#frmForgot").submit(function (e) {
 //REGISTER
 $("#frmRegister").submit(function (e) {
   e.preventDefault();
+  var pass = $(this).find('#txtPassword').val();
+  var rpass = $(this).find('#txtRetypePassword').val();
   if (pass != rpass) {
     $(this).find(".lblDisplayError").show(function () {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; Password is not the same</div>');
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + VERIFY_PASSWORD_ERROR + '</div>');
     });
+    $(this).find("#txtPassword").focus();
     return;
   }
-  var pass = $(this).find('#txtPassword', this).val();
-  var rpass = $(this).find('#txtRetypePassword', this).val();
   $(this).find("#btnRegister").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Submitting...');
   $(this).find('#btnRegister').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
+  console.log("hello");
   $.ajax({
     context: this,
     type: 'POST',
     url: root + 'ajax/register.php',
     data: $(this).serialize(),
     success: function (response) {
+      console.log("hi");
       if (response) {
         alertNotif('success', 'Email sent to verify your email!', false, 10000);
         $(this).find('#btnRegister').attr('disabled', false);
         $(this).find('#frmRegister').trigger('reset');
         $('#modalRegistration').modal('hide');
         $(this).find('#btnRegister').html('Register');
-        // if ($(this).find('#txtEmail').val().includes("gmail")) {
-        //   location.href = "gmail.com";
-        // }
       } else {
         $(this).find("#btnRegister").html('Register');
         $(this).find('#btnRegister').attr('disabled', false);

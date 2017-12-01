@@ -23,12 +23,12 @@ $('#frmChangeRoom').submit(function (e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'files/changeRoomDescription.php',
+    url: root + 'ajax/changeRoomDescription.php',
     data: $(this).serialize() + "&txtRoomType=" + $(".modal-title").html().replace(" ", "_"),
     success: function (response) {
-      if (response == 'ok') {
+      if (response) {
         $('#modalEditRoom').modal('hide');
-        alertNotif("success", "Updated Successfully!", true, 3000);
+        alertNotif("success", "Updated Successfully!", true);
       }
     }
   });
