@@ -48,6 +48,10 @@ $('#btnGitUpdate').click(function () {
   $.ajax({
     url: root + 'ajax/gitUpdate.php',
     success: function (response) {
+      if (!response) {
+        alertNotif("error", "Not Available for localhost");
+        return;
+      }
       alertNotif("success", response, true, 10000);
     }
   });

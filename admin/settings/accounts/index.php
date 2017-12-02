@@ -52,15 +52,15 @@
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <input type="hidden" name="txtEmail">
+          <input type="hidden" id="txtEmail" name="txtEmail">
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Name: </label>
-            <div class="col-sm-6">
+            <div class="col-sm-10">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-5">
                   <input id="txtFirstName" name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-5">
                   <input id="txtLastName" name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
                 </div>
               </div>
@@ -68,8 +68,8 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Account Type: </label>
-            <div class="col-sm-10">
-              <select id="cmbAccountType" name="cmbAccountType" class="form-control" style="width:40%">
+            <div class="col-sm-5">
+              <select id="cmbAccountType" name="cmbAccountType" class="form-control">
                 <option>User</option>
                 <option>Admin</option>
                 <option>Owner</option>

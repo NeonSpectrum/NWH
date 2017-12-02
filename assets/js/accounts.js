@@ -79,7 +79,8 @@ $('#frmEditAccount').submit(function (e) {
     data: $(this).serialize(),
     success: function (response) {
       if (response) {
-        alertNotif("success", "Records Updated Successfully!");
+        $(this).closest("#modalEditAccount").modal('hide');
+        alertNotif("success", "Records Updated Successfully!", true);
         $(this).find(".lblDisplayError").html('');
       } else {
         $(this).find("#btnUpdate").html('Update');
