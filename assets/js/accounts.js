@@ -55,3 +55,39 @@ $('input[type="search"]').on('keyup change', function (e) {
   e.preventDefault();
   oTable.column(0).search($(this).val()).draw();
 });
+
+$('.btnEditAccount').click(function () {
+  var email = $(this).attr("id");
+  var firstName = $(this).closest("tr").find("#txtFirstName").html();
+  var lastName = $(this).closest("tr").find("#txtLastName").html();
+  var accountType = $(this).closest("tr").find("#txtAccountType").html();
+  $('.modal-title').html(email);
+  $('#modalEditAccount').find("#txtEmail").val(email);
+  $('#modalEditAccount').find("#txtFirstName").val(firstName);
+  $('#modalEditAccount').find("#txtLastName").val(lastName);
+  $('#modalEditAccount').find("#cmbAccountType").val(accountType);
+});
+
+$('#frmEditAccount').submit(function (e) {
+  e.preventDefault();
+  $(this).find("#btnUpdate").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
+  $(this).find("#btnUpdate").attr('disabled', true);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/editAccount.php',
+    data: $(this).serialize(),
+    success: function (response) {
+      if (response) {
+        alertNotif("success", "Records Updated Successfully!");
+        $(this).find(".lblDisplayError").html('');
+      } else {
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find("#btnUpdate").attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
+        });
+      }
+    }
+  });
+});

@@ -148,7 +148,7 @@
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <div class="modal-body">
-        <form id="frmRegister" method="post" class="form-horizontal">
+        <form id="frmRegister" class="form-horizontal">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

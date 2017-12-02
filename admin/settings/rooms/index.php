@@ -55,7 +55,7 @@
                 echo "<tr>";
                 echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
                 echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
-                echo "<td style='width:20%'><button class='btn btn-primary btnEditRoom' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'>Edit</button></td>";
+                echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
                 echo "</tr>";
               }
             ?>
@@ -79,7 +79,7 @@
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Description</label>
+            <label class="col-sm-2 control-label">Description</label>
               <div class="col-sm-10">
                 <textarea id="txtDescription" name="txtDescription" type="text" class="form-control" style="resize:none" placeholder="Description" rows="10" required></textarea>
               </div>
