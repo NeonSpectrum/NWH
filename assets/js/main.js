@@ -103,9 +103,14 @@ $(document).ready(function () {
 // PACE DONE
 Pace.on('done', function () {
   scrolling(true);
+
   $("html,body").scrollTop(0);
   $(".loadingIcon").fadeOut("slow");
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
+
+
+  // BACK TO TOP
+  $('body').append('<div id="backToTop" class="btn btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></div>');
 
   // WOW SETTINGS
   new WOW({
@@ -141,12 +146,26 @@ Pace.on('done', function () {
 
   // BACK TO TOP
   $(window).scroll(function () {
-    // BACK TO TOP  
-    if ($(window).scrollTop() > 300) {
-      $('a.back-to-top').fadeIn('slow');
-    } else {
-      $('a.back-to-top').fadeOut('slow');
+    if (screen.width <= 480) {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        $('.mylivechat_collapsed').fadeOut();
+      } else {
+        $('.mylivechat_collapsed').fadeIn();
+      }
     }
+    // BACK TO TOP  
+    if ($(this).scrollTop() <= 200) {
+      $('#backToTop').fadeOut();
+    } else {
+      $('#backToTop').fadeIn();
+    }
+  });
+
+  $('#backToTop').click(function () {
+    $("html, body").animate({
+      scrollTop: 0
+    }, 600);
+    return false;
   });
 });
 

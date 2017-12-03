@@ -1,7 +1,12 @@
 <?php
   // IF SESSION NOT EXISTS, START 
   if(!isset($_SESSION)) session_start();
-
+  if(strpos($_SERVER['PHP_SELF'],"admin")) {
+    if ($_SESSION['accountType']=='User' || !isset($_SESSION['accountType'])) {
+      header('location: ../');
+      exit();
+    }
+  }
   // CONNECTING TO DATABASE
   require_once 'files/db.php';
 
@@ -72,7 +77,6 @@
     // IF HOME DISABLE MARGIN TOP
     if ($currentDirectory != "home")
       echo "<div class='height-navbar'></div>\n";
-    echo "<a href='#' class='back-to-top'>Back to Top</a>\n";
   }
 ?>
 <div id="alertBox"></div>

@@ -1,9 +1,5 @@
 <?php
   require_once '../header.php';
-  if ($_SESSION['accountType']=='User' || !isset($_SESSION['accountType'])) {
-    header('location: ../');
-    exit();
-  }
 ?>
 <style>body{overflow-y:hidden}</style>
 <?php require_once '../files/sidebar.php';?>
