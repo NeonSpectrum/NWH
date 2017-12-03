@@ -1,12 +1,17 @@
 <?php
   // Pear Mail Library
   $domain = strpos($_SERVER['REQUEST_URI'],"nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
+  $host = strpos($_SERVER['REQUEST_URI'],"nwh") ? "/nwh" : "/";
   require_once '../files/db.php';
 
   parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 
   if(isset($txtEmail))
   {
+    if ($expirydate < strtotime("now")) {
+      echo "<script>alert('Link Expired. Please register again.');location.href='$host';</script>";
+      exit();
+    }
     $fname = $txtFirstName;
     $lname = $txtLastName;
     $email = $txtEmail;
@@ -14,7 +19,6 @@
     $date = date("Y-m-d");
     $query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$date')";
     $result = mysqli_query($db,$query);
-    $host = strpos($_SERVER['REQUEST_URI'],"nwh") ? "/nwh" : "/";
     if(!$result)
     {
       echo "<script>alert('Already Registered!');location.href='$host';</script>";
@@ -42,10 +46,10 @@
     $count = mysqli_num_rows($result);
 
     if ($count == 0 && strpos($email,'@') && strpos($email,'.')) {
-      $data = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password");
+      $data = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&expirydate=" . (strtotime("now") + (60*5)));
       $subject = "Northwood Hotel Account Creation";
       $body = "Please proceed to this link to register your account:<br/>http://$domain/account/register.php?$data";
-      echo sendMail("Northwood Hotel Registration","$email","$subject","$body");
+      echo sendMail("$email","$subject","$body");
     } else if($count != 0) {
       echo ALREADY_REGISTERED;
     } else {

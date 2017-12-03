@@ -6,7 +6,7 @@
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\Exception;
 
-  function sendMail($head, $email, $subject, $body) {
+  function sendMail($email, $subject, $body) {
     try {
       $mail = new PHPMailer(true); 
       $mail->isSMTP();
@@ -17,7 +17,7 @@
       $mail->SMTPSecure = 'tls';
       $mail->Port = 465;          
   
-      $mail->setFrom(NOREPLY_EMAIL, $head);
+      $mail->setFrom(NOREPLY_EMAIL, "Northwood Hotel");
       $mail->addAddress($email);
   
       $mail->isHTML(true);
