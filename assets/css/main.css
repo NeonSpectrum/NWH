@@ -42,8 +42,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   display: none;
   color: #fff;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 #backToTop:hover {
