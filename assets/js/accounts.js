@@ -90,7 +90,7 @@ $('.btnDeleteAccount').click(function () {
               'The account has been deleted.',
               'success'
             )
-            location.reload();
+            setTimeout(location.reload(), 1000);
           }
         }
       });
