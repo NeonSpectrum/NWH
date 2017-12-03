@@ -1,3 +1,8 @@
+<?php
+  // IF NOT ADMIN SHOW FOOTER AND CONTACT BOX
+  if (!strpos($_SERVER['PHP_SELF'],"admin")) 
+  {
+?>
 <div class="footer">
   <div class="center-block" style="width:80%;padding-left:5%;font-size:15px">
   <div class="row" style="padding:20px 0px 80px 0px">
@@ -29,6 +34,7 @@
 
 <!-- REQUIRED JS -->
 <?php
+  }
   foreach (glob(__DIR__."/assets/js/required/*.js") as $js) {
     $file = str_replace(__DIR__."/", "", $js);
     echo "<script src='{$root}$file?v=" . filemtime($js) . "'></script>\n";

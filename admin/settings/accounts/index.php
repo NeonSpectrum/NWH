@@ -30,7 +30,9 @@
                 echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
                 echo "<td id='txtLastName'>{$row['LastName']}</td>";
                 echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
-                echo "<td><a class='btnEditAccount' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
+                echo "<td><a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+                echo "&nbsp;&nbsp;<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+                echo "</td>";
                 echo "</tr>";
               }
             ?>

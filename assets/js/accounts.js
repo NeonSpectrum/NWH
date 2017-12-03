@@ -67,7 +67,36 @@ $('.btnEditAccount').click(function () {
   $('#modalEditAccount').find("#txtLastName").val(lastName);
   $('#modalEditAccount').find("#cmbAccountType").val(accountType);
 });
-
+$('.btnDeleteAccount').click(function () {
+  var email = $(this).attr("id");
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/deleteAccount.php',
+        data: "txtEmail=" + email,
+        success: function (response) {
+          if (response == true) {
+            swal(
+              'Deleted!',
+              'The account has been deleted.',
+              'success'
+            )
+            location.reload();
+          }
+        }
+      });
+    }
+  })
+});
 $('#frmEditAccount').submit(function (e) {
   e.preventDefault();
   $(this).find("#btnUpdate").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
