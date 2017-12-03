@@ -108,10 +108,6 @@ Pace.on('done', function () {
   $(".loadingIcon").fadeOut("slow");
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a6216638960d0b273167071aecae651f664d6462
   // BACK TO TOP
   $('body').append('<div id="backToTop" class="btn btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></div>');
 
