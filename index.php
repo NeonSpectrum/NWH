@@ -1,4 +1,10 @@
 <?php
+  if (!isset($_COOKIE['firstvisit']))
+  {
+    setcookie("firstvisit", true, time() + 60 * 3);
+    header('Location: welcome');
+    exit();
+  }
   require_once 'header.php';
   require_once 'files/navbar.php';
 ?>
