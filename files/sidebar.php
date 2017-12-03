@@ -1,11 +1,11 @@
 <?php
-  $dashboard = $settings = $rooms = '';
+  $dashboard = $booking = $chat = $settings = '';
   if (strpos($_SERVER['PHP_SELF'],'booking')) {
     $booking = ' is-active';
+  } elseif (strpos($_SERVER['PHP_SELF'],'chat')) {
+    $chat = ' is-active';
   } elseif (strpos($_SERVER['PHP_SELF'],'settings')) {
     $settings = ' is-active';
-  } elseif (strpos($_SERVER['PHP_SELF'],'rooms')) {
-    $rooms = ' is-active';
   } elseif (strpos($_SERVER['PHP_SELF'],'admin')) {
     $dashboard = ' is-active';
   }
@@ -38,6 +38,11 @@
         <li class="c-menu__item has-submenu <?php echo $booking;?>" title="Booking">
           <a class="c-menu__item__inner" href="<?php echo $root;?>admin/booking"><i class="fa fa-address-book-o"></i>
             <div class="c-menu-item__title"><span>Booking</span></div>
+          </a>
+        </li>
+        <li class="c-menu__item has-submenu <?php echo $chat;?>" title="Chat">
+          <a class="c-menu__item__inner" href="<?php echo $root;?>admin/chat"><i class="fa fa-comment-o"></i>
+            <div class="c-menu-item__title"><span>Chat</span></div>
           </a>
         </li>
         <li class="c-menu__item has-submenu <?php echo $settings;?>" title="Settings">
