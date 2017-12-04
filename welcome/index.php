@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../assets/css/welcome.css">
 </head>
 
-<body style="height:100%;width:100%;user-select:none">
+<body>
   <a class="proceed animated slideInUp" href="../" style="display:none;background-color:transparent;color:white;border-width:0;font-size:20px;position:fixed;bottom:0;right:0;z-index:9999;padding:20px;"><i class="fa fa-chevron-right fa-lg" aria-hidden="true"></i>  PROCEED TO THE WEBSITE</a>
   <div id="large-header" class="large-header">
     <canvas id="demo-canvas"></canvas>
