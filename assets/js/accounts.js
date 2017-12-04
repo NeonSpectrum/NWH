@@ -61,7 +61,7 @@ $('.btnEditAccount').click(function () {
   var firstName = $(this).closest("tr").find("#txtFirstName").html();
   var lastName = $(this).closest("tr").find("#txtLastName").html();
   var accountType = $(this).closest("tr").find("#txtAccountType").html();
-  $('.modal-title').html(email);
+  $('#modalEditAccount').find('.modal-title').html(email);
   $('#modalEditAccount').find("#txtEmail").val(email);
   $('#modalEditAccount').find("#txtFirstName").val(firstName);
   $('#modalEditAccount').find("#txtLastName").val(lastName);
@@ -142,13 +142,21 @@ $('#frmEditAccount').submit(function (e) {
   e.preventDefault();
   $(this).find("#btnUpdate").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
   $(this).find("#btnUpdate").attr('disabled', true);
+  if ($(this).find('#cmbAccountType').val() != "User" && $(this).find('#  cmbAccountType').val() != "Admin") {
+    $(this).find(".lblDisplayError").show(function () {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; Invalid Account Type</div>');
+    });
+    $(this).find("#btnUpdate").html('Update');
+    $(this).find("#btnUpdate").attr('disabled', false);
+    return;
+  }
   $.ajax({
     context: this,
     type: 'POST',
     url: root + 'ajax/editAccount.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response) {
+      if (response == true) {
         $(this).closest("#modalEditAccount").modal('hide');
         alertNotif("success", "Records Updated Successfully!", true);
         $(this).find(".lblDisplayError").html('');

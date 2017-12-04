@@ -12,7 +12,7 @@
     <h1 class="page-title">
       Accounts
       <span class="pull-right">
-        <button class="btn btn-primary" data-toggle='modal' data-target='#modalAddAccount'> Add</button>
+        <a style="cursor:pointer" data-toggle='modal' data-target='#modalAddAccount'><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">
@@ -35,8 +35,13 @@
                 echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
                 echo "<td id='txtLastName'>{$row['LastName']}</td>";
                 echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
-                echo "<td><a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
-                echo "&nbsp;&nbsp;<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+                echo "<td>";
+                if ($row['AccountType'] != "Owner" || $_SESSION['accountType'] == "Owner") {
+                  echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+                  echo "&nbsp;&nbsp;";
+                }
+                if ($_SESSION['accountType'] == "Owner")
+                  echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
                 echo "</td>";
                 echo "</tr>";
               }
@@ -48,56 +53,62 @@
   </div>
 </main>
 <div id="modalAddAccount" class="modal fade" role="dialog">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title text-center">Registration</h4>
-    </div>
-    <div class="modal-body">
-      <form id="frmAddAccount" class="form-horizontal">
-        <div class="lblDisplayError">
-          <!-- errors will be shown here ! -->
-        </div>
-        <div class="form-group">
-          <label for="email" class="col-sm-2 control-label">Name</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-md-6">
-                <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
-              </div>
-              <div class="col-md-6">
-                <input name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Registration</h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmAddAccount" class="form-horizontal">
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-md-6">
+                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
+                </div>
+                <div class="col-md-6">
+                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="email" class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
-            <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" minlength="8" required/>
+          <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+              <input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" minlength="8" required/>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="col-sm-2 control-label"></label>
-          <div class="col-sm-10">
-            <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
+          <div class="form-group">
+            <label for="password" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+              <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <br/><button id="btnRegister" type="submit" class="btn btn-info">Register</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </form>
+          <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Contact #</label>
+            <div class="col-sm-10">
+              <input name="txtContactNumber" type="number" class="form-control" id="txtContactNumber" placeholder="Contact Number" minlength="10" required/>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <br/><button id="btnRegister" type="submit" class="btn btn-info">Register</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
- </div>
 </div>
 <div id="modalEditAccount" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -128,10 +139,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Account Type: </label>
             <div class="col-sm-5">
-              <select id="cmbAccountType" name="cmbAccountType" class="form-control">
+              <select id="cmbAccountType" name="cmbAccountType" class="form-control" required>
                 <option>User</option>
                 <option>Admin</option>
-                <option>Owner</option>
               </select>
             </div>
           </div>

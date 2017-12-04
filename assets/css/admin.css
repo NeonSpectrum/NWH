@@ -37,6 +37,18 @@ h3 {
   font-size: 18px;
 }
 
+.user-icon-navbar {
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
 .u-list {
   margin: 0;
   padding: 0;

@@ -30,6 +30,6 @@
         location.reload();
       else
         return
-    }, timeout != null ? timeout : 2000);
+    }, timeout != null ? timeout : 1300);
   }\n";
 ?>

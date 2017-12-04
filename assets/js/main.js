@@ -33,7 +33,7 @@ $(document).ready(function () {
     }
   });
 
-  // MAKE NUMBER RESET TO MIN OR MAX WHEN LEAVE
+  // MAKE NUMBER RESET TO MIN OR MAX
   $('input[type=number]').on('keyup keydown', function (e) {
     var min = parseInt($(this).attr("min"));
     var max = parseInt($(this).attr("max"));
@@ -234,14 +234,6 @@ function scrolling(enable) {
 
 // DISPLAY BOOKING ID
 $("#cmbBookingID").change(function () {
-  if ($("#cmbBookingID").val() == '') {
-    $(this).closest("form").find("#txtRoomID").val('');
-    $(this).closest("form").find("#txtAdults").val('0');
-    $(this).closest("form").find("#txtChildrens").val('0');
-    $(this).closest("form").find("#btnEditReservation").prop("disabled", true);
-    $(this).closest("form").find("#btnPrint").prop("disabled", true);
-    return;
-  }
   $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
   $(this).closest("form").find("#btnPrint").prop("disabled", false);
   $.ajax({
@@ -256,7 +248,7 @@ $("#cmbBookingID").change(function () {
       $(this).closest("form").find("#txtCheckInDate").val(response[1]);
       $(this).closest("form").find("#txtCheckOutDate").val(response[2]);
       $(this).closest("form").find("#txtAdults").val(response[3]);
-      $(this).closest("form").find("#txtChildrens").val(response[4]);
+      $(this).closest("form").find("#txtChildren").val(response[4]);
     }
   });
 });
@@ -392,8 +384,8 @@ function ValidateSingleInput(oInput) {
 // EDIT RESERVATION
 $("#frmEditReservation").submit(function (e) {
   e.preventDefault();
-  $(this).find("#btnEditReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnEditReservation').attr('disabled', true);
+  $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
+  $(this).find('#btnReservation').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
     context: this,
@@ -403,10 +395,10 @@ $("#frmEditReservation").submit(function (e) {
     success: function (response) {
       if (response) {
         $('#modalEditReservation').modal('hide');
-        alertNotif('success', 'Updated Successfully!', false);
+        alertNotif('success', 'Updated Successfully!', true);
       } else {
-        $(this).find("#btnEditReservation").html('Update');
-        $(this).find('#btnEditReservation').attr('disabled', false);
+        $(this).find("#btnReservation").html('Update');
+        $(this).find('#btnReservation').attr('disabled', false);
         $(this).find(".lblDisplayError").show(function () {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })

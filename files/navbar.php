@@ -24,21 +24,21 @@
                 <label>Check In Date:</label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" onkeypress="return disableKey(event,'number')" required readonly>
+                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" required readonly>
                 </div>
               </div>
               <div class="form-group">
                 <label>Check Out Date:</label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" onkeypress="return disableKey(event,'number')" required readonly>
+                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" required readonly>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <label>Adults:</label>
-                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="10" required>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="1" min="1" max="10" required>
                   </div>
                   <div class="col-md-6">
                     <label>Children:</label>
@@ -184,9 +184,15 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Contact #</label>
+            <div class="col-sm-10">
+              <input name="txtContactNumber" type="number" class="form-control" id="txtContactNumber" placeholder="Contact Number" minlength="10" required/>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="captcha" class="col-sm-2 control-label"></label>
             <div class="col-sm-10">
-              <div class="g-recaptcha" style="width:100%" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+              <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
             </div>
           </div>
           <div class="modal-footer">
@@ -349,7 +355,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-3">
-              <input name="RoomID" type="text" class="form-control" id="RoomID" placeholder="RoomID" value="<?php echo $roomID;?>" required/>
+              <input name="txtRoomID" type="text" class="form-control" id="txtRoomID" placeholder="Room ID" value="<?php echo $roomID;?>" required/>
             </div>
           </div>
           <div class="form-group">
@@ -357,7 +363,7 @@
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="CheckInDate" type="text" class="form-control checkInDate" id="CheckInDate" value="<?php echo $checkInDate;?>" required readonly/>
+                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate;?>" required readonly/>
               </div>
             </div>
           </div>
@@ -366,20 +372,20 @@
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="CheckOutDate" type="text" class="form-control checkOutDate" id="CheckOutDate" value="<?php echo $checkOutDate;?>" required readonly/>
+                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate;?>" required readonly/>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="Adults" type="number" class="form-control" id="Adults" placeholder="Adults" value="<?php echo $adults;?>" onkeypress="disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults;?>" onkeypress="disableKey(event,'letter');" min="1" max="10" value="1" required/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Childrens</label>
+            <label class="col-sm-3 control-label">Children</label>
             <div class="col-sm-3">
-              <input name="Childrens" type="number" class="form-control" id="Childrens" placeholder="Childrens" value="<?php echo $children;?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" value="<?php echo $children;?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="modal-footer">

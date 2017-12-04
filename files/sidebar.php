@@ -1,8 +1,10 @@
 <?php
-  $dashboard = $booking = $chat = $settings = '';
+  $dashboard = $booking = $reservation = $chat = $settings = '';
   if (strpos($_SERVER['PHP_SELF'],'booking')) {
     $booking = ' is-active';
-  } elseif (strpos($_SERVER['PHP_SELF'],'chat')) {
+  } elseif (strpos($_SERVER['PHP_SELF'],'reservation')) {
+    $reservation = ' is-active';
+  }elseif (strpos($_SERVER['PHP_SELF'],'chat')) {
     $chat = ' is-active';
   } elseif (strpos($_SERVER['PHP_SELF'],'settings')) {
     $settings = ' is-active';
@@ -18,7 +20,7 @@
     <div class="header-title">
       Admin Page
     </div>
-    Logged in as: <span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['fname']} {$_SESSION['lname']}";?></span>
+    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo "{$_SESSION['picture']}?v=".filemtime(__DIR__."/../images/profilepics/{$_SESSION['picture']}");?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['fname']} {$_SESSION['lname']}";?></span>
     <a id="btnGitUpdate" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
     <a href="<?php echo $root;?>account/logout.php" title="Logout" style="text-decoration:none" class="c-header-icon"><i class="fa fa-power-off"></i></a>
   </div>
@@ -33,6 +35,11 @@
         <li class="c-menu__item <?php echo $dashboard;?>" title="Dashboard">
           <a class="c-menu__item__inner" href="<?php echo $root;?>admin"><i class="fa fa-id-card-o"></i>
             <div class="c-menu-item__title"><span>Dashboard</span></div>
+          </a>
+        </li>
+        <li class="c-menu__item has-submenu <?php echo $reservation;?>" title="Reservation">
+          <a class="c-menu__item__inner" href="<?php echo $root;?>admin/reservation"><i class="fa fa-calendar-check-o"></i>
+            <div class="c-menu-item__title"><span>Reservation</span></div>
           </a>
         </li>
         <li class="c-menu__item has-submenu <?php echo $booking;?>" title="Booking">
