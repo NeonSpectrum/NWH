@@ -15,7 +15,7 @@
         <li><a data-toggle="tab" href="#roomtypes">Room Type</a></li>
       </ul>
       <div class="tab-content">
-        <div id="rooms" class="tab-pane fade in active">
+        <div id="rooms" class="tab-pane fade in active table-responsive">
           <table id="tblRooms" class="table table-striped table-bordered table-hover" cellspacing="0">
             <thead>
               <th>Room ID</th>
@@ -40,7 +40,7 @@
             </tbody>
           </table>
         </div>
-        <div id="roomtypes" class="tab-pane fade">
+        <div id="roomtypes" class="tab-pane fade table-responsive">
           <table id="tblRoomTypes" class="table table-striped table-bordered table-hover" cellspacing="0">
             <thead>
               <th>Room Type</th>

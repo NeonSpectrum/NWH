@@ -242,6 +242,12 @@ p.ref {
   transform: translate3d(-50%, -50%, 0);
 }
 
+@media only screen and (max-width:768px) {
+  .main-title {
+    font-size: 36px;
+  }
+}
+
 .demo-1 .main-title {
   text-transform: uppercase;
   font-size: 4.2em;

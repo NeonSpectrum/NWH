@@ -18,8 +18,6 @@
     <canvas id="demo-canvas"></canvas>
     <h1 class="main-title animated zoomInDown" style="display:none">Northwood <span class="thin">Hotel</span></h1>
   </div>
-  <script src="../assets/js/required/animatemouse.js"></script>
-
   <script src="../assets/js/welcome.js"></script>
   <script src="../assets/js/required/1_jquery.min.js"></script>
   <script>
