@@ -22,6 +22,7 @@
       $pdf->setSourceFile('../../assets/reservation.pdf');
       $tpl = $pdf->importPage(1);
       $pdf->useTemplate($tpl, 5, 10, 200);
+      $pdf->SetTitle('Northwood Reservation Confirmation');
       $pdf->SetFont('Arial');
       $pdf->SetTextColor(0, 0, 0);
       $pdf->SetFontSize('10');
