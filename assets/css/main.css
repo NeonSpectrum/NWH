@@ -23,8 +23,14 @@ body {
 }
 
 .mylivechat_inline {
-  z-index: 100 !important;
+  z-index: 101 !important;
 }
+
+
+/* 
+.mylivechat_buttonround {
+  filter: none !important;
+} */
 
 a[disabled],
 a[disabled]:hover {

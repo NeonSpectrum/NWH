@@ -8,7 +8,7 @@
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
-    <h1 class="page-title">Dashboard</h1>
+    <h1 class="page-title">Room Management</h1>
     <div class="well">
       <ul class="nav nav-tabs nav-justified">
         <li class="active"><a data-toggle="tab" href="#rooms">Rooms</a></li>

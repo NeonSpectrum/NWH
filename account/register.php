@@ -5,6 +5,7 @@
   require_once '../files/db.php';
 
   parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
+  $date = date("Y-m-d");
 
   if(isset($txtEmail))
   {
@@ -16,7 +17,6 @@
     $lname = $txtLastName;
     $email = $txtEmail;
     $password = $txtPassword;
-    $date = date("Y-m-d");
     $query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$date')";
     $result = mysqli_query($db,$query);
     if(!$result)
@@ -44,8 +44,17 @@
     $query = "SELECT * FROM account WHERE EmailAddress='$email'";
     $result = mysqli_query($db,$query);
     $count = mysqli_num_rows($result);
-
     if ($count == 0 && strpos($email,'@') && strpos($email,'.')) {
+      if (isset($_POST['type']) && $_POST['type'] == "noverify") {
+        $query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$date')";
+        mysqli_query($db,$query);
+        if (mysqli_affected_rows($db) != 0) {
+          echo true;
+        } else {
+          echo ALREADY_REGISTERED;
+        }
+        return;
+      }
       $data = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&expirydate=" . (strtotime("now") + (60*5)));
       $subject = "Northwood Hotel Account Creation";
       $body = "Please proceed to this link to register your account:<br/>http://$domain/account/register.php?$data";

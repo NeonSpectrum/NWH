@@ -55,6 +55,17 @@
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Chat Console</div>
+          <div class="panel-body">
+            
+          </div>
+          <div class="panel-footer">
+            <a href="<?php echo $root;?>admin/chat">View more...</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>

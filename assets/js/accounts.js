@@ -85,18 +85,59 @@ $('.btnDeleteAccount').click(function () {
         data: "txtEmail=" + email,
         success: function (response) {
           if (response == true) {
-            swal(
-              'Deleted!',
-              'The account has been deleted.',
-              'success'
-            )
-            setTimeout(location.reload(), 1000);
+            swal({
+              title: 'Deleted!',
+              text: 'The account has been deleted.',
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
           }
         }
       });
     }
   })
 });
+$("#frmAddAccount").submit(function (e) {
+  e.preventDefault();
+  var pass = $(this).find('#txtPassword').val();
+  var rpass = $(this).find('#txtRetypePassword').val();
+  if (pass != rpass) {
+    $(this).find(".lblDisplayError").show(function () {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + VERIFY_PASSWORD_ERROR + '</div>');
+    });
+    $(this).find("#txtPassword").focus();
+    return;
+  }
+  $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
+  $(this).find('#btnRegister').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  console.log("hello");
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/register.php',
+    data: $(this).serialize() + "&type=noverify",
+    success: function (response) {
+      if (response == true) {
+        alertNotif('success', 'Registered Successfully', true);
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find('#frmRegister').trigger('reset');
+        $('#modalAddAccount').modal('hide');
+        $(this).find('#btnRegister').html('Register');
+      } else {
+        $(this).find("#btnRegister").html('Register');
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function () {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+
 $('#frmEditAccount').submit(function (e) {
   e.preventDefault();
   $(this).find("#btnUpdate").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
