@@ -74,7 +74,7 @@ $("#btnSubmit").click(function (e) {
     type: 'POST',
     url: root + 'ajax/bookNow.php',
     dataType: "json",
-    data: $('#frmBookNow').serialize(),
+    data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
     success: function (response) {
       if (!response) {
         alertNotif("error", "Full");

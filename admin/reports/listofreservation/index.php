@@ -1,20 +1,15 @@
 <?php 
-  require_once '../../header.php';
+  require_once '../../../header.php';
   if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
   {
     header('location: ../../../');
     exit();
   }
 ?>
-<?php require_once '../../files/sidebar.php';?>
+<?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
-    <h1 class="page-title">
-      Booking
-      <span class="pull-right">
-        <a style="cursor:pointer" href="<?php echo $root;?>reservation"><span class="fa fa-plus"></span></a>
-      </span>
-    </h1>
+    <h1 class="page-title">List of Reservation</h1>
     <div class="well">
       <div class="table-responsive">
         <table id="tblReservation" class="table table-striped table-bordered table-hover">
@@ -24,13 +19,14 @@
             <th>Room ID</th>
             <th>Check In Date</th>
             <th>Check Out Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
             <th>Adults</th>
             <th>Children</th>
-            <th>Action</th>
           </thead>
           <tbody>
             <?php
-              $query = "SELECT * FROM booking";
+              $query = "SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID";
               $result = mysqli_query($db,$query) or die(mysql_error());
               while ($row = mysqli_fetch_assoc($result))
               {
@@ -40,12 +36,10 @@
                 echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
                 echo "<td id='txtCheckInDate'>{$row['CheckInDate']}</td>";
                 echo "<td id='txtCheckOutDate'>{$row['CheckOutDate']}</td>";
+                echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
+                echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
                 echo "<td id='txtAdults'>{$row['Adults']}</td>";
                 echo "<td id='txtChildren'>{$row['Children']}</td>";
-                echo "<td>";
-                echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation'><i class='fa fa-pencil'></i></a>";
-                echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation/?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
-                echo "</td>";
                 echo "</tr>";
               }
             ?>
@@ -67,7 +61,6 @@
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <input type="hidden" id="cmbBookingID" name="cmbBookingID">
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-3">
@@ -113,4 +106,4 @@
     </div>
    </div>
 </div>
-<?php require_once '../../footer.php';?>
+<?php require_once '../../../footer.php';?>

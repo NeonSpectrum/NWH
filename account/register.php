@@ -24,7 +24,7 @@
     {
       echo "<script>alert('Already Registered!');location.href='$host';</script>";
     }
-    else if(mysqli_affected_rows($db)!=0)
+    else if(mysqli_affected_rows($db) > 0)
     {
       echo "<script>alert('Registered Successfully!');location.href='$host';</script>";
     }
@@ -51,7 +51,7 @@
       if (isset($_POST['type']) && $_POST['type'] == "noverify") {
         $query = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,ContactNumber,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$contactNumber','$date')";
         mysqli_query($db,$query);
-        if (mysqli_affected_rows($db) != 0) {
+        if (mysqli_affected_rows($db) > 0) {
           echo true;
         } else {
           echo ALREADY_REGISTERED;

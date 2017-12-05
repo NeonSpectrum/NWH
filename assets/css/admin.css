@@ -37,6 +37,12 @@ h3 {
   font-size: 18px;
 }
 
+a[disabled],
+a[disabled]:hover {
+  pointer-events: none;
+  color: #868686;
+}
+
 .user-icon-navbar {
   float: left;
   width: 25px;

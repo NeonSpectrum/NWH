@@ -10,7 +10,7 @@
     $newPass = password_hash($newPass, PASSWORD_DEFAULT);
     $query = "UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'";
     $result = mysqli_query($db,$query) or die(mysql_error());
-    if (mysqli_affected_rows($db)!=0) {
+    if (mysqli_affected_rows($db) > 0) {
       echo '<script>alert("Reset Successfully!");location.href="../";</script>';
       exit();
     } else {

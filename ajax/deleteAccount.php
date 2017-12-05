@@ -8,7 +8,7 @@
 
       $query = "DELETE FROM account WHERE EmailAddress='$email'";
       $result = mysqli_query($db,$query);
-      if (mysqli_affected_rows($db)!=0) {
+      if (mysqli_affected_rows($db) > 0) {
         echo true;
       }
     } catch(PDOException $e) {

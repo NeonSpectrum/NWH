@@ -85,7 +85,7 @@
                   <div class="form-group">
                     <label class="sr-only">Password</label>
                     <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                      <span class="input-group-addon"><span class="fa fa-key"></span></span>
                       <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
                     </div>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 

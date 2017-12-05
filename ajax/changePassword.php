@@ -24,7 +24,7 @@
       if ($count==1 && password_verify($password, $row['Password']) && strpos($email,'@') && strpos($email,'.')) {
         $query = "UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'";
         $result = mysqli_query($db,$query) or die(mysql_error());
-        if (mysqli_affected_rows($db)!=0) {
+        if (mysqli_affected_rows($db) > 0) {
           echo true;
         }
       } else {

@@ -9,7 +9,7 @@
     $query = "UPDATE room_type SET RoomDescription='$roomDescription' WHERE RoomType='$roomType'";
     mysqli_query($db, $query);
     
-    if (mysqli_affected_rows($db) != 0) {
+    if (mysqli_affected_rows($db) > 0) {
       echo true;
     }
   }
