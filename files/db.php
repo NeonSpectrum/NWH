@@ -1,5 +1,5 @@
 <?php
-  require_once 'strings.php'; //link strings php
+  require_once 'strings.php';
   require_once 'functions.php';
   
   $servername = "northwoodhotel.xyz";
