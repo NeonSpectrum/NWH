@@ -52,6 +52,6 @@
       $pdf->Write(0, "P".number_format($price));
 
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf","I");
-      }
     }
-  ?>
+  }
+?>
