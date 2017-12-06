@@ -1,2 +1,5 @@
 {
+    "require": {
+        "braintree/braintree_php": "^3.26"
+    }
 }
