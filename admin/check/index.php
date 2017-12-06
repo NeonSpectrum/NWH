@@ -132,7 +132,15 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Email Address</label>
             <div class="col-sm-8">
-              <input name="txtEmail" type="text" class="form-control" id="txtEmail" placeholder="Email Address" required/>
+              <select name="txtEmail" class="form-control" id="txtEmail">
+                <?php
+                  $query = "SELECT * FROM account";
+                  $result = mysqli_query($db, $query);
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<option>{$row['EmailAddress']}</option>";
+                  }
+                ?>
+              </select>
             </div>
           </div>
           <div class="form-group">

@@ -39,7 +39,7 @@
     $file = str_replace(__DIR__."/", "", $js);
     echo "<script src='{$root}$file?v=" . filemtime($js) . "'></script>\n";
   }
-  if (!strpos($_SERVER['PHP_SELF'],"admin") && $_SERVER['SERVER_NAME'] != "localhost") {
+  if (!strpos($_SERVER['PHP_SELF'],"admin") /* && $_SERVER['SERVER_NAME'] != "localhost" */) {
     echo "<script async defer data-cfasync='false' src='https://mylivechat.com/chatinline.aspx?hccid=13576530'></script>\n";
     echo "<script src='https://www.google.com/recaptcha/api.js'></script>\n";
   }

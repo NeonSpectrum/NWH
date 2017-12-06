@@ -7,10 +7,10 @@
   $password = PASSWORD;
   $database = "cp018101_nwh";
 
-  if ($_SERVER['SERVER_NAME'] != "localhost" && $_SERVER['SERVER_NAME'] != "localhost.nwh" ) {
+  if ($_SERVER['SERVER_NAME'] == $servername) {
     $db = mysqli_connect($servername, $username, $password, $database);
   } else {
-    $db = mysqli_connect("localhost", "root", $password, $database);
+    $db = mysqli_connect($_SERVER['SERVER_NAME'], "root", $password, $database);
   }
   if (!$db)
   {

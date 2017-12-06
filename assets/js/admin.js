@@ -43,6 +43,11 @@ var Dashboard = function () {
 
 Dashboard.init();
 
+$(window).on('resize', function () {
+  $('.l-sidebar').height($(window).height() + 100);
+  // $('main.l-main .content-wrapper').height();
+  console.log($('main.l-main .content-wrapper').height() + 50);
+});
 // GIT UPDATE
 $('#btnGitUpdate').click(function () {
   $.ajax({

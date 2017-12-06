@@ -67,7 +67,7 @@
           </a>
           <ul class="c-menu__submenu u-list">
             <li title="List Of Reservation">
-              <a class="c-menu__item__inner" href="<?php echo $root;?>admin/reports/listofreservation"><i class="fa fa-ticket"></i>
+              <a class="c-menu__item__inner" href="<?php echo $root;?>admin/reports/listofreservation"><i class="fa fa-book"></i>
                 <div class="c-menu-item__title"><span>List of Reservation</span></div>
               </a>
             </li>

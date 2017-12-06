@@ -72,13 +72,13 @@
   $result = mysqli_query($db, $query);
   while ($row = mysqli_fetch_assoc($result)) {
     echo "      <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>\n";
-    echo "        <figure class='imghvr-push-up' style='box-shadow: 1px 1px 1px #888888'>
+    echo "        <figure class='imghvr-fade' style='box-shadow: 1px 1px 1px #888888'>
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?".filemtime("gallery/images/rooms/{$row['RoomType']}.jpg")."'>
           <figcaption style='background-color:rgb(235,235,235);text-align:center;color:black;padding-top:0px'>
             <h3 style='color:black'>".str_replace("_"," ",$row['RoomType'])."</h3><br/>
             <p>{$row['RoomDescription']}</p>
           </figcaption>
-        </figure>\n";
+        </figure><h3 style='text-align:center'>".str_replace("_", " ", $row['RoomType'])."</h3>\n";
     echo "      </div>\n";
   }
 ?>

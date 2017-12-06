@@ -312,6 +312,7 @@ a[disabled]:hover {
   left: 0;
   top: 0;
   bottom: 0;
+  height: 1000000px;
   background: #102c58;
   -webkit-transition: width 0.5s ease-in-out;
   -moz-transition: width 0.5s ease-in-out;
@@ -338,6 +339,7 @@ a[disabled]:hover {
 
 .l-sidebar__content {
   height: 100%;
+  min-height: 100%;
   position: relative;
 }
 

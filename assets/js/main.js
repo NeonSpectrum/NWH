@@ -490,7 +490,8 @@ $("#frmLogin").submit(function (e) {
     url: root + 'account/login.php',
     data: $(this).serialize(),
     success: function (response) {
-      if (response) {
+      if (response == true) {
+        $('#modalLogin').modal('hide');
         alertNotif("success", "Login Successfully", true);
       } else {
         $(this).find("#btnLogin").html('Sign In');
