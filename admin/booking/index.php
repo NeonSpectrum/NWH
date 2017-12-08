@@ -1,10 +1,9 @@
-<?php 
-  require_once '../../header.php';
-  if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
-  {
-    header('location: ../../../');
-    exit();
-  }
+<?php
+require_once '../../header.php';
+if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
+  header('location: ../../../');
+  exit();
+}
 ?>
 <?php require_once '../../files/sidebar.php';?>
 <main class="l-main">
@@ -12,7 +11,7 @@
     <h1 class="page-title">
       Booking
       <span class="pull-right">
-        <a style="cursor:pointer" href="<?php echo $root;?>reservation"><span class="fa fa-plus"></span></a>
+        <a style="cursor:pointer" href="<?php echo $root; ?>reservation"><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">
@@ -30,25 +29,24 @@
           </thead>
           <tbody>
             <?php
-              $query = "SELECT * FROM booking";
-              $result = mysqli_query($db,$query) or die(mysql_error());
-              while ($row = mysqli_fetch_assoc($result))
-              {
-                echo "<tr>";
-                echo "<td>{$row['BookingID']}</td>";
-                echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-                echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-                echo "<td id='txtCheckInDate'>{$row['CheckInDate']}</td>";
-                echo "<td id='txtCheckOutDate'>{$row['CheckOutDate']}</td>";
-                echo "<td id='txtAdults'>{$row['Adults']}</td>";
-                echo "<td id='txtChildren'>{$row['Children']}</td>";
-                echo "<td>";
-                echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation'><i class='fa fa-pencil'></i></a>";
-                echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation/?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
-                echo "</td>";
-                echo "</tr>";
-              }
-            ?>
+$query  = "SELECT * FROM booking";
+$result = mysqli_query($db, $query) or die(mysql_error());
+while ($row = mysqli_fetch_assoc($result)) {
+  echo "<tr>";
+  echo "<td>{$row['BookingID']}</td>";
+  echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+  echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+  echo "<td id='txtCheckInDate'>{$row['CheckInDate']}</td>";
+  echo "<td id='txtCheckOutDate'>{$row['CheckOutDate']}</td>";
+  echo "<td id='txtAdults'>{$row['Adults']}</td>";
+  echo "<td id='txtChildren'>{$row['Children']}</td>";
+  echo "<td>";
+  echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation'><i class='fa fa-pencil'></i></a>";
+  echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation/?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
+  echo "</td>";
+  echo "</tr>";
+}
+?>
           </tbody>
         </table>
       </div>
@@ -69,9 +67,16 @@
           </div>
           <input type="hidden" id="cmbBookingID" name="cmbBookingID">
           <div class="form-group">
-            <label class="col-sm-3 control-label">Room ID</label>
+            <label class="col-sm-3 control-label">Room Type</label>
             <div class="col-sm-3">
-              <input name="txtRoomID" type="text" class="form-control" id="txtRoomID" placeholder="Room ID" required/>
+              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
+                <option>Standard Single</option>
+                <option>Standard Double</option>
+                <option>Family Room</option>
+                <option>Junior Suites</option>
+                <option>Studio Type</option>
+                <option>Barkada Room</option>
+              </select>
             </div>
           </div>
           <div class="form-group">

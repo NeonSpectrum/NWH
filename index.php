@@ -1,23 +1,25 @@
 <?php
-  if (!isset($_COOKIE['firstvisit']))
-  {
-    setcookie("firstvisit", true, time() + 60 * 3);
-    header('Location: welcome');
-    exit();
-  }
-  require_once 'header.php';
-  require_once 'files/navbar.php';
+// if (!isset($_COOKIE['firstvisit']))
+// {
+//   setcookie("firstvisit", true, time() + 60 * 3);
+//   header('Location: welcome');
+//   exit();
+// }
+error_reporting(-1); // reports all errors
+ini_set("display_errors", "1"); // shows all errors
+ini_set("log_errors", 1);
+require_once 'header.php';
+require_once 'files/navbar.php';
 ?>
 <div class="full-screen">
   <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
 <?php
-  // GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
-  foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image)
-  {
-    $filename = str_replace("images/carousel/","",$image);
-    echo "      <div class='item'><img src='$image?v=".filemtime("$image")."' alt='$filename'></div>\n";
-  }
+// GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
+foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
+  $filename = str_replace("images/carousel/", "", $image);
+  echo "      <div class='item'><img src='$image?v=" . filemtime("$image") . "' alt='$filename'></div>\n";
+}
 ?>
     </div>
     <a class="left carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('prev')" style="background:transparent !important">
@@ -57,7 +59,7 @@
       </div>
       <div class="form-group">
         <label></label>
-        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo !isset($_SESSION['email']) ? 'Login First!' : 'Book Now';?></button>
+        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : ''; ?>><?php echo !isset($_SESSION['email']) ? 'Login First!' : 'Book Now'; ?></button>
       </div>
     </form>
   </div>
@@ -67,20 +69,24 @@
   <div class="panel-body center-block" style="width:80%">
     <div class="row">
 <?php
-  // USE DATABASE TO SUPPLY ROOM INFORMATION
-  $query = "SELECT * FROM room_type";
-  $result = mysqli_query($db, $query);
-  while ($row = mysqli_fetch_assoc($result)) {
-    echo "      <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>\n";
-    echo "        <figure class='imghvr-fade' style='box-shadow: 1px 1px 1px #888888'>
-          <img src='gallery/images/rooms/{$row['RoomType']}.jpg?".filemtime("gallery/images/rooms/{$row['RoomType']}.jpg")."'>
-          <figcaption style='background-color:rgb(235,235,235);text-align:center;color:black;padding-top:0px'>
-            <h3 style='color:black'>".str_replace("_"," ",$row['RoomType'])."</h3><br/>
-            <p>{$row['RoomDescription']}</p>
-          </figcaption>
-        </figure><h3 style='text-align:center'>".str_replace("_", " ", $row['RoomType'])."</h3>\n";
-    echo "      </div>\n";
-  }
+// USE DATABASE TO SUPPLY ROOM INFORMATION
+$query  = "SELECT * FROM room_type";
+$result = mysqli_query($db, $query);
+while ($row = mysqli_fetch_assoc($result)) {
+  ?>
+  <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
+    <figure class='imghvr-fade' style='box-shadow: 1px 1px 1px #888888'>
+      <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
+      <figcaption style='background: url("gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg"; ?>") center;text-align:center;color:black;padding:0px'>
+        <div style='background-color:rgba(255,255,255,0.8);height:100%;width:100%;position:fixed;padding:40px 20px'>
+          <p><?php echo $row['RoomDescription']; ?></p>
+        </div>
+      </figcaption>
+    </figure>
+    <h3 style='text-align:center'><?php echo str_replace("_", " ", $row['RoomType']); ?></h3>
+  </div>
+<?php
+}
 ?>
       </div>
     </div>
@@ -96,8 +102,8 @@
           <p style="font-style:italic;font-size:20px;padding:0px 30px 0px 30px;">One of the most exciting and amazing tourist destination in the Philippines, The Hundred Islands National Park in Alaminos, Pangasinan that covers 123 islands with 1,844 hectares. Northwood Hotel is just a few minutes away from Don Gonzalo Montemayor wharf in Barangay Lucap where you can rent a boat and start exploring the beautiful paradise of Governor’s Island, Quezon Island, Marcos Island, Children Island and some other islets.</p>
         </div>
         <div class="col-md-6 wow slideInRight">
-          <div class="youtube" data-embed="izqnhjcyP0E"> 
-            <div class="play-button"></div> 
+          <div class="youtube" data-embed="izqnhjcyP0E">
+            <div class="play-button"></div>
           </div>
         </div>
       </div>

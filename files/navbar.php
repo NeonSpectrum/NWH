@@ -1,13 +1,13 @@
 <?php
-  $fname = isset($_SESSION["fname"]) ? $_SESSION["fname"] : '';
-  $lname = isset($_SESSION["lname"]) ? $_SESSION["lname"] : '';
-  $picture = isset($_SESSION["picture"]) ? $_SESSION["picture"] : '';
-  $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
+$fname       = isset($_SESSION["fname"]) ? $_SESSION["fname"] : '';
+$lname       = isset($_SESSION["lname"]) ? $_SESSION["lname"] : '';
+$picture     = isset($_SESSION["picture"]) ? $_SESSION["picture"] : '';
+$accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
 ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root;?>"><img src="<?php echo $root;?>images/logo-rendered.png?<?php echo filemtime(__DIR__."/../images/logo-rendered.png");?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?<?php echo filemtime(__DIR__ . "/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -47,24 +47,23 @@
                 </div>
               </div>
               <div class="form-group">
-                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : '';?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!';?></button>
+                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!'; ?></button>
               </div>
-            </form> 
+            </form>
           </ul>
         </li>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="margin-top:-1px;margin-left:-1px">
-            <li><a href="<?php echo $root;?>">Home</a></li>
-            <li><a href="<?php echo $root;?>gallery">Gallery</a></li>
-            <li><a href="<?php echo $root;?>roomandrates">Room & Rates</a></li>
-            <li><a href="<?php echo $root;?>contactus">Contact Us</a></li>
+            <li><a href="<?php echo $root; ?>">Home</a></li>
+            <li><a href="<?php echo $root; ?>gallery">Gallery</a></li>
+            <li><a href="<?php echo $root; ?>roomandrates">Room & Rates</a></li>
+            <li><a href="<?php echo $root; ?>contactus">Contact Us</a></li>
           </ul>
         </li>
 <?php
-  if (!isset($_SESSION['email']))
-  {
-?>
+if (!isset($_SESSION['email'])) {
+  ?>
         <li class="dropdown">
           <!-- <a data-toggle="dropdown" style="cursor:pointer;user-select:none;position:fixed;left:2%;top:25%;z-index:10;background-color:white;padding:200px;font-size:300px">LOGIN</a> -->
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span><b> LOGIN </b><span class="caret"></span></a>
@@ -88,7 +87,7 @@
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
                       <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
                     </div>
-                    <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div> 
+                    <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div>
                     <!-- <div class="checkbox">
                       <label>
                         <input type="checkbox" name="cbxRemember" checked> Keep me logged-in
@@ -106,40 +105,40 @@
           </ul>
         </li>
 <?php
-  }
-  else
-  {
-?>
+} else {
+  ?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root;?>images/profilepics/<?php echo $picture;echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture");?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $picture;
+  echo "?v=" . filemtime(__DIR__ . "/../images/profilepics/$picture"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo "$fname $lname";?>
+              <?php echo "$fname $lname"; ?>
             </div>
-	          <span class="caret"></span>
-		      </a>
+            <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
 <?php
-  if ($accounttype == "Owner" || $accounttype == "Admin")
+if ($accounttype == "Owner" || $accounttype == "Admin") {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
-?>
+  }
+
+  ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-            <li><a href="<?php echo $root;?>account/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="<?php echo $root; ?>account/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
 <?php
-  }
+}
 ?>
       </ul>
     </div>
   </div>
 </nav>
 <?php
-  if (!isset($_SESSION['email']))
-  {
-?>
+if (!isset($_SESSION['email'])) {
+  ?>
 <div id="modalRegistration" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -232,10 +231,8 @@
    </div>
 </div>
 <?php
-  }
-  else
-  {
-?>
+} else {
+  ?>
 <div id="modalChange" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -261,7 +258,7 @@
               <input name="txtRetypeNewPass" type="password" style="margin-top:15px" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
             </div>
           </div>
-            
+
           <div class="modal-footer">
             <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -294,10 +291,10 @@
             <div class="col-sm-8">
               <div class="row">
                 <div class="col-md-6">
-                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" value="<?php echo $_SESSION['fname'];?>" required />
+                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" value="<?php echo $_SESSION['fname']; ?>" required />
                 </div>
                 <div class="col-md-6">
-                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name"value="<?php echo $_SESSION['lname'];?>" required/>
+                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name"value="<?php echo $_SESSION['lname']; ?>" required/>
                 </div>
               </div>
             </div>
@@ -328,34 +325,43 @@
             <div class="col-sm-2">
               <select class="form-control" id="cmbBookingID" name="cmbBookingID">
 <?php
-  $email = $_SESSION['email'];
-  $query = "SELECT * FROM booking WHERE EmailAddress = '$email'";
-  $result = mysqli_query($db, $query) or die(mysql_error());
-  $roomID = $checkInDate = $checkOutDate = $adults = $children = "";
-  $first = true;
+$email    = $_SESSION['email'];
+  $query    = "SELECT * FROM booking WHERE EmailAddress = '$email'";
+  $result   = mysqli_query($db, $query) or die(mysql_error());
+  $roomID   = $checkInDate   = $checkOutDate   = '';
+  $adults   = 1;
+  $children = 0;
+  $first    = true;
   while ($row = mysqli_fetch_assoc($result)) {
     $tomorrow = time() + 86400; // +1 day
     if ($tomorrow < strtotime($row['CheckInDate'])) {
       if ($first) {
-        $roomID = $row['RoomID'];
-        $checkInDate = $row['CheckInDate'];
+        $roomID       = $row['RoomID'];
+        $checkInDate  = $row['CheckInDate'];
         $checkOutDate = $row['CheckOutDate'];
-        $adults = $row['Adults'];
-        $children = $row['Children'];
-        $first = false;
+        $adults       = $row['Adults'];
+        $children     = $row['Children'];
+        $first        = false;
       }
       echo "                ";
-      echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";
+      echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
     }
   }
-?>
+  ?>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Room ID</label>
-            <div class="col-sm-3">
-              <input name="txtRoomID" type="text" class="form-control" id="txtRoomID" placeholder="Room ID" value="<?php echo $roomID;?>" required/>
+            <label class="col-sm-3 control-label">Room Type</label>
+            <div class="col-sm-7">
+              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
+                <option>Standard Single</option>
+                <option>Standard Double</option>
+                <option>Family Room</option>
+                <option>Junior Suites</option>
+                <option>Studio Type</option>
+                <option>Barkada Room</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -363,7 +369,7 @@
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate;?>" required readonly/>
+                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly/>
               </div>
             </div>
           </div>
@@ -372,24 +378,24 @@
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate;?>" required readonly/>
+                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly/>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults;?>" onkeypress="disableKey(event,'letter');" min="1" max="10" value="1" required/>
+              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults; ?>" onkeypress="disableKey(event,'letter');" min="1" max="10" value="1" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Children</label>
             <div class="col-sm-3">
-              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" value="<?php echo $children;?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" value="<?php echo $children; ?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root;?>/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
+            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
             <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
@@ -399,5 +405,5 @@
    </div>
 </div>
 <?php
-  }
+}
 ?>

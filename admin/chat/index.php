@@ -1,6 +1,6 @@
-<?php 
-  require_once '../../header.php';
-  require_once '../../files/sidebar.php';
+<?php
+require_once '../../header.php';
+require_once '../../files/sidebar.php';
 ?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg" style="padding:0;overflow-y:hidden">

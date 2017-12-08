@@ -1,6 +1,6 @@
-<?php 
-  require_once '../header.php';
-  require_once '../files/navbar.php';
+<?php
+require_once '../header.php';
+require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">

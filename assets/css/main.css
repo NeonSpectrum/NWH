@@ -22,6 +22,11 @@ body {
   }
 }
 
+.darkmode {
+  color:white;
+  background-color: black !important;
+}
+
 .mylivechat_inline {
   z-index: 101 !important;
 }

@@ -1,10 +1,9 @@
-<?php 
-  require_once '../../../header.php';
-  if($_SESSION['accountType']=='User' || !isset($_SESSION['accountType']))
-  {
-    header('location: ../../');
-    exit();
-  }
+<?php
+require_once '../../../header.php';
+if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
+  header('location: ../../');
+  exit();
+}
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
@@ -26,26 +25,28 @@
             <th>Action</th>
           </thead>
           <tbody>
-            <?php
-              $query = "SELECT * FROM account";
-              $result = mysqli_query($db, $query);
-              while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-                echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
-                echo "<td id='txtLastName'>{$row['LastName']}</td>";
-                echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
-                echo "<td>";
-                if ($row['AccountType'] != "Owner" || $_SESSION['accountType'] == "Owner") {
-                  echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
-                  echo "&nbsp;&nbsp;";
-                }
-                if ($_SESSION['accountType'] == "Owner")
-                  echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
-                echo "</td>";
-                echo "</tr>";
-              }
-            ?>
+<?php
+$query  = "SELECT * FROM account";
+$result = mysqli_query($db, $query);
+while ($row = mysqli_fetch_assoc($result)) {
+  echo "<tr>";
+  echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+  echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
+  echo "<td id='txtLastName'>{$row['LastName']}</td>";
+  echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
+  echo "<td>";
+  if ($row['AccountType'] != "Owner" || $_SESSION['accountType'] == "Owner") {
+    echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+    echo "&nbsp;&nbsp;";
+  }
+  if ($_SESSION['accountType'] == "Owner") {
+    echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+  }
+
+  echo "</td>";
+  echo "</tr>";
+}
+?>
           </tbody>
         </table>
       </div>
