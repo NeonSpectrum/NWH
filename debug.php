@@ -1,6 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec('export PATH=$PATH:~/git-2.9.5 && '.$_POST['command']))));
+  $path = $_SERVER['SERVER_NAME'] == "www.northwoodhotel.xyz" ? "export PATH=$PATH:~/git-2.9.5 && " : "";
+  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path.$_POST['command']))));
   return;
 }
 ?>
@@ -8,12 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Terminal</title>
 </head>
 <body>
   <form id="frmCommand">
     <input type="text" name="command" autofocus>
   </form>
+  <br/>
   <div id="message"></div>
   <script src="assets/js/required/1_jquery.min.js"></script>
   <script>
