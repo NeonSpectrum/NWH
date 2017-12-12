@@ -410,14 +410,12 @@ $("#frmRegister").submit(function(e) {
   $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
   $(this).find('#btnRegister').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
-  console.log("hello");
   $.ajax({
     context: this,
     type: 'POST',
     url: root + 'account/register.php',
     data: $(this).serialize(),
     success: function(response) {
-      console.log("hi");
       if (response == true) {
         alertNotif('success', 'Email sent to verify your email!', false, 10000);
         $(this).find('#btnRegister').attr('disabled', false);

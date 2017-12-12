@@ -7,7 +7,7 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__ . "/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__."/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -110,7 +110,7 @@ if (!isset($_SESSION['email'])) {
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $picture;
-  echo "?v=" . filemtime(__DIR__ . "/../images/profilepics/$picture"); ?>');background-position:center;"></div>
+  echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo "$fname $lname"; ?>
             </div>
@@ -344,7 +344,7 @@ $email    = $_SESSION['email'];
         $first        = false;
       }
       echo "                ";
-      echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
+      echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";
     }
   }
   ?>
@@ -395,7 +395,7 @@ $email    = $_SESSION['email'];
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>/files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
+            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
             <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>

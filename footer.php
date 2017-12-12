@@ -34,9 +34,9 @@ if (!strpos($_SERVER['PHP_SELF'], "admin")) {
 <!-- REQUIRED JS -->
 <?php
 }
-foreach (glob(__DIR__ . "/assets/js/required/*.js") as $js) {
-  $file = str_replace(__DIR__ . "/", "", $js);
-  echo "<script src='{$root}$file?v=" . filemtime($js) . "'></script>\n";
+foreach (glob(__DIR__."/assets/js/required/*.js") as $js) {
+  $file = str_replace(__DIR__."/", "", $js);
+  echo "<script src='{$root}$file?v=".filemtime($js)."'></script>\n";
 }
 if (!strpos($_SERVER['PHP_SELF'], "admin") && $_SERVER['SERVER_NAME'] != "localhost") {
   echo "<script async defer data-cfasync='false' src='https://mylivechat.com/chatinline.aspx?hccid=13576530'></script>\n";
@@ -46,17 +46,17 @@ if (!strpos($_SERVER['PHP_SELF'], "admin") && $_SERVER['SERVER_NAME'] != "localh
 
 <!-- CUSTOM JS -->
 <?php
-echo "<script src='${root}assets/js/strings.php?v=" . filemtime(__DIR__ . "/assets/js/strings.php") . "'></script>\n";
+echo "<script src='${root}assets/js/strings.php?v=".filemtime(__DIR__."/assets/js/strings.php")."'></script>\n";
 if (strpos($_SERVER['PHP_SELF'], "admin")) {
-  echo "<script src='{$root}assets/js/admin.js?v=" . filemtime(__DIR__ . "/assets/js/admin.js") . "'></script>\n";
+  echo "<script src='{$root}assets/js/admin.js?v=".filemtime(__DIR__."/assets/js/admin.js")."'></script>\n";
 } else {
-  echo "<script src='{$root}assets/js/main.js?v=" . filemtime(__DIR__ . "/assets/js/main.js") . "'></script>\n";
+  echo "<script src='{$root}assets/js/main.js?v=".filemtime(__DIR__."/assets/js/main.js")."'></script>\n";
 }
-if (file_exists(__DIR__ . "/assets/js/$currentDirectory.js") && $currentDirectory != 'admin') {
-  echo "<script src='{$root}assets/js/$currentDirectory.js?v=" . filemtime(__DIR__ . "/assets/js/$currentDirectory.js") . "'></script>\n";
+if (file_exists(__DIR__."/assets/js/$currentDirectory.js") && $currentDirectory != 'admin') {
+  echo "<script src='{$root}assets/js/$currentDirectory.js?v=".filemtime(__DIR__."/assets/js/$currentDirectory.js")."'></script>\n";
 }
 if ((isset($_SESSION['accountType']) && $_SESSION['accountType'] != "Owner") && $_SERVER['SERVER_NAME'] != "localhost") {
-  echo "<script src='{$root}assets/js/verifyLoginSession.js?v=" . filemtime(__DIR__ . "/assets/js/verifyLoginSession.js") . "'></script>\n";
+  echo "<script src='{$root}assets/js/verifyLoginSession.js?v=".filemtime(__DIR__."/assets/js/verifyLoginSession.js")."'></script>\n";
 }
 ?>
 

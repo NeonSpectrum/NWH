@@ -18,10 +18,10 @@ if (isset($_POST)) {
       $_SESSION['picture']     = $row['ProfilePicture'];
       $_SESSION['accountType'] = $row['AccountType'];
       // update isLogged
-      $cookie = openssl_encrypt("email=" . $email . "&password=" . $row['Password'], "AES-128-ECB", ENCRYPT_KEYWORD);
+      $cookie = openssl_encrypt("email=".$email."&password=".$row['Password'], "AES-128-ECB", ENCRYPT_KEYWORD);
       // if(!empty($_POST["cbxRemember"]))
       // {
-      setcookie("nwhAuth", $cookie, time() + (60 * 60 * 24 * 7), "/");
+      // setcookie("nwhAuth", $cookie, time() + (60 * 60 * 24 * 7), "/");
       // }
       // else
       // {
@@ -31,8 +31,7 @@ if (isset($_POST)) {
       //     unset($_COOKIE['nwhAuth']);
       //   }
       // }
-      $session_id = session_id();
-      $query      = "UPDATE account SET SessionID='$session_id' WHERE EmailAddress='$email'";
+      $query = "UPDATE account SET SessionID='".session_id()."' WHERE EmailAddress='$email'";
       mysqli_query($db, $query);
 
       echo true;
