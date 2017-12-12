@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         url: 'debug.php',
         data: $(this).serialize(),
         success: function(response) {
-          $('#message').html($('#message').html() + "<br/><br/>" + response);
+          $('#message').html(response);
           $(this).trigger("reset");
         }
       });
