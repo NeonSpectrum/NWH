@@ -47,7 +47,7 @@ $('#btnGitUpdate').click(function() {
         alertNotif("error", "Not Available for localhost");
         return;
       }
-      alertNotif("success", response, true, 10000);
+      alertNotif("success", response, false);
     }
   });
 })
