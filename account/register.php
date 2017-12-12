@@ -17,7 +17,8 @@ if (isset($txtEmail)) {
   $email         = $txtEmail;
   $password      = $txtPassword;
   $contactNumber = $txtContactNumber;
-  $query         = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,ContactNumber,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$contactNumber','$date')";
+  $birthDate     = $txtBirthDate;
+  $query         = "INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,ContactNumber,BirthDate,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$contactNumber','$birthDate','$date')";
   $result        = mysqli_query($db, $query);
   if (!$result) {
     echo "<script>alert('Already Registered!');location.href='$host';</script>";
@@ -27,10 +28,10 @@ if (isset($txtEmail)) {
 } else if (isset($_POST)) {
   $fname         = stripslashes($_POST['txtFirstName']); // removes backslashes
   $fname         = mysqli_real_escape_string($db, $fname); //escapes special characters in a string
-  $fname         = ucwords($fname); //capitalize first character
+  $fname         = ucwords(strtolower($fname)); //capitalize first character
   $lname         = stripslashes($_POST['txtLastName']); // removes backslashes
   $lname         = mysqli_real_escape_string($db, $lname); //escapes special characters in a string
-  $lname         = ucwords($lname); //capitalize first character
+  $lname         = ucwords(strtolower($lname)); //capitalize first character
   $email         = stripslashes($_POST['txtEmail']);
   $email         = mysqli_real_escape_string($db, $email);
   $password      = stripslashes($_POST['txtPassword']);
@@ -38,6 +39,8 @@ if (isset($txtEmail)) {
   $password      = password_hash($password, PASSWORD_DEFAULT);
   $contactNumber = stripslashes($_POST['txtContactNumber']);
   $contactNumber = mysqli_real_escape_string($db, $contactNumber);
+  $birthDate     = stripslashes($_POST['txtBirthDate']);
+  $birthDate     = mysqli_real_escape_string($db, $birthDate);
   $query         = "SELECT * FROM account WHERE EmailAddress='$email'";
   $result        = mysqli_query($db, $query);
   $count         = mysqli_num_rows($result);
@@ -51,7 +54,7 @@ if (isset($txtEmail)) {
         echo ALREADY_REGISTERED;
       }
     } else {
-      $data    = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&expirydate=" . (strtotime("now") + (60 * 5)));
+      $data    = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=".(strtotime("now") + (60 * 5)));
       $subject = "Northwood Hotel Account Creation";
       $body    = "Please proceed to this link to register your account:<br/>http://$domain/account/register.php?$data";
       echo sendMail("$email", "$subject", "$body");

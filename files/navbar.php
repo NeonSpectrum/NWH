@@ -121,7 +121,6 @@ if (!isset($_SESSION['email'])) {
 if ($accounttype == "Owner" || $accounttype == "Admin") {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
   }
-
   ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
@@ -151,51 +150,64 @@ if (!isset($_SESSION['email'])) {
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
-              <div class="row">
-                <div class="col-md-6">
-                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
+          <div class="row" style="margin:0">
+            <div class="col-md-6" style="padding-right:25px">
+              <div class="form-group">
+                <label>First Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" required autocomplete="off">
                 </div>
-                <div class="col-md-6">
-                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
+              </div>
+              <div class="form-group">
+                <label>Last Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" required autocomplete="off">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Birth Date<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" required readonly autocomplete="off">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Contact Number<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-mobile"></span></span>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" required autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-left:25px">
+              <div class="form-group">
+                <label>Email Address<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" required autocomplete="off">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-key"></span></span>
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" required autocomplete="off">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Verify Password<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-key"></span></span>
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" required autocomplete="off">
                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
-              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" minlength="8" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label"></label>
-            <div class="col-sm-10">
-              <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Contact #</label>
-            <div class="col-sm-10">
-              <input name="txtContactNumber" type="number" class="form-control" id="txtContactNumber" placeholder="Contact Number" minlength="10" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="captcha" class="col-sm-2 control-label"></label>
-            <div class="col-sm-10">
-              <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
-            </div>
-          </div>
           <div class="modal-footer">
-            <br/><button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+            <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+            <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>

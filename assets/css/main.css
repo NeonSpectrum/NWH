@@ -5,7 +5,7 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   body {
     height: 960px;
     background-size: cover;
@@ -13,7 +13,7 @@ body {
   }
 }
 
-@media only screen and (min-width:768px) {
+@media only screen and (min-width:767px) {
   .navbar {
     position: fixed;
     top: 0;
@@ -22,9 +22,43 @@ body {
   }
 }
 
-.darkmode {
-  color: white;
-  background-color: #abb88e !important;
+/* CUSTOM BOOTSTRAP */
+
+label>sup {
+  margin-left: 2px;
+  color: red;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+.modal-footer {
+  padding: 15px 0;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.input-group-addon {
+  border-radius: 0;
+}
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 767px) {
+  #frmRegister>.row>.col-md-6 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
 }
 
 .mylivechat_inline {
@@ -71,12 +105,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-size: 30%;
 }
 
+/* MODAL */
+
+/*.modal-header {
+  background-color: #032B49;
+  color: white;
+}
+
+.modal-header .close {
+  margin-top: -2px;
+  color: white;
+  text-shadow: none;
+}*/
+
 img.white-border {
   -webkit-filter: drop-shadow(0.5px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white);
   filter: drop-shadow(0.5px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white);
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   .loadingIcon {
     background-size: 75%;
   }
@@ -112,7 +159,7 @@ img.white-border {
   padding: 5px 0px 5px 80px;
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   body {
     background-position: 50% 0px;
   }
@@ -175,7 +222,7 @@ img.white-border {
   height: 100px;
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   .height-navbar {
     height: 0px;
   }
@@ -304,7 +351,6 @@ img.white-border {
 
 .dropdown-menu {
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 7px !important;
 }
 
 .dropdown-menu li a {
@@ -317,7 +363,7 @@ img.white-border {
   transition: all 0.3s ease-in-out;
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   .dropdown-menu {
     border-radius: 0px !important;
   }
@@ -363,7 +409,7 @@ img.white-border {
   background: rgba(255, 255, 255, 0.9);
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   h1 {
     font-size: 30px;
   }

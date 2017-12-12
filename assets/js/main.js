@@ -9,7 +9,8 @@ $(document).ready(function() {
     $(this).find('form')[0].reset();
     $(this).find('button').attr('disabled', false);
     $(this).find('.lblDisplayError').html('');
-    $(this).find('#g-recaptcha-response').val('');
+    grecaptcha.reset();
+    $("#frmRegister").find('button[type=submit]').attr('disabled', true);
     // scrolling(true);
   });
   // DISABLE SCROLL IF MODAL IS SHOWN
@@ -17,11 +18,11 @@ $(document).ready(function() {
     // scrolling(false);
   });
   // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
-  $("input[type=text]").change(function() {
-    if ($(this).val() && !$(this).closest("form").hasClass("frmBookCheck")) {
-      $(this).closest('form').find("button").removeAttr('disabled');
-    }
-  });
+  // $("input[type=text]").change(function() {
+  //   if ($(this).val() && !$(this).closest("form").hasClass("frmBookCheck")) {
+  //     $(this).closest('form').find("button").removeAttr('disabled');
+  //   }
+  // });
   // FOCUS ON SELECT
   $('input').focus(function() {
     if (!($(this).attr("class").includes("check") && $(this).attr("class").includes("Date"))) {
@@ -98,6 +99,11 @@ Pace.on('done', function() {
     offset: 40
   }).init();
   // DATE PICKER SETTINGS
+  $('input.datepicker').datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    todayHighlight: true
+  });
   $('input.checkInDate, input.checkOutDate').datepicker({
     format: "yyyy-mm-dd",
     startDate: '+1d',
@@ -106,6 +112,10 @@ Pace.on('done', function() {
   });
   // DATE PICKER SCRIPTS
   updateDate();
+  $('input.datepicker').each(function() {
+    var date = new Date();
+    $(this).datepicker('update', date);
+  });
   $('input.checkInDate, input.checkOutDate').each(function() {
     if ($(this).val()) {
       $(this).datepicker('update', $(this).val());
@@ -434,7 +444,11 @@ $("#frmRegister").submit(function(e) {
 });
 
 function recaptchaCallback() {
-  $('#btnRegister').removeAttr('disabled');
+  $('#frmRegister').find("button[type=submit]").removeAttr('disabled');
+}
+
+function expiredCallback() {
+  $('#frmRegister').find("button[type=submit]").attr("disabled", true);
 }
 // LOGIN
 $("#frmLogin").submit(function(e) {
