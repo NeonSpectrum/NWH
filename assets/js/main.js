@@ -7,7 +7,7 @@ $(document).ready(function() {
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function() {
     $(this).find('form')[0].reset();
-    $(this).find('button').attr('disabled', false);
+    // $(this).find('button').attr('disabled', false);
     $(this).find('.lblDisplayError').html('');
     grecaptcha.reset();
     $("#frmRegister").find('button[type=submit]').attr('disabled', true);
@@ -312,7 +312,7 @@ $("#frmEditProfile").submit(function(e) {
         $(this).find("#btnEditProfile").html('Update');
         $(this).find('#btnEditProfile').attr('disabled', false);
         $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + zzzzz + '</div>');
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         });
       }
     }
