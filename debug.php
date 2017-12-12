@@ -1,21 +1,35 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  echo shell_exec("export PATH=$PATH:~/git-2.9.5 && ".$_POST['command']);
+  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($_POST['command']))));
   return;
 }
 ?>
-<script src="assets/js/required/1_jquery.min.js"></script>
-<script>
-  function execute(command){
-    $.ajax({
-      type: 'POST',
-      url: 'debug.php',
-      data: "command="+command,
-      success: function(response) {
-        console.log(response);
-        return true;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <form id="frmCommand">
+    <input type="text" name="command" autofocus>
+  </form>
+  <div id="message"></div>
+  <script src="assets/js/required/1_jquery.min.js"></script>
+  <script>
+    $('#frmCommand').submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: 'debug.php',
+        data: $(this).serialize(),
+        success: function(response) {
+          $('#message').html($('#message').html() + "<br/><br/>" + response);
+          $(this).trigger("reset");
+        }
+      });
     });
-    return "Command Executed:";
-  }
-</script>
+  </script>
+</body>
+</html>
