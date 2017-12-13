@@ -18,7 +18,7 @@ require_once 'files/navbar.php';
 // GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
 foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
   $filename = str_replace("images/carousel/", "", $image);
-  echo "      <div class='item'><img src='$image?v=".filemtime("$image")."' alt='$filename'></div>\n";
+  echo "      <div class='item'><img src='$image?v=" . filemtime("$image") . "' alt='$filename'></div>\n";
 }
 ?>
     </div>
@@ -76,7 +76,7 @@ while ($row = mysqli_fetch_assoc($result)) {
   ?>
   <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
     <figure class='imghvr-slide-up' style='box-shadow: 1px 1px 1px #888888'>
-      <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?v=".filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
+      <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
       <figcaption style='background: url("gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg"; ?>") center;text-align:center;color:black;padding:0px'>
         <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
           <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?></div>
