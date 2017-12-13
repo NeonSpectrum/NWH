@@ -4,7 +4,7 @@ require_once '../files/db.php';
 
 $name          = $_SESSION['fname'] . $_SESSION['lname'];
 $email         = $_SESSION['email'];
-$host          = strpos($_SERVER['REQUEST_URI'], "nwh") ? "/nwh" : "/";
+$host          = strpos($_SERVER['PHP_SELF'], "nwh") ? "/nwh" : "";
 $target_dir    = $_SERVER['DOCUMENT_ROOT'] . "$host/images/profilepics/";
 $target_file   = basename($_FILES["file"]["name"]);
 $imageFileType = pathinfo($target_dir . $target_file, PATHINFO_EXTENSION);

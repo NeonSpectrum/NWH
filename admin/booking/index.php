@@ -42,7 +42,7 @@ while ($row = mysqli_fetch_assoc($result)) {
   echo "<td id='txtChildren'>{$row['Children']}</td>";
   echo "<td>";
   echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-  echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation/?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
+  echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
   echo "</td>";
   echo "</tr>";
 }
@@ -68,7 +68,7 @@ while ($row = mysqli_fetch_assoc($result)) {
           <input type="hidden" id="cmbBookingID" name="cmbBookingID">
           <div class="form-group">
             <label class="col-sm-3 control-label">Room Type</label>
-            <div class="col-sm-3">
+            <div class="col-sm-7">
               <select id="cmbRoomType" name="cmbRoomType" class="form-control">
                 <option>Standard Single</option>
                 <option>Standard Double</option>

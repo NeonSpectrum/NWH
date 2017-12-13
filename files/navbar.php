@@ -7,7 +7,7 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__."/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__ . "/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -110,7 +110,7 @@ if (!isset($_SESSION['email'])) {
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $picture;
-  echo "?v=".filemtime(__DIR__."/../images/profilepics/$picture"); ?>');background-position:center;"></div>
+  echo "?v=" . filemtime(__DIR__ . "/../images/profilepics/$picture"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo "$fname $lname"; ?>
             </div>
@@ -145,8 +145,8 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Registration</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmRegister" class="form-horizontal">
+      <form id="frmRegister" class="form-horizontal">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -205,13 +205,13 @@ if (!isset($_SESSION['email'])) {
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
-            <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+          <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
@@ -222,8 +222,8 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Forgot Password</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmForgot" method="post" class="form-horizontal">
+      <form id="frmForgot" method="post" class="form-horizontal">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -233,12 +233,12 @@ if (!isset($_SESSION['email'])) {
               <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnReset" type="submit" class="btn btn-info">Submit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnReset" type="submit" class="btn btn-info">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
@@ -252,8 +252,8 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmChange" method="post" class="form-horizontal">
+      <form id="frmChange" method="post" class="form-horizontal">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -270,13 +270,12 @@ if (!isset($_SESSION['email'])) {
               <input name="txtRetypeNewPass" type="password" style="margin-top:15px" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
             </div>
           </div>
-
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
@@ -287,36 +286,62 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditProfile" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <form id="frmEditProfile" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">Profile Picture</label>
-            <div class="col-sm-8">
-              <input type="file" class="form-control" name="imgProfilePic" id="imgProfilePic" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateSingleInput(this);">
+          <div class="row" style="margin:0">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>Profile Picture</label>
+                <input type="file" class="form-control" name="imgProfilePic" id="imgProfilePic" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateSingleInput(this);">
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">Name</label>
-            <div class="col-sm-8">
-              <div class="row">
-                <div class="col-md-6">
-                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" value="<?php echo $_SESSION['fname']; ?>" required />
+            <div class="col-md-3">
+              <div style="border:1px solid #ccc;height:102px;width:102px;">
+                <img id="displayImage" src="#" style="object-fit: cover"/>
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-right:25px">
+              <div class="form-group">
+                <label>First Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" value="<?php echo $_SESSION['fname']; ?>" required autocomplete="off">
                 </div>
-                <div class="col-md-6">
-                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name"value="<?php echo $_SESSION['lname']; ?>" required/>
+              </div>
+              <div class="form-group">
+                <label>Last Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" value="<?php echo $_SESSION['lname']; ?>" required autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-left:25px">
+              <div class="form-group">
+                <label>Birth Date<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" value="<?php echo $_SESSION['birthDate']; ?>" required readonly autocomplete="off">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Contact Number<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-mobile"></span></span>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['contactNumber']; ?>" required autocomplete="off">
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnEditProfile" type="submit" class="btn btn-info">Edit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEditProfile" type="submit" class="btn btn-info">Edit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -327,8 +352,8 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Reservation</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditReservation" method="post" class="form-horizontal">
+      <form id="frmEditReservation" method="post" class="form-horizontal">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -356,7 +381,7 @@ $email    = $_SESSION['email'];
         $first        = false;
       }
       echo "                ";
-      echo "<option value='".$row['BookingID']."'>".$row['BookingID']."</option>\n";
+      echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
     }
   }
   ?>
@@ -406,13 +431,13 @@ $email    = $_SESSION['email'];
               <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" value="<?php echo $children; ?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
-            <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
+          <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>

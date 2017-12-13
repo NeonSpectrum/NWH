@@ -9,15 +9,13 @@
   opacity: 1;
 }
 
-.carousel-fade .carousel-inner .active.left,
-.carousel-fade .carousel-inner .active.right {
+.carousel-fade .carousel-inner .active.left, .carousel-fade .carousel-inner .active.right {
   left: 0;
   opacity: 0;
   z-index: 1;
 }
 
-.carousel-fade .carousel-inner .next.left,
-.carousel-fade .carousel-inner .prev.right {
+.carousel-fade .carousel-inner .next.left, .carousel-fade .carousel-inner .prev.right {
   opacity: 1;
 }
 
@@ -25,29 +23,59 @@
   z-index: 2;
 }
 
-@media all and (transform-3d),
-(-webkit-transform-3d) {
-  .carousel-fade .carousel-inner>.item.next,
-  .carousel-fade .carousel-inner>.item.active.right {
+@media all and (transform-3d), (-webkit-transform-3d) {
+  .carousel-fade .carousel-inner>.item.next, .carousel-fade .carousel-inner>.item.active.right {
     opacity: 0;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
-  .carousel-fade .carousel-inner>.item.prev,
-  .carousel-fade .carousel-inner>.item.active.left {
+  .carousel-fade .carousel-inner>.item.prev, .carousel-fade .carousel-inner>.item.active.left {
     opacity: 0;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
-  .carousel-fade .carousel-inner>.item.next.left,
-  .carousel-fade .carousel-inner>.item.prev.right,
-  .carousel-fade .carousel-inner>.item.active {
+  .carousel-fade .carousel-inner>.item.next.left, .carousel-fade .carousel-inner>.item.prev.right, .carousel-fade .carousel-inner>.item.active {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }
 
+/* ANIMATION IMAGEHOVER */
+
+[class*=" imghvr-"], [class*=" imghvr-"] *, [class*=" imghvr-"]:after, [class*=" imghvr-"] :after, [class*=" imghvr-"]:before, [class*=" imghvr-"] :before, [class^=imghvr-], [class^=imghvr-] *, [class^=imghvr-]:after, [class^=imghvr-] :after, [class^=imghvr-]:before, [class^=imghvr-] :before {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease
+}
+
+/* JSSOR */
+
+.jssora051 {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+
+.jssora051 .a {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 360;
+  stroke-miterlimit: 10;
+}
+
+.jssora051:hover {
+  opacity: .8;
+}
+
+.jssora051.jssora051dn {
+  opacity: .5;
+}
+
+.jssora051.jssora051ds {
+  opacity: .3;
+  pointer-events: none;
+}
 
 /* BOOK NOW CONTENT */
 
@@ -111,7 +139,6 @@ input[type="date"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-
 /* CAROUSEL */
 
 .full-screen {
@@ -123,7 +150,6 @@ input[type="date"]::-webkit-inner-spin-button {
 .item img {
   background-position: 50% 50%;
 }
-
 
 /* HOME CONTENT */
 
@@ -142,7 +168,6 @@ input[type="date"]::-webkit-inner-spin-button {
     text-align: center;
   }
 }
-
 
 /* YOUTUBE */
 
@@ -179,20 +204,15 @@ input[type="date"]::-webkit-inner-spin-button {
   border-color: transparent transparent transparent #fff;
 }
 
-.youtube img,
-.youtube .play-button {
+.youtube img, .youtube .play-button {
   cursor: pointer;
 }
 
-.youtube img,
-.youtube iframe,
-.youtube .play-button,
-.youtube .play-button:before {
+.youtube img, .youtube iframe, .youtube .play-button, .youtube .play-button:before {
   position: absolute;
 }
 
-.youtube .play-button,
-.youtube .play-button:before {
+.youtube .play-button, .youtube .play-button:before {
   top: 50%;
   left: 50%;
   transform: translate3d( -50%, -50%, 0);

@@ -32,8 +32,8 @@ if (isset($_POST)) {
     } else {
       echo "There's something wrong in your book!";
     }
-    $query = "UPDATE room SET Status='Occupied' WHERE RoomID=$roomID";
-    mysqli_query($db, $query);
+    // $query = "UPDATE room SET Status='Occupied' WHERE RoomID=$roomID";
+    // mysqli_query($db, $query);
   } catch (PDOException $e) {
     echo $e->getMessage();
   }

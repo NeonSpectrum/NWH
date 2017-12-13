@@ -1,28 +1,23 @@
 $(document).ready(function() {
+  new WOW({
+    offset: 40
+  }).init();
+  $("html,body").scrollTop(0);
   scrolling(false);
+  new WOW({
+    offset: 40
+  }).init();
   // HIDE CONTACT BOX IF MOBILE
   if (screen.width <= 480) {
     $('.contactbox').fadeOut();
   }
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function() {
-    $(this).find('form')[0].reset();
-    // $(this).find('button').attr('disabled', false);
+    $(this).find("form").trigger("reset");
     $(this).find('.lblDisplayError').html('');
     grecaptcha.reset();
     $("#frmRegister").find('button[type=submit]').attr('disabled', true);
-    // scrolling(true);
   });
-  // DISABLE SCROLL IF MODAL IS SHOWN
-  $('.modal').on('shown.bs.modal', function() {
-    // scrolling(false);
-  });
-  // AUTO ENABLE DISABLED BUTTON IF THE TEXTBOX HAS VALUE
-  // $("input[type=text]").change(function() {
-  //   if ($(this).val() && !$(this).closest("form").hasClass("frmBookCheck")) {
-  //     $(this).closest('form').find("button").removeAttr('disabled');
-  //   }
-  // });
   // FOCUS ON SELECT
   $('input').focus(function() {
     if (!($(this).attr("class").includes("check") && $(this).attr("class").includes("Date"))) {
@@ -94,10 +89,6 @@ Pace.on('done', function() {
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   // BACK TO TOP
   $('body').append('<div id="backToTop" class="btn btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></div>');
-  // WOW SETTINGS
-  new WOW({
-    offset: 40
-  }).init();
   // DATE PICKER SETTINGS
   $('input.datepicker').datepicker({
     format: "yyyy-mm-dd",
@@ -170,6 +161,18 @@ baguetteBox.run('.img-baguette', {
   animation: 'fadeIn',
   fullscreen: true
 });
+
+function readPicture(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#displayImage').attr('src', e.target.result).width(100).height(100);
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    $('#displayImage').attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+  }
+}
 // UPDATE ALL DATES
 function updateDate() {
   var date = new Date();

@@ -66,8 +66,6 @@ if (strpos($_SERVER['PHP_SELF'], "admin")) {
   echo "<link type='text/css' rel='stylesheet' id='pace' href='{$root}assets/css/pace-theme-center-simple.css?v=".filemtime(__DIR__.'/assets/css/pace-theme-center-simple.css')."'>\n";
 }
 ?>
-<link type='text/css' rel='stylesheet prefetch' href="https://fonts.googleapis.com/css?family=Nunito">
-
 </head>
 
 <body<?php echo strpos($_SERVER['PHP_SELF'], "/admin") ? ' class="sidebar-is-reduced"' : ''; ?>>
