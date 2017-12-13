@@ -103,10 +103,6 @@ Pace.on('done', function() {
   });
   // DATE PICKER SCRIPTS
   updateDate();
-  $('input.datepicker').each(function() {
-    var date = new Date();
-    $(this).datepicker('update', date);
-  });
   $('input.checkInDate, input.checkOutDate').each(function() {
     if ($(this).val()) {
       $(this).datepicker('update', $(this).val());
