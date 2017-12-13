@@ -176,7 +176,7 @@ if (!isset($_SESSION['email'])) {
               <div class="form-group">
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
-                  <span class="input-group-addon"><span class="fa fa-mobile"></span></span>
+                  <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" required autocomplete="off">
                 </div>
               </div>
@@ -330,7 +330,7 @@ if (!isset($_SESSION['email'])) {
               <div class="form-group">
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
-                  <span class="input-group-addon"><span class="fa fa-mobile"></span></span>
+                  <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['contactNumber']; ?>" required autocomplete="off">
                 </div>
               </div>
