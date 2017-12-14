@@ -157,7 +157,7 @@ baguetteBox.run('.img-baguette', {
   animation: 'fadeIn',
   fullscreen: true
 });
-
+// READ PICTURE THEN DISPLAY
 function readPicture(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -169,6 +169,24 @@ function readPicture(input) {
     $('#displayImage').attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
   }
 }
+// CHECK EMAIL
+$('#frmRegister').find("#txtEmail").change(function() {
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/checkEmail.php',
+    data: "txtEmail=" + $(this).val(),
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".has-feedback").removeClass("has-error").addClass("has-success");
+        $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-remove").addClass("glyphicon glyphicon-ok");
+      } else {
+        $(this).closest(".has-feedback").removeClass("has-success").addClass("has-error");
+        $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon glyphicon-remove");
+      }
+    }
+  });
+});
 // UPDATE ALL DATES
 function updateDate() {
   var date = new Date();

@@ -182,11 +182,12 @@ if (!isset($_SESSION['email'])) {
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
                   <input type="email" name="txtEmail" id="txtEmail" class="form-control" required autocomplete="off">
+                  <span class="form-control-feedback"></span>
                 </div>
               </div>
               <div class="form-group">
