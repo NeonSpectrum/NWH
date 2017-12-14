@@ -145,13 +145,13 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Registration</h4>
       </div>
-      <form id="frmRegister" class="form-horizontal">
+      <form id="frmRegister">
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <div class="row" style="margin:0">
-            <div class="col-md-6" style="padding-right:25px">
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
@@ -181,7 +181,7 @@ if (!isset($_SESSION['email'])) {
                 </div>
               </div>
             </div>
-            <div class="col-md-6" style="padding-left:25px">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
@@ -286,12 +286,12 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
-      <form id="frmEditProfile" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <form id="frmEditProfile" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <div class="row" style="margin:0">
+          <div class="row">
             <div class="col-md-9">
               <div class="form-group">
                 <label>Profile Picture</label>
@@ -303,7 +303,7 @@ if (!isset($_SESSION['email'])) {
                 <img id="displayImage" src="#" style="object-fit: cover"/>
               </div>
             </div>
-            <div class="col-md-6" style="padding-right:25px">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
@@ -319,7 +319,7 @@ if (!isset($_SESSION['email'])) {
                 </div>
               </div>
             </div>
-            <div class="col-md-6" style="padding-left:25px">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
