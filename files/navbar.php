@@ -299,7 +299,7 @@ if (!isset($_SESSION['email'])) {
               </div>
             </div>
             <div class="col-md-3">
-              <div style="border:1px solid #ccc;height:102px;width:102px;">
+              <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
                 <img id="displayImage" src="#" style="object-fit: cover"/>
               </div>
             </div>

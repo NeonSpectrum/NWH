@@ -143,6 +143,11 @@ while ($row = mysqli_fetch_assoc($result)) {
               <select id="cmbAccountType" name="cmbAccountType" class="form-control" required>
                 <option>User</option>
                 <option>Admin</option>
+<?php
+if ($_SESSION['accountType'] == "Owner") {
+  echo "<option>Owner</option>";
+}
+?>
               </select>
             </div>
           </div>

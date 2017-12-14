@@ -42,11 +42,11 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             <h3> Step 1 - Check</h3>
             <div class="form-group">
               <label>Check In Date:</label>
-              <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" onkeypress="return disableKey(event,'number')" required>
+              <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly>
             </div>
             <div class="form-group">
               <label>Check Out Date:</label>
-              <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" onkeypress="return disableKey(event,'number')" required>
+              <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly>
             </div>
             <div class="form-group">
               <div class="row">

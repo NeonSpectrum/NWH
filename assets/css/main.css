@@ -57,6 +57,10 @@ label>sup {
   box-shadow: none;
 }
 
+.datepicker {
+  z-index: 101 !important;
+}
+
 .mylivechat_inline {
   z-index: 101 !important;
 }
