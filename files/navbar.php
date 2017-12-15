@@ -26,6 +26,8 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" required readonly>
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label>Check Out Date:</label>
@@ -33,6 +35,8 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" required readonly>
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <div class="row">
@@ -80,13 +84,17 @@ if (!isset($_SESSION['email'])) {
                       <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
                       <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
                     </div>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Password</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                      <input id="txtPassword" type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
                     </div>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div>
                     <!-- <div class="checkbox">
                       <label>
@@ -97,7 +105,7 @@ if (!isset($_SESSION['email'])) {
                   <div class="form-group">
                     <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
                     <button class="btn btn-default btn-block" type="button" data-toggle="modal" data-target="#modalRegistration">Register</button>
-                  <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
+                    <div class="text-right" style="margin-top:10px"><a style="cursor:pointer;font-size:13px;padding-right:5px" data-toggle="modal" data-target="#modalForgot">Forgot password?</a></div>
                   </div>
                 </form>
               </div>
@@ -145,40 +153,53 @@ if (!isset($_SESSION['email'])) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Registration</h4>
       </div>
-      <form id="frmRegister">
+      <form id="frmRegister" data-toggle="validator">
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="row">
+            <div class="col-md-12">
+              <b>Note:</b> You must verify the email address to register your account.
+              <br/>
+              <br/>
+            </div>
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtLastName" id="txtLastName" class="form-control" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                   <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" required readonly autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -186,23 +207,28 @@ if (!isset($_SESSION['email'])) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" required autocomplete="off">
-                  <span class="form-control-feedback"></span>
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
                   <input type="password" name="txtPassword" id="txtPassword" class="form-control" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="form-group">
+              <div class="form-group has-feedback">
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
           </div>
@@ -311,6 +337,8 @@ if (!isset($_SESSION['email'])) {
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" value="<?php echo $_SESSION['fname']; ?>" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label>Last Name<sup>*</sup></label>
@@ -318,6 +346,8 @@ if (!isset($_SESSION['email'])) {
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtLastName" id="txtLastName" class="form-control" value="<?php echo $_SESSION['lname']; ?>" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -327,6 +357,8 @@ if (!isset($_SESSION['email'])) {
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                   <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" value="<?php echo $_SESSION['birthDate']; ?>" required readonly autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label>Contact Number<sup>*</sup></label>
@@ -334,6 +366,8 @@ if (!isset($_SESSION['email'])) {
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['contactNumber']; ?>" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
           </div>

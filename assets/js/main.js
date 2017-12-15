@@ -210,23 +210,23 @@ function scrolling(enable) {
   }
 }
 // CHECK EMAIL
-$('#frmRegister').find("#txtEmail").change(function() {
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/checkEmail.php',
-    data: "txtEmail=" + $(this).val(),
-    success: function(response) {
-      if (response == true) {
-        $(this).closest(".has-feedback").removeClass("has-error").addClass("has-success");
-        $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-remove").addClass("glyphicon glyphicon-ok");
-      } else {
-        $(this).closest(".has-feedback").removeClass("has-success").addClass("has-error");
-        $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon glyphicon-remove");
-      }
-    }
-  });
-});
+// $('#frmRegister').find("#txtEmail").change(function() {
+//   $.ajax({
+//     context: this,
+//     type: 'POST',
+//     url: root + 'ajax/checkEmail.php',
+//     data: "txtEmail=" + $(this).val(),
+//     success: function(response) {
+//       if (response == true) {
+//         $(this).closest(".has-feedback").removeClass("has-error").addClass("has-success");
+//         $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-remove").addClass("glyphicon glyphicon-ok");
+//       } else {
+//         $(this).closest(".has-feedback").removeClass("has-success").addClass("has-error");
+//         $(this).parent().find("span.form-control-feedback").removeClass("glyphicon-ok").addClass("glyphicon glyphicon-remove");
+//       }
+//     }
+//   });
+// });
 // DISPLAY BOOKING ID
 $("#cmbBookingID").change(function() {
   $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
@@ -444,7 +444,7 @@ $("#frmRegister").submit(function(e) {
     data: $(this).serialize(),
     success: function(response) {
       if (response == true) {
-        alertNotif('success', 'Email sent to verify your email!', false, 10000);
+        alertNotif('success', REGISTER_VERIFY, false);
         $(this).find('#btnRegister').attr('disabled', false);
         $(this).find('#frmRegister').trigger('reset');
         $('#modalRegistration').modal('hide');

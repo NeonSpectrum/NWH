@@ -26,6 +26,22 @@ if (isset($txtEmail)) {
     echo "<script>alert('Registered Successfully!');location.href='$host';</script>";
   }
 } else if (isset($_POST)) {
+
+  if (isset($_POST['g-recaptcha-response'])) {
+    $captcha = $_POST['g-recaptcha-response'];
+  }
+  if (!$captcha) {
+    echo 'Please check the the captcha form.';
+    return;
+  }
+  $secretKey    = "6Ler0DUUAAAAABE_r5gAH7LhkRPAavkyNkUOOQZd";
+  $ip           = $_SERVER['REMOTE_ADDR'];
+  $response     = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+  $responseKeys = json_decode($response, true);
+  if (intval($responseKeys["success"]) !== 1) {
+    echo 'You are spammer ! Get the @$%K out';
+    return;
+  }
   $fname         = stripslashes($_POST['txtFirstName']); // removes backslashes
   $fname         = mysqli_real_escape_string($db, $fname); //escapes special characters in a string
   $fname         = ucwords(strtolower($fname)); //capitalize first character
@@ -54,7 +70,7 @@ if (isset($txtEmail)) {
         echo ALREADY_REGISTERED;
       }
     } else {
-      $data    = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=".(strtotime("now") + (60 * 5)));
+      $data    = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
       $subject = "Northwood Hotel Account Creation";
       $body    = "Please proceed to this link to register your account:<br/>http://$domain/account/register.php?$data";
       echo sendMail("$email", "$subject", "$body");
