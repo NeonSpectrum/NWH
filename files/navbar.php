@@ -17,7 +17,7 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" style="margin-top:12px">
         <li class="dropdown">
-          <button class="btn btn-danger" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
+          <button class="btn btn-danger pulse" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
             <form class="form frmBookCheck" method="post">
               <div class="form-group">
@@ -301,7 +301,7 @@ if (!isset($_SESSION['email'])) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" src="#" style="object-fit: cover"/>
+                <img id="displayImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">

@@ -80,7 +80,6 @@ $('.btnMoreInfo').click(function() {
     }
   });
 });
-//JSSOR
 // YOUTUBE
 (function() {
   var youtube = document.querySelectorAll(".youtube");
