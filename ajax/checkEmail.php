@@ -6,7 +6,7 @@ if (isset($_GET)) {
   $result = mysqli_query($db, $query);
   $rows   = mysqli_num_rows($result);
   if ($rows > 0 || !filter_var($_GET['txtEmail'], FILTER_VALIDATE_EMAIL)) {
-    // http_response_code(400);
+    http_response_code(409);
     echo false;
   } else {
     http_response_code(200);
