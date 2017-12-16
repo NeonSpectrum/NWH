@@ -113,7 +113,7 @@ Pace.on('done', function() {
     $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
   });
   // ANIMATE TO HASH
-  if (window.location.hash && $(window.location.hash).offset() != null) {
+  if (window.location.hash && $(window.location.hash).offset() != null && location.pathname.includes("/contactus/")) {
     $('html, body').animate({
       scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
     }, 1000, 'swing');

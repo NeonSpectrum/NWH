@@ -1,141 +1,432 @@
-$(document).ready(function () {
-  if ($('#btn-step2').hasClass("active")) {
-    $.ajax({
-      type: 'POST',
-      url: root + 'ajax/getRooms.php',
-      data: $('#frmBookNow').serialize(),
-      success: function (response) {
-        $('span#txtRooms').html(response);
-        $('input[type="checkbox"]').change(function () {
-          $('input[type="checkbox"]').not(this).prop('checked', false);
-        });
-      }
-    });
+/*! 
+ * SmartWizard v4.2.2
+ * The awesome jQuery step wizard plugin with Bootstrap support
+ * http://www.techlaboratory.net/smartwizard
+ *
+ * Created by Dipu Raj
+ * http://dipuraj.me
+ *
+ * Licensed under the terms of the MIT License
+ * https://github.com/techlab/SmartWizard/blob/master/LICENSE
+ */
+! function(t, s, e, n) {
+  "use strict";
+
+  function i(s, e) {
+    this.options = t.extend(!0, {}, o, e), this.main = t(s), this.nav = this.main.children("ul"), this.steps = t("li > a", this.nav), this.container = this.main.children("div"), this.pages = this.container.children("div"), this.current_index = null, this.init()
   }
-});
-
-$('.btnPrev').click(function () {
-  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
-  prev(step);
-  $(this).each(function () {
-    $(this).prop('disabled', false);
-  });
-});
-
-$('.btnNext').click(function () {
-  $(this).html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i> Submitting...');
-  $(this).attr('disabled', true);
-  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
-  if (step == 1) {
-    if (!validateStep1()) {
-      $(this).html('Next');
-      $(this).prop('disabled', false);
-      return;
+  var o = {
+    selected: 0,
+    keyNavigation: !0,
+    autoAdjustHeight: !0,
+    cycleSteps: !1,
+    backButtonSupport: !0,
+    useURLhash: !0,
+    showStepURLhash: !0,
+    lang: {
+      next: "Next",
+      previous: "Previous"
+    },
+    toolbarSettings: {
+      toolbarPosition: "bottom",
+      toolbarButtonPosition: "right",
+      showNextButton: !0,
+      showPreviousButton: !0,
+      toolbarExtraButtons: []
+    },
+    anchorSettings: {
+      anchorClickable: !0,
+      enableAllAnchors: !1,
+      markDoneStep: !0,
+      markAllPreviousStepsAsDone: !0,
+      removeDoneStepOnNavigateBack: !1,
+      enableAnchorOnDoneStep: !0
+    },
+    contentURL: null,
+    contentCache: !0,
+    ajaxSettings: {},
+    disabledSteps: [],
+    errorSteps: [],
+    hiddenSteps: [],
+    theme: "default",
+    transitionEffect: "none",
+    transitionSpeed: "400"
+  };
+  t.extend(i.prototype, {
+    init: function() {
+      this._setElements(), this._setToolbar(), this._setEvents();
+      var e = this.options.selected;
+      if (this.options.useURLhash) {
+        var n = s.location.hash;
+        if (n && n.length > 0) {
+          var i = t("a[href*='" + n + "']", this.nav);
+          if (i.length > 0) {
+            var o = this.steps.index(i);
+            e = o >= 0 ? o : e
+          }
+        }
+      }
+      e > 0 && this.options.anchorSettings.markDoneStep && this.options.anchorSettings.markAllPreviousStepsAsDone && this.steps.eq(e).parent("li").prevAll().addClass("done"), this._showStep(e)
+    },
+    _setElements: function() {
+      this.main.addClass("sw-main sw-theme-" + this.options.theme), this.nav.addClass("nav nav-tabs step-anchor"), this.options.anchorSettings.enableAllAnchors !== !1 && this.options.anchorSettings.anchorClickable !== !1 && this.steps.parent("li").addClass("clickable"), this.container.addClass("sw-container tab-content"), this.pages.addClass("step-content");
+      var s = this;
+      return this.options.disabledSteps && this.options.disabledSteps.length > 0 && t.each(this.options.disabledSteps, function(t, e) {
+        s.steps.eq(e).parent("li").addClass("disabled")
+      }), this.options.errorSteps && this.options.errorSteps.length > 0 && t.each(this.options.errorSteps, function(t, e) {
+        s.steps.eq(e).parent("li").addClass("danger")
+      }), this.options.hiddenSteps && this.options.hiddenSteps.length > 0 && t.each(this.options.hiddenSteps, function(t, e) {
+        s.steps.eq(e).parent("li").addClass("hidden")
+      }), !0
+    },
+    _setToolbar: function() {
+      if ("none" === this.options.toolbarSettings.toolbarPosition) return !0;
+      var s = this.options.toolbarSettings.showNextButton !== !1 ? t("<button></button>").text(this.options.lang.next).addClass("btn btn-default sw-btn-next").attr("type", "button") : null,
+        e = this.options.toolbarSettings.showPreviousButton !== !1 ? t("<button></button>").text(this.options.lang.previous).addClass("btn btn-default sw-btn-prev").attr("type", "button") : null,
+        n = t("<div></div>").addClass("btn-group navbar-btn sw-btn-group pull-" + this.options.toolbarSettings.toolbarButtonPosition).attr("role", "group").append(e, s),
+        i = null;
+      this.options.toolbarSettings.toolbarExtraButtons && this.options.toolbarSettings.toolbarExtraButtons.length > 0 && (i = t("<div></div>").addClass("btn-group navbar-btn sw-btn-group-extra pull-" + this.options.toolbarSettings.toolbarButtonPosition).attr("role", "group"), t.each(this.options.toolbarSettings.toolbarExtraButtons, function(t, s) {
+        i.append(s.clone(!0))
+      }));
+      var o, a;
+      switch (this.options.toolbarSettings.toolbarPosition) {
+        case "top":
+          o = t("<nav></nav>").addClass("navbar btn-toolbar sw-toolbar sw-toolbar-top"), o.append(n), "left" === this.options.toolbarSettings.toolbarButtonPosition ? o.append(i) : o.prepend(i), this.container.before(o);
+          break;
+        case "bottom":
+          a = t("<nav></nav>").addClass("navbar btn-toolbar sw-toolbar sw-toolbar-bottom"), a.append(n), "left" === this.options.toolbarSettings.toolbarButtonPosition ? a.append(i) : a.prepend(i), this.container.after(a);
+          break;
+        case "both":
+          o = t("<nav></nav>").addClass("navbar btn-toolbar sw-toolbar sw-toolbar-top"), o.append(n), "left" === this.options.toolbarSettings.toolbarButtonPosition ? o.append(i) : o.prepend(i), this.container.before(o), a = t("<nav></nav>").addClass("navbar btn-toolbar sw-toolbar sw-toolbar-bottom"), a.append(n.clone(!0)), "left" === this.options.toolbarSettings.toolbarButtonPosition ? a.append(i.clone(!0)) : a.prepend(i.clone(!0)), this.container.after(a);
+          break;
+        default:
+          a = t("<nav></nav>").addClass("navbar btn-toolbar sw-toolbar sw-toolbar-bottom"), a.append(n), "left" === this.options.toolbarSettings.toolbarButtonPosition ? a.append(i) : a.prepend(i), this.container.after(a)
+      }
+      return !0
+    },
+    _setEvents: function() {
+      var n = this;
+      return t(this.steps).on("click", function(t) {
+        if (t.preventDefault(), n.options.anchorSettings.anchorClickable === !1) return !0;
+        var s = n.steps.index(this);
+        if (n.options.anchorSettings.enableAnchorOnDoneStep === !1 && n.steps.eq(s).parent("li").hasClass("done")) return !0;
+        s !== n.current_index && (n.options.anchorSettings.enableAllAnchors !== !1 && n.options.anchorSettings.anchorClickable !== !1 ? n._showStep(s) : n.steps.eq(s).parent("li").hasClass("done") && n._showStep(s))
+      }), t(".sw-btn-next", this.main).on("click", function(t) {
+        t.preventDefault(), n.steps.index(this) !== n.current_index && n._showNext()
+      }), t(".sw-btn-prev", this.main).on("click", function(t) {
+        t.preventDefault(), n.steps.index(this) !== n.current_index && n._showPrevious()
+      }), this.options.keyNavigation && t(e).keyup(function(t) {
+        n._keyNav(t)
+      }), this.options.backButtonSupport && t(s).on("hashchange", function(e) {
+        if (!n.options.useURLhash) return !0;
+        if (s.location.hash) {
+          var i = t("a[href*='" + s.location.hash + "']", n.nav);
+          i && i.length > 0 && (e.preventDefault(), n._showStep(n.steps.index(i)))
+        }
+      }), !0
+    },
+    _showNext: function() {
+      for (var t = this.current_index + 1, s = t; s < this.steps.length; s++)
+        if (!this.steps.eq(s).parent("li").hasClass("disabled") && !this.steps.eq(s).parent("li").hasClass("hidden")) {
+          t = s;
+          break
+        }
+      if (this.steps.length <= t) {
+        if (!this.options.cycleSteps) return !1;
+        t = 0
+      }
+      return this._showStep(t), !0
+    },
+    _showPrevious: function() {
+      for (var t = this.current_index - 1, s = t; s >= 0; s--)
+        if (!this.steps.eq(s).parent("li").hasClass("disabled") && !this.steps.eq(s).parent("li").hasClass("hidden")) {
+          t = s;
+          break
+        }
+      if (0 > t) {
+        if (!this.options.cycleSteps) return !1;
+        t = this.steps.length - 1
+      }
+      return this._showStep(t), !0
+    },
+    _showStep: function(t) {
+      return !!this.steps.eq(t) && (t != this.current_index && (!this.steps.eq(t).parent("li").hasClass("disabled") && !this.steps.eq(t).parent("li").hasClass("hidden") && (this._loadStepContent(t), !0)))
+    },
+    _loadStepContent: function(s) {
+      var e = this,
+        n = this.steps.eq(this.current_index),
+        i = "",
+        o = this.steps.eq(s),
+        a = o.data("content-url") && o.data("content-url").length > 0 ? o.data("content-url") : this.options.contentURL;
+      if (null !== this.current_index && this.current_index !== s && (i = this.current_index < s ? "forward" : "backward"), null !== this.current_index && this._triggerEvent("leaveStep", [n, this.current_index, i]) === !1) return !1;
+      if (!(a && a.length > 0) || o.data("has-content") && this.options.contentCache) this._transitPage(s);
+      else {
+        var r = o.length > 0 ? t(o.attr("href"), this.main) : null,
+          h = t.extend(!0, {}, {
+            url: a,
+            type: "POST",
+            data: {
+              step_number: s
+            },
+            dataType: "text",
+            beforeSend: function() {
+              o.parent("li").addClass("loading")
+            },
+            error: function(s, e, n) {
+              o.parent("li").removeClass("loading"), t.error(n)
+            },
+            success: function(t) {
+              t && t.length > 0 && (o.data("has-content", !0), r.html(t)), o.parent("li").removeClass("loading"), e._transitPage(s)
+            }
+          }, this.options.ajaxSettings);
+        t.ajax(h)
+      }
+      return !0
+    },
+    _transitPage: function(s) {
+      var e = this,
+        n = this.steps.eq(this.current_index),
+        i = n.length > 0 ? t(n.attr("href"), this.main) : null,
+        o = this.steps.eq(s),
+        a = o.length > 0 ? t(o.attr("href"), this.main) : null,
+        r = "";
+      null !== this.current_index && this.current_index !== s && (r = this.current_index < s ? "forward" : "backward");
+      var h = "middle";
+      return 0 === s ? h = "first" : s === this.steps.length - 1 && (h = "final"), this.options.transitionEffect = this.options.transitionEffect.toLowerCase(), this.pages.finish(), "slide" === this.options.transitionEffect ? i && i.length > 0 ? i.slideUp("fast", this.options.transitionEasing, function() {
+        a.slideDown(e.options.transitionSpeed, e.options.transitionEasing)
+      }) : a.slideDown(this.options.transitionSpeed, this.options.transitionEasing) : "fade" === this.options.transitionEffect ? i && i.length > 0 ? i.fadeOut("fast", this.options.transitionEasing, function() {
+        a.fadeIn("fast", e.options.transitionEasing, function() {
+          t(this).show()
+        })
+      }) : a.fadeIn(this.options.transitionSpeed, this.options.transitionEasing, function() {
+        t(this).show()
+      }) : (i && i.length > 0 && i.hide(), a.show()), this._setURLHash(o.attr("href")), this._setAnchor(s), this._setButtons(s), this._fixHeight(s), this.current_index = s, this._triggerEvent("showStep", [o, this.current_index, r, h]), !0
+    },
+    _setAnchor: function(t) {
+      return this.steps.eq(this.current_index).parent("li").removeClass("active danger loading"), this.options.anchorSettings.markDoneStep !== !1 && null !== this.current_index && (this.steps.eq(this.current_index).parent("li").addClass("done"), this.options.anchorSettings.removeDoneStepOnNavigateBack !== !1 && this.steps.eq(t).parent("li").nextAll().removeClass("done")), this.steps.eq(t).parent("li").removeClass("done danger loading").addClass("active"), !0
+    },
+    _setButtons: function(s) {
+      return this.options.cycleSteps || (0 >= s ? t(".sw-btn-prev", this.main).addClass("disabled") : t(".sw-btn-prev", this.main).removeClass("disabled"), this.steps.length - 1 <= s ? t(".sw-btn-next", this.main).addClass("disabled") : t(".sw-btn-next", this.main).removeClass("disabled")), !0
+    },
+    _keyNav: function(t) {
+      var s = this;
+      switch (t.which) {
+        case 37:
+          s._showPrevious(), t.preventDefault();
+          break;
+        case 39:
+          s._showNext(), t.preventDefault();
+          break;
+        default:
+          return
+      }
+    },
+    _fixHeight: function(s) {
+      if (this.options.autoAdjustHeight) {
+        var e = this.steps.eq(s).length > 0 ? t(this.steps.eq(s).attr("href"), this.main) : null;
+        this.container.finish().animate({
+          minHeight: e.outerHeight()
+        }, this.options.transitionSpeed, function() {})
+      }
+      return !0
+    },
+    _triggerEvent: function(s, e) {
+      var n = t.Event(s);
+      return this.main.trigger(n, e), !n.isDefaultPrevented() && n.result
+    },
+    _setURLHash: function(t) {
+      this.options.showStepURLhash && s.location.hash !== t && (s.location.hash = t)
+    },
+    theme: function(t) {
+      if (this.options.theme === t) return !1;
+      this.main.removeClass("sw-theme-" + this.options.theme), this.options.theme = t, this.main.addClass("sw-theme-" + this.options.theme), this._triggerEvent("themeChanged", [this.options.theme])
+    },
+    next: function() {
+      this._showNext()
+    },
+    prev: function() {
+      this._showPrevious()
+    },
+    reset: function() {
+      if (this._triggerEvent("beginReset") === !1) return !1;
+      this.container.stop(!0), this.pages.stop(!0), this.pages.hide(), this.current_index = null, this._setURLHash(this.steps.eq(this.options.selected).attr("href")), t(".sw-toolbar", this.main).remove(), this.steps.removeClass(), this.steps.parents("li").removeClass(), this.steps.data("has-content", !1), this.init(), this._triggerEvent("endReset")
+    },
+    stepState: function(s, e) {
+      var n = this;
+      s = t.isArray(s) ? s : [s];
+      var i = t.grep(this.steps, function(e, i) {
+        return t.inArray(i, s) !== -1 && i !== n.current_index
+      });
+      if (i && i.length > 0) switch (e) {
+        case "disable":
+          t(i).parents("li").addClass("disabled");
+          break;
+        case "enable":
+          t(i).parents("li").removeClass("disabled");
+          break;
+        case "hide":
+          t(i).parents("li").addClass("hidden");
+          break;
+        case "show":
+          t(i).parents("li").removeClass("hidden")
+      }
     }
-    $.ajax({
-      type: 'POST',
-      url: root + 'ajax/getRooms.php',
-      data: $('#frmBookNow').serialize(),
-      success: function (response) {
-        $('span#txtRooms').html(response);
-        $('input[type="checkbox"]').change(function () {
-          $('input[type="checkbox"]').not(this).prop('checked', false);
-        });
-      }
-    });
-  } else if (step == 2) {
-    if (!validateStep2()) {
-      $(this).html('Next');
-      $(this).prop('disabled', false);
-      return;
-    }
-    $.ajax({
-      type: 'POST',
-      url: root + 'ajax/getRoomPrice.php',
-      data: $('#frmBookNow').serialize(),
-      success: function (response) {
-        $('span#txtRoomPrice').html(response);
-      }
-    });
+  }), t.fn.smartWizard = function(s) {
+    var e, n = arguments;
+    return void 0 === s || "object" == typeof s ? this.each(function() {
+      t.data(this, "smartWizard") || t.data(this, "smartWizard", new i(this, s))
+    }) : "string" == typeof s && "_" !== s[0] && "init" !== s ? (e = t.data(this[0], "smartWizard"), "destroy" === s && t.data(this, "smartWizard", null), e instanceof i && "function" == typeof e[s] ? e[s].apply(e, Array.prototype.slice.call(n, 1)) : this) : void 0
   }
-  next(step);
-  $(this).each(function () {
-    $(this).prop('disabled', false);
-    $(this).html("Next");
-  });
-});
-// BOOK NOW FORM
-$("#btnSubmit").click(function (e) {
-  var step = parseInt($(this).closest(".step").attr("id").replace("step", ""));
-  $(this).html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i> Submitting ...');
-  $(this).prop('disabled', true);
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/bookNow.php',
-    dataType: "json",
-    data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
-    success: function (response) {
-      if (!response) {
-        alertNotif("error", "Full");
-        return;
-      }
-      $('span#txtBookingID').html(response[0]);
-      $('span#txtRoomID').html(response[1]);
-      $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
-      next(step);
+}(jQuery, window, document);
+// SCRIPT
+$(document).ready(function() {
+  // Step show event 
+  $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+    //alert("You are on step "+stepNumber+" now");
+    if (stepPosition === 'first') {
+      $("#prev-btn").addClass('disabled');
+    } else if (stepPosition === 'final') {
+      $("#next-btn").addClass('disabled');
+    } else {
+      $("#prev-btn").removeClass('disabled');
+      $("#next-btn").removeClass('disabled');
     }
   });
+  // Smart Wizard
+  $('#smartwizard').smartWizard({
+    selected: 0, // Initial selected step, 0 = first step 
+    keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+    autoAdjustHeight: true, // Automatically adjust content height
+    cycleSteps: false, // Allows to cycle the navigation of steps
+    backButtonSupport: true, // Enable the back button support
+    useURLhash: false, // Enable selection of the step based on url hash
+    lang: { // Language variables
+      next: 'Next',
+      previous: 'Previous'
+    },
+    toolbarSettings: {
+      toolbarPosition: 'bottom', // none, top, bottom, both
+      toolbarButtonPosition: 'right', // left, right
+      showNextButton: true, // show/hide a Next button
+      showPreviousButton: true, // show/hide a Previous button
+      toolbarExtraButtons: [
+        $('<button></button>').text('Finish').addClass('btn btn-info').on('click', function() {
+          alert('Finsih button click');
+        }),
+        $('<button></button>').text('Cancel').addClass('btn btn-danger').on('click', function() {
+          alert('Cancel button click');
+        })
+      ]
+    },
+    anchorSettings: {
+      anchorClickable: true, // Enable/Disable anchor navigation
+      enableAllAnchors: false, // Activates all anchors clickable all times
+      markDoneStep: true, // add done css
+      enableAnchorOnDoneStep: false // Enable/Disable the done steps navigation
+    },
+    contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
+    disabledSteps: [], // Array Steps disabled
+    errorSteps: [], // Highlight step with errors
+    theme: 'arrows',
+    transitionEffect: 'fade', // Effect on navigation, none/slide/fade
+    transitionSpeed: '400'
+  });
+  // Show Step
+  $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
+    if (stepNumber == 1) {
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/getRooms.php',
+        data: $('#frmBookNow').serialize(),
+        success: function(response) {
+          $('span#txtRooms').html(response);
+          $('input[type="checkbox"]').change(function() {
+            $('input[type="checkbox"]').not(this).prop('checked', false);
+            return true;
+          });
+        }
+      });
+    }
+  });
+  // Leave Step
+  $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+    if (stepNumber == 0) {
+      var checkIn = new Date($('#frmBookNow').find("#txtCheckInDate").val());
+      var checkOut = new Date($('#frmBookNow').find("#txtCheckOutDate").val());
+      if (checkIn > checkOut) {
+        alertNotif("error", "Check Out date must be greater than Check In date.");
+        return false;
+      }
+      if (parseInt($('#frmBookNow').find('#txtAdults').val()) <= 0) {
+        alertNotif("error", "An adult is a must!");
+        return false;
+      }
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/getRooms.php',
+        data: $('#frmBookNow').serialize(),
+        success: function(response) {
+          $('span#txtRooms').html(response);
+          $('input[type="checkbox"]').change(function() {
+            $('input[type="checkbox"]').not(this).prop('checked', false);
+          });
+          addBookingSummary("Check In Date: " + $('#frmBookNow').find("#txtCheckInDate").val() + "<br/>Check Out Date: " + $('#frmBookNow').find("#txtCheckOutDate").val() + "<br/>Adults: " + $('#frmBookNow').find("#txtAdults").val() + "<br/>Children: " + $('#frmBookNow').find("#txtChildren").val())
+          return true;
+        }
+      });
+    } else if (stepNumber == 1) {
+      if (!$('#frmBookNow').find("input[name='rdbRoom']:checked").val()) {
+        alertNotif("error", "Please choose a room before proceeding to next step.");
+        return false;
+      }
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/getRoomPrice.php',
+        data: $('#frmBookNow').serialize(),
+        success: function(response) {
+          $('span#txtRoomPrice').html(response);
+          addBookingSummary("Room Type: " + $('#frmBookNow').find("input[name='rdbRoom']").val().replace("_", " "));
+          return true;
+        }
+      });
+    } else if (stepNumber == 2) {
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + 'ajax/bookNow.php',
+        dataType: "json",
+        data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
+        success: function(response) {
+          $('span#txtBookingID').html(response[0]);
+          $('span#txtRoomID').html(response[1]);
+          $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+          addBookingSummary("Total Price: " + $('#frmBookNow').find("#txtRoomPrice").html());
+        }
+      });
+    } else {}
+  });
+  // External Button Events
+  $("#reset-btn").on("click", function() {
+    // Reset wizard
+    $('#smartwizard').smartWizard("reset");
+    return true;
+  });
+  $("#prev-btn").on("click", function() {
+    // Navigate previous
+    $('#smartwizard').smartWizard("prev");
+    return true;
+  });
+  $("#next-btn").on("click", function() {
+    // Navigate next
+    $('#smartwizard').smartWizard("next");
+    return true;
+  });
+  if (location.search.includes("txtCheckInDate") && location.search.includes("txtCheckOutDate") && location.search.includes("txtAdults") && location.search.includes("txtChildren")) {
+    $('#smartwizard').smartWizard("next");
+  }
 });
 
-function prev(step) {
-  $('.step').each(function () {
-    $(this).css("display", "none");
-  });
-  $('.btn-stepwizard').each(function () {
-    $(this).removeClass("active");
-  });
-  $('#step' + (step)).css("display", "none");
-  $('#step' + (step - 1)).css("display", "");
-  $('#btn-step' + (step - 1)).addClass("active");
-  $(window).scrollTop(0);
-}
-
-function next(step) {
-  $('.step').each(function () {
-    $(this).css("display", "none");
-  });
-  $('.btn-stepwizard').each(function () {
-    $(this).removeClass("active");
-  });
-  $('#step' + (step)).css("display", "none");
-  $('#step' + (step + 1)).css("display", "");
-  $('#btn-step' + (step + 1)).addClass("active");
-  $(window).scrollTop(0);
-}
-
-function validateStep1() {
-  var checkIn = new Date($('#frmBookNow').find("#txtCheckInDate").val());
-  var checkOut = new Date($('#frmBookNow').find("#txtCheckOutDate").val());
-
-  if (checkIn > checkOut) {
-    alertNotif("error", "Check Out date must be greater than Check In date.");
-    return false;
-  }
-  if (parseInt($('#frmBookNow').find('#txtAdults').val()) <= 0) {
-    alertNotif("error", "An adult is a must!");
-    return false;
-  } else if (parseInt($('#frmBookNow').find('#txtAdults').val()) + parseInt($('#frmBookNow').find('#txtAdults').val()) == 0) {
-    alertNotif("error", "Please enter a valid number of guests!");
-    return false;
-  }
-  return true;
-}
-
-function validateStep2() {
-  if (!$('#frmBookNow').find("input[name='rdbRoom']:checked").val()) {
-    alertNotif("error", "Please choose a room before proceeding to next step.");
-    return false;
-  }
-  return true;
+function addBookingSummary(html) {
+  var nextLine = $('#bookingSummary').html().trim() != "" ? "<br/>" : "";
+  $('#bookingSummary').hide().html($('#bookingSummary').html() + nextLine + html).fadeIn();
 }

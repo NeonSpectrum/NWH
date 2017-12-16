@@ -75,11 +75,11 @@ $result = mysqli_query($db, $query);
 while ($row = mysqli_fetch_assoc($result)) {
   ?>
   <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
-    <figure class='imghvr-slide-up' style='box-shadow: 1px 1px 1px #888888'>
+    <figure class='imghvr-hinge-up' style='box-shadow: 1px 1px 1px #888888'>
       <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
       <figcaption style='background: url("gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg"; ?>") center;text-align:center;color:black;padding:0px'>
         <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-          <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?></div>
+          <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?><br/><div style="font-size:15px">Price starts at <i>₱ <?php echo number_format(getRoomPrice($row['RoomType'])); ?></i></div></div>
           <p style="padding:40px 20px"><?php echo $row['RoomDescription']; ?></p>
           <button id="<?php echo $row['RoomType']; ?>" class="btn btn-info btnMoreInfo" data-toggle="modal" data-target="#modalRoom" style="position:absolute;bottom:0;left:0;width:50%">More Info</button>
           <button class="btn btn-primary" style="position:absolute;bottom:0;right:0;width:50%">Book Now</button>

@@ -13,77 +13,55 @@ $adults       = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
 $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
 ?>
 <div class="container-fluid" style="margin-bottom:20px">
-  <div class="stepwizard col-md-offset-2">
-    <div class="stepwizard-row setup-panel">
-      <div class="stepwizard-step">
-        <div id="btn-step1" class="btn-stepwizard <?php echo isset($_GET['txtCheckInDate']) ? '' : 'active'; ?>">1</div>
-        <p>Step 1</p>
-      </div>
-      <div class="stepwizard-step">
-        <div id="btn-step2" class="btn-stepwizard <?php echo isset($_GET['txtCheckInDate']) ? 'active' : ''; ?>">2</div>
-        <p>Step 2</p>
-      </div>
-      <div class="stepwizard-step">
-        <div id="btn-step3" class="btn-stepwizard">3</div>
-        <p>Step 3</p>
-      </div>
-      <div class="stepwizard-step">
-        <div id="btn-step4" class="btn-stepwizard">4</div>
-        <p>Finish</p>
-      </div>
-    </div>
-  </div>
-
-  <form id="frmBookNow">
-    <div class="row setup-content">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="col-md-12">
-          <div id="step1" class="step animated fadeIn" style="<?php echo isset($_GET['txtCheckInDate']) ? 'display:none' : ''; ?>">
-            <h3> Step 1 - Check</h3>
-            <div class="form-group">
-              <label>Check In Date:</label>
-              <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly>
-            </div>
-            <div class="form-group">
-              <label>Check Out Date:</label>
-              <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Adults:</label>
-                  <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="<?php echo $adults; ?>" min="1" max="10" required>
-                </div>
-                <div class="col-md-6">
-                  <label>Children:</label>
-                  <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="<?php echo $children; ?>" min="0"max="10" required>
+  <div class="col-md-9">
+    <form id="frmBookNow">
+      <div id="smartwizard">
+        <ul>
+          <li style="width:25%"><a href="#step-1">Step 1<br /><small>Check In & Check Out Date</small></a></li>
+          <li style="width:25%"><a href="#step-2">Step 2<br /><small>Select Rooms</small></a></li>
+          <li style="width:25%"><a href="#step-3">Step 3<br /><small>Payment</small></a></li>
+          <li style="width:25%"><a href="#step-4">Step 4<br /><small>Finish</small></a></li>
+        </ul>
+        <div>
+          <div id="step-1" style="padding:20px">
+            <div id="form-step-0" >
+              <div class="form-group">
+                <label>Check In Date:</label>
+                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly>
+              </div>
+              <div class="form-group">
+                <label>Check Out Date:</label>
+                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Adult(s):</label>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="<?php echo $adults; ?>" min="1" max="10" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Children:</label>
+                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="<?php echo $children; ?>" min="0" max="10" required>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <button class="btn btn-primary btnNext btn-lg pull-right" type="button">Next</button>
-            </div>
           </div>
-          <div id="step2" class="step animated fadeIn" style="<?php echo isset($_GET['txtCheckInDate']) ? '' : 'display:none'; ?>">
-            <h3> Step 2 - Room</h3>
+          <div id="step-2">
             <div class="row">
-              <span id="txtRooms"></span>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btnPrev btn-lg pull-left" type="button">Previous</button>
-              <button class="btn btn-primary btnNext btn-lg pull-right" type="button">Next</button>
+              <span id="txtRooms">
+                <div style="padding:25%">
+
+                </div>
+              </span>
             </div>
           </div>
-          <div id="step3" class="step animated fadeIn" style="display:none">
+          <div id="step-3">
             <h3> Step 3 - Payment</h3>
             TOTAL AMOUNT OF: ₱&nbsp;<span id="txtRoomPrice"></span>
             <br/><br/><br/><br/><br/><br/><br/><br/>
-            <div class="form-group">
-              <button class="btn btn-primary btnPrev btn-lg pull-left" type="button">Previous</button>
-              <button id="btnSubmit" class="btn btn-primary btn-lg pull-right" type="button">Submit</button>
-            </div>
           </div>
-          <div id="step4" class="step animated fadeIn" style="display:none">
+          <div id="step-4">
             <br/><br/>
             <h3>Your booking ID is <span id="txtBookingID"></span>
             <h3>Your Room ID is <span id="txtRoomID"></span>
@@ -94,7 +72,18 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           </div>
         </div>
       </div>
+      <div class="btn-group navbar-btn pull-right" role="group">
+        <!-- <button class="btn btn-default" id="prev-btn" type="button">Previous</button> -->
+        <button class="btn btn-default" id="next-btn" type="button">Next</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <div style="border:1px solid black">
+      <div style="background-color:rgb(142, 196, 231);padding:20px;text-align:center;border-bottom:1px solid black;font-size:16pt">Booking Summary</div>
+      <div style="padding:5px" id="bookingSummary">
+      </div>
     </div>
-  </form>
+  </div>
 </div>
 <?php require_once '../footer.php';?>

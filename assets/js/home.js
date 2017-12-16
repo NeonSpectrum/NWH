@@ -56,6 +56,7 @@ $(".carousel").on("mousemove", function(event) {
 $(".carousel").on("mouseup", function(event) {
   mouseDown = false;
 });
+var jssor, temp;
 // MORE INFO BUTTON
 $('.btnMoreInfo').click(function() {
   $.ajax({
@@ -65,6 +66,11 @@ $('.btnMoreInfo').click(function() {
     data: 'roomType=' + $(this).attr("id"),
     dataType: 'json',
     success: function(response) {
+      if (jssor != null && temp != null) {
+        jssor.$Pause();
+        $("#rooms_slider_container").remove();
+        $("#pictures").append(temp);
+      }
       $("#modalRoom").find(".modal-title").html($(this).attr("id").replace("_", " "));
       $("#modalRoom").find("div[u='slides']").html(response[0]);
       $("#modalRoom").find("#description").html(response[1]);
@@ -76,7 +82,8 @@ $('.btnMoreInfo').click(function() {
           $Steps: 1 //[Optional] Steps to go for each navigation request, default value is 1
         }
       };
-      new $JssorSlider$('rooms_slider_container', options);
+      temp = $("#pictures").html();
+      jssor = new $JssorSlider$('rooms_slider_container', options);
     }
   });
 });
