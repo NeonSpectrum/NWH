@@ -302,18 +302,7 @@ $(document).ready(function() {
       previous: 'Previous'
     },
     toolbarSettings: {
-      toolbarPosition: 'bottom', // none, top, bottom, both
-      toolbarButtonPosition: 'right', // left, right
-      showNextButton: true, // show/hide a Next button
-      showPreviousButton: true, // show/hide a Previous button
-      toolbarExtraButtons: [
-        $('<button></button>').text('Finish').addClass('btn btn-info').on('click', function() {
-          alert('Finsih button click');
-        }),
-        $('<button></button>').text('Cancel').addClass('btn btn-danger').on('click', function() {
-          alert('Cancel button click');
-        })
-      ]
+      toolbarPosition: 'none'
     },
     anchorSettings: {
       anchorClickable: true, // Enable/Disable anchor navigation
@@ -354,7 +343,7 @@ $(document).ready(function() {
           $('input[type="checkbox"]').change(function() {
             $('input[type="checkbox"]').not(this).prop('checked', false);
           });
-          addBookingSummary("Check In Date: " + $('#frmBookNow').find("#txtCheckInDate").val() + "<br/>Check Out Date: " + $('#frmBookNow').find("#txtCheckOutDate").val() + "<br/>Adults: " + $('#frmBookNow').find("#txtAdults").val() + "<br/>Children: " + $('#frmBookNow').find("#txtChildren").val())
+          addBookingSummary("Check In Date: <span class='pull-right'>" + $('#frmBookNow').find("#txtCheckInDate").val() + "</span><br/>Check Out Date: <span class='pull-right'>" + $('#frmBookNow').find("#txtCheckOutDate").val() + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>");
           return true;
         }
       });
@@ -369,16 +358,16 @@ $(document).ready(function() {
         alertNotif("error", "Please choose a room before proceeding to next step.");
         return false;
       }
-      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:black'>");
+      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
       var total = 0;
       $('.numberOfRooms').each(function() {
         if ($(this).find("select").val() != 0) {
-          addBookingSummary($(this).parent().find("#roomName").html() + ": " + $(this).find("select").val() + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
+          addBookingSummary($(this).parent().find("#roomName").html() + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
         }
         total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
       });
       $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:black'>");
+      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
       addBookingSummary("Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
     } else if (stepNumber == 2) {
       $.ajax({
@@ -394,12 +383,13 @@ $(document).ready(function() {
           addBookingSummary("Total Price: " + $('#frmBookNow').find("#txtRoomPrice").html());
         }
       });
-    } else {}
+    }
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
     // Reset wizard
     $('#smartwizard').smartWizard("reset");
+    $('#bookingSummary').html('');
     return true;
   });
   $("#prev-btn").on("click", function() {

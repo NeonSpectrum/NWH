@@ -68,14 +68,14 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
         </div>
       </div>
       <div class="btn-group navbar-btn pull-right" role="group">
-        <!-- <button class="btn btn-default" id="prev-btn" type="button">Previous</button> -->
-        <button class="btn btn-default" id="next-btn" type="button">Next</button>
+        <button class="btn btn-default" id="reset-btn" style="margin-right:10px" type="button">Reset</button>
+        <button class="btn btn-primary" id="next-btn" type="button">Next</button>
       </div>
     </form>
   </div>
   <div class="col-md-3">
-    <div style="border:1px solid black">
-      <div style="background-color:rgb(142, 196, 231);padding:20px;text-align:center;border-bottom:1px solid black;font-size:16pt">Booking Summary</div>
+    <div style="border:1px solid #ccc">
+      <div style="background-color:rgb(142, 196, 231);padding:20px;text-align:center;border-bottom:1px solid #ccc;font-size:16pt">Booking Summary</div>
       <div style="padding:5px" id="bookingSummary">
       </div>
     </div>

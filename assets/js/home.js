@@ -1,22 +1,43 @@
-$(document).ready(function() {
+Pace.on('done', function() {
+  var caption_transitions = [
+    [{
+      b: -1,
+      d: 1,
+      o: -1
+    }, {
+      b: 0,
+      d: 600,
+      o: 1,
+      e: {
+        o: 5
+      }
+    }],
+  ];
   var home_transitions = [{
-    $Duration: 400,
-    $Delay: 40,
-    $Cols: 16,
-    $Formation: $JssorSlideshowFormations$.$FormationStraight,
-    $Opacity: 2,
-    $Assembly: 260
+    $Duration: 800,
+    x: 0.3,
+    $Cols: 2,
+    $SlideOut: true,
+    $ChessMode: {
+      $Column: 3
+    },
+    $Easing: {
+      $Left: $Jease$.$InCubic,
+      $Opacity: $Jease$.$Linear
+    },
+    $Opacity: 2
   }];
   var home_options = {
     $AutoPlay: true,
     $Idle: 3000,
     $DragOrientation: 1,
     $PauseOnHover: 0,
+    $CaptionSliderOptions: {
+      $Class: $JssorCaptionSlideo$,
+      $Transitions: caption_transitions
+    },
     $ArrowNavigatorOptions: {
       $Class: $JssorArrowNavigator$
-    },
-    $BulletNavigatorOptions: {
-      $Class: $JssorBulletNavigator$
     },
     $SlideshowOptions: {
       $Class: $JssorSlideshowRunner$,
@@ -105,7 +126,7 @@ $('.btnMoreInfo').click(function() {
         $("#pictures").append(temp);
       }
       $("#modalRoom").find(".modal-title").html($(this).attr("id").replace("_", " "));
-      $("#modalRoom").find("div[u='slides']").html(response[0]);
+      $("#modalRoom").find("div[data-u='slides']").html(response[0]);
       $("#modalRoom").find("#description").html(response[1]);
       var options = {
         $FillMode: 2,

@@ -22,10 +22,13 @@ require_once 'files/navbar.php';
 // GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
 foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
   $filename = str_replace("images/carousel/", "", $image);
-  echo "      <div><img u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'></div>\n";
+  echo "<div data-b='0' data-p='112.50' style='display: none;'>
+          <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
+          <div data-u='caption' data-t='0' style='position: absolute; bottom: 150px; left: 0; width: 100%; height: 50px; background-color: rgba(255,255,255,0.8); font-size: 20px; line-height: 50px; text-align: center;text-transform:uppercase'>Luxury meets affordability in the heart of Alaminos City</div>
+        </div>\n";
 }
 ?>
-    <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" u="progress"></div></div>
+    <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div></div>
     <!-- Arrow Navigator -->
     <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
         <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
@@ -131,7 +134,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <div class="row" style="margin:0">
           <div class="col-md-8" id="pictures">
             <div id="rooms_slider_container" style="position: relative; top: 0px; left: 0px; width: 550px;height: 400px;">
-              <div u="slides" style="position: absolute; left: 0px; top: 0px; width: 550px; height: 400px;overflow: hidden;">
+              <div data-u="slides" style="position: absolute; left: 0px; top: 0px; width: 550px; height: 400px;overflow: hidden;">
 
               </div>
               <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2"  data-scale-left="0.75">

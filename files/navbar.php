@@ -16,6 +16,9 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" style="margin-top:12px">
+<?php
+if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
+  ?>
         <li class="dropdown">
           <button class="btn btn-danger pulse" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
@@ -56,6 +59,9 @@ $accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
             </form>
           </ul>
         </li>
+<?php
+}
+?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="margin-top:-1px;margin-left:-1px">
