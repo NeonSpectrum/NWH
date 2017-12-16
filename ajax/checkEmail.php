@@ -6,9 +6,11 @@ if (isset($_GET)) {
   $result = mysqli_query($db, $query);
   $rows   = mysqli_num_rows($result);
   if ($rows > 0 || !filter_var($_GET['txtEmail'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(408);
+    http_response_code(400);
+    echo false;
   } else {
     http_response_code(200);
+    echo true;
   }
 }
 ?>
