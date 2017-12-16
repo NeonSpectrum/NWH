@@ -1,63 +1,96 @@
-// CAROUSEL
-var $item = $('.carousel .item');
-var $wHeight = $(window).width() > 480 ? $(window).height() : $(window).height() - 80;
-$item.eq(0).addClass('active');
-$item.height($wHeight);
-$item.addClass('full-screen');
-$('.carousel img').each(function() {
-  var $src = $(this).attr('src');
-  var $color = $(this).attr('data-color');
-  $(this).parent().css({
-    'background-image': 'url(' + $src + ')',
-    'background-color': $color
-  });
-  $(this).remove();
-});
-$(window).on('resize', function() {
-  $wHeight = $(window).width() > 480 ? $(window).height() : $(window).height() - 80;
-  $item.height($wHeight);
-});
-$('.carousel').hover(function(e) {
-  clearInterval(timer);
-});
-timer = setInterval(function() {
-  $('.carousel').carousel('next');
-}, 5000);
-$(".carousel").on("touchstart", function(event) {
-  var xClick = event.originalEvent.touches[0].pageX;
-  $(this).one("touchmove", function(event) {
-    var xMove = event.originalEvent.touches[0].pageX;
-    if (Math.floor(xClick - xMove) > 5) {
-      $(this).carousel('next');
-    } else if (Math.floor(xClick - xMove) < -5) {
-      $(this).carousel('prev');
-    }
-  });
-  $(".carousel").on("touchend", function() {
-    $(this).off("touchmove");
-  });
-});
-var xClick;
-var mouseDown;
-$(".carousel").on("mousedown", function(event) {
-  xClick = event.pageX;
-  mouseDown = true;
-});
-$(".carousel").on("mousemove", function(event) {
-  if (mouseDown) {
-    var xMove = event.pageX;
-    if (xClick > xMove) {
-      $(this).carousel('next');
-    } else if (xClick < xMove) {
-      $(this).carousel('prev');
+$(document).ready(function() {
+  var home_transitions = [{
+    $Duration: 400,
+    $Delay: 40,
+    $Cols: 16,
+    $Formation: $JssorSlideshowFormations$.$FormationStraight,
+    $Opacity: 2,
+    $Assembly: 260
+  }];
+  var home_options = {
+    $AutoPlay: true,
+    $Idle: 3000,
+    $DragOrientation: 1,
+    $PauseOnHover: 0,
+    $ArrowNavigatorOptions: {
+      $Class: $JssorArrowNavigator$
+    },
+    $BulletNavigatorOptions: {
+      $Class: $JssorBulletNavigator$
+    },
+    $SlideshowOptions: {
+      $Class: $JssorSlideshowRunner$,
+      $Transitions: home_transitions,
+      $TransitionsOrder: 1
+    },
+  };
+  var home_slider = new $JssorSlider$("home_slider", home_options);
+  //make sure to clear margin of the slider container element
+  home_slider.$Elmt.style.margin = "";
+  /*#region responsive code begin*/
+  /*
+      parameters to scale jssor slider to fill a container
+
+      MAX_WIDTH
+          prevent slider from scaling too wide
+      MAX_HEIGHT
+          prevent slider from scaling too high, default value is original height
+      MAX_BLEEDING
+          prevent slider from bleeding outside too much, default value is 1
+          0: contain mode, allow up to 0% to bleed outside, the slider will be all inside container
+          1: cover mode, allow up to 100% to bleed outside, the slider will cover full area of container
+          0.1: flex mode, allow up to 10% to bleed outside, this is better way to make full window slider, especially for mobile devices
+  */
+  var MAX_WIDTH = 3000;
+  var MAX_HEIGHT = 3000;
+  var MAX_BLEEDING = 1;
+
+  function ScaleSlider() {
+    var containerElement = home_slider.$Elmt.parentNode;
+    var containerWidth = containerElement.clientWidth;
+    if (containerWidth) {
+      var originalWidth = home_slider.$OriginalWidth();
+      var originalHeight = home_slider.$OriginalHeight();
+      var containerHeight = containerElement.clientHeight || originalHeight;
+      var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
+      var expectedHeight = Math.min(MAX_HEIGHT || containerHeight, containerHeight);
+      //scale the slider to expected size
+      home_slider.$ScaleSize(expectedWidth, expectedHeight, MAX_BLEEDING);
+      //position slider at center in vertical orientation
+      home_slider.$Elmt.style.top = ((containerHeight - expectedHeight) / 2) + "px";
+      //position slider at center in horizontal orientation
+      home_slider.$Elmt.style.left = ((containerWidth - expectedWidth) / 2) + "px";
+    } else {
+      window.setTimeout(ScaleSlider, 30);
     }
   }
+  /*ios disable scrolling and bounce effect*/
+  //$Jssor$.$AddEvent(document, "touchmove", function(event){event.touches.length < 2 && $Jssor$.$CancelEvent(event);});
+  ScaleSlider();
+  $(window).bind("load", ScaleSlider);
+  $(window).bind("resize", ScaleSlider);
+  $(window).bind("orientationchange", ScaleSlider);
+  /*#endregion responsive code end*/
+  // loading
+  var progressElement = document.getElementById("progress-element");
+
+  function ProgressChangeEventHandler(slideIndex, progress, progressBegin, idleBegin, idleEnd, progressEnd) {
+    //this event continuously fires within the process of current slide
+    //slideIndex: the index of slide
+    //progress: current time in the whole process
+    //progressBegin: the begining of the whole process (generally, layer animation starts to play in)
+    //idleBegin: captions played in and become idle, will wait for a period which is specified by option '$Idle' (or a break point created using slider maker)
+    //idleEnd: the idle time is over, play the rest until progressEnd
+    //progressEnd: the whole process has been completed
+    if (progressEnd > 0) {
+      var progressPercent = progress / progressEnd * 100 + "%";
+      progressElement.style.width = progressPercent;
+    }
+  }
+  home_slider.$On($JssorSlider$.$EVT_PROGRESS_CHANGE, ProgressChangeEventHandler);
 });
-$(".carousel").on("mouseup", function(event) {
-  mouseDown = false;
-});
-var jssor, temp;
 // MORE INFO BUTTON
+var jssor, temp;
 $('.btnMoreInfo').click(function() {
   $.ajax({
     context: this,

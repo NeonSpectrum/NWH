@@ -283,12 +283,9 @@ $(document).ready(function() {
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     //alert("You are on step "+stepNumber+" now");
-    if (stepPosition === 'first') {
-      $("#prev-btn").addClass('disabled');
-    } else if (stepPosition === 'final') {
-      $("#next-btn").addClass('disabled');
+    if (stepPosition === 'final') {
+      $("#next-btn").remove();
     } else {
-      $("#prev-btn").removeClass('disabled');
       $("#next-btn").removeClass('disabled');
     }
   });
@@ -331,23 +328,6 @@ $(document).ready(function() {
     transitionEffect: 'fade', // Effect on navigation, none/slide/fade
     transitionSpeed: '400'
   });
-  // Show Step
-  $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
-    if (stepNumber == 1) {
-      $.ajax({
-        type: 'POST',
-        url: root + 'ajax/getRooms.php',
-        data: $('#frmBookNow').serialize(),
-        success: function(response) {
-          $('span#txtRooms').html(response);
-          $('input[type="checkbox"]').change(function() {
-            $('input[type="checkbox"]').not(this).prop('checked', false);
-            return true;
-          });
-        }
-      });
-    }
-  });
   // Leave Step
   $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
     if (stepNumber == 0) {
@@ -366,7 +346,11 @@ $(document).ready(function() {
         url: root + 'ajax/getRooms.php',
         data: $('#frmBookNow').serialize(),
         success: function(response) {
-          $('span#txtRooms').html(response);
+          $('#txtRooms').html(response);
+          baguetteBox.run('.img-baguette', {
+            animation: 'fadeIn',
+            fullscreen: true
+          });
           $('input[type="checkbox"]').change(function() {
             $('input[type="checkbox"]').not(this).prop('checked', false);
           });
@@ -375,20 +359,27 @@ $(document).ready(function() {
         }
       });
     } else if (stepNumber == 1) {
-      if (!$('#frmBookNow').find("input[name='rdbRoom']:checked").val()) {
+      var roomSelected = false;
+      $('.numberOfRooms').each(function() {
+        if ($(this).find("select").val() != 0) {
+          roomSelected = true;
+        }
+      });
+      if (!roomSelected) {
         alertNotif("error", "Please choose a room before proceeding to next step.");
         return false;
       }
-      $.ajax({
-        type: 'POST',
-        url: root + 'ajax/getRoomPrice.php',
-        data: $('#frmBookNow').serialize(),
-        success: function(response) {
-          $('span#txtRoomPrice').html(response);
-          addBookingSummary("Room Type: " + $('#frmBookNow').find("input[name='rdbRoom']").val().replace("_", " "));
-          return true;
+      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:black'>");
+      var total = 0;
+      $('.numberOfRooms').each(function() {
+        if ($(this).find("select").val() != 0) {
+          addBookingSummary($(this).parent().find("#roomName").html() + ": " + $(this).find("select").val() + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
         }
+        total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
       });
+      $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:black'>");
+      addBookingSummary("Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
     } else if (stepNumber == 2) {
       $.ajax({
         context: this,
@@ -427,6 +418,6 @@ $(document).ready(function() {
 });
 
 function addBookingSummary(html) {
-  var nextLine = $('#bookingSummary').html().trim() != "" ? "<br/>" : "";
+  var nextLine = $('#bookingSummary').html().trim() != "" && !$('#bookingSummary').html().includes("<hr") ? "<br/>" : "";
   $('#bookingSummary').hide().html($('#bookingSummary').html() + nextLine + html).fadeIn();
 }

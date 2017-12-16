@@ -48,12 +48,7 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             </div>
           </div>
           <div id="step-2">
-            <div class="row">
-              <span id="txtRooms">
-                <div style="padding:25%">
-
-                </div>
-              </span>
+            <div id="txtRooms">
             </div>
           </div>
           <div id="step-3">

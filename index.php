@@ -11,25 +11,32 @@
 require_once 'header.php';
 require_once 'files/navbar.php';
 ?>
-<div class="full-screen">
-  <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
-    <div class="carousel-inner" role="listbox">
+<div style="position:relative;top:0;left:0;width:100%;height:100%;overflow:hidden;">
+  <div id="home_slider" style="position:relative;margin:0 auto;top:0px;left:0px;width:960px;height:640px;overflow:hidden;visibility:hidden;">
+      <!-- Loading Screen -->
+    <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
+    </div>
+    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
 <?php
 // GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
 foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
   $filename = str_replace("images/carousel/", "", $image);
-  echo "      <div class='item'><img src='$image?v=" . filemtime("$image") . "' alt='$filename'></div>\n";
+  echo "      <div><img u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'></div>\n";
 }
 ?>
+    <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" u="progress"></div></div>
+    <!-- Arrow Navigator -->
+    <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+        </svg>
     </div>
-    <a class="left carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('prev')" style="background:transparent !important">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="javascript:void(0)" role="button" onclick="$('#carousel').carousel('next')" style="background:transparent !important">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+        </svg>
+    </div>
   </div>
 </div>
 <div class="booknow center-block">
@@ -82,7 +89,7 @@ while ($row = mysqli_fetch_assoc($result)) {
           <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?><br/><div style="font-size:15px">Price starts at <i>₱ <?php echo number_format(getRoomPrice($row['RoomType'])); ?></i></div></div>
           <p style="padding:40px 20px"><?php echo $row['RoomDescription']; ?></p>
           <button id="<?php echo $row['RoomType']; ?>" class="btn btn-info btnMoreInfo" data-toggle="modal" data-target="#modalRoom" style="position:absolute;bottom:0;left:0;width:50%;text-decoration:underline">More Info</button>
-          <button class="btn btn-primary" style="position:absolute;bottom:0;right:0;width:50%;text-decoration:underline">Book Now</button>
+          <button onclick="location.href='reservation'" class="btn btn-primary" style="position:absolute;bottom:0;right:0;width:50%;text-decoration:underline">Book Now</button>
         </div>
       </figcaption>
       <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?><br/><div style="font-size:15px">Price starts at <i>₱ <?php echo number_format(getRoomPrice($row['RoomType'])); ?></i></div></div>
