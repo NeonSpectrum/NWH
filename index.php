@@ -24,7 +24,6 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
   $filename = str_replace("images/carousel/", "", $image);
   echo "<div data-b='0' data-p='112.50' style='display: none;'>
           <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
-          <div data-u='caption' data-t='0' style='position: absolute; bottom: 150px; left: 0; width: 100%; height: 50px; background-color: rgba(255,255,255,0.8); font-size: 20px; line-height: 50px; text-align: center;text-transform:uppercase'>Luxury meets affordability in the heart of Alaminos City</div>
         </div>\n";
 }
 ?>

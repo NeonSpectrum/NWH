@@ -1,18 +1,4 @@
 Pace.on('done', function() {
-  var caption_transitions = [
-    [{
-      b: -1,
-      d: 1,
-      o: -1
-    }, {
-      b: 0,
-      d: 600,
-      o: 1,
-      e: {
-        o: 5
-      }
-    }],
-  ];
   var home_transitions = [{
     $Duration: 800,
     x: 0.3,
@@ -32,10 +18,6 @@ Pace.on('done', function() {
     $Idle: 3000,
     $DragOrientation: 1,
     $PauseOnHover: 0,
-    $CaptionSliderOptions: {
-      $Class: $JssorCaptionSlideo$,
-      $Transitions: caption_transitions
-    },
     $ArrowNavigatorOptions: {
       $Class: $JssorArrowNavigator$
     },
