@@ -8,7 +8,7 @@ $(document).ready(function() {
     offset: 40
   }).init();
   // HIDE CONTACT BOX IF MOBILE
-  if (screen.width <= 480) {
+  if ($(window).width() < 480 || $(window).height() < 480) {
     $('.contactbox').fadeOut();
   }
   // RESET FORM IF EXISTS IF MODAL IS EXITED
@@ -120,7 +120,7 @@ Pace.on('done', function() {
   }
   // BACK TO TOP
   $(window).scroll(function() {
-    if (screen.width <= 480) {
+    if ($(window).width() < 480 || $(window).height() < 480) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
         $('.mylivechat_collapsed').fadeOut();
       } else {
@@ -143,7 +143,7 @@ Pace.on('done', function() {
 });
 $(window).on('resize', function() {
   $('.loadingIcon').height($(window).height());
-  if (screen.width <= 480) {
+  if ($(window).width() < 480 || $(window).height() < 480) {
     $('.navbar').removeClass("navbar-fixed-top");
     $("body").css("background-position", "50% 0px");
     $('.contactbox').fadeOut();

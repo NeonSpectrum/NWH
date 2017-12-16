@@ -54,13 +54,16 @@ Pace.on('done', function() {
     if (containerWidth) {
       var originalWidth = home_slider.$OriginalWidth();
       var originalHeight = home_slider.$OriginalHeight();
-      var containerHeight = containerElement.clientHeight || originalHeight;
       var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
-      var expectedHeight = Math.min(MAX_HEIGHT || containerHeight, containerHeight);
+      var expectedHeight = Math.min(MAX_HEIGHT || originalHeight, originalHeight);
       //scale the slider to expected size
-      home_slider.$ScaleSize(expectedWidth, expectedHeight, MAX_BLEEDING);
+      if ($(window).width() < 480 || $(window).height() < 480) {
+        home_slider.$ScaleSize(expectedWidth, expectedHeight - 80, MAX_BLEEDING);
+      } else {
+        home_slider.$ScaleSize(expectedWidth, expectedHeight, MAX_BLEEDING);
+      }
       //position slider at center in vertical orientation
-      home_slider.$Elmt.style.top = ((containerHeight - expectedHeight) / 2) + "px";
+      home_slider.$Elmt.style.top = ((originalHeight - expectedHeight) / 2) + "px";
       //position slider at center in horizontal orientation
       home_slider.$Elmt.style.left = ((containerWidth - expectedWidth) / 2) + "px";
     } else {
@@ -75,22 +78,21 @@ Pace.on('done', function() {
   $(window).bind("orientationchange", ScaleSlider);
   /*#endregion responsive code end*/
   // loading
-  var progressElement = document.getElementById("progress-element");
-
-  function ProgressChangeEventHandler(slideIndex, progress, progressBegin, idleBegin, idleEnd, progressEnd) {
-    //this event continuously fires within the process of current slide
-    //slideIndex: the index of slide
-    //progress: current time in the whole process
-    //progressBegin: the begining of the whole process (generally, layer animation starts to play in)
-    //idleBegin: captions played in and become idle, will wait for a period which is specified by option '$Idle' (or a break point created using slider maker)
-    //idleEnd: the idle time is over, play the rest until progressEnd
-    //progressEnd: the whole process has been completed
-    if (progressEnd > 0) {
-      var progressPercent = progress / progressEnd * 100 + "%";
-      progressElement.style.width = progressPercent;
-    }
-  }
-  home_slider.$On($JssorSlider$.$EVT_PROGRESS_CHANGE, ProgressChangeEventHandler);
+  // var progressElement = document.getElementById("progress-element");
+  // function ProgressChangeEventHandler(slideIndex, progress, progressBegin, idleBegin, idleEnd, progressEnd) {
+  //   //this event continuously fires within the process of current slide
+  //   //slideIndex: the index of slide
+  //   //progress: current time in the whole process
+  //   //progressBegin: the begining of the whole process (generally, layer animation starts to play in)
+  //   //idleBegin: captions played in and become idle, will wait for a period which is specified by option '$Idle' (or a break point created using slider maker)
+  //   //idleEnd: the idle time is over, play the rest until progressEnd
+  //   //progressEnd: the whole process has been completed
+  //   if (progressEnd > 0) {
+  //     // var progressPercent = progress / progressEnd * 100 + "%";
+  //     // progressElement.style.width = progressPercent;
+  //   }
+  // }
+  // home_slider.$On($JssorSlider$.$EVT_PROGRESS_CHANGE, ProgressChangeEventHandler);
 });
 // MORE INFO BUTTON
 var jssor, temp;
