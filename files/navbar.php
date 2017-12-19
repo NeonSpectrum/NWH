@@ -175,7 +175,7 @@ if (!isset($_SESSION['email'])) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -184,7 +184,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -202,7 +202,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -213,7 +213,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -463,7 +463,7 @@ $email    = $_SESSION['email'];
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults; ?>" onkeypress="disableKey(event,'letter');" min="1" max="10" value="1" required/>
+              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults; ?>" onkeypress="return disableKey(event,'letter');" min="1" max="10" value="1" required/>
             </div>
           </div>
           <div class="form-group">
