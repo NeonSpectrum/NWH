@@ -55,11 +55,11 @@ if ($_SESSION['accountType'] == "Owner") {
             <div class="c-menu-item__title"><span>Check</span></div>
           </a>
         </li>
-        <li class="c-menu__item has-submenu <?php echo $chat; ?>" title="Chat">
-          <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/chat"><i class="fa fa-comment-o"></i>
+        <!-- <li class="c-menu__item has-submenu <?php //echo $chat; ?>" title="Chat">
+          <a class="c-menu__item__inner" href="<?php //echo $root; ?>admin/chat"><i class="fa fa-comment-o"></i>
             <div class="c-menu-item__title"><span>Chat</span></div>
           </a>
-        </li>
+        </li> -->
         <li class="c-menu__item has-submenu <?php echo $reports; ?>" title="Reports">
           <a class="c-menu__item__inner"><i class="fa fa-bar-chart"></i>
             <div class="c-menu-item__title"><span>Reports</span></div>
