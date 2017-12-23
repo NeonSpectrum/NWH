@@ -60,54 +60,91 @@ while ($row = mysqli_fetch_assoc($result)) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Registration</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddAccount" class="form-horizontal">
+      <form id="frmRegister" data-toggle="validator">
+        <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
-              <div class="row">
-                <div class="col-md-6">
-                  <input name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
+          <div class="row">
+            <div class="col-md-12">
+              <b>Note:</b> You must verify the email address to register your account.
+              <br/>
+              <br/>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-feedback">
+                <label>First Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
-                <div class="col-md-6">
-                  <input name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Last Name<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Birth Date<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" required readonly autocomplete="off">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Contact Number<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group has-feedback">
+                <label>Email Address<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Password<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-key"></span></span>
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" required autocomplete="off">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Verify Password<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-key"></span></span>
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
-              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input name="txtPassword" type="password" class="form-control" id="txtPassword" placeholder="Password" minlength="8" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label"></label>
-            <div class="col-sm-10">
-              <input name="txtRetypePassword" type="password" class="form-control" id="txtRetypePassword" placeholder="Retype Password" minlength="8" required/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Contact #</label>
-            <div class="col-sm-10">
-              <input name="txtContactNumber" type="number" class="form-control" id="txtContactNumber" placeholder="Contact Number" minlength="10" required/>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <br/><button id="btnRegister" type="submit" class="btn btn-info">Register</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

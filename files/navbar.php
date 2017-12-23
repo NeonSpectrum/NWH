@@ -246,7 +246,7 @@ if (!isset($_SESSION['email'])) {
         </div>
       </form>
     </div>
-   </div>
+  </div>
 </div>
 <div id="modalForgot" class="modal fade" role="dialog">
   <div class="modal-dialog">

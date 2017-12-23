@@ -19,18 +19,20 @@ if (isset($txtEmail)) {
     echo "<script>alert('Already Registered!');location.href='$host';</script>";
   }
 } else if (isset($_POST)) {
-  $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
-  if (!$captcha) {
-    echo 'Please check the the captcha form.';
-    return;
-  }
-  $secretKey    = "6Ler0DUUAAAAABE_r5gAH7LhkRPAavkyNkUOOQZd";
-  $ip           = $_SERVER['REMOTE_ADDR'];
-  $response     = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
-  $responseKeys = json_decode($response, true);
-  if (intval($responseKeys["success"]) !== 1) {
-    echo 'You are spammer ! Get the @$%K out';
-    return;
+  if (!isset($_POST['type'])) {
+    $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
+    if (!$captcha) {
+      echo 'Please check the the captcha form.';
+      return;
+    }
+    $secretKey    = "6Ler0DUUAAAAABE_r5gAH7LhkRPAavkyNkUOOQZd";
+    $ip           = $_SERVER['REMOTE_ADDR'];
+    $response     = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+    $responseKeys = json_decode($response, true);
+    if (intval($responseKeys["success"]) !== 1) {
+      echo 'You are spammer ! Get the @$%K out';
+      return;
+    }
   }
   $fname         = ucwords(strtolower($db->real_escape_string($_POST['txtFirstName'])));
   $lname         = ucwords(strtolower($db->real_escape_string($_POST['txtLastName'])));
