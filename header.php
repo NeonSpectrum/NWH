@@ -75,7 +75,7 @@ if (strpos($_SERVER['PHP_SELF'], "admin")) {
 <?php
 // IF NOT ADMIN DISPLAY LOADING ANIMATION
 if (!strpos($_SERVER['PHP_SELF'], "admin")) {
-  echo "<div class='loadingIcon'><noscript><span style='position:fixed;z-index:9999'>Please enable Javascript to continue.</span></noscript></div>\n";
+  echo "<div class='loadingIcon'><div id='loadingStatus'><noscript>Please enable Javascript to continue.</noscript></div></div>\n";
 
   // IF HOME DISABLE MARGIN TOP
   if ($currentDirectory != "home") {

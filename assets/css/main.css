@@ -29,6 +29,14 @@ body {
   }
 }
 
+#loadingStatus {
+  position: fixed;
+  width: 100%;
+  bottom: 35%;
+  vertical-align: text-top;
+  text-align: center;
+}
+
 /* CUSTOM BOOTSTRAP */
 
 label>sup {

@@ -81,6 +81,22 @@ $(document).ready(function() {
     updateDate();
   });
 });
+Pace.track(function() {
+  $.ajax({
+    url: root + "ajax/checkDatabase.php",
+    success: function(response) {
+      if (response == false) {
+        $("#loadingStatus").html("Database Missing... Importing Database <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE");
+        $.ajax({
+          url: root + "ajax/executeScriptDB.php",
+          success: function(response) {
+            $("#loadingStatus").html("Database created!");
+          }
+        });
+      }
+    }
+  })
+});
 // PACE DONE
 Pace.on('done', function() {
   scrolling(true);
@@ -249,7 +265,7 @@ $("#cmbBookingID").change(function() {
 // CHANGE PASSWORD
 $("#frmChange").submit(function(e) {
   e.preventDefault();
-  $(this).find("#btnUpdate").html('<img src="' + root + 'images/btn-ajax-loader.gif" height="20px" width="20px" alt=""/> &nbsp; Updating...');
+  $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnUpdate').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({

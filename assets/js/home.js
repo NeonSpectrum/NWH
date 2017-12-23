@@ -1,16 +1,6 @@
 Pace.on('done', function() {
   var home_transitions = [{
     $Duration: 800,
-    x: 0.3,
-    $Cols: 2,
-    $SlideOut: true,
-    $ChessMode: {
-      $Column: 3
-    },
-    $Easing: {
-      $Left: $Jease$.$InCubic,
-      $Opacity: $Jease$.$Linear
-    },
     $Opacity: 2
   }];
   var home_options = {

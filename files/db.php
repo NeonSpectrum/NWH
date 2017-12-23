@@ -2,13 +2,14 @@
 require_once 'strings.php';
 require_once 'functions.php';
 
-$servername = "localhost";
-$username   = "cp018101";
-$password   = PASSWORD;
-$database   = "cp018101_nwh";
-
-$db = mysqli_connect($servername, $username, $password, $database);
-if (!$db) {
-  die("Connection failed: " . $db->connect_error);
+function executeQuery($query) {
+  $db = new mysqli("localhost", "cp018101", PASSWORD);
+  if (!$db->select_db("cp018101_nwh")) {
+    echo "Database Not Found!";
+    return false;
+  }
+  $result = $db->query($query);
+  $db->close();
+  return $result;
 }
 ?>

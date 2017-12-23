@@ -33,9 +33,8 @@ function sendMail($email, $subject, $body) {
 
 function getRoomPrice($room) {
   global $db;
-  $query  = "SELECT * FROM room_type WHERE RoomType='$room'";
-  $result = mysqli_query($db, $query);
-  $row    = mysqli_fetch_assoc($result);
+  $result = executeQuery("SELECT * FROM room_type WHERE RoomType='$room'");
+  $row    = $result->fetch_assoc();
   if (mktime(0, 0, 0, 10, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 5, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
     $price = $row['PeakRate'];
   } else if (mktime(0, 0, 0, 7, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 8, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
@@ -45,13 +44,13 @@ function getRoomPrice($room) {
   }
   return $price;
 }
+
 function generateRoomID($room) {
   global $db;
   $rooms  = array();
-  $query  = "SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE RoomType = '$room'";
-  $result = mysqli_query($db, $query);
+  $result = executeQuery("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE RoomType = '$room'");
 
-  while ($row = mysqli_fetch_assoc($result)) {
+  while ($row = $result->fetch_assoc()) {
     if ($row['Status'] != 'Disabled' && $row['Status'] != 'Occupied') {
       $rooms[] = $row['RoomID'];
     }
@@ -62,6 +61,7 @@ function generateRoomID($room) {
 
   return $rooms[array_rand($rooms, 1)];
 }
+
 function getBetween($var1 = "", $var2 = "", $pool) {
   $temp1  = strpos($pool, $var1) + strlen($var1);
   $result = substr($pool, $temp1, strlen($pool));
@@ -72,6 +72,7 @@ function getBetween($var1 = "", $var2 = "", $pool) {
 
   return substr($result, 0, $dd);
 }
+
 function nwh_encrypt($string) {
   return openssl_encrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
 }

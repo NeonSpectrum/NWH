@@ -80,9 +80,8 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
     <div class="row">
 <?php
 // USE DATABASE TO SUPPLY ROOM INFORMATION
-$query  = "SELECT * FROM room_type";
-$result = mysqli_query($db, $query);
-while ($row = mysqli_fetch_assoc($result)) {
+$result = executeQuery("SELECT * FROM room_type");
+while ($result != false && $row = $result->fetch_assoc()) {
   ?>
   <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
     <figure class='imghvr-hinge-up' style='box-shadow: 1px 1px 1px #888888'>

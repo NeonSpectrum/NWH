@@ -11,25 +11,25 @@ foreach ($json as $string) {
   echo ",{$string['name']}=\"{$string['value']}\"";
 }
 echo ";const root=\"$root\";";
-echo "function alertNotif(type, message, reload, timeout) {
-    $.notify({
-      icon:'glyphicon glyphicon-exclamation-sign',
-      message: '<div style=\'text-align:center;margin-top:-20px\'>' + message + '</div>'
-    }, {
-      type: type == 'error' ? 'danger' : type,
-      placement: {
-        from: 'top',
-        align: 'center'
-      },
-      newest_on_top: true,
-      mouse_over: true,
-      delay: message.length > 100 ? 0 : 3000
-    });
-    setTimeout(function () {
-      if (reload)
-        location.reload();
-      else
-        return
-    }, timeout != null ? timeout : 1300);
-  }\n";
 ?>
+function alertNotif(type, message, reload, timeout) {
+  $.notify({
+    icon:'glyphicon glyphicon-exclamation-sign',
+    message: '<div style=\'text-align:center;margin-top:-20px\'>' + message + '</div>'
+  }, {
+    type: type == 'error' ? 'danger' : type,
+    placement: {
+      from: 'top',
+      align: 'center'
+    },
+    newest_on_top: true,
+    mouse_over: true,
+    delay: message.length > 100 ? 0 : 3000
+  });
+  setTimeout(function () {
+    if (reload)
+      location.reload();
+    else
+      return
+  }, timeout != null ? timeout : 1300);
+}
