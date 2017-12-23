@@ -1,7 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $path = strpos($_SERVER['SERVER_NAME'], "northwoodhotel") ? "export PATH=$PATH:~/git-2.9.5 && " : "";
-  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path . $_POST['command']))));
+  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec("export PATH=$PATH:~/git-2.9.5 && {$_POST['command']}"))));
   return;
 }
 ?>
