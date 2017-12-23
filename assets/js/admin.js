@@ -33,6 +33,11 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
+$('input.datepicker').datepicker({
+  format: "yyyy-mm-dd",
+  autoclose: true,
+  todayHighlight: true
+});
 $(window).on('resize', function() {
   $('.l-sidebar').height($(window).height() + 100);
 });
