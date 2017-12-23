@@ -1,6 +1,6 @@
 [{
   "name": "REGISTER_VERIFY",
-  "value": "Email Sent. Please verify your account to register. The link will expire after 10 minutes."
+  "value": "Email Sent. Kindly verify your account to register.<br/>The link will expire after 10 minutes."
 }, {
   "name": "PRIVILEGE_DELETE_ACCOUNT",
   "value": "You do not have the privilege to delete this account."
