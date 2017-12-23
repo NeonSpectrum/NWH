@@ -62,6 +62,16 @@ function generateRoomID($room) {
 
   return $rooms[array_rand($rooms, 1)];
 }
+function getBetween($var1 = "", $var2 = "", $pool) {
+  $temp1  = strpos($pool, $var1) + strlen($var1);
+  $result = substr($pool, $temp1, strlen($pool));
+  $dd     = strpos($result, $var2);
+  if ($dd == 0) {
+    $dd = strlen($result);
+  }
+
+  return substr($result, 0, $dd);
+}
 function nwh_encrypt($string) {
   return openssl_encrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
 }

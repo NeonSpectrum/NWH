@@ -1,17 +1,22 @@
 <?php
-  $root = substr($_SERVER['PHP_SELF'], 0, 5) == '/nwh/' ? '/nwh/' : '/';
-  $jsonFile = file_get_contents(__DIR__."/../../assets/strings.json");
-  $json = json_decode($jsonFile, true);
-  $first = true;
-  foreach ($json as $string) {
-    if (isset($first)) {
-      echo "var {$string['name']}=\"{$string['value']}\"";
-      unset($first);
-    }
-    echo ",{$string['name']}=\"{$string['value']}\"";
+$root = "/";
+if (strtolower($_SERVER['SERVER_NAME']) == "localhost") {
+  $root = substr($_SERVER['REQUEST_URI'], 1);
+  $root = substr($root, 0, strpos($root, "/") + 1);
+  $root = "/" . $root;
+}
+$jsonFile = file_get_contents(__DIR__ . "/../../assets/strings.json");
+$json     = json_decode($jsonFile, true);
+$first    = true;
+foreach ($json as $string) {
+  if (isset($first)) {
+    echo "var {$string['name']}=\"{$string['value']}\"";
+    unset($first);
   }
-  echo ";const root=\"$root\";";
-  echo "function alertNotif(type, message, reload, timeout) {
+  echo ",{$string['name']}=\"{$string['value']}\"";
+}
+echo ";const root=\"$root\";";
+echo "function alertNotif(type, message, reload, timeout) {
     $.notify({
       icon:'glyphicon glyphicon-exclamation-sign',
       message: '<div style=\'text-align:center;margin-top:-20px\'>' + message + '</div>'

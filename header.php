@@ -1,6 +1,15 @@
 <?php
+// CONNECTING TO DATABASE
+require_once 'files/db.php';
+
 // TEMPORARY FOR DOMAINS WITH /nwh/
-$root = substr($_SERVER['PHP_SELF'], 0, 5) == '/nwh/' ? '/nwh/' : '/';
+$root = "/";
+if (strtolower($_SERVER['SERVER_NAME']) == "localhost") {
+  $root = substr($_SERVER['REQUEST_URI'], 1);
+  $root = substr($root, 0, strpos($root, "/") + 1);
+  $root = "/" . $root;
+}
+
 // IF SESSION NOT EXISTS, START
 if (!isset($_SESSION)) {
   session_start();
@@ -12,8 +21,6 @@ if (strpos($_SERVER['PHP_SELF'], "admin")) {
     exit();
   }
 }
-// CONNECTING TO DATABASE
-require_once 'files/db.php';
 
 // GET CURRENT DIRECTORY EXAMPLE: gallery, roomandrates, contactus
 $currentDirectory = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], "/") + 1);
