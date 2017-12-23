@@ -9,29 +9,22 @@ if ($pass != $rpass) {
   return;
 }
 if (isset($_POST)) {
-  try {
-    $email    = stripslashes($_SESSION['email']); // removes backslashes
-    $email    = mysqli_real_escape_string($db, $email); //escapes special characters in a string
-    $password = stripslashes($_POST['txtOldPass']);
-    $password = mysqli_real_escape_string($db, $password);
-    $newpass  = stripslashes($_POST['txtNewPass']);
-    $newpass  = mysqli_real_escape_string($db, $newpass);
-    $newpass  = password_hash($newpass, PASSWORD_DEFAULT);
-    $query    = "SELECT * FROM `account` WHERE EmailAddress='$email'";
-    $result   = mysqli_query($db, $query) or die(mysql_error());
-    $row      = $result->fetch_assoc();
-    $count    = mysqli_num_rows($result);
-    if ($count == 1 && password_verify($password, $row['Password']) && strpos($email, '@') && strpos($email, '.')) {
-      $query  = "UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'";
-      $result = mysqli_query($db, $query) or die(mysql_error());
-      if (mysqli_affected_rows($db) > 0) {
-        echo true;
-      }
+  $email    = $db->real_escape_string($_SESSION['email']);
+  $password = $db->real_escape_string($_POST['txtOldPass']);
+  $newpass  = $db->real_escape_string($_POST['txtNewPass']);
+  $newpass  = password_hash($newpass, PASSWORD_DEFAULT);
+  $result   = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");
+  $row      = $result->fetch_assoc();
+  if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
+    $result = $db->query("UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'");
+    if ($db->affected_rows > 0) {
+      createLog("update|user.password");
+      echo true;
     } else {
-      echo OLD_PASSWORD_ERROR;
+      echo $db->error;
     }
-  } catch (PDOException $e) {
-    echo $e->getMessage();
+  } else {
+    echo OLD_PASSWORD_ERROR;
   }
 }
 ?>

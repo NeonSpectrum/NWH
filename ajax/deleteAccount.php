@@ -1,18 +1,16 @@
 <?php
-  session_start();
-  require_once '../files/db.php';
+session_start();
+require_once '../files/db.php';
 
-  if (isset($_POST)) {
-    try {
-      $email = $_POST['txtEmail'];
+if (isset($_POST)) {
+  $email = $db->real_escape_string($_POST['txtEmail']);
 
-      $query = "DELETE FROM account WHERE EmailAddress='$email'";
-      $result = mysqli_query($db,$query);
-      if (mysqli_affected_rows($db) > 0) {
-        echo true;
-      }
-    } catch(PDOException $e) {
-      echo $e->getMessage();
-    }
+  $result = $db->query("DELETE FROM account WHERE EmailAddress='$email'");
+  if ($db->affected_rows > 0) {
+    createLog("delete|account|$email");
+    echo true;
+  } else {
+    echo $db->error;
   }
+}
 ?>

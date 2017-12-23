@@ -1,5 +1,5 @@
 <?php
-require_once "../files/db.php";
+require_once "../files/strings.php";
 
 $db = new mysqli("localhost", "cp018101", PASSWORD);
 

@@ -3,29 +3,20 @@ session_start();
 require_once '../files/db.php';
 
 if (isset($_POST)) {
-  try {
-    $email       = $_POST['txtEmail'];
-    $accounttype = $_POST['cmbAccountType'];
-    $firstname   = $_POST['txtFirstName'];
-    $lastname    = $_POST['txtLastName'];
+  $email       = $db->real_escape_string($_POST['txtEmail']);
+  $accounttype = $db->real_escape_string($_POST['cmbAccountType']);
+  $firstname   = $db->real_escape_string($_POST['txtFirstName']);
+  $lastname    = $db->real_escape_string($_POST['txtLastName']);
 
-    $query  = "SELECT * FROM account WHERE EmailAddress='$email'";
-    $result = mysqli_query($db, $query);
-    $row    = $result->fetch_assoc();
-    if ($_SESSION['accountType'] != 'Owner' && $row['AccountType'] == 'Owner') {
-      echo PRIVILEGE_EDIT_ACCOUNT;
-      return;
-    }
+  $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
+  $row    = $result->fetch_assoc();
 
-    $query  = "UPDATE `account` SET AccountType='$accounttype',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'";
-    $result = mysqli_query($db, $query);
-    if (mysqli_affected_rows($db) > 0) {
-      echo true;
-    } else {
-      echo NO_UPDATE;
-    }
-  } catch (PDOException $e) {
-    echo $e->getMessage();
+  $result = $db->query("UPDATE `account` SET AccountType='$accounttype',Firstname='$firstname',Lastname='$lastname' WHERE EmailAddress='$email'");
+  if ($db->affected_rows > 0) {
+    createLog("update|account|$email");
+    echo true;
+  } else {
+    echo $db->error;
   }
 }
 ?>

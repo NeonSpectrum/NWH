@@ -1,12 +1,10 @@
 $(document).ready(function() {
-  new WOW({
-    offset: 40
-  }).init();
-  $("html,body").scrollTop(0);
+  if ($('html, body').scrollTop() != 0) {
+    setTimeout(function() {
+      $('html, body').scrollTop(0);
+    }, 50);
+  }
   scrolling(false);
-  new WOW({
-    offset: 40
-  }).init();
   // HIDE CONTACT BOX IF MOBILE
   if ($(window).width() < 480 || $(window).height() < 480) {
     $('.contactbox').fadeOut();
@@ -86,11 +84,12 @@ Pace.track(function() {
     url: root + "ajax/checkDatabase.php",
     success: function(response) {
       if (response == false) {
-        $("#loadingStatus").html("Database Missing... Importing Database <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE");
+        $("#loadingStatus").html("Database Missing... Importing Database <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE. THE PAGE WILL RELOAD ITSELF.");
         $.ajax({
           url: root + "ajax/executeScriptDB.php",
           success: function(response) {
-            $("#loadingStatus").html("Database created!");
+            $("#loadingStatus").html("Database created!</i>");
+            location.reload();
           }
         });
       }
@@ -100,7 +99,9 @@ Pace.track(function() {
 // PACE DONE
 Pace.on('done', function() {
   scrolling(true);
-  $("html,body").scrollTop(0);
+  new WOW({
+    offset: 40
+  }).init();
   $(".loadingIcon").fadeOut("slow");
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   // BACK TO TOP

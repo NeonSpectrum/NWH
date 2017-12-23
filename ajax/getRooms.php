@@ -2,13 +2,12 @@
 require_once '../files/db.php';
 
 if (isset($_POST)) {
-  $guests = (int) $_POST['txtAdults'];
+  $guests = $db->real_escape_string($_POST['txtAdults']);
 
-  $query  = "SELECT DISTINCT(RoomType), RoomDescription, PeakRate, LeanRate, DiscountedRate, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= 1 GROUP BY room_type.RoomTypeID";
-  $result = mysqli_query($db, $query);
+  $result = $db->query("SELECT DISTINCT(RoomType), RoomDescription, PeakRate, LeanRate, DiscountedRate, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= 1 GROUP BY room_type.RoomTypeID");
 
   echo "\n<div class='table-responsive'>\n<table>";
-  while ($row = mysqli_fetch_assoc($result)) {
+  while ($row = $result->fetch_assoc()) {
     echo "<tr>";
     echo "<td class='img-baguette' style='padding:10px'>";
     $first = true;

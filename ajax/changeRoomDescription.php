@@ -3,14 +3,16 @@ session_start();
 require_once '../files/db.php';
 
 if (isset($_POST)) {
-  $roomType        = $_POST['txtRoomType'];
-  $roomDescription = $_POST['txtDescription'];
+  $roomType        = $db->real_escape_string($_POST['txtRoomType']);
+  $roomDescription = $db->real_escape_string($_POST['txtDescription']);
 
-  $query = "UPDATE room_type SET RoomDescription='$roomDescription' WHERE RoomType='$roomType'";
-  mysqli_query($db, $query);
+  $db->query("UPDATE room_type SET RoomDescription='$roomDescription' WHERE RoomType='$roomType'");
 
-  if (mysqli_affected_rows($db) > 0) {
+  if ($db->affected_rows > 0) {
+    createLog("update|room_type|$roomType");
     echo true;
+  } else {
+    echo $db->error;
   }
 }
 ?>

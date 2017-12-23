@@ -6,7 +6,7 @@
 //   exit();
 // }
 // error_reporting(-1); // reports all errors
-// ini_set("display_errors", "1"); // shows all errors
+// ini_set("display_errors", "0"); // shows all errors
 // ini_set("log_errors", 1);
 require_once 'header.php';
 require_once 'files/navbar.php';
@@ -31,14 +31,14 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
     </div>
     <!-- Arrow Navigator -->
     <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
-        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
-        </svg>
+      <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+        <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+      </svg>
     </div>
     <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
-        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
-        </svg>
+      <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+        <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+      </svg>
     </div>
   </div>
 </div>
@@ -80,9 +80,10 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
     <div class="row">
 <?php
 // USE DATABASE TO SUPPLY ROOM INFORMATION
-$result = executeQuery("SELECT * FROM room_type");
-while ($result != false && $row = $result->fetch_assoc()) {
-  ?>
+if (!$db->connect_error) {
+  $result = $db->query("SELECT * FROM room_type");
+  while ($row = $result->fetch_assoc()) {
+    ?>
   <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
     <figure class='imghvr-hinge-up' style='box-shadow: 1px 1px 1px #888888'>
       <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
@@ -98,6 +99,7 @@ while ($result != false && $row = $result->fetch_assoc()) {
     </figure>
   </div>
 <?php
+}
 }
 ?>
       </div>

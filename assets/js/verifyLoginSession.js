@@ -1,12 +1,13 @@
-setInterval(function () {
-  Pace.ignore(function () {
+setInterval(function() {
+  Pace.ignore(function() {
     $.ajax({
-      url: root + 'files/verifyLoginSession.php',
-      success: function (response) {
+      url: root + 'ajax/verifyLoginSession.php',
+      success: function(response) {
+        console.log(response);
         if (!response) {
           $.ajax({
-            url: '/files/checkLogout.php',
-            success: function () {
+            url: root + 'account/logout.php',
+            success: function() {
               location.reload(true);
             }
           });

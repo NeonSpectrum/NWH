@@ -403,26 +403,27 @@ if (!isset($_SESSION['email'])) {
             <div class="col-sm-2">
               <select class="form-control" id="cmbBookingID" name="cmbBookingID">
 <?php
-$email    = $_SESSION['email'];
-  $query    = "SELECT * FROM booking WHERE EmailAddress = '$email'";
-  $result   = mysqli_query($db, $query) or die(mysql_error());
-  $roomID   = $checkInDate   = $checkOutDate   = '';
-  $adults   = 1;
-  $children = 0;
-  $first    = true;
-  while ($row = mysqli_fetch_assoc($result)) {
-    $tomorrow = time() + 86400; // +1 day
-    if ($tomorrow < strtotime($row['CheckInDate'])) {
-      if ($first) {
-        $roomID       = $row['RoomID'];
-        $checkInDate  = $row['CheckInDate'];
-        $checkOutDate = $row['CheckOutDate'];
-        $adults       = $row['Adults'];
-        $children     = $row['Children'];
-        $first        = false;
+if (!$db) {
+    $email  = $db->real_escape_string($_SESSION['email']);
+    $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
+    // $roomID   = $checkInDate   = $checkOutDate   = '';
+    $adults   = 1;
+    $children = 0;
+    $first    = true;
+    while ($row = $result->fetch_assoc()) {
+      $tomorrow = time() + 86400; // +1 day
+      if ($tomorrow < strtotime($row['CheckInDate'])) {
+        // if ($first) {
+        //   $roomID       = $row['RoomID'];
+        //   $checkInDate  = $row['CheckInDate'];
+        //   $checkOutDate = $row['CheckOutDate'];
+        //   $adults       = $row['Adults'];
+        //   $children     = $row['Children'];
+        //   $first        = false;
+        // }
+        echo "                ";
+        echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
       }
-      echo "                ";
-      echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
     }
   }
   ?>

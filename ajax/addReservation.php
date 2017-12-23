@@ -4,17 +4,17 @@ require_once '../files/db.php';
 
 if (isset($_POST)) {
   try {
-    $roomType     = str_replace(" ", "_", $_POST['cmbRoomType']);
-    $email        = $_POST['txtEmail'];
-    $checkInDate  = $_POST['txtCheckInDate'];
-    $checkOutDate = $_POST['txtCheckOutDate'];
-    $adults       = $_POST['txtAdults'];
-    $children     = $_POST['txtChildren'];
+    $roomType     = $db->real_escape_string(str_replace(" ", "_", $_POST['cmbRoomType']));
+    $email        = $db->real_escape_string($_POST['txtEmail']);
+    $checkInDate  = $db->real_escape_string($_POST['txtCheckInDate']);
+    $checkOutDate = $db->real_escape_string($_POST['txtCheckOutDate']);
+    $adults       = $db->real_escape_string($_POST['txtAdults']);
+    $children     = $db->real_escape_string($_POST['txtChildren']);
     $roomID       = generateRoomID($roomType);
     $price        = getRoomPrice($roomType);
-    $query        = "INSERT INTO walk_in VALUES(NULL, '$email', $roomID, '$checkInDate', '$checkOutDate', $adults, $children, 0, $price)";
-    mysqli_query($db, $query);
-    if (mysqli_affected_rows($db) > 0) {
+    $db->query("INSERT INTO walk_in VALUES(NULL, '$email', $roomID, '$checkInDate', '$checkOutDate', $adults, $children, 0, $price)");
+    if ($db->affected_rows > 0) {
+      createLog("insert|walk_in|" . $db->insert_id);
       echo true;
     }
   } catch (PDOException $e) {
