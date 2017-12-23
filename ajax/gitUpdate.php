@@ -1,4 +1,5 @@
 <?php
+require_once "../files/db.php";
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;
   return;

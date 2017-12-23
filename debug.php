@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 <body>
   <form id="frmCommand">
-    <input type="text" name="command" autofocus>
+    <input type="text" name="command" autofocus autocomplete="off">
   </form>
   <br/>
   <div id="message"></div>
