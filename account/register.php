@@ -1,6 +1,7 @@
 <?php
 $domain = strpos($_SERVER['REQUEST_URI'], "nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
 $host   = strpos($_SERVER['REQUEST_URI'], "nwh") ? "/nwh" : "/";
+session_start();
 require_once '../files/db.php';
 
 parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
@@ -45,7 +46,7 @@ if (isset($txtEmail)) {
   if ($result->num_rows == 0) {
     if (isset($_POST['type']) && $_POST['type'] == "noverify") {
       $db->query("INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,ContactNumber,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$contactNumber','$date')");
-      createLog("insert|account.register|$email");
+      createLog("insert|account.register|$email", $_SESSION['email']);
       if ($db->affected_rows > 0) {
         echo true;
       } else {
