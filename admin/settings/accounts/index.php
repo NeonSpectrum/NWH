@@ -66,11 +66,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             <!-- errors will be shown here ! -->
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <b>Note:</b> You must verify the email address to register your account.
-              <br/>
-              <br/>
-            </div>
             <div class="col-md-6">
               <div class="form-group has-feedback">
                 <label>First Name<sup>*</sup></label>
@@ -141,7 +136,7 @@ while ($row = mysqli_fetch_assoc($result)) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-info">Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
