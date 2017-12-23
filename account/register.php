@@ -53,8 +53,10 @@ if (isset($txtEmail)) {
       $data    = nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
       $subject = "Northwood Hotel Account Creation";
       $body    = "Please proceed to this link to register your account:<br/>http://$domain/account/register.php?$data";
-      createLog("sent|registration|$email");
-      echo sendMail("$email", "$subject", "$body");
+      if (sendMail("$email", "$subject", "$body") == true) {
+        createLog("sent|registration|$email");
+        echo true;
+      }
     }
   } else {
     echo ALREADY_REGISTERED;
