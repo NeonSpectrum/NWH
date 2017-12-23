@@ -39,7 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
     echo "&nbsp;&nbsp;";
   }
-  if ($_SESSION['accountType'] == "Owner") {
+  if ($_SESSION['accountType'] == "Owner" && $_SESSION['email'] != $row['EmailAddress']) {
     echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
   }
 
