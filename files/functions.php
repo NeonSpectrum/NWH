@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/../assets/PHPMailer/src/Exception.php';
 require_once __DIR__ . '/../assets/PHPMailer/src/PHPMailer.php';
 require_once __DIR__ . '/../assets/PHPMailer/src/SMTP.php';
