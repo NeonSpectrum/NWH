@@ -3,12 +3,7 @@
 require_once 'files/db.php';
 
 // TEMPORARY FOR DOMAINS WITH /nwh/
-$root = "/";
-if (strtolower($_SERVER['SERVER_NAME']) == "localhost") {
-  $root = substr($_SERVER['REQUEST_URI'], 1);
-  $root = substr($root, 0, strpos($root, "/") + 1);
-  $root = "/" . $root;
-}
+$root = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 
 // IF SESSION NOT EXISTS, START
 if (!isset($_SESSION)) {

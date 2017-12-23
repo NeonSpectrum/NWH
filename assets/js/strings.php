@@ -1,10 +1,5 @@
 <?php
-$root = "/";
-if (strtolower($_SERVER['SERVER_NAME']) == "localhost") {
-  $root = substr($_SERVER['REQUEST_URI'], 1);
-  $root = substr($root, 0, strpos($root, "/") + 1);
-  $root = "/" . $root;
-}
+$root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $jsonFile = file_get_contents(__DIR__ . "/../../assets/strings.json");
 $json     = json_decode($jsonFile, true);
 $first    = true;
