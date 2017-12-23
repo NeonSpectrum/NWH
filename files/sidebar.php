@@ -23,8 +23,8 @@ if (strpos($_SERVER['PHP_SELF'], 'booking')) {
       Admin Page
     </div>
     Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['picture']}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['picture']}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['fname']} {$_SESSION['lname']}"; ?></span>
-    <?php
-if ($_SESSION['email'] == "youngskymann@gmail.com") {
+<?php
+if ($_SESSION['accountType'] == "Owner") {
   ?>
     <a id="btnGitUpdate" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
     <?php
