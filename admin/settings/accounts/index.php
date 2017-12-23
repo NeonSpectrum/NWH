@@ -60,7 +60,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Registration</h4>
       </div>
-      <form id="frmRegister" data-toggle="validator">
+      <form id="frmAddAccount" data-toggle="validator">
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
