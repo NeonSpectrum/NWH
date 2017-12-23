@@ -89,11 +89,17 @@ if ($_SESSION['email'] == "youngskymann@gmail.com") {
                 <div class="c-menu-item__title"><span>Room Management</span></div>
               </a>
             </li>
+<?php
+if ($_SESSION['accountType'] == "Owner") {
+  ?>
             <li title="Event Logs">
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/eventlogs"><i class="fa fa-database"></i>
                 <div class="c-menu-item__title"><span>Event Logs</span></div>
               </a>
             </li>
+<?php
+}
+?>
           </ul>
         </li>
       </ul>

@@ -1,6 +1,6 @@
 <?php
 require_once '../../../header.php';
-if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
+if ($_SESSION['accountType'] == 'User' || $_SESSION['accountType'] == 'Admin' || !isset($_SESSION['accountType'])) {
   header('location: ../../');
   exit();
 }
