@@ -1,7 +1,7 @@
 <?php
 require_once '../files/db.php';
 
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $guests = $db->real_escape_string($_POST['txtAdults']);
 
   $result = $db->query("SELECT DISTINCT(RoomType), RoomDescription, PeakRate, LeanRate, DiscountedRate, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= 1 GROUP BY room_type.RoomTypeID");

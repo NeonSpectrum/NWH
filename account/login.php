@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../files/db.php';
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $email    = $db->real_escape_string($_POST['txtEmail']);
   $password = $db->real_escape_string($_POST['txtPassword']);
   $result   = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");

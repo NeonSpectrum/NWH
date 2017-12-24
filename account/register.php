@@ -19,7 +19,7 @@ if (isset($txtEmail)) {
   } else {
     echo "<script>alert('Already Registered!');location.href='$host';</script>";
   }
-} else if (isset($_POST)) {
+} else if ($_SERVER['REQUEST_METHOD'] == "POST") {
   if (!isset($_POST['type'])) {
     $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
     if (!$captcha) {

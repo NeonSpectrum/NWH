@@ -6,7 +6,7 @@ require_once 'files/db.php';
 $root = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 
 // IF SESSION NOT EXISTS, START
-if (!isset($_SESSION)) {
+if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 

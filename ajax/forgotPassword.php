@@ -1,5 +1,4 @@
 <?php
-// Pear Mail Library
 $domain = strpos($_SERVER['REQUEST_URI'], "nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
 
 require_once '../files/db.php';
@@ -8,7 +7,9 @@ parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 
 if (isset($newPass)) {
   $newPass = password_hash($newPass, PASSWORD_DEFAULT);
-  $result  = $db->query("UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'");
+
+  $result = $db->query("UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'");
+
   if ($db->affected_rows > 0) {
     createLog("update|account.password|$email");
     echo '<script>alert("Reset Successfully!");location.href="../";</script>';
@@ -16,10 +17,12 @@ if (isset($newPass)) {
   } else {
     echo $db->error;
   }
-} else if (isset($_POST)) {
-  $email  = $db->real_escape_string($_POST['txtEmail']);
+} else if ($_SERVER['REQUEST_METHOD'] == "POST") {
+  $email = $db->real_escape_string($_POST['txtEmail']);
+
   $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");
   $row    = $result->fetch_assoc();
+
   if ($result->num_rows == 1) {
     createLog("sent|forgot.password|$email");
     $data    = nwh_encrypt("email=$email&newPass=" . getRandomString(8));

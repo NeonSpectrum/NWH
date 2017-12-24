@@ -2,7 +2,7 @@
 session_start();
 require_once '../files/db.php';
 
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $room = $db->real_escape_string($_POST['rdbRoom']);
 
   $roomID   = generateRoomID($room);

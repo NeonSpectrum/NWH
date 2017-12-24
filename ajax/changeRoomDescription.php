@@ -2,7 +2,7 @@
 session_start();
 require_once '../files/db.php';
 
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $roomType        = $db->real_escape_string($_POST['txtRoomType']);
   $roomDescription = $db->real_escape_string($_POST['txtDescription']);
 

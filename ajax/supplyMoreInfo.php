@@ -3,8 +3,9 @@ require_once "../files/db.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $roomType = $db->real_escape_string($_POST['roomType']);
-  $result   = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
-  $row      = $result->fetch_assoc();
+
+  $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
+  $row    = $result->fetch_assoc();
 
   $arr[0] = "";
   foreach (glob("../gallery/images/rooms/{$roomType}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
