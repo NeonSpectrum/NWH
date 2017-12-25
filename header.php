@@ -1,9 +1,6 @@
 <?php
 // CONNECTING TO DATABASE
-require_once 'files/db.php';
-
-// TEMPORARY FOR DOMAINS WITH /nwh/
-$root = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+require_once 'files/autoload.php';
 
 // IF SESSION NOT EXISTS, START
 if (session_status() == PHP_SESSION_NONE) {

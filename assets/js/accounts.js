@@ -1,22 +1,7 @@
-var oTable = $('#tblAccount').DataTable({
-  initComplete: function() {
-    this.api().columns().every(function() {
-      var column = this;
-      var select = $('<select><option value=""></option></select>').appendTo($(column.footer()).empty()).on('change', function() {
-        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        column.search(val ? '^' + val + '$' : '', true, false).draw();
-      });
-      column.data().unique().sort().each(function(d, j) {
-        select.append('<option value="' + d + '">' + d + '</option>')
-      });
-    });
-  }
-});
-// $('input[type="search"]').attr("placeholder", "Email Address");
-// $('input[type="search"]').on('keyup change', function(e) {
-//   e.preventDefault();
-//   oTable.column(0).search($(this).val()).draw();
-// });
+var oTable = $('#tblAccount').DataTable();
+$('#tblAccount_length').find("select").addClass("form-control");
+$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();
 $('.btnEditAccount').click(function() {
   var email = $(this).attr("id");
   var firstName = $(this).closest("tr").find("#txtFirstName").html();
@@ -42,8 +27,8 @@ $('.btnDeleteAccount').click(function() {
     if (result.value) {
       $.ajax({
         type: 'POST',
-        url: root + 'ajax/deleteAccount.php',
-        data: "txtEmail=" + email,
+        url: root + 'account/',
+        data: "txtEmail=" + email + "&mode=deleteAccount",
         success: function(response) {
           if (response == true) {
             swal({
@@ -55,13 +40,22 @@ $('.btnDeleteAccount').click(function() {
                 location.reload();
               }
             });
+          } else {
+            swal({
+              title: 'Error',
+              text: 'There was an error deleting the account!',
+              type: 'error'
+            });
           }
         }
       });
     }
   })
 });
-$("#frmAddAccount").submit(function(e) {
+$("#frmAddAccount").validator().submit(function(e) {
+  if (e.isDefaultPrevented()) {
+    return;
+  }
   e.preventDefault();
   var pass = $(this).find('#txtPassword').val();
   var rpass = $(this).find('#txtRetypePassword').val();
@@ -75,15 +69,14 @@ $("#frmAddAccount").submit(function(e) {
   $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
   $(this).find('#btnRegister').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
-  console.log("hello");
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'account/register.php',
-    data: $(this).serialize() + "&type=noverify",
+    url: root + 'account/',
+    data: $(this).serialize() + "&verify=false&mode=register",
     success: function(response) {
       if (response == true) {
-        alertNotif('success', 'Registered Successfully', true);
+        alertNotif('success', REGISTER_SUCCESS, true);
         $(this).find('#btnRegister').attr('disabled', false);
         $(this).find('#frmRegister').trigger('reset');
         $('#modalAddAccount').modal('hide');

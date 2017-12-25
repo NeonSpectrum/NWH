@@ -1,9 +1,4 @@
 $(document).ready(function() {
-  if ($('html, body').scrollTop() != 0) {
-    setTimeout(function() {
-      $('html, body').scrollTop(0);
-    }, 50);
-  }
   scrolling(false);
   // HIDE CONTACT BOX IF MOBILE
   if ($(window).width() < 480 || $(window).height() < 480) {
@@ -86,7 +81,7 @@ Pace.track(function() {
       if (response == false) {
         $("#loadingStatus").html("Database Missing... Importing Database <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE. THE PAGE WILL RELOAD ITSELF.");
         $.ajax({
-          url: root + "ajax/executeScriptDB.php",
+          url: root + "ajax/executeScriptautoload.php",
           success: function(response) {
             $("#loadingStatus").html("Database created!</i>");
             location.reload();
@@ -98,6 +93,9 @@ Pace.track(function() {
 });
 // PACE DONE
 Pace.on('done', function() {
+  if ($('html, body').scrollTop() != 0) {
+    $('html, body').scrollTop(0);
+  }
   scrolling(true);
   new WOW({
     offset: 40
@@ -112,6 +110,9 @@ Pace.on('done', function() {
     autoclose: true,
     todayHighlight: true
   });
+  $('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
+    return false;
+  })
   $('input.checkInDate, input.checkOutDate').datepicker({
     format: "yyyy-mm-dd",
     startDate: '+1d',
@@ -174,6 +175,279 @@ baguetteBox.run('.img-baguette', {
   animation: 'fadeIn',
   fullscreen: true
 });
+// DISPLAY BOOKING ID
+$("#cmbBookingID").change(function() {
+  $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
+  $(this).closest("form").find("#btnPrint").prop("disabled", false);
+  $.ajax({
+    context: this,
+    url: root + 'ajax/cmbBookingIdDisplay.php',
+    type: "POST",
+    dataType: "json",
+    data: $(this).serialize(),
+    success: function(response) {
+      $(this).closest("form").find("#cmbRoomType").val(response[0]);
+      $(this).closest("form").find("#txtCheckInDate").val(response[1]);
+      $(this).closest("form").find("#txtCheckOutDate").val(response[2]);
+      $(this).closest("form").find("#txtAdults").val(response[3]);
+      $(this).closest("form").find("#txtChildren").val(response[4]);
+    }
+  });
+});
+// LOGIN
+$("#frmLogin").submit(function(e) {
+  e.preventDefault();
+  $(this).find(".lblDisplayError").html('');
+  $(this).find("#btnLogin").html('<i class="fa fa-spinner fa-pulse"></i> Signing In ...');
+  $(this).find("#btnLogin").attr('disabled', true);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/',
+    data: $(this).serialize() + "&mode=login",
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        alertNotif("success", "Login Successfully", true);
+      } else {
+        $(this).find("#btnLogin").html('Sign In');
+        $(this).find("#btnLogin").attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+//REGISTER
+$("#frmRegister").validator().submit(function(e) {
+  if (e.isDefaultPrevented()) {
+    return;
+  }
+  e.preventDefault();
+  if (!(grecaptcha && grecaptcha.getResponse().length !== 0)) {
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + CAPTCHA_ERROR + '</div>');
+    });
+    return;
+  }
+  var pass = $(this).find('#txtPassword').val();
+  var rpass = $(this).find('#txtRetypePassword').val();
+  if (pass != rpass) {
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + VERIFY_PASSWORD_ERROR + '</div>');
+    });
+    $(this).find("#txtPassword").focus();
+    return;
+  }
+  $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
+  $(this).find('#btnRegister').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/',
+    data: $(this).serialize() + "&verify=true&mode=register",
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        alertNotif('success', REGISTER_VERIFY, false);
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find('#frmRegister').trigger('reset');
+        $(this).find('#btnRegister').html('Register');
+      } else {
+        $(this).find("#btnRegister").html('Register');
+        $(this).find('#btnRegister').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+// FORGOT PASSWORD
+$("#frmForgot").submit(function(e) {
+  e.preventDefault();
+  $(this).find("#btnReset").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
+  $(this).find("#btnReset").prop('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/',
+    data: $(this).serialize() + "&mode=forgotPassword",
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        $('#frmForgot').trigger('reset');
+        $(this).find("#btnReset").html('Submit');
+        $(this).find("#btnReset").prop('disabled', false);
+        alertNotif('success', "Email sent!", false);
+      } else {
+        $(this).find("#btnReset").html('Submit');
+        $(this).find("#btnReset").prop('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+// CHANGE PASSWORD
+$("#frmChange").submit(function(e) {
+  e.preventDefault();
+  var pass = $(this).find('#txtNewPass').val();
+  var rpass = $(this).find('#txtRetypeNewPass').val();
+  $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
+  $(this).find('#btnUpdate').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  if (pass != rpass) {
+    $(this).find("#btnUpdate").html('Update');
+    $(this).find('#btnUpdate').attr('disabled', false);
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + VERIFY_PASSWORD_ERROR + '</div>');
+    });
+    $(this).find("#txtNewPass").focus();
+    return;
+  }
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/',
+    data: $(this).serialize() + "&mode=changePassword",
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        $(this).find('#frmChange').trigger('reset');
+        $(this).find('#btnUpdate').attr('disabled', false);
+        alertNotif("success", "Updated Successfully!");
+      } else {
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find('#btnUpdate').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+// EDIT PROFILE
+$("#frmEditProfile").submit(function(e) {
+  e.preventDefault();
+  $(this).find("#btnEditProfile").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
+  $(this).find('#btnEditProfile').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  if ($("#imgProfilePic")[0].files[0]) {
+    if ($('#imgProfilePic').prop('files')[0].size > 2097152) {
+      $(this).find("#btnEditProfile").html('Update');
+      $(this).find('#btnEditProfile').attr('disabled', false);
+      $(this).find(".lblDisplayError").show(function() {
+        $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
+      });
+      return;
+    }
+  }
+  var form_data = new FormData();
+  form_data.append("file", $('#imgProfilePic').prop('files')[0]);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'account/?' + $(this).serialize() + "&mode=editAccount",
+    data: form_data,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        alertNotif("success", "Updated Successfully!", true);
+      } else {
+        $(this).find("#btnEditProfile").html('Update');
+        $(this).find('#btnEditProfile').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        });
+      }
+    }
+  });
+});
+// EDIT RESERVATION
+$("#frmEditReservation").submit(function(e) {
+  e.preventDefault();
+  $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
+  $(this).find('#btnReservation').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/editReservation.php',
+    data: $(this).serialize(),
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal("hide");
+        alertNotif('success', 'Updated Successfully!', true);
+      } else {
+        $(this).find("#btnReservation").html('Update');
+        $(this).find('#btnReservation').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        })
+      }
+    }
+  });
+});
+// BOOK NOW BUTTON
+$('.frmBookCheck').submit(function(e) {
+  e.preventDefault();
+  var checkIn = new Date($(this).find("#txtCheckInDate").val());
+  var checkOut = new Date($(this).find("#txtCheckOutDate").val());
+  if (checkIn > checkOut) {
+    alertNotif("error", "Check Out date must be greater than Check In date.");
+    return;
+  }
+  if (parseInt($(this).find('#txtAdults').val()) + parseInt($(this).find('#txtAdults').val()) == 0) {
+    alertNotif("error", "Please enter a valid number of guests!");
+    return;
+  }
+  $(this).find("#btnBookNow").html('<i class="fa fa-spinner fa-pulse"></i> Booking...');
+  $(this).find("#btnBookNow").prop('disabled', true);
+  location.href = root + "reservation/?" + $(this).serialize();
+});
+// CONTACT US FORM
+$('#frmContact').submit(function(e) {
+  e.preventDefault();
+  if (!$(this).find('#txtEmail').val().includes('@') || !$(this).find('#txtEmail').val().includes('.')) {
+    alertNotif("error", "Invalid Format of Email Address", false);
+    $('#txtEmail').focus();
+    return;
+  }
+  $(this).find("#btnSubmit").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
+  $(this).find("#btnSubmit").prop('disabled', true);
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/contactForm.php',
+    data: $(this).serialize(),
+    success: function(response) {
+      if (response == true) {
+        alertNotif("success", "Sent Successfully", false);
+        $(this).trigger("reset");
+        $(this).parent().toggleClass('contactbox--tray');
+      } else {
+        alertNotif("error", response, false);
+      }
+      $(this).find("#btnSubmit").html('Send');
+      $(this).find("#btnSubmit").prop('disabled', false);
+    }
+  });
+})
+
+function recaptchaCallback() {
+  $('#frmRegister').find("button[type=submit]").removeAttr('disabled');
+}
+
+function expiredCallback() {
+  $('#frmRegister').find("button[type=submit]").attr("disabled", true);
+}
 // READ PICTURE THEN DISPLAY
 function readPicture(input) {
   if (input.files && input.files[0]) {
@@ -226,117 +500,9 @@ function scrolling(enable) {
     $('body').unbind('DOMMouseScroll.prev mousewheel.prev');
   }
 }
-// DISPLAY BOOKING ID
-$("#cmbBookingID").change(function() {
-  $(this).closest("form").find("#btnEditReservation").prop("disabled", false);
-  $(this).closest("form").find("#btnPrint").prop("disabled", false);
-  $.ajax({
-    context: this,
-    url: root + 'ajax/cmbBookingIdDisplay.php',
-    type: "POST",
-    dataType: "json",
-    data: $(this).serialize(),
-    success: function(response) {
-      $(this).closest("form").find("#cmbRoomType").val(response[0]);
-      $(this).closest("form").find("#txtCheckInDate").val(response[1]);
-      $(this).closest("form").find("#txtCheckOutDate").val(response[2]);
-      $(this).closest("form").find("#txtAdults").val(response[3]);
-      $(this).closest("form").find("#txtChildren").val(response[4]);
-    }
-  });
-});
-// CHANGE PASSWORD
-$("#frmChange").submit(function(e) {
-  e.preventDefault();
-  $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnUpdate').attr('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/changePassword.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        $('#modalChange').modal('hide');
-        $(this).find('#frmChange').trigger('reset');
-        $(this).find('#btnUpdate').attr('disabled', false);
-        alertNotif("success", "Updated Successfully!");
-      } else {
-        $(this).find("#btnUpdate").html('Update');
-        $(this).find('#btnUpdate').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
-        });
-      }
-    }
-  });
-});
-// EDIT PROFILE
-$("#frmEditProfile").submit(function(e) {
-  e.preventDefault();
-  $(this).find("#btnEditProfile").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnEditProfile').attr('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/editProfile.php',
-    data: $(this).serialize() + "&profilePic=" + document.getElementById("imgProfilePic").files.length,
-    success: function(response) {
-      if (response == true) {
-        if (document.getElementById("imgProfilePic").files.length != 0) {
-          var file_data = $('#imgProfilePic').prop('files')[0];
-          var form_data = new FormData();
-          form_data.append('file', file_data);
-          if (file_data.size > 2097152) {
-            $(this).find("#btnEditProfile").html('Update');
-            $(this).find('#btnEditProfile').attr('disabled', false);
-            $(this).find(".lblDisplayError").show(function() {
-              $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
-            });
-          } else {
-            $.ajax({
-              url: root + 'ajax/uploadPicture.php',
-              dataType: 'text',
-              cache: false,
-              contentType: false,
-              processData: false,
-              data: form_data,
-              context: this,
-              type: 'POST',
-              success: function(responseUpload) {
-                if (responseUpload == true) {
-                  $('#modalEditProfile').modal('hide');
-                  alertNotif("success", "Updated Successfully!", true);
-                } else {
-                  $(this).find("#btnEditProfile").html('Update');
-                  $(this).find('#btnEditProfile').attr('disabled', false);
-                  $(this).find(".lblDisplayError").show(function() {
-                    $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + responseUpload + '</div>');
-                  });
-                }
-              }
-            });
-          }
-        } else {
-          $('#modalEditProfile').modal('hide');
-          $(this).find('#frmEditProfile').trigger('reset');
-          alertNotif("success", "Updated Successfully!", true);
-        }
-      } else {
-        $(this).find("#btnEditProfile").html('Update');
-        $(this).find('#btnEditProfile').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
-        });
-      }
-    }
-  });
-});
-var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 
 function ValidateSingleInput(oInput) {
+  var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
   var file_data = $('#imgProfilePic').prop('files')[0];
   if (file_data.size > 2097152) {
     $(this).find('#btnEditProfile').attr('disabled', true);
@@ -370,169 +536,3 @@ function ValidateSingleInput(oInput) {
   }
   return true;
 }
-// EDIT RESERVATION
-$("#frmEditReservation").submit(function(e) {
-  e.preventDefault();
-  $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnReservation').attr('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/editReservation.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        $('#modalEditReservation').modal('hide');
-        alertNotif('success', 'Updated Successfully!', true);
-      } else {
-        $(this).find("#btnReservation").html('Update');
-        $(this).find('#btnReservation').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
-        })
-      }
-    }
-  });
-});
-// FORGOT PASSWORD
-$("#frmForgot").submit(function(e) {
-  e.preventDefault();
-  $(this).find("#btnReset").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
-  $(this).find("#btnReset").prop('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/forgotPassword.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        $('#modalForgot').modal('hide');
-        $('#frmForgot').trigger('reset');
-        alertNotif('success', "Email sent!", true);
-      } else {
-        $(this).find("#btnReset").html('Submit');
-        $(this).find("#btnReset").prop('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
-        });
-      }
-    }
-  });
-});
-//REGISTER
-$("#frmRegister").submit(function(e) {
-  e.preventDefault();
-  var pass = $(this).find('#txtPassword').val();
-  var rpass = $(this).find('#txtRetypePassword').val();
-  if (pass != rpass) {
-    $(this).find(".lblDisplayError").show(function() {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + VERIFY_PASSWORD_ERROR + '</div>');
-    });
-    $(this).find("#txtPassword").focus();
-    return;
-  }
-  $(this).find("#btnRegister").html('<i class="fa fa-spinner fa-pulse"></i> Submitting...');
-  $(this).find('#btnRegister').attr('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'account/register.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        alertNotif('success', REGISTER_VERIFY, false);
-        $(this).find('#btnRegister').attr('disabled', false);
-        $(this).find('#frmRegister').trigger('reset');
-        $('#modalRegistration').modal('hide');
-        $(this).find('#btnRegister').html('Register');
-      } else {
-        $(this).find("#btnRegister").html('Register');
-        $(this).find('#btnRegister').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
-        });
-      }
-    }
-  });
-});
-
-function recaptchaCallback() {
-  $('#frmRegister').find("button[type=submit]").removeAttr('disabled');
-}
-
-function expiredCallback() {
-  $('#frmRegister').find("button[type=submit]").attr("disabled", true);
-}
-// LOGIN
-$("#frmLogin").submit(function(e) {
-  e.preventDefault();
-  $(this).find(".lblDisplayError").html('');
-  $(this).find("#btnLogin").html('<i class="fa fa-spinner fa-pulse"></i> Signing In ...');
-  $(this).find("#btnLogin").attr('disabled', true);
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'account/login.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        $('#modalLogin').modal('hide');
-        alertNotif("success", "Login Successfully", true);
-      } else {
-        $(this).find("#btnLogin").html('Sign In');
-        $(this).find("#btnLogin").attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
-        });
-      }
-    }
-  });
-});
-// BOOK NOW BUTTON
-$('.frmBookCheck').submit(function(e) {
-  e.preventDefault();
-  var checkIn = new Date($(this).find("#txtCheckInDate").val());
-  var checkOut = new Date($(this).find("#txtCheckOutDate").val());
-  if (checkIn > checkOut) {
-    alertNotif("error", "Check Out date must be greater than Check In date.");
-    return;
-  }
-  if (parseInt($(this).find('#txtAdults').val()) + parseInt($(this).find('#txtAdults').val()) == 0) {
-    alertNotif("error", "Please enter a valid number of guests!");
-    return;
-  }
-  $(this).find("#btnBookNow").html('<i class="fa fa-spinner fa-pulse"></i> Booking...');
-  $(this).find("#btnBookNow").prop('disabled', true);
-  location.href = root + "reservation/?" + $(this).serialize();
-});
-// CONTACT US FORM
-$('#frmContact').submit(function(e) {
-  e.preventDefault();
-  if (!$(this).find('#txtEmail').val().includes('@') || !$(this).find('#txtEmail').val().includes('.')) {
-    alertNotif("error", "Invalid Format of Email Address", false);
-    $('#txtEmail').focus();
-    return;
-  }
-  $(this).find("#btnSubmit").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
-  $(this).find("#btnSubmit").prop('disabled', true);
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/contactForm.php',
-    data: $(this).serialize(),
-    success: function(response) {
-      if (response == true) {
-        alertNotif("success", "Sent Successfully", false);
-        $(this).trigger("reset");
-        $(this).parent().toggleClass('contactbox--tray');
-      } else {
-        alertNotif("error", response, false);
-      }
-      $(this).find("#btnSubmit").html('Send');
-      $(this).find("#btnSubmit").prop('disabled', false);
-    }
-  });
-})

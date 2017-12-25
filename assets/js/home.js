@@ -1,4 +1,15 @@
+var home_slider = null;
 Pace.on('done', function() {
+  if ($("#modalForgotToChangePassword").length) {
+    $("#modalForgotToChangePassword").modal({
+      backdrop: "static",
+      keyboard: false
+    });
+    $("#modalForgotToChangePassword").modal('show');
+  } else if ($("#tokenError").length) {
+    alertNotif("error", $("#tokenError").html(), false);
+  }
+  if (home_slider != null) return;
   var home_transitions = [{
     $Duration: 800,
     $Opacity: 2
@@ -17,23 +28,8 @@ Pace.on('done', function() {
       $TransitionsOrder: 1
     },
   };
-  var home_slider = new $JssorSlider$("home_slider", home_options);
-  //make sure to clear margin of the slider container element
+  home_slider = new $JssorSlider$("home_slider", home_options);
   home_slider.$Elmt.style.margin = "";
-  /*#region responsive code begin*/
-  /*
-      parameters to scale jssor slider to fill a container
-
-      MAX_WIDTH
-          prevent slider from scaling too wide
-      MAX_HEIGHT
-          prevent slider from scaling too high, default value is original height
-      MAX_BLEEDING
-          prevent slider from bleeding outside too much, default value is 1
-          0: contain mode, allow up to 0% to bleed outside, the slider will be all inside container
-          1: cover mode, allow up to 100% to bleed outside, the slider will cover full area of container
-          0.1: flex mode, allow up to 10% to bleed outside, this is better way to make full window slider, especially for mobile devices
-  */
   var MAX_WIDTH = 3000;
   var MAX_HEIGHT = 3000;
   var MAX_BLEEDING = 1;
@@ -52,9 +48,7 @@ Pace.on('done', function() {
       } else {
         home_slider.$ScaleSize(expectedWidth, expectedHeight, MAX_BLEEDING);
       }
-      //position slider at center in vertical orientation
       home_slider.$Elmt.style.top = ((originalHeight - expectedHeight) / 2) + "px";
-      //position slider at center in horizontal orientation
       home_slider.$Elmt.style.left = ((containerWidth - expectedWidth) / 2) + "px";
     } else {
       window.setTimeout(ScaleSlider, 30);
@@ -66,23 +60,6 @@ Pace.on('done', function() {
   $(window).bind("load", ScaleSlider);
   $(window).bind("resize", ScaleSlider);
   $(window).bind("orientationchange", ScaleSlider);
-  /*#endregion responsive code end*/
-  // loading
-  // var progressElement = document.getElementById("progress-element");
-  // function ProgressChangeEventHandler(slideIndex, progress, progressBegin, idleBegin, idleEnd, progressEnd) {
-  //   //this event continuously fires within the process of current slide
-  //   //slideIndex: the index of slide
-  //   //progress: current time in the whole process
-  //   //progressBegin: the begining of the whole process (generally, layer animation starts to play in)
-  //   //idleBegin: captions played in and become idle, will wait for a period which is specified by option '$Idle' (or a break point created using slider maker)
-  //   //idleEnd: the idle time is over, play the rest until progressEnd
-  //   //progressEnd: the whole process has been completed
-  //   if (progressEnd > 0) {
-  //     // var progressPercent = progress / progressEnd * 100 + "%";
-  //     // progressElement.style.width = progressPercent;
-  //   }
-  // }
-  // home_slider.$On($JssorSlider$.$EVT_PROGRESS_CHANGE, ProgressChangeEventHandler);
 });
 // MORE INFO BUTTON
 var jssor, temp;

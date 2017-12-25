@@ -1,5 +1,6 @@
 <?php
 require_once '../header.php';
+$system->checkUserLevel(1, true);
 ?>
 <style>body{overflow-y:hidden}</style>
 <?php require_once '../files/sidebar.php';?>
@@ -55,17 +56,23 @@ $row    = mysqli_fetch_assoc($result)['rows'];
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-4">
+<?php
+if (CHAT) {
+  ?>
+      <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">Chat Console</div>
           <div class="panel-body">
 
           </div>
           <div class="panel-footer">
-            <a href="<?php //echo $root; ?>admin/chat">View more...</a>
+            <a href="<?php echo $root; ?>admin/chat">View more...</a>
           </div>
         </div>
-      </div> -->
+      </div>
+<?php
+}
+?>
     </div>
   </div>
 </main>

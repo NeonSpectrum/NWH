@@ -1,5 +1,5 @@
 <?php
-require_once '../files/db.php';
+require_once '../files/autoload.php';
 
 $dateNow = date('Y-m-d H:i:s');
 $id      = $_POST['txtID'];

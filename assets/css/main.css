@@ -81,10 +81,6 @@ a[disabled], a[disabled]:hover {
   pointer-events: none;
 }
 
-button.disabled {
-  pointer-events: none;
-}
-
 /*input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }*/

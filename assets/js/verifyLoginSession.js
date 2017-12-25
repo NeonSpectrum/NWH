@@ -6,7 +6,7 @@ setInterval(function() {
         console.log(response);
         if (!response) {
           $.ajax({
-            url: root + 'account/logout.php',
+            url: root + 'account?mode=logout',
             success: function() {
               location.reload(true);
             }

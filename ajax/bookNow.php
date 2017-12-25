@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once '../files/db.php';
+require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $room = $db->real_escape_string($_POST['rdbRoom']);
 
-  $roomID   = generateRoomID($room);
+  $roomID   = $room->generateRoomID($room);
   $email    = $db->real_escape_string($_SESSION['email']);
   $checkIn  = $db->real_escape_string($_POST['txtCheckInDate']);
   $checkOut = $db->real_escape_string($_POST['txtCheckOutDate']);

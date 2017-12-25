@@ -1,9 +1,6 @@
 <?php
 require_once '../../header.php';
-if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
-  header('location: ../../../');
-  exit();
-}
+$system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../files/sidebar.php';?>
 <main class="l-main">
@@ -28,24 +25,8 @@ if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
             <th>Action</th>
           </thead>
           <tbody>
-            <?php
-$query  = "SELECT * FROM booking";
-$result = mysqli_query($db, $query) or die(mysql_error());
-while ($row = mysqli_fetch_assoc($result)) {
-  echo "<tr>";
-  echo "<td>{$row['BookingID']}</td>";
-  echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-  echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-  echo "<td id='txtCheckInDate'>{$row['CheckInDate']}</td>";
-  echo "<td id='txtCheckOutDate'>{$row['CheckOutDate']}</td>";
-  echo "<td id='txtAdults'>{$row['Adults']}</td>";
-  echo "<td id='txtChildren'>{$row['Children']}</td>";
-  echo "<td>";
-  echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-  echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
-  echo "</td>";
-  echo "</tr>";
-}
+<?php
+$view->booking();
 ?>
           </tbody>
         </table>

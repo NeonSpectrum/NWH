@@ -1,9 +1,6 @@
 <?php
 require_once '../../../header.php';
-if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
-  header('location: ../../');
-  exit();
-}
+$system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
@@ -16,36 +13,19 @@ if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
     </h1>
     <div class="well">
       <div class="table-responsive">
-        <table id="tblAccount" class="table table-striped table-bordered table-hover">
+        <table id="tblAccount" class="display">
           <thead>
-            <th>Email Address</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Account Type</th>
-            <th>Action</th>
+            <tr>
+              <th>Email Address</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Account Type</th>
+              <th>Action</th>
+            </tr>
           </thead>
           <tbody>
 <?php
-$query  = "SELECT * FROM account";
-$result = mysqli_query($db, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-  echo "<tr>";
-  echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-  echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
-  echo "<td id='txtLastName'>{$row['LastName']}</td>";
-  echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
-  echo "<td>";
-  if ($row['AccountType'] != "Owner" || $_SESSION['accountType'] == "Owner") {
-    echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
-    echo "&nbsp;&nbsp;";
-  }
-  if ($_SESSION['accountType'] == "Owner" && $_SESSION['email'] != $row['EmailAddress']) {
-    echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
-  }
-
-  echo "</td>";
-  echo "</tr>";
-}
+$view->accounts();
 ?>
           </tbody>
         </table>
@@ -89,7 +69,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" required readonly autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" placeholder="yyyy-mm-dd" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -109,7 +89,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -118,7 +98,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -127,7 +107,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" minlength="8" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

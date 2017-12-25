@@ -1,6 +1,6 @@
 <?php
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
-$jsonFile = file_get_contents(__DIR__ . "/../../assets/strings.json");
+$jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
 $json     = json_decode($jsonFile, true);
 $first    = true;
 foreach ($json as $string) {

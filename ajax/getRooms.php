@@ -1,5 +1,5 @@
 <?php
-require_once '../files/db.php';
+require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $guests = $db->real_escape_string($_POST['txtAdults']);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     echo "<td style='vertical-align:top;padding:10px'>
             <h3 id='roomName'>" . str_replace("_", " ", $row['RoomType']) . "</h3><br/>
             {$row['RoomDescription']}<br/><br/>
-            <span style='text-style:bold;font-size:20px;'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format(getRoomPrice($row['RoomType'])) . "</span></span>
+            <span style='text-style:bold;font-size:20px;'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span>
           </td>";
     echo "<td style='padding:10px;width:100px' class='numberOfRooms'>";
     echo "<select style='width:100%' class='form-control'>";

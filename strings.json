@@ -1,0 +1,46 @@
+[{
+  "name": "REGISTER_VERIFY",
+  "value": "Email Sent. Kindly verify your account to register.<br/>The link will expire after 10 minutes."
+}, {
+  "name": "REGISTER_SUCCESS",
+  "value": "Registered Successfully!"
+}, {
+  "name": "REGISTER_EMAIL_ERROR",
+  "value": "Email is invalid or already exists."
+}, {
+  "name": "ERROR_OCCURED",
+  "value": "Something went wrong!"
+}, {
+  "name": "INVALID_EMAIL_PASSWORD",
+  "value": "Incorrect Email and/or Password"
+}, {
+  "name": "NOTHING_CHANGED",
+  "value": "Nothing Changed"
+}, {
+  "name": "FORMAT_ERROR_EMAIL",
+  "value": "Invalid Format of Email Address"
+}, {
+  "name": "INVALID_EMAIL",
+  "value": "Invalid Email Address"
+}, {
+  "name": "ALREADY_LOGGED",
+  "value": "Already Logged In"
+}, {
+  "name": "ALREADY_REGISTERED",
+  "value": "Already registered! Please try a different one."
+}, {
+  "name": "OLD_PASSWORD_ERROR",
+  "value": "Please check your password!"
+}, {
+  "name": "VERIFY_PASSWORD_ERROR",
+  "value": "Incorrect Password!"
+}, {
+  "name": "UPLOAD_ERROR",
+  "value": "Sorry, there was an error uploading your file."
+}, {
+  "name": "TOKEN_EXPIRED",
+  "value": "Sorry, your token is not exists or already expired."
+}, {
+  "name": "CAPTCHA_ERROR",
+  "value": "Please check the captcha."
+}]

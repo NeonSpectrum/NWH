@@ -1,5 +1,5 @@
 <?php
-require_once "../files/db.php";
+require_once "../files/autoload.php";
 
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;

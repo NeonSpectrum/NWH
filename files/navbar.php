@@ -27,7 +27,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 <label>Check In Date:</label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" required readonly>
+                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -36,7 +36,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 <label>Check Out Date:</label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" required readonly>
+                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -45,11 +45,11 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 <div class="row">
                   <div class="col-md-6">
                     <label>Adults:</label>
-                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="1" min="1" max="10" required>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="1" min="1" max="<?php echo MAX_ADULTS; ?>" required>
                   </div>
                   <div class="col-md-6">
                     <label>Children:</label>
-                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="10" required>
+                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="<?php echo MAX_CHILDREN; ?>" required>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
           </ul>
         </li>
 <?php
-if (!isset($_SESSION['email'])) {
+if (!$system->isLogged()) {
   ?>
         <li class="dropdown">
           <!-- <a data-toggle="dropdown" style="cursor:pointer;user-select:none;position:fixed;left:2%;top:25%;z-index:10;background-color:white;padding:200px;font-size:300px">LOGIN</a> -->
@@ -132,14 +132,14 @@ if (!isset($_SESSION['email'])) {
           </a>
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
 <?php
-if ($accounttype == "Owner" || $accounttype == "Admin") {
+if ($system->checkUserLevel(1)) {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
   }
   ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
-            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChange">Change Password</a></li>
-            <li><a href="<?php echo $root; ?>account/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChangePassword">Change Password</a></li>
+            <li><a href="<?php echo $root; ?>account?mode=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </li>
 <?php
@@ -150,7 +150,7 @@ if ($accounttype == "Owner" || $accounttype == "Admin") {
   </div>
 </nav>
 <?php
-if (!isset($_SESSION['email'])) {
+if (!$system->isLogged()) {
   ?>
 <div id="modalRegistration" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -193,7 +193,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" required readonly autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" placeholder="yyyy-mm-dd" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -213,7 +213,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>ajax/checkEmail.php" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="<?php echo REGISTER_EMAIL_ERROR; ?>" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -222,7 +222,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -231,7 +231,7 @@ if (!isset($_SESSION['email'])) {
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -278,7 +278,7 @@ if (!isset($_SESSION['email'])) {
 <?php
 } else {
   ?>
-<div id="modalChange" class="modal fade" role="dialog">
+<div id="modalChangePassword" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -403,28 +403,8 @@ if (!isset($_SESSION['email'])) {
             <div class="col-sm-2">
               <select class="form-control" id="cmbBookingID" name="cmbBookingID">
 <?php
-if (!$db) {
-    $email  = $db->real_escape_string($_SESSION['email']);
-    $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
-    // $roomID   = $checkInDate   = $checkOutDate   = '';
-    $adults   = 1;
-    $children = 0;
-    $first    = true;
-    while ($row = $result->fetch_assoc()) {
-      $tomorrow = time() + 86400; // +1 day
-      if ($tomorrow < strtotime($row['CheckInDate'])) {
-        // if ($first) {
-        //   $roomID       = $row['RoomID'];
-        //   $checkInDate  = $row['CheckInDate'];
-        //   $checkOutDate = $row['CheckOutDate'];
-        //   $adults       = $row['Adults'];
-        //   $children     = $row['Children'];
-        //   $first        = false;
-        // }
-        echo "                ";
-        echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
-      }
-    }
+if (!$db->connect_error) {
+    $view->listBookingID();
   }
   ?>
               </select>
@@ -448,7 +428,7 @@ if (!$db) {
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly/>
+                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate; ?>" required/>
               </div>
             </div>
           </div>
@@ -457,20 +437,20 @@ if (!$db) {
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly/>
+                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required/>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Adults</label>
             <div class="col-sm-3">
-              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" value="<?php echo $adults; ?>" onkeypress="return disableKey(event,'letter');" min="1" max="10" value="1" required/>
+              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" min="1" max="<?php echo MAX_ADULTS; ?>" value="1" required/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Children</label>
             <div class="col-sm-3">
-              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" value="<?php echo $children; ?>" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="<?php echo MAX_CHILDREN; ?>" value="0" required/>
             </div>
           </div>
         </div>

@@ -1,11 +1,8 @@
 var oTable = $('#tblReservation').DataTable();
-$('input[type="search"]').attr("placeholder", "Booking ID");
-$('input[type="search"]').on('keyup change', function (e) {
-  e.preventDefault();
-  oTable.column(0).search($(this).val()).draw();
-});
-
-$('.btnEditReservation').click(function () {
+$('#tblAccount_length').find("select").addClass("form-control");
+$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();
+$('.btnEditReservation').click(function() {
   var bookingID = $(this).attr("id");
   var email = $(this).closest("tr").find("#txtEmail").html();
   var roomID = $(this).closest("tr").find("#txtRoomID").html();
@@ -22,8 +19,7 @@ $('.btnEditReservation').click(function () {
   $('#modalEditReservation').find("#txtAdults").val(adults);
   $('#modalEditReservation').find("#txtChildren").val(children);
 });
-
-$("#frmEditReservation").submit(function (e) {
+$("#frmEditReservation").submit(function(e) {
   e.preventDefault();
   $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnReservation').attr('disabled', true);
@@ -33,14 +29,14 @@ $("#frmEditReservation").submit(function (e) {
     type: 'POST',
     url: root + 'ajax/editReservation.php',
     data: $(this).serialize(),
-    success: function (response) {
+    success: function(response) {
       if (response == true) {
         $('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', true);
       } else {
         $(this).find("#btnReservation").html('Update');
         $(this).find('#btnReservation').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function () {
+        $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })
       }

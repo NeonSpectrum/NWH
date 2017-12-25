@@ -38,8 +38,17 @@ $('input.datepicker').datepicker({
   autoclose: true,
   todayHighlight: true
 });
+$('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
+  return false;
+})
 $(window).on('resize', function() {
   $('.l-sidebar').height($(window).height() + 100);
+});
+$('.modal').on('hidden.bs.modal', function() {
+  $(this).find("form").trigger("reset");
+  $(this).find('.lblDisplayError').html('');
+  grecaptcha.reset();
+  $("#frmRegister").find('button[type=submit]').attr('disabled', true);
 });
 // GIT UPDATE
 $('#btnGitUpdate').click(function() {

@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 if (!isset($_SESSION['email'])) {
   echo "<script>alert('Login First!');location.href='../';</script>";
 }
@@ -27,21 +27,21 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             <div id="form-step-0" >
               <div class="form-group">
                 <label>Check In Date:</label>
-                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required readonly>
+                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required>
               </div>
               <div class="form-group">
                 <label>Check Out Date:</label>
-                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required readonly>
+                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required>
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <label>Adult(s):</label>
-                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="<?php echo $adults; ?>" min="1" max="10" required>
+                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" value="<?php echo $adults; ?>" min="1" max="<?php echo MAX_ADULTS; ?>" required>
                   </div>
                   <div class="col-md-6">
                     <label>Children:</label>
-                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="<?php echo $children; ?>" min="0" max="10" required>
+                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" value="<?php echo $children; ?>" min="0" max="<?php echo MAX_CHILDREN; ?>" required>
                   </div>
                 </div>
               </div>

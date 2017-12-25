@@ -11,7 +11,6 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `cp018101_nwh` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `cp018101_nwh`;
 
-DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
   `EmailAddress` varchar(100) NOT NULL,
   `Password` text NOT NULL,
@@ -26,13 +25,13 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `DateRegistered`, `SessionID`) VALUES
+('arias_louie@hotmail.com', '$2y$10$psTt7F23OHGFeEvCGxEq0O55urRDQ89LvJWYuHsnW0E01X6KMYkl6', 'Admin', 'default.png', 'Arias', 'Louie', '123', '0000-00-00', '2017-12-23', '11bfab5d094090fb6086d87ae0c27563'),
 ('beajewelcvines@gmail.com', '$2y$10$VFNjVijVyv73K1tq8Fs5.uds4JwDpaRvMh1yy2BWKETxlj9PQ7Aw2', 'Admin', 'default.png', 'Bea Jewel', 'Vines', '123', '2017-12-13', '2017-12-04', 'ioccmabmgrhh7j9700gbi3ni0h'),
-('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123', '2017-12-13', '2017-10-29', 'k9mnvrc9su4m29e2fahve2uglm'),
+('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123', '2017-12-13', '2017-10-29', 'j5n0c4noiqmgdk44b2iou3jca5'),
 ('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'cuv527khttgpq9r22ufkv30ru0'),
 ('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Admin', 'KateBolanos.png', 'Kate', 'Bolanos', '123', '2017-12-13', '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('youngskymann@gmail.com', '$2y$10$luX9F27Y3LawOTgXiTXZh.VBNdGawSHEIdvpuE2wwz9y3rILcBZlC', 'Owner', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'u78ctlu9taelpp90ratt43drfq');
+('youngskymann@gmail.com', '$2y$10$luX9F27Y3LawOTgXiTXZh.VBNdGawSHEIdvpuE2wwz9y3rILcBZlC', 'Owner', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
 
-DROP TABLE IF EXISTS `booking`;
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
   `EmailAddress` varchar(100) NOT NULL,
@@ -45,7 +44,21 @@ CREATE TABLE `booking` (
   `TotalAmount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE `forgot_password` (
+  `id` int(11) NOT NULL,
+  `EmailAddress` varchar(256) NOT NULL,
+  `token` varchar(256) NOT NULL,
+  `used` tinyint(1) NOT NULL DEFAULT '0',
+  `timestamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL,
+  `user` varchar(256) DEFAULT NULL,
+  `action` varchar(256) NOT NULL,
+  `timestamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `reservation` (
   `ReservationID` int(11) NOT NULL,
   `BookingID` int(11) DEFAULT NULL,
@@ -55,7 +68,6 @@ CREATE TABLE `reservation` (
   `Price` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `room`;
 CREATE TABLE `room` (
   `RoomID` int(3) NOT NULL,
   `RoomTypeID` int(11) NOT NULL,
@@ -63,7 +75,7 @@ CREATE TABLE `room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES
-(101, 1, 'Occupied'),
+(101, 1, 'Enabled'),
 (102, 1, 'Enabled'),
 (103, 1, 'Enabled'),
 (104, 5, 'Enabled'),
@@ -88,7 +100,6 @@ INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES
 (211, 1, 'Enabled'),
 (212, 1, 'Enabled');
 
-DROP TABLE IF EXISTS `room_type`;
 CREATE TABLE `room_type` (
   `RoomTypeID` int(11) NOT NULL,
   `RoomType` varchar(50) NOT NULL,
@@ -107,7 +118,6 @@ INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `Capacity`
 (5, 'Studio_Type', 'I AM STUDIO TYPE', 2, 1500, 1100, 1300),
 (6, 'Barkada_Room', 'I AM BARKADA ROOM', 4, 3500, 2000, 2600);
 
-DROP TABLE IF EXISTS `walk_in`;
 CREATE TABLE `walk_in` (
   `WalkInID` int(11) NOT NULL,
   `EmailAddress` varchar(100) NOT NULL,
@@ -128,6 +138,13 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`BookingID`,`EmailAddress`,`RoomID`),
   ADD KEY `RoomID` (`RoomID`),
   ADD KEY `EmailAddress` (`EmailAddress`);
+
+ALTER TABLE `forgot_password`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `EmailAddress` (`EmailAddress`);
+
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`ReservationID`),
@@ -150,6 +167,12 @@ ALTER TABLE `walk_in`
 ALTER TABLE `booking`
   MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `forgot_password`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `reservation`
   MODIFY `ReservationID` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -163,6 +186,9 @@ ALTER TABLE `walk_in`
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`),
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
+
+ALTER TABLE `forgot_password`
+  ADD CONSTRAINT `forgot_password_ibfk_1` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`WalkInID`) REFERENCES `walk_in` (`WalkInID`),

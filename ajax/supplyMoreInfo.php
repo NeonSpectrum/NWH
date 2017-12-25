@@ -1,5 +1,5 @@
 <?php
-require_once "../files/db.php";
+require_once "../files/autoload.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $roomType = $db->real_escape_string($_POST['roomType']);
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $src = str_replace("../", "", $image);
     $arr[0] .= "<div><img u='image' src='$src?v=" . filemtime($image) . "'/></div>\n";
   }
-  $arr[1] = "{$row['RoomDescription']}<br/><div style='padding:20px;text-align:center;font-size:30px;font-style:bold'>₱&nbsp;" . number_format(getRoomPrice($row['RoomType'])) . "</div>";
+  $arr[1] = "{$row['RoomDescription']}<br/><div style='padding:20px;text-align:center;font-size:30px;font-style:bold'>₱&nbsp;" . number_format($room->getRoomPrice($row['RoomType'])) . "</div>";
 
   echo json_encode($arr);
 }

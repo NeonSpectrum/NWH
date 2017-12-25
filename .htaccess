@@ -99,6 +99,12 @@ order allow,deny
 deny from all
 </Files>
 
+#Prevent viewing of config.ini file
+<Files config.ini>
+order allow,deny
+deny from all
+</Files>
+
 #Prevent directory listings
 Options All -Indexes
 

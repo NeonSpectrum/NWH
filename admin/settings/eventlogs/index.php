@@ -1,18 +1,12 @@
 <?php
 require_once '../../../header.php';
-if ($_SESSION['accountType'] == 'User' || $_SESSION['accountType'] == 'Admin' || !isset($_SESSION['accountType'])) {
-  header('location: ../../');
-  exit();
-}
+$system->checkUserLevel(2, true);
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">
       Event Logs
-      <span class="pull-right">
-        <a style="cursor:pointer" data-toggle='modal' data-target='#modalAddAccount'><span class="fa fa-plus"></span></a>
-      </span>
     </h1>
     <div class="well">
       <div class="table-responsive">
@@ -25,15 +19,7 @@ if ($_SESSION['accountType'] == 'User' || $_SESSION['accountType'] == 'Admin' ||
           </thead>
           <tbody>
 <?php
-$result = $db->query("SELECT * FROM log");
-while ($row = $result->fetch_assoc()) {
-  echo "<tr>";
-  echo "<td>{$row['id']}</td>";
-  echo "<td>{$row['user']}</td>";
-  echo "<td>" . str_replace("|", " | ", $row['action']) . "</td>";
-  echo "<td>{$row['timestamp']}</td>";
-  echo "</tr>";
-}
+$view->eventLogs();
 ?>
           </tbody>
         </table>

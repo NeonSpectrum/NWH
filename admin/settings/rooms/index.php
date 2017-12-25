@@ -1,9 +1,6 @@
 <?php
 require_once '../../../header.php';
-if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
-  header('location: ../../');
-  exit();
-}
+$system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
@@ -24,18 +21,7 @@ if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
             </thead>
             <tbody>
 <?php
-$query  = "SELECT RoomID, RoomType, RoomDescription, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID ORDER BY RoomID";
-$result = mysqli_query($db, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-  echo "<tr>";
-  echo "<td>{$row['RoomID']}</td>";
-  echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-  $checked  = $row['Status'] == 'Enabled' || $row['Status'] == 'Occupied' ? 'checked' : '';
-  $disabled = $row['Status'] == "Occupied" ? "data-onstyle='danger' disabled" : "";
-  $status   = $row['Status'] == "Occupied" ? "Occupied" : "Enabled";
-  echo "<td><input type='checkbox' data-toggle='toggle' data-on='$status' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked $disabled/></td>";
-  echo "</tr>";
-}
+$view->rooms("statuses");
 ?>
             </tbody>
           </table>
@@ -48,16 +34,8 @@ while ($row = mysqli_fetch_assoc($result)) {
               <th>Action</th>
             </thead>
             <tbody>
-            <?php
-$query  = "SELECT RoomType, RoomDescription FROM room_type";
-$result = mysqli_query($db, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-  echo "<tr>";
-  echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-  echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
-  echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
-  echo "</tr>";
-}
+<?php
+$view->rooms("descriptions");
 ?>
             </tbody>
           </table>

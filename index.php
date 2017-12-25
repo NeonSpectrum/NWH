@@ -19,13 +19,7 @@ require_once 'files/navbar.php';
     </div>
     <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
 <?php
-// GET ALL FILES IN DIRECTORY images/carousel/ AND DISPLAY IT USING CAROUSEL
-foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
-  $filename = str_replace("images/carousel/", "", $image);
-  echo "<div data-b='0' data-p='112.50' style='display: none;'>
-          <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
-        </div>\n";
-}
+$view->homeJssor();
 ?>
     <!-- <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div> -->
     </div>
@@ -49,23 +43,23 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
         <label>Check In Date: </label>
         <div class="input-group">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" required readonly/>
+          <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" required/>
         </div>
       </div>
       <div class="form-group">
         <label>Check Out Date: </label>
         <div class="input-group">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" required readonly/>
+          <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" required/>
         </div>
       </div>
       <div class="form-group">
         <label>Adults: </label>
-        <input class="form-control" type="number" id="txtAdults" name="txtAdults" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="10" required/>
+        <input class="form-control" type="number" id="txtAdults" name="txtAdults" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
       </div>
       <div class="form-group">
         <label>Children: </label>
-        <input class="form-control" type="number" id="txtChildren" name="txtChildren" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="10" required/>
+        <input class="form-control" type="number" id="txtChildren" name="txtChildren" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
       </div>
       <div class="form-group">
         <label></label>
@@ -81,25 +75,7 @@ foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $ima
 <?php
 // USE DATABASE TO SUPPLY ROOM INFORMATION
 if (!$db->connect_error) {
-  $result = $db->query("SELECT * FROM room_type");
-  while ($row = $result->fetch_assoc()) {
-    ?>
-  <div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
-    <figure class='imghvr-hinge-up' style='box-shadow: 1px 1px 1px #888888'>
-      <img src='gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg"); ?>'>
-      <figcaption style='background: url("gallery/images/rooms/<?php echo "{$row['RoomType']}.jpg"; ?>") center;text-align:center;color:black;padding:0px'>
-        <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-          <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?><br/><div style="font-size:15px">Price starts at <i>₱ <?php echo number_format(getRoomPrice($row['RoomType'])); ?></i></div></div>
-          <p style="padding:40px 20px"><?php echo $row['RoomDescription']; ?></p>
-          <button id="<?php echo $row['RoomType']; ?>" class="btn btn-info btnMoreInfo" data-toggle="modal" data-target="#modalRoom" style="position:absolute;bottom:0;left:0;width:50%;text-decoration:underline">More Info</button>
-          <button onclick="location.href='reservation'" class="btn btn-primary" style="position:absolute;bottom:0;right:0;width:50%;text-decoration:underline">Book Now</button>
-        </div>
-      </figcaption>
-      <div style='text-align:center;color:black;font-size:22px'><?php echo str_replace("_", " ", $row['RoomType']); ?><br/><div style="font-size:15px">Price starts at <i>₱ <?php echo number_format(getRoomPrice($row['RoomType'])); ?></i></div></div>
-    </figure>
-  </div>
-<?php
-}
+  $view->homeRooms();
 }
 ?>
       </div>
@@ -159,6 +135,49 @@ if (!$db->connect_error) {
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>
+<?php
+if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToken($_GET['email'], $_GET['token'])) {
+  ?>
+<div id="modalForgotToChangePassword" class="modal fade" role="dialog" backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center">Change Password</h4>
+      </div>
+      <form id="frmChange" method="post" class="form-horizontal">
+        <div class="modal-body">
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <input type="hidden" name="txtToken" value="<?php echo $_GET['token']; ?>"/>
+          <div class="form-group">
+            <label for="oldpass" class="col-sm-3 control-label">Email</label>
+            <div class="col-sm-8">
+              <input name="txtEmail" type="text" class="form-control" id="txtEmail" value="<?php echo $_GET['email']; ?>" readonly/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">New Password</label>
+            <div class="col-sm-8">
+              <input name="txtNewPass" type="password" class="form-control" id="txtNewPass" placeholder="New Password" minlength="8" required/>
+              <input name="txtRetypeNewPass" type="password" style="margin-top:15px" class="form-control" id="txtRetypeNewPass" placeholder="Retype New Password" minlength="8" required/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+        </div>
+      </form>
+    </div>
    </div>
 </div>
+<?php
+} else if (isset($_GET['email']) && isset($_GET['token']) && !$account->verifyForgotToken($_GET['email'], $_GET['token'])) {
+  ?>
+<span id="tokenError"><?php echo TOKEN_EXPIRED; ?></span>
+<?php
+}
+?>
 <?php require_once 'footer.php';?>

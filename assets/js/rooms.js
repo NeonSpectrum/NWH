@@ -4,7 +4,7 @@ $('.cbxRoom').change(function() {
   var status = $(this).prop('checked') ? "Enabled" : "Disabled";
   $.ajax({
     type: 'POST',
-    url: '/files/changeStatus.php',
+    url: root + 'ajax/changeStatus.php',
     data: 'roomID=' + $(this).attr("id") + "&status=" + status
   });
 });
@@ -16,8 +16,8 @@ $('.btnEditRoom').click(function() {
 });
 $('#frmChangeRoom').submit(function(e) {
   e.preventDefault();
-  $("#btnUpdate").html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i>  Updating...');
-  $('#btnUpdate').attr('disabled', true);
+  $(this).find("#btnUpdate").html('<i style="font-size:16px" class="fa fa-spinner fa-pulse"></i>  Updating...');
+  $(this).find('#btnUpdate').attr('disabled', true);
   $.ajax({
     context: this,
     type: 'POST',
@@ -31,6 +31,8 @@ $('#frmChangeRoom').submit(function(e) {
         $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
         });
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find('#btnUpdate').attr('disabled', false);
       }
     }
   });

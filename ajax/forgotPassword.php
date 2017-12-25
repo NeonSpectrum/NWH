@@ -1,7 +1,7 @@
 <?php
 $domain = strpos($_SERVER['REQUEST_URI'], "nwh") ? "{$_SERVER['SERVER_NAME']}/nwh" : $_SERVER['SERVER_NAME'];
 
-require_once '../files/db.php';
+require_once '../files/autoload.php';
 
 parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
 

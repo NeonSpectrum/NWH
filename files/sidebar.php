@@ -1,4 +1,5 @@
 <?php
+echo CHAT;
 $dashboard = $booking = $check = $chat = $reports = $settings = '';
 if (strpos($_SERVER['PHP_SELF'], 'booking')) {
   $booking = ' is-active';
@@ -24,13 +25,13 @@ if (strpos($_SERVER['PHP_SELF'], 'booking')) {
     </div>
     Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['picture']}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['picture']}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['fname']} {$_SESSION['lname']}"; ?></span>
 <?php
-if ($_SESSION['accountType'] == "Owner") {
+if ($system->checkUserLevel(2)) {
   ?>
     <a id="btnGitUpdate" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
     <?php
 }
 ?>
-    <a href="<?php echo $root; ?>account/logout.php" title="Logout" style="text-decoration:none" class="c-header-icon"><i class="fa fa-power-off"></i></a>
+    <a href="<?php echo $root; ?>account?mode=logout" title="Logout" style="text-decoration:none" class="c-header-icon"><i class="fa fa-power-off"></i></a>
   </div>
 </header>
 <div class="l-sidebar">
@@ -55,11 +56,17 @@ if ($_SESSION['accountType'] == "Owner") {
             <div class="c-menu-item__title"><span>Check</span></div>
           </a>
         </li>
-        <!-- <li class="c-menu__item has-submenu <?php //echo $chat; ?>" title="Chat">
-          <a class="c-menu__item__inner" href="<?php //echo $root; ?>admin/chat"><i class="fa fa-comment-o"></i>
+<?php
+if (CHAT) {
+  ?>
+        <li class="c-menu__item has-submenu <?php echo $chat; ?>" title="Chat">
+          <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/chat"><i class="fa fa-comment-o"></i>
             <div class="c-menu-item__title"><span>Chat</span></div>
           </a>
-        </li> -->
+        </li>
+<?php
+}
+?>
         <li class="c-menu__item has-submenu <?php echo $reports; ?>" title="Reports">
           <a class="c-menu__item__inner"><i class="fa fa-bar-chart"></i>
             <div class="c-menu-item__title"><span>Reports</span></div>
@@ -90,7 +97,7 @@ if ($_SESSION['accountType'] == "Owner") {
               </a>
             </li>
 <?php
-if ($_SESSION['accountType'] == "Owner") {
+if ($system->checkUserLevel(2)) {
   ?>
             <li title="Event Logs">
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/eventlogs"><i class="fa fa-database"></i>
