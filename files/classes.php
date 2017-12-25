@@ -191,39 +191,54 @@ class Account extends System {
     }
   }
 
-  public function editProfile($credentials) {
+  public function editProfile($credentials, $basic = false) {
     global $db, $root;
-    $output = NOTHING_CHANGED;
-    if (isset($credentials['image'])) {
-      $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
-      $filename  = basename($_SESSION['fname'] . $_SESSION['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
-      $output    = $this->saveImage($credentials['image'], $directory, $filename);
-      if ($output == true) {
-        $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['email']}'");
-        $this->createLog("update|account.profilepicture");
-        $_SESSION["picture"] = $filename;
+    if ($basic) {
+      $email       = $credentials['email'];
+      $accountType = $credentials['accountType'];
+      $firstName   = $credentials['firstName'];
+      $lastName    = $credentials['lastName'];
+
+      $result = $db->query("UPDATE `account` SET AccountType='$accountType',FirstName='$firstName',LastName='$lastName' WHERE EmailAddress='$email'");
+      if ($db->affected_rows > 0) {
+        $this->createLog("update|account|$email");
+        echo true;
       } else {
-        return $output;
+        echo $db->error;
       }
+    } else {
+      $output = NOTHING_CHANGED;
+      if (isset($credentials['image'])) {
+        $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
+        $filename  = basename($_SESSION['fname'] . $_SESSION['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
+        $output    = $this->saveImage($credentials['image'], $directory, $filename);
+        if ($output == true) {
+          $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['email']}'");
+          $this->createLog("update|account.profilepicture");
+          $_SESSION["picture"] = $filename;
+        } else {
+          return $output;
+        }
+      }
+
+      $email         = $db->real_escape_string($_SESSION['email']);
+      $fname         = $db->real_escape_string($credentials['fname']);
+      $lname         = $db->real_escape_string($credentials['lname']);
+      $birthDate     = $db->real_escape_string($credentials['birthDate']);
+      $contactNumber = $db->real_escape_string($credentials['contactNumber']);
+
+      $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
+
+      if ($db->affected_rows > 0) {
+        $_SESSION['fname']         = $fname;
+        $_SESSION['lname']         = $lname;
+        $_SESSION['birthDate']     = $birthDate;
+        $_SESSION['contactNumber'] = $contactNumber;
+        $this->createLog("update|account.profile");
+        $output = true;
+      }
+      return $output;
     }
-
-    $email         = $db->real_escape_string($_SESSION['email']);
-    $fname         = $db->real_escape_string($credentials['fname']);
-    $lname         = $db->real_escape_string($credentials['lname']);
-    $birthDate     = $db->real_escape_string($credentials['birthDate']);
-    $contactNumber = $db->real_escape_string($credentials['contactNumber']);
-
-    $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
-
-    if ($db->affected_rows > 0) {
-      $_SESSION['fname']         = $fname;
-      $_SESSION['lname']         = $lname;
-      $_SESSION['birthDate']     = $birthDate;
-      $_SESSION['contactNumber'] = $contactNumber;
-      $this->createLog("update|account.profile");
-      $output = true;
-    }
-    return $output;
   }
 
   public function deleteAccount($email) {
@@ -300,7 +315,24 @@ class Room extends System {
   }
 
 }
+class Book {
+  public function showBookingInfo($bookingID) {
+    global $db;
+    $result = $db->query("SELECT * FROM booking JOIN room ON booking.RoomID = room.RoomID JOIN room_type ON room_type.RoomTypeID = room.RoomTypeID WHERE BookingID = $bookingID");
+    $row    = $result->fetch_assoc();
 
+    if ($result->num_rows == 1) {
+      $arr    = [];
+      $arr[0] = $row['RoomType'];
+      $arr[1] = $row['CheckInDate'];
+      $arr[2] = $row['CheckOutDate'];
+      $arr[3] = $row['Adults'];
+      $arr[4] = $row['Childrens'];
+
+      return json_encode($arr);
+    }
+  }
+}
 class View extends Room {
 
   public function homeJssor() {
@@ -488,7 +520,6 @@ class View extends Room {
       if ($_SESSION['accountType'] == "Owner" && $_SESSION['email'] != $row['EmailAddress']) {
         echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
       }
-
       echo "</td>";
       echo "</tr>";
     }

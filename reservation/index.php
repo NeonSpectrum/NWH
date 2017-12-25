@@ -7,10 +7,9 @@ if (!isset($_SESSION['email'])) {
 require_once '../header.php';
 require_once '../files/navbar.php';
 
-$checkInDate  = isset($_GET['txtCheckInDate']) ? $_GET['txtCheckInDate'] : '';
-$checkOutDate = isset($_GET['txtCheckOutDate']) ? $_GET['txtCheckOutDate'] : '';
-$adults       = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
-$children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
+$checkDate = isset($_GET['txtCheckDate']) ? $_GET['txtCheckDate'] : '';
+$adults    = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
+$children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
 ?>
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">
@@ -26,12 +25,8 @@ $children     = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           <div id="step-1" style="padding:20px">
             <div id="form-step-0" >
               <div class="form-group">
-                <label>Check In Date:</label>
-                <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" value="<?php echo $checkInDate; ?>" required>
-              </div>
-              <div class="form-group">
-                <label>Check Out Date:</label>
-                <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required>
+                <label>Check Date:</label>
+                <input id="txtCheckDate" type="text" class="form-control checkDate" name="txtCheckDate" value="<?php echo $checkDate; ?>" readonly required>
               </div>
               <div class="form-group">
                 <div class="row">

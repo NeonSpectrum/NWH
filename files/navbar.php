@@ -24,19 +24,10 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
             <form class="form frmBookCheck" method="post">
               <div class="form-group">
-                <label>Check In Date:</label>
+                <label>Check Date:</label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckInDate" type="text" class="form-control checkInDate" name="txtCheckInDate" required>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <label>Check Out Date:</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckOutDate" type="text" class="form-control checkOutDate" name="txtCheckOutDate" required>
+                  <input id="txtCheckDate" type="text" class="form-control checkDate" name="txtCheckDate" readonly required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -193,7 +184,7 @@ if (!$system->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" placeholder="yyyy-mm-dd" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="yyyy-mm-dd" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -424,20 +415,11 @@ if (!$db->connect_error) {
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Check In Date</label>
+            <label class="col-sm-3 control-label">Check Date</label>
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" value="<?php echo $checkInDate; ?>" required/>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Check Out Date</label>
-            <div class="col-sm-7">
-              <div class="input-group date">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" value="<?php echo $checkOutDate; ?>" required/>
+                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" readonly required/>
               </div>
             </div>
           </div>

@@ -40,17 +40,10 @@ $view->homeJssor();
   <div class="booknow-content text-center">
     <form class="form-inline frmBookCheck">
       <div class="form-group">
-        <label>Check In Date: </label>
+        <label>Check Date: </label>
         <div class="input-group">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkInDate" type="text" id="txtCheckInDate" name="txtCheckInDate" required/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Check Out Date: </label>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkOutDate" type="text" id="txtCheckOutDate" name="txtCheckOutDate" required/>
+          <input class="form-control checkDate" type="text" id="txtCheckDate" name="txtCheckDate" style="width:250px" readonly required/>
         </div>
       </div>
       <div class="form-group">

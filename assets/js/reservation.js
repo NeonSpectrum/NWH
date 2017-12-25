@@ -320,8 +320,9 @@ $(document).ready(function() {
   // Leave Step
   $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
     if (stepNumber == 0) {
-      var checkIn = new Date($('#frmBookNow').find("#txtCheckInDate").val());
-      var checkOut = new Date($('#frmBookNow').find("#txtCheckOutDate").val());
+      var checkDate = $('#frmBookNow').find("#txtCheckDate").val().split(" - ");
+      var checkIn = new Date(checkDate[0]);
+      var checkOut = new Date(checkDate[1]);
       if (checkIn > checkOut) {
         alertNotif("error", "Check Out date must be greater than Check In date.");
         return false;
@@ -343,7 +344,7 @@ $(document).ready(function() {
           $('input[type="checkbox"]').change(function() {
             $('input[type="checkbox"]').not(this).prop('checked', false);
           });
-          addBookingSummary("Check In Date: <span class='pull-right'>" + $('#frmBookNow').find("#txtCheckInDate").val() + "</span><br/>Check Out Date: <span class='pull-right'>" + $('#frmBookNow').find("#txtCheckOutDate").val() + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>");
+          addBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>");
           return true;
         }
       });
@@ -402,7 +403,7 @@ $(document).ready(function() {
     $('#smartwizard').smartWizard("next");
     return true;
   });
-  if (location.search.includes("txtCheckInDate") && location.search.includes("txtCheckOutDate") && location.search.includes("txtAdults") && location.search.includes("txtChildren")) {
+  if (location.search.includes("txtCheckDate") && location.search.includes("txtAdults") && location.search.includes("txtChildren")) {
     $('#smartwizard').smartWizard("next");
   }
 });

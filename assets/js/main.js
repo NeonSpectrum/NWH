@@ -1,3 +1,4 @@
+var date = new Date();
 $(document).ready(function() {
   scrolling(false);
   // HIDE CONTACT BOX IF MOBILE
@@ -70,8 +71,8 @@ $(document).ready(function() {
       });
     }
     $(this).find(".lblDisplayError").html("");
-    $(this).find("form").trigger("reset");
-    updateDate();
+    // $(this).find("form").trigger("reset");
+    // updateDate();
   });
 });
 Pace.track(function() {
@@ -105,31 +106,44 @@ Pace.on('done', function() {
   // BACK TO TOP
   $('body').append('<div id="backToTop" class="btn btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></div>');
   // DATE PICKER SETTINGS
-  $('input.datepicker').datepicker({
-    format: "yyyy-mm-dd",
+  // $('input.datepicker').datepicker({
+  //   format: "yyyy-mm-dd",
+  //   autoclose: true,
+  //   todayHighlight: true
+  // });
+  $('input.birthDate').datepicker({
+    format: DATE_FORMAT,
     autoclose: true,
-    todayHighlight: true
+    startView: 2,
+    endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
   });
-  $('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
+  $('input.checkDate').keypress(function() {
     return false;
   })
-  $('input.checkInDate, input.checkOutDate').datepicker({
-    format: "yyyy-mm-dd",
-    startDate: '+1d',
-    autoclose: true,
-    todayHighlight: true
-  });
-  // DATE PICKER SCRIPTS
-  updateDate();
-  $('input.checkInDate, input.checkOutDate').each(function() {
-    if ($(this).val()) {
-      $(this).datepicker('update', $(this).val());
+  $('input.checkDate').daterangepicker({
+    autoApply: true,
+    autoUpdateInput: true,
+    locale: {
+      format: DATE_FORMAT.toUpperCase()
     }
   });
-  $('input.checkInDate').change(function() {
-    $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val())
-    $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
-  });
+  // $('input.checkInDate, input.checkOutDate').datepicker({
+  //   format: "yyyy-mm-dd",
+  //   startDate: '+1d',
+  //   autoclose: true,
+  //   todayHighlight: true
+  // });
+  // DATE PICKER SCRIPTS
+  // updateDate();
+  // $('input.checkInDate, input.checkOutDate').each(function() {
+  //   if ($(this).val()) {
+  //     $(this).datepicker('update', $(this).val());
+  //   }
+  // });
+  // $('input.checkInDate').change(function() {
+  //   $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val())
+  //   $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
+  // });
   // ANIMATE TO HASH
   if (window.location.hash && $(window.location.hash).offset() != null && location.pathname.includes("/contactus/")) {
     $('html, body').animate({
@@ -462,7 +476,6 @@ function readPicture(input) {
 }
 // UPDATE ALL DATES
 function updateDate() {
-  var date = new Date();
   var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
   $(".checkInDate, .checkOutDate").each(function() {
     if (!$(this).attr("value")) {

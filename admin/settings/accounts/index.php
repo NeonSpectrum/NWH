@@ -8,7 +8,7 @@ $system->checkUserLevel(1, true);
     <h1 class="page-title">
       Accounts
       <span class="pull-right">
-        <a style="cursor:pointer" data-toggle='modal' data-target='#modalAddAccount'><span class="fa fa-plus"></span></a>
+        <a style="cursor:pointer" title="Add" data-toggle='modal' data-target='#modalAddAccount'><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">
@@ -69,7 +69,7 @@ $view->accounts();
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" placeholder="yyyy-mm-dd" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker birthDate" placeholder="yyyy-mm-dd" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

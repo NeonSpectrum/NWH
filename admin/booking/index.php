@@ -8,7 +8,7 @@ $system->checkUserLevel(1, true);
     <h1 class="page-title">
       Booking
       <span class="pull-right">
-        <a style="cursor:pointer" href="<?php echo $root; ?>reservation"><span class="fa fa-plus"></span></a>
+        <a style="cursor:pointer" title="Add" href="<?php echo $root; ?>reservation"><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">

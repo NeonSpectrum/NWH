@@ -1,5 +1,6 @@
 <?php
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+$config   = parse_ini_file(__DIR__ . "/../../config.ini");
 $jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
 $json     = json_decode($jsonFile, true);
 $first    = true;
@@ -9,6 +10,10 @@ foreach ($json as $string) {
     unset($first);
   }
   echo ",{$string['name']}=\"{$string['value']}\"";
+}
+foreach ($config as $name => $value) {
+  $value = $value == false ? "false" : $value;
+  echo "," . strtoupper($name) . "=\"$value\"";
 }
 echo ";const root=\"$root\";";
 ?>
