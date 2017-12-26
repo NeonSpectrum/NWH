@@ -63,15 +63,11 @@ $view->homeJssor();
 </div>
 <div class="panel panel-default" style="border-top-width:0px;">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">ROOM TYPES</h1></div>
-  <div class="panel-body center-block" style="width:80%">
+  <div class="panel-body center-block" style="width:90%">
     <div class="row">
 <?php
-// USE DATABASE TO SUPPLY ROOM INFORMATION
-if (!$db->connect_error) {
-  $view->homeRooms();
-}
+$view->homeRooms();
 ?>
-      </div>
     </div>
   </div>
 </div>

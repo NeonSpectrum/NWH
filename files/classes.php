@@ -348,20 +348,21 @@ class View extends Room {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
-      echo "<div class='col-sm-4 wow slideInUp' style='margin-bottom:20px'>
-            <figure class='imghvr-hinge-up' style='box-shadow: 1px 1px 1px #888888'>
+      echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
+            <figure class='imghvr-hinge-up'>
               <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
               <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
                 <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-                  <div style='text-align:center;color:black;font-size:22px'>" . str_replace("_", "", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+                  <div style='text-align:center;color:black;font-size:22px;padding-top:10px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
                   <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
-                  <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' data-toggle='modal' data-target='#modalRoom' style='position:absolute;bottom:0;left:0;width:50%;text-decoration:underline'>More Info</button>
-                  <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='position:absolute;bottom:0;right:0;width:50%;text-decoration:underline'>Book Now</button>
                 </div>
               </figcaption>
               <div style='text-align:center;color:black;font-size:22px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
             </figure>
-          </div>";
+            <div style='position:relative;height:20px;margin-top:-6px'>
+              <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
+              <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='width:50%;position:absolute;right:0'>Book Now</button>
+            </div></div>";
     }
   }
 
