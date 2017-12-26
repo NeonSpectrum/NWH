@@ -1,6 +1,6 @@
 var oTable = $('#tblReservation').DataTable();
-$('#tblAccount_length').find("select").addClass("form-control");
-$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
+$('#tblReservation_length').find("select").addClass("form-control");
+$('#tblReservation_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
 $('.btnEditReservation').click(function() {
   var bookingID = $(this).attr("id");

@@ -1,5 +1,7 @@
 $('#tblWalkIn').DataTable();
 $('#tblBook').DataTable();
-$('#tblAccount_length').find("select").addClass("form-control");
-$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
+$('#tblWalkIn_length').find("select").addClass("form-control");
+$('#tblWalkIn_filter').find("input[type=search]").addClass("form-control");
+$('#tblBook_length').find("select").addClass("form-control");
+$('#tblBook_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();

@@ -5,9 +5,6 @@
 //   header('Location: welcome');
 //   exit();
 // }
-// error_reporting(-1); // reports all errors
-// ini_set("display_errors", "0"); // shows all errors
-// ini_set("log_errors", 1);
 require_once 'header.php';
 require_once 'files/navbar.php';
 ?>
@@ -66,7 +63,9 @@ $view->homeJssor();
   <div class="panel-body center-block" style="width:90%">
     <div class="row">
 <?php
-$view->homeRooms();
+if (!$db->connect_error) {
+  $view->homeRooms();
+}
 ?>
     </div>
   </div>

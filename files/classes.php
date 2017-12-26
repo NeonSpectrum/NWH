@@ -338,9 +338,10 @@ class View extends Room {
   public function homeJssor() {
     foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
       $filename = str_replace("images/carousel/", "", $image);
+      echo "      ";
       echo "<div data-b='0' data-p='112.50' style='display: none;'>
-          <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
-        </div>\n";
+        <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
+      </div>\n";
     }
   }
 
@@ -348,21 +349,23 @@ class View extends Room {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
+      echo "      ";
       echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
-            <figure class='imghvr-hinge-up'>
-              <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
-              <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
-                <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-                  <div style='text-align:center;color:black;font-size:22px;padding-top:10px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
-                  <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
-                </div>
-              </figcaption>
-              <div style='text-align:center;color:black;font-size:22px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
-            </figure>
-            <div style='position:relative;height:20px;margin-top:-6px'>
-              <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
-              <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='width:50%;position:absolute;right:0'>Book Now</button>
-            </div></div>";
+        <figure class='imghvr-hinge-up'>
+          <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
+          <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
+            <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
+              <div style='text-align:center;color:black;font-size:22px;padding-top:10px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+              <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
+            </div>
+          </figcaption>
+          <div style='text-align:center;color:black;font-size:22px'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+        </figure>
+        <div style='position:relative;height:20px;margin-top:-6px'>
+          <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
+          <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='width:50%;position:absolute;right:0'>Book Now</button>
+        </div>
+      </div>\n";
     }
   }
 
@@ -514,11 +517,11 @@ class View extends Room {
       echo "<td id='txtLastName'>{$row['LastName']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       echo "<td>";
-      if ($row['AccountType'] != "Owner" || $_SESSION['accountType'] == "Owner") {
+      if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {
         echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
         echo "&nbsp;&nbsp;";
       }
-      if ($_SESSION['accountType'] == "Owner" && $_SESSION['email'] != $row['EmailAddress']) {
+      if ($_SESSION['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
         echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
       }
       echo "</td>";
@@ -527,6 +530,7 @@ class View extends Room {
   }
 
   public function eventLogs() {
+    global $db;
     $result = $db->query("SELECT * FROM log");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
@@ -543,7 +547,7 @@ class View extends Room {
     $email  = $db->real_escape_string($_SESSION['email']);
     $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
     while ($row = $result->fetch_assoc()) {
-      $tomorrow = time() + 86400; // +1 day
+      $tomorrow = time() + 86400 * EDIT_RESERVATION_DAYS;
       if ($tomorrow < strtotime($row['CheckInDate'])) {
         echo "                ";
         echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
@@ -612,7 +616,7 @@ class System {
           break;
         }
       }
-      if ($currentLevel < $reqLevel) {
+      if ($currentLevel < $reqLevel && !($currentLevel == 1 && ALLOW_OWNER_PRIVILEGES)) {
         if ($kick) {
           header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
           exit();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
+if (!$system->isLogged()) {
   echo "<script>alert('Login First!');location.href='../';</script>";
 }
 require_once '../header.php';

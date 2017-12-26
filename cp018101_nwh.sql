@@ -13,15 +13,15 @@ USE `cp018101_nwh`;
 
 CREATE TABLE `account` (
   `EmailAddress` varchar(100) NOT NULL,
-  `Password` text NOT NULL,
+  `Password` varchar(255) NOT NULL,
   `AccountType` varchar(10) DEFAULT 'User',
-  `ProfilePicture` varchar(50) DEFAULT 'default.png',
-  `FirstName` text NOT NULL,
-  `LastName` text NOT NULL,
+  `ProfilePicture` varchar(105) DEFAULT 'default.png',
+  `FirstName` varchar(50) NOT NULL,
+  `LastName` varchar(50) NOT NULL,
   `ContactNumber` varchar(20) NOT NULL,
   `BirthDate` date NOT NULL,
   `DateRegistered` date NOT NULL,
-  `SessionID` text
+  `SessionID` varchar(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `DateRegistered`, `SessionID`) VALUES
@@ -46,16 +46,16 @@ CREATE TABLE `booking` (
 
 CREATE TABLE `forgot_password` (
   `id` int(11) NOT NULL,
-  `EmailAddress` varchar(256) NOT NULL,
-  `token` varchar(256) NOT NULL,
+  `EmailAddress` varchar(100) NOT NULL,
+  `token` varchar(50) NOT NULL,
   `used` tinyint(1) NOT NULL DEFAULT '0',
   `timestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
-  `user` varchar(256) DEFAULT NULL,
-  `action` varchar(256) NOT NULL,
+  `user` varchar(100) DEFAULT NULL,
+  `action` varchar(100) NOT NULL,
   `timestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -71,7 +71,7 @@ CREATE TABLE `reservation` (
 CREATE TABLE `room` (
   `RoomID` int(3) NOT NULL,
   `RoomTypeID` int(11) NOT NULL,
-  `Status` varchar(20) NOT NULL DEFAULT 'Enabled'
+  `Status` varchar(10) NOT NULL DEFAULT 'Enabled'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES

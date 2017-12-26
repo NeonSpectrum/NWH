@@ -1,4 +1,7 @@
 [{
+  "name": "LOGIN_SUCCESS",
+  "value": "Login Successfully!"
+}, {
   "name": "REGISTER_VERIFY",
   "value": "Email Sent. Kindly verify your account to register.<br/>The link will expire after 10 minutes."
 }, {
@@ -8,8 +11,17 @@
   "name": "REGISTER_EMAIL_ERROR",
   "value": "Email is invalid or already exists."
 }, {
+  "name": "FORGOT_EMAIL_SENT",
+  "value": "Email sent. Please also check the spam."
+}, {
   "name": "ERROR_OCCURED",
   "value": "Something went wrong!"
+}, {
+  "name": "UPDATE_SUCCESS",
+  "value": "Updated Successfully!"
+}, {
+  "name": "SENT_SUCCESS",
+  "value": "Sent Successfully!"
 }, {
   "name": "INVALID_EMAIL_PASSWORD",
   "value": "Incorrect Email and/or Password"
@@ -17,7 +29,7 @@
   "name": "NOTHING_CHANGED",
   "value": "Nothing Changed"
 }, {
-  "name": "FORMAT_ERROR_EMAIL",
+  "name": "EMAIL_ERROR_FORMAT",
   "value": "Invalid Format of Email Address"
 }, {
   "name": "INVALID_EMAIL",
@@ -43,4 +55,19 @@
 }, {
   "name": "CAPTCHA_ERROR",
   "value": "Please check the captcha."
+}, {
+  "name": "DATABASE_PROGRESS",
+  "value": "Database Missing... Importing Database Backup <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE. THE PAGE WILL RELOAD ITSELF."
+}, {
+  "name": "DATABASE_LOGIN_ERROR",
+  "value": "Cannot Import Database Backup!<br/>Invalid Root Password. Please make sure it is blank."
+}, {
+  "name": "DATABASE_SUCCESS",
+  "value": "Database created!"
+}, {
+  "name": "NOT_ENOUGH_GUESTS",
+  "value": "Please enter a valid number of guests!"
+}, {
+  "name": "INVALID_CHECK_DATE",
+  "value": "Check Out date must be greater than Check In date."
 }]

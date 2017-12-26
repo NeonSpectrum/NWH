@@ -1,4 +1,5 @@
 var date = new Date();
+var database = false;
 $(document).ready(function() {
   scrolling(false);
   // HIDE CONTACT BOX IF MOBILE
@@ -76,21 +77,29 @@ $(document).ready(function() {
   });
 });
 Pace.track(function() {
-  $.ajax({
-    url: root + "ajax/checkDatabase.php",
-    success: function(response) {
-      if (response == false) {
-        $("#loadingStatus").html("Database Missing... Importing Database <i class='fa fa-spinner fa-pulse'></i><br/>DON'T RELOAD THIS PAGE. THE PAGE WILL RELOAD ITSELF.");
-        $.ajax({
-          url: root + "ajax/executeScriptautoload.php",
-          success: function(response) {
-            $("#loadingStatus").html("Database created!</i>");
-            location.reload();
-          }
-        });
+  if (location.hostname.toLowerCase() == "localhost") {
+    $.ajax({
+      url: root + "ajax/checkDatabase.php",
+      success: function(response) {
+        if (response == false) {
+          $("#loadingStatus").html(DATABASE_PROGRESS);
+          $.ajax({
+            url: root + "ajax/executeScriptDB.php",
+            success: function(response) {
+              $("#loadingStatus").html(DATABASE_SUCCESS);
+              location.reload();
+            }
+          });
+        } else if (response.includes("Access denied")) {
+          $("#loadingStatus").html(DATABASE_LOGIN_ERROR);
+        } else {
+          database = true;
+        }
       }
-    }
-  })
+    })
+  } else {
+    database = true;
+  }
 });
 // PACE DONE
 Pace.on('done', function() {
@@ -101,7 +110,9 @@ Pace.on('done', function() {
   new WOW({
     offset: 40
   }).init();
-  $(".loadingIcon").fadeOut("slow");
+  if (database) {
+    $(".loadingIcon").fadeOut("slow");
+  }
   $('#pace').attr("href", $('#pace').attr("href").replace("pace-theme-center-simple", "pace-theme-minimal"));
   // BACK TO TOP
   $('body').append('<div id="backToTop" class="btn btn-sm"><span class="glyphicon glyphicon-chevron-up"></span></div>');
@@ -222,7 +233,7 @@ $("#frmLogin").submit(function(e) {
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
-        alertNotif("success", "Login Successfully", true);
+        alertNotif("success", LOGIN_SUCCESS, true);
       } else {
         $(this).find("#btnLogin").html('Sign In');
         $(this).find("#btnLogin").attr('disabled', false);
@@ -296,7 +307,7 @@ $("#frmForgot").submit(function(e) {
         $('#frmForgot').trigger('reset');
         $(this).find("#btnReset").html('Submit');
         $(this).find("#btnReset").prop('disabled', false);
-        alertNotif('success', "Email sent!", false);
+        alertNotif('success', FORGOT_EMAIL_SENT, false);
       } else {
         $(this).find("#btnReset").html('Submit');
         $(this).find("#btnReset").prop('disabled', false);
@@ -334,7 +345,7 @@ $("#frmChange").submit(function(e) {
         $(this).closest(".modal").modal("hide");
         $(this).find('#frmChange').trigger('reset');
         $(this).find('#btnUpdate').attr('disabled', false);
-        alertNotif("success", "Updated Successfully!");
+        alertNotif("success", UPDATE_SUCCESS);
       } else {
         $(this).find("#btnUpdate").html('Update');
         $(this).find('#btnUpdate').attr('disabled', false);
@@ -373,7 +384,7 @@ $("#frmEditProfile").submit(function(e) {
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
-        alertNotif("success", "Updated Successfully!", true);
+        alertNotif("success", UPDATE_SUCCESS, true);
       } else {
         $(this).find("#btnEditProfile").html('Update');
         $(this).find('#btnEditProfile').attr('disabled', false);
@@ -398,7 +409,7 @@ $("#frmEditReservation").submit(function(e) {
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
-        alertNotif('success', 'Updated Successfully!', true);
+        alertNotif('success', UPDATE_SUCCESS, true);
       } else {
         $(this).find("#btnReservation").html('Update');
         $(this).find('#btnReservation').attr('disabled', false);
@@ -415,11 +426,11 @@ $('.frmBookCheck').submit(function(e) {
   var checkIn = new Date($(this).find("#txtCheckInDate").val());
   var checkOut = new Date($(this).find("#txtCheckOutDate").val());
   if (checkIn > checkOut) {
-    alertNotif("error", "Check Out date must be greater than Check In date.");
+    alertNotif("error", INVALID_CHECK_DATE);
     return;
   }
   if (parseInt($(this).find('#txtAdults').val()) + parseInt($(this).find('#txtAdults').val()) == 0) {
-    alertNotif("error", "Please enter a valid number of guests!");
+    alertNotif("error", NOT_ENOUGH_GUESTS);
     return;
   }
   $(this).find("#btnBookNow").html('<i class="fa fa-spinner fa-pulse"></i> Booking...');
@@ -430,7 +441,7 @@ $('.frmBookCheck').submit(function(e) {
 $('#frmContact').submit(function(e) {
   e.preventDefault();
   if (!$(this).find('#txtEmail').val().includes('@') || !$(this).find('#txtEmail').val().includes('.')) {
-    alertNotif("error", "Invalid Format of Email Address", false);
+    alertNotif("error", ERROR_EMAIL_FORMAT, false);
     $('#txtEmail').focus();
     return;
   }
@@ -443,9 +454,8 @@ $('#frmContact').submit(function(e) {
     data: $(this).serialize(),
     success: function(response) {
       if (response == true) {
-        alertNotif("success", "Sent Successfully", false);
+        alertNotif("success", SENT_SUCCESS, false);
         $(this).trigger("reset");
-        $(this).parent().toggleClass('contactbox--tray');
       } else {
         alertNotif("error", response, false);
       }

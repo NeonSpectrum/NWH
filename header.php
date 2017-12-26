@@ -78,7 +78,6 @@ if (!strpos($_SERVER['PHP_SELF'], "admin")) {
   if ($currentDirectory != "home") {
     echo "<div class='height-navbar'></div>\n";
   }
-
+  echo "<div id='alertBox'></div>\n";
 }
 ?>
-<div id="alertBox"></div>

@@ -2,32 +2,35 @@ var date = new Date();
 var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 $('#tblWalkIn').DataTable();
 $('#tblBook').DataTable();
-
 $('#tblWalkIn').parent().find('input[type="search"]').attr("placeholder", "Walk In ID");
-$('#tblWalkIn').parent().find('input[type="search"]').on('keyup change', function (e) {
+$('#tblWalkIn').parent().find('input[type="search"]').on('keyup change', function(e) {
   e.preventDefault();
   $('#tblWalkIn').DataTable().column(0).search($(this).val()).draw();
 });
 $('#tblBook').parent().find('input[type="search"]').attr("placeholder", "Booking ID");
-$('#tblBook').parent().find('input[type="search"]').on('keyup change', function (e) {
+$('#tblBook').parent().find('input[type="search"]').on('keyup change', function(e) {
   e.preventDefault();
   $('#tblBook').DataTable().column(0).search($(this).val()).draw();
 });
-
+$('#tblWalkIn_length').find("select").addClass("form-control");
+$('#tblWalkIn_filter').find("input[type=search]").addClass("form-control");
+$('#tblBook_length').find("select").addClass("form-control");
+$('#tblBook_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();
 $('input.checkInDate, input.checkOutDate').datepicker({
   format: "yyyy-mm-dd",
   startDate: '0d',
   autoclose: true,
   todayHighlight: true
 });
-$(".checkInDate, .checkOutDate").each(function () {
+$(".checkInDate, .checkOutDate").each(function() {
   $(this).datepicker("setDate", today);
 });
-$('input.checkInDate').change(function () {
+$('input.checkInDate').change(function() {
   $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val());
   $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
 });
-$('.btnCheckIn').click(function () {
+$('.btnCheckIn').click(function() {
   var table = $(this).closest("table").attr("id") == "tblWalkIn" ? "walk_in" : "booking";
   swal({
     title: 'Are you sure?',
@@ -43,7 +46,7 @@ $('.btnCheckIn').click(function () {
         type: 'POST',
         url: root + 'ajax/check.php',
         data: "txtID=" + $(this).attr("id") + "&type=checkIn&table=" + table,
-        success: function (response) {
+        success: function(response) {
           if (response == true) {
             var date = new Date();
             swal({
@@ -71,8 +74,7 @@ $('.btnCheckIn').click(function () {
     }
   });
 });
-
-$('.btnCheckOut').click(function () {
+$('.btnCheckOut').click(function() {
   var table = $(this).closest("table").attr("id") == "tblWalkIn" ? "walk_in" : "booking";
   swal({
     title: 'Are you sure?',
@@ -88,7 +90,7 @@ $('.btnCheckOut').click(function () {
         type: 'POST',
         url: root + 'ajax/check.php',
         data: "txtID=" + $(this).attr("id") + "&type=checkOut&table=" + table,
-        success: function (response) {
+        success: function(response) {
           if (response == true) {
             var date = new Date();
             swal({
@@ -106,8 +108,7 @@ $('.btnCheckOut').click(function () {
     }
   });
 });
-
-$("#frmAddReservation").submit(function (e) {
+$("#frmAddReservation").submit(function(e) {
   e.preventDefault();
   $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnReservation').attr('disabled', true);
@@ -117,14 +118,14 @@ $("#frmAddReservation").submit(function (e) {
     type: 'POST',
     url: root + 'ajax/addReservation.php',
     data: $(this).serialize(),
-    success: function (response) {
+    success: function(response) {
       if (response == true) {
         $('#modalAddReservation').modal('hide');
         alertNotif('success', 'Added Successfully!', true);
       } else {
         $(this).find("#btnReservation").html('Update');
         $(this).find('#btnReservation').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function () {
+        $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })
       }

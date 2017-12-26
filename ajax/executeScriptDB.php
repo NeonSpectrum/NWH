@@ -2,7 +2,7 @@
 require_once "../files/strings.php";
 require_once "../files/classes.php";
 
-$db = new mysqli("localhost", "cp018101", PASSWORD);
+$db = new mysqli("localhost", "root", "");
 
 $contents = file_get_contents("../cp018101_nwh.sql");
 
