@@ -1,11 +1,10 @@
 <?php
-session_start();
+require_once '../header.php';
+require_once '../files/navbar.php';
 
 if (!$system->isLogged()) {
   echo "<script>alert('Login First!');location.href='../';</script>";
 }
-require_once '../header.php';
-require_once '../files/navbar.php';
 
 $checkDate = isset($_GET['txtCheckDate']) ? $_GET['txtCheckDate'] : '';
 $adults    = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
@@ -49,7 +48,19 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           <div id="step-3">
             <h3> Step 3 - Payment</h3>
             TOTAL AMOUNT OF: ₱&nbsp;<span id="txtRoomPrice"></span>
-            <br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/>
+            <div class="paymentWrap">
+              <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
+                <label class="btn paymentMethod active">
+                  <div class="method cash"></div>
+                    <input type="radio" name="txtPaymentMethod" value="Cash" checked>
+                </label>
+                <label class="btn paymentMethod">
+                  <div class="method paypal"></div>
+                    <input type="radio" name="txtPaymentMethod" value="PayPal">
+                </label>
+              </div>
+            </div>
           </div>
           <div id="step-4">
             <br/><br/>
@@ -58,7 +69,6 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             <br/><br/><br/><br/>
             <a id="btnPrint" class="btn btn-primary btn-lg pull-right" style="margin-left:20px" type="button">Print</a>
             <a class="btn btn-default btn-lg pull-right" href="<?php echo $root; ?>" type="button">Go back to home</a>
-            <br/><br/><br/><br/>
           </div>
         </div>
       </div>

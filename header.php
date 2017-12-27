@@ -2,20 +2,14 @@
 // CONNECTING TO DATABASE
 require_once 'files/autoload.php';
 
-// IF SESSION NOT EXISTS, START
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
+@session_start();
 
-if (strpos($_SERVER['PHP_SELF'], "admin")) {
-  if ($_SESSION['accountType'] == 'User' || !isset($_SESSION['accountType'])) {
-    header("location: $root");
-    exit();
-  }
+if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
+  $system->checkUserLevel(1, true);
 }
 
 // GET CURRENT DIRECTORY EXAMPLE: gallery, roomandrates, contactus
-$currentDirectory = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], "/") + 1);
+$currentDirectory = substr(strtolower($_SERVER['PHP_SELF']), 0, strrpos(strtolower($_SERVER['PHP_SELF']), "/") + 1);
 $currentDirectory = substr($currentDirectory, 0, -1);
 $currentDirectory = substr($currentDirectory, strrpos($currentDirectory, "/") + 1);
 $currentDirectory = $currentDirectory == '' || $currentDirectory == 'nwh' ? 'home' : $currentDirectory;
@@ -27,14 +21,18 @@ $currentDirectory = $currentDirectory == '' || $currentDirectory == 'nwh' ? 'hom
 
 <title>Northwood Hotel</title>
 
-<!-- WEBSITE ICON -->
-<link rel='shortcut icon' href='<?php echo $root; ?>favicon.ico?<?php echo filemtime(__DIR__ . "/favicon.ico"); ?>'/>
-
 <!-- META -->
 <?php
 require_once 'files/meta.php';
 echo "\n";
 ?>
+
+<!-- WEBSITE ICON -->
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo $root; ?>favicon.ico?v=<?php echo filemtime(__DIR__ . "/favicon.ico"); ?>"/>
+<link rel="apple-touch-icon" type="image/png" href="<?php echo $root; ?>images/logo-57.png?v=<?php echo filemtime(__DIR__ . "/images/logo-57.png"); ?>">
+<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="<?php echo $root; ?>images/logo-72.png?v=<?php echo filemtime(__DIR__ . "/images/logo-72.png"); ?>">
+<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="<?php echo $root; ?>images/logo-114.png?v=<?php echo filemtime(__DIR__ . "/images/logo-114.png"); ?>">
+<link rel="icon" type="image/png" href="<?php echo $root; ?>images/logo-114.png?v=<?php echo filemtime(__DIR__ . "/images/logo-114.png"); ?>">
 
 <!-- REQUIRED CSS -->
 <?php
@@ -47,7 +45,7 @@ foreach (glob(__DIR__ . "/assets/css/required/*.css") as $css) {
 <!-- CUSTOM CSS -->
 <?php
 // GET MAIN OR ADMIN CSS
-if (strpos($_SERVER['PHP_SELF'], "admin")) {
+if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/admin.css?v=" . filemtime(__DIR__ . "/assets/css/admin.css") . "'>\n";
 } else {
   echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/main.css?v=" . filemtime(__DIR__ . "/assets/css/main.css") . "'>\n";
@@ -59,7 +57,7 @@ if (file_exists(__DIR__ . "/assets/css/$currentDirectory.css") && $currentDirect
 }
 
 // IF ADMIN USE MINIMAL PACE
-if (strpos($_SERVER['PHP_SELF'], "admin")) {
+if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   echo "<link type='text/css' rel='stylesheet' href='{$root}assets/css/pace-theme-minimal.css?v=" . filemtime(__DIR__ . '/assets/css/pace-theme-minimal.css') . "'>\n";
 } else {
   echo "<link type='text/css' rel='stylesheet' id='pace' href='{$root}assets/css/pace-theme-center-simple.css?v=" . filemtime(__DIR__ . '/assets/css/pace-theme-center-simple.css') . "'>\n";
@@ -67,11 +65,11 @@ if (strpos($_SERVER['PHP_SELF'], "admin")) {
 ?>
 </head>
 
-<body<?php echo strpos($_SERVER['PHP_SELF'], "/admin") ? ' class="sidebar-is-reduced"' : ''; ?>>
+<body<?php echo strpos(strtolower($_SERVER['PHP_SELF']), "/admin") ? ' class="sidebar-is-reduced"' : ''; ?>>
 
 <?php
 // IF NOT ADMIN DISPLAY LOADING ANIMATION
-if (!strpos($_SERVER['PHP_SELF'], "admin")) {
+if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   echo "<div class='loadingIcon'><div id='loadingStatus'><noscript>Please enable Javascript to continue.</noscript></div></div>\n";
 
   // IF HOME DISABLE MARGIN TOP

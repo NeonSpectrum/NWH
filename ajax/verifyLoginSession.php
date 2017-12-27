@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 require_once '../files/autoload.php';
 if (isset($_SESSION['email'])) {
   $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='{$_SESSION['email']}'");

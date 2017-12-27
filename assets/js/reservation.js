@@ -371,19 +371,20 @@ $(document).ready(function() {
       addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
       addBookingSummary("Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
     } else if (stepNumber == 2) {
-      $.ajax({
-        context: this,
-        type: 'POST',
-        url: root + 'ajax/bookNow.php',
-        dataType: "json",
-        data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
-        success: function(response) {
-          $('span#txtBookingID').html(response[0]);
-          $('span#txtRoomID').html(response[1]);
-          $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
-          addBookingSummary("Total Price: " + $('#frmBookNow').find("#txtRoomPrice").html());
-        }
-      });
+      $('#reset-btn').css("display", "none");
+      // $.ajax({
+      //   context: this,
+      //   type: 'POST',
+      //   url: root + 'ajax/bookNow.php',
+      //   dataType: "json",
+      //   data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
+      //   success: function(response) {
+      //     $('span#txtBookingID').html(response[0]);
+      //     $('span#txtRoomID').html(response[1]);
+      // $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+      addBookingSummary("<br/>Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>");
+      // }
+      // });
     }
   });
   // External Button Events

@@ -1,7 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
+@session_start();
 
 class Account extends System {
 
@@ -351,7 +349,7 @@ class View extends Room {
     while ($row = $result->fetch_assoc()) {
       echo "      ";
       echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
-        <figure class='imghvr-hinge-up'>
+        <figure class='imghvr-fade-in'>
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>

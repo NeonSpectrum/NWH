@@ -15,7 +15,7 @@ $(document).ready(function() {
   });
   // FOCUS ON SELECT
   $('input').focus(function() {
-    if (!($(this).attr("class").includes("check") && $(this).attr("class").includes("Date"))) {
+    if (!($(this).attr("class") != null && $(this).attr("class").includes("check") && $(this).attr("class").includes("Date"))) {
       $(this).select();
     }
   });
@@ -134,6 +134,7 @@ Pace.on('done', function() {
   $('input.checkDate').daterangepicker({
     autoApply: true,
     autoUpdateInput: true,
+    minDate: moment(new Date()).add(1, 'days'),
     locale: {
       format: DATE_FORMAT.toUpperCase()
     }
