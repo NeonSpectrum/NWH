@@ -189,9 +189,9 @@ class Account extends System {
     }
   }
 
-  public function editProfile($credentials, $basic = false) {
+  public function editProfile($credentials, $admin = false) {
     global $db, $root;
-    if ($basic) {
+    if ($admin) {
       $email       = $credentials['email'];
       $accountType = $credentials['accountType'];
       $firstName   = $credentials['firstName'];
