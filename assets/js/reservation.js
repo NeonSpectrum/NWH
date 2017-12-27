@@ -281,6 +281,7 @@
 // SCRIPT
 var rooms = [];
 $(document).ready(function() {
+  $('#modalRules').modal("show");
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     //alert("You are on step "+stepNumber+" now");

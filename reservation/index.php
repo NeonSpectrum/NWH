@@ -88,4 +88,23 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
     </div>
   </div>
 </div>
+<div id="modalRules" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Rules and Regulation</h4>
+      </div>
+      <div class="modal-body" style="padding:30px">
+        <li>To guarantee your reservation a down payment of 50% of the total package amount must be made as soon as the booking is confirmed (within 48 hours of guest confirmation) and full payment must be paid during check-in. Failure to deposit down payment will result in forfeiture of reservation. Failure to make full payment will nullify the booking and consequently bestows on Northwood Hotel the right to disallow the guest to use our facilities.</li><br/>
+        <li>Any Valid or Government issues Photo ID is required to check in at the hotel.</li><br/>
+        <li>All credit card payments incur a surcharge of 5% additionally to the amount charged.</li><br/>
+        <li>The rooms are all strictly non-smoking.</li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php require_once '../footer.php';?>
