@@ -21,7 +21,7 @@ CREATE TABLE `account` (
   `ContactNumber` varchar(20) NOT NULL,
   `BirthDate` date NOT NULL,
   `DateRegistered` date NOT NULL,
-  `SessionID` varchar(50)
+  `SessionID` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `DateRegistered`, `SessionID`) VALUES
@@ -35,13 +35,13 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
   `EmailAddress` varchar(100) NOT NULL,
-  `RoomID` int(11) NOT NULL,
   `CheckInDate` date NOT NULL,
   `CheckOutDate` date NOT NULL,
   `Adults` int(11) NOT NULL,
   `Children` int(11) NOT NULL,
   `AmountPaid` int(11) NOT NULL,
-  `TotalAmount` int(11) NOT NULL
+  `TotalAmount` int(11) DEFAULT NULL,
+  `PaymentMethod` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
@@ -57,15 +57,6 @@ CREATE TABLE `log` (
   `user` varchar(100) DEFAULT NULL,
   `action` varchar(100) NOT NULL,
   `timestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `reservation` (
-  `ReservationID` int(11) NOT NULL,
-  `BookingID` int(11) DEFAULT NULL,
-  `WalkInID` int(11) DEFAULT NULL,
-  `CheckIn` datetime NOT NULL,
-  `CheckOut` datetime DEFAULT NULL,
-  `Price` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `room` (
@@ -118,25 +109,12 @@ INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `Capacity`
 (5, 'Studio_Type', 'I AM STUDIO TYPE', 2, 1500, 1100, 1300),
 (6, 'Barkada_Room', 'I AM BARKADA ROOM', 4, 3500, 2000, 2600);
 
-CREATE TABLE `walk_in` (
-  `WalkInID` int(11) NOT NULL,
-  `EmailAddress` varchar(100) NOT NULL,
-  `RoomID` int(11) NOT NULL,
-  `CheckInDate` date NOT NULL,
-  `CheckOutDate` date NOT NULL,
-  `Adults` int(11) NOT NULL,
-  `Children` int(11) NOT NULL,
-  `AmountPaid` int(11) NOT NULL,
-  `TotalAmount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 ALTER TABLE `account`
   ADD PRIMARY KEY (`EmailAddress`);
 
 ALTER TABLE `booking`
-  ADD PRIMARY KEY (`BookingID`,`EmailAddress`,`RoomID`),
-  ADD KEY `RoomID` (`RoomID`),
+  ADD PRIMARY KEY (`BookingID`,`EmailAddress`),
   ADD KEY `EmailAddress` (`EmailAddress`);
 
 ALTER TABLE `forgot_password`
@@ -146,22 +124,12 @@ ALTER TABLE `forgot_password`
 ALTER TABLE `log`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`ReservationID`),
-  ADD UNIQUE KEY `BookingID` (`BookingID`),
-  ADD UNIQUE KEY `WalkInID` (`WalkInID`);
-
 ALTER TABLE `room`
   ADD PRIMARY KEY (`RoomID`),
   ADD KEY `RoomTypeID` (`RoomTypeID`);
 
 ALTER TABLE `room_type`
   ADD PRIMARY KEY (`RoomTypeID`);
-
-ALTER TABLE `walk_in`
-  ADD PRIMARY KEY (`WalkInID`),
-  ADD KEY `RoomID` (`RoomID`),
-  ADD KEY `EmailAddress` (`EmailAddress`);
 
 
 ALTER TABLE `booking`
@@ -173,33 +141,18 @@ ALTER TABLE `forgot_password`
 ALTER TABLE `log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `reservation`
-  MODIFY `ReservationID` int(11) NOT NULL AUTO_INCREMENT;
-
 ALTER TABLE `room_type`
   MODIFY `RoomTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
-ALTER TABLE `walk_in`
-  MODIFY `WalkInID` int(11) NOT NULL AUTO_INCREMENT;
-
 
 ALTER TABLE `booking`
-  ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`),
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
 ALTER TABLE `forgot_password`
   ADD CONSTRAINT `forgot_password_ibfk_1` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
-ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`WalkInID`) REFERENCES `walk_in` (`WalkInID`),
-  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
-
 ALTER TABLE `room`
   ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`RoomTypeID`) REFERENCES `room_type` (`RoomTypeID`);
-
-ALTER TABLE `walk_in`
-  ADD CONSTRAINT `walk_in_ibfk_1` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`),
-  ADD CONSTRAINT `walk_in_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
