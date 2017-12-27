@@ -296,20 +296,30 @@ class Room extends System {
     return $price;
   }
 
-  public function generateRoomID($room) {
+  public function generateRoomID($room, $quantity, $checkInDate, $checkOutDate) {
     global $db;
-    $rooms  = array();
+    $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE RoomType = '$room'");
-
     while ($row = $result->fetch_assoc()) {
-      if ($row['Status'] != 'Disabled' && $row['Status'] != 'Occupied') {
+      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}'");
+      if ($roomResult->num_rows > 0) {
+        while ($roomRow = $roomResult->fetch_assoc()) {
+          if ($this->isBetweenDate($roomRow['CheckInDate'], $roomRow['CheckOutDate'], $checkInDate, $checkOutDate)) {
+            $roomAvailable = false;
+            break;
+          }
+          $roomAvailable = true;
+        }
+      } else {
+        $roomAvailable = true;
+      }
+      if ($row['Status'] != 'Disabled' && $roomAvailable && !in_array($row['RoomID'], $rooms)) {
         $rooms[] = $row['RoomID'];
       }
     }
-    if (empty($rooms)) {
-      return "Full";
-    }
-    return $rooms[array_rand($rooms, 1)];
+    shuffle($rooms);
+    $roomPicked = array_slice($rooms, 0, $quantity);
+    return $roomPicked;
   }
 
 }
@@ -689,13 +699,20 @@ class System {
 
   public function isExpired($date, $time) {
     $seconds = $time * 60;
-    if (strtotime($date) + $seconds < strtotime("now")) {
+    return strtotime($date) + $seconds < strtotime("now");
+  }
+  public function isBetweenDate($checkDate1, $checkDate2, $date1, $date2) {
+    $checkDate1 = strtotime($checkDate1);
+    $checkDate2 = strtotime($checkDate2);
+    $date1      = strtotime($date1);
+    $date2      = strtotime($date2);
+
+    if (($checkDate1 >= $date1 && $checkDate1 <= $date2) && ($checkDate2 >= $date1 && $checkDate2 <= $date2)) {
       return true;
     } else {
       return false;
     }
   }
-
   public function getBetween($var1 = "", $var2 = "", $pool) {
     $temp1  = strpos($pool, $var1) + strlen($var1);
     $result = substr($pool, $temp1, strlen($pool));

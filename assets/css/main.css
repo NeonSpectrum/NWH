@@ -21,6 +21,16 @@ body {
   }
 }
 
+#loadingMode {
+  display: none;
+  background: #fff url('../../images/loading.gif') no-repeat center;
+  background-size: 15%;
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+
 #loadingStatus {
   position: fixed;
   width: 100%;

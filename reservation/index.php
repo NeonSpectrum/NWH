@@ -20,7 +20,8 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           <li style="width:25%"><a href="#step-3">Step 3<br /><small>Payment</small></a></li>
           <li style="width:25%"><a href="#step-4">Step 4<br /><small>Finish</small></a></li>
         </ul>
-        <div>
+        <div style="min-height: 200px">
+          <div id="loadingMode"></div>
           <div id="step-1" style="padding:20px">
             <div id="form-step-0" >
               <div class="form-group">
@@ -63,12 +64,13 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             </div>
           </div>
           <div id="step-4">
-            <br/><br/>
             <h3>Your booking ID is <span id="txtBookingID"></span>
-            <h3>Your Room ID is <span id="txtRoomID"></span>
-            <br/><br/><br/><br/>
-            <a id="btnPrint" class="btn btn-primary btn-lg pull-right" style="margin-left:20px" type="button">Print</a>
-            <a class="btn btn-default btn-lg pull-right" href="<?php echo $root; ?>" type="button">Go back to home</a>
+            <h3>Your Room ID are:<br/> <span id="txtRoomID"></span>
+            <br/>
+            <div class="text-right">
+              <a id="btnPrint" class="btn btn-primary btn-lg" style="margin-left:20px" type="button">Print</a>
+              <a class="btn btn-default btn-lg" href="<?php echo $root; ?>" type="button">Go back to home</a>
+            </div>
           </div>
         </div>
       </div>

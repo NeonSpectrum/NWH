@@ -279,6 +279,7 @@
   }
 }(jQuery, window, document);
 // SCRIPT
+var rooms = [];
 $(document).ready(function() {
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
@@ -331,6 +332,7 @@ $(document).ready(function() {
         alertNotif("error", "An adult is a must!");
         return false;
       }
+      $("#loadingMode").fadeIn();
       $.ajax({
         type: 'POST',
         url: root + 'ajax/getRooms.php',
@@ -345,7 +347,7 @@ $(document).ready(function() {
             $('input[type="checkbox"]').not(this).prop('checked', false);
           });
           addBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>");
-          return true;
+          $("#loadingMode").fadeOut();
         }
       });
     } else if (stepNumber == 1) {
@@ -361,9 +363,17 @@ $(document).ready(function() {
       }
       addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
       var total = 0;
+      $("#loadingMode").fadeIn();
       $('.numberOfRooms').each(function() {
         if ($(this).find("select").val() != 0) {
-          addBookingSummary($(this).parent().find("#roomName").html() + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
+          var roomName = $(this).parent().find("#roomName").html();
+          var roomQuantity = $(this).find("select").val();
+          rooms.push({
+            roomType: roomName,
+            roomQuantity: roomQuantity
+          });
+          addBookingSummary(roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
+          $("#loadingMode").fadeOut();
         }
         total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
       });
@@ -372,35 +382,37 @@ $(document).ready(function() {
       addBookingSummary("Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
     } else if (stepNumber == 2) {
       $('#reset-btn').css("display", "none");
-      // $.ajax({
-      //   context: this,
-      //   type: 'POST',
-      //   url: root + 'ajax/bookNow.php',
-      //   dataType: "json",
-      //   data: $('#frmBookNow').serialize() + "&txtRoomPrice=" + $('#txtRoomPrice').html(),
-      //   success: function(response) {
-      //     $('span#txtBookingID').html(response[0]);
-      //     $('span#txtRoomID').html(response[1]);
-      // $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
-      addBookingSummary("<br/>Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>");
-      // }
-      // });
+      $("#loadingMode").fadeIn();
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + 'ajax/bookNow.php',
+        dataType: "json",
+        data: {
+          data: $('#frmBookNow').serialize(),
+          rooms: rooms
+        },
+        success: function(response) {
+          $('span#txtBookingID').html(response[0]);
+          $('span#txtRoomID').html(response[1]);
+          $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+          addBookingSummary("<br/>Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>");
+          $("#loadingMode").fadeOut();
+        }
+      });
     }
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
-    // Reset wizard
     $('#smartwizard').smartWizard("reset");
     $('#bookingSummary').html('');
     return true;
   });
   $("#prev-btn").on("click", function() {
-    // Navigate previous
     $('#smartwizard').smartWizard("prev");
     return true;
   });
   $("#next-btn").on("click", function() {
-    // Navigate next
     $('#smartwizard').smartWizard("next");
     return true;
   });

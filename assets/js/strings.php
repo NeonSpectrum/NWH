@@ -1,3 +1,12 @@
+String.prototype.includes = function (str) {
+  var returnValue = false;
+
+  if (this.indexOf(str) !== -1) {
+    returnValue = true;
+  }
+
+  return returnValue;
+}
 <?php
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");

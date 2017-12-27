@@ -28,13 +28,13 @@ $(document).ready(function() {
       $(this).val(max);
     }
   });
-  // CONTACT BOX
-  $('.contactbox__title').on('click', function() {
-    $('.contactbox').toggleClass('contactbox--tray');
-  });
-  $('.contactbox').on('transitionend', function() {
-    if ($(this).hasClass('contactbox--closed')) $(this).remove();
-  });
+  // // CONTACT BOX
+  // $('.contactbox__title').on('click', function() {
+  //   $('.contactbox').toggleClass('contactbox--tray');
+  // });
+  // $('.contactbox').on('transitionend', function() {
+  //   if ($(this).hasClass('contactbox--closed')) $(this).remove();
+  // });
   // BACK TO TOP
   $('a.back-to-top, a.simple-back-to-top').click(function() {
     $('html, body').animate({
@@ -135,6 +135,7 @@ Pace.on('done', function() {
     autoApply: true,
     autoUpdateInput: true,
     minDate: moment(new Date()).add(1, 'days'),
+    endDate: moment(new Date()).add(1, 'days'),
     locale: {
       format: DATE_FORMAT.toUpperCase()
     }

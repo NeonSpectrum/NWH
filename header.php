@@ -4,15 +4,16 @@ require_once 'files/autoload.php';
 
 @session_start();
 
+// IF ADMIN PAGE KICK IF NOT ADMIN
 if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   $system->checkUserLevel(1, true);
 }
 
-// GET CURRENT DIRECTORY EXAMPLE: gallery, roomandrates, contactus
+// GET CURRENT DIRECTORY EXAMPLE: home, gallery, roomandrates, contactus
 $currentDirectory = substr(strtolower($_SERVER['PHP_SELF']), 0, strrpos(strtolower($_SERVER['PHP_SELF']), "/") + 1);
 $currentDirectory = substr($currentDirectory, 0, -1);
 $currentDirectory = substr($currentDirectory, strrpos($currentDirectory, "/") + 1);
-$currentDirectory = $currentDirectory == '' || $currentDirectory == 'nwh' ? 'home' : $currentDirectory;
+$currentDirectory = $currentDirectory == str_replace("/", "", $root) ? 'home' : $currentDirectory;
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +25,6 @@ $currentDirectory = $currentDirectory == '' || $currentDirectory == 'nwh' ? 'hom
 <!-- META -->
 <?php
 require_once 'files/meta.php';
-echo "\n";
 ?>
 
 <!-- WEBSITE ICON -->
