@@ -172,7 +172,7 @@ class Account extends System {
     global $db;
     $result = $db->query("SELECT * FROM forgot_password WHERE EmailAddress='$email' AND token='$token'");
     $row    = $result->fetch_assoc();
-    if ($result->num_rows > 0 && !$row['used'] && !$this->isExpired($row['timestamp'], FORGOT_PASSWORD_EXPIRATION)) {
+    if ($result->num_rows > 0 && !$row['used'] && !$this->isExpired($row['timestamp'], FORGOT_EXPIRATION)) {
       return true;
     } else {
       return $db->error;
@@ -323,6 +323,7 @@ class Room extends System {
   }
 
 }
+
 class Book {
   public function showBookingInfo($bookingID) {
     global $db;
@@ -341,6 +342,7 @@ class Book {
     }
   }
 }
+
 class View extends Room {
 
   public function homeJssor() {
@@ -401,10 +403,10 @@ class View extends Room {
       }
       echo "</td>";
       echo "<td style='vertical-align:top'>
-          <h3>" . str_replace("_", " ", $row['RoomType']) . "</h3><br/>
+          <h3><b>" . str_replace("_", " ", $row['RoomType']) . "</b></h3><br/>
           {$row['RoomDescription']}
         </td>";
-      echo "<td><center>From<br/><br/><span style='text-style:bold;font-size:20px;'>₱&nbsp;" . number_format($this->getRoomPrice($row['RoomType'])) . "</span></center></td>";
+      echo "<td><center>From<br/><br/><span style='font-size:20px;'><b>₱&nbsp;" . number_format($this->getRoomPrice($row['RoomType'])) . "</b></span></center></td>";
       echo "</tr>";
     }
   }
@@ -637,13 +639,13 @@ class System {
     }
   }
 
-  public function sendContactForm($name, $email, $message) {
+  public function sendContactForm($name, $email, $contactNumber, $message) {
     $subject = "Message from $email";
-    $body    = "Name: $name<br/>Email: $email<br/>Message: $message";
-    return $this->sendMail("Northwood Hotel Support", SUPPORT_EMAIL, $subject, $body);
+    $body    = "Name: $name<br/>Email: $email<br/>ContactNumber: $contactNumber<br/>Message: $message";
+    return $this->sendMail(SUPPORT_EMAIL, $subject, $body, "Northwood Hotel Support");
   }
 
-  public function sendMail($email, $subject, $body) {
+  public function sendMail($email, $subject, $body, $title = "") {
     try {
       $mail = new PHPMailer(true);
       $mail->isSMTP();

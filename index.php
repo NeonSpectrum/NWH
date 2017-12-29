@@ -75,7 +75,7 @@ if (!$db->connect_error) {
     <div class="center-block" style="width:80%;margin-bottom:20px;padding-top:5px">
       <h1 class="wow slideInUp" style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
       <hr style="border-color:white;border-width:3px;width:10%"/>
-      <div class="row center-block" style="background:rgba(255,255,255,0.6);padding-top:20px;overflow:hidden">
+      <div class="row center-block" style="background:rgba(255,255,255,0.7);padding-top:20px;overflow:hidden">
         <div class="col-md-6 wow slideInLeft">
           <p style="font-style:italic;font-size:20px;padding:0px 30px 0px 30px;">One of the most exciting and amazing tourist destination in the Philippines, The Hundred Islands National Park in Alaminos, Pangasinan that covers 123 islands with 1,844 hectares. Northwood Hotel is just a few minutes away from Don Gonzalo Montemayor wharf in Barangay Lucap where you can rent a boat and start exploring the beautiful paradise of Governor’s Island, Quezon Island, Marcos Island, Children Island and some other islets.</p>
         </div>
@@ -121,6 +121,33 @@ if (!$db->connect_error) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modalPromo" class="modal fade center" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1" data-dismiss="modal">&times;</button>
+      <div id="promo_slider_container" style="position: relative; top: 0px; left: 0px; width: 600px;height: 550px;">
+        <div data-u="slides" style="position: absolute; left: 0px; top: 0px; width: 600px; height: 550px;overflow: hidden;">
+          <div>
+            <img data-u='image' src='images/background.jpg' alt=''>
+          </div>
+          <div>
+            <img data-u='image' src='images/hundred-islands.jpg' alt=''>
+          </div>
+        </div>
+        <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2"  data-scale-left="0.75">
+          <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="11040,1920 4960,8000 11040,14080"></polyline>
+          </svg>
+        </div>
+        <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale-right="0.75">
+          <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="4960,1920 11040,8000 4960,14080"></polyline>
+          </svg>
+        </div>
       </div>
     </div>
   </div>

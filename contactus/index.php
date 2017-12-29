@@ -4,7 +4,7 @@ require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
-    <h1 style="margin-top:0px;text-align:center">Contact Us</h1>
+    <h1 style="margin-top:0px;text-align:center">CONTACT US</h1>
     <hr style="border-color:black"/>
     <div class="box-content">
       <h2>Northwood Hotel</h2><br/>
@@ -16,13 +16,16 @@ require_once '../files/navbar.php';
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
         <div class="form-group">
-          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" require />
+          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" required />
         </div>
         <div class="form-group">
-          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" require />
+          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" required/>
         </div>
         <div class="form-group">
-          <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" require></textarea>
+          <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)"/>
+        </div>
+        <div class="form-group">
+          <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>
         </div>
         <div class="form-group">
           <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>

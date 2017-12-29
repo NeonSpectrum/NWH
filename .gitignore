@@ -1,2 +1,11 @@
 /images/profilepics/
+
+# ini
 /config.ini
+
+# Office Temp Files
+~$*
+
+# Temp Files
+*.temp
+*.tmp

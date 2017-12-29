@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
   $arr = array();
 
-  $db->query("INSERT INTO booking VALUES(NULL, '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod')");
+  $db->query("INSERT INTO booking VALUES(NULL, '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod','$date')");
 
   if ($db->affected_rows > 0) {
     $bookingID = $db->insert_id;

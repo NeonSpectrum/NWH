@@ -240,22 +240,10 @@ input[type="date"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-/* CAROUSEL */
-
-.full-screen {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.item img {
-  background-position: 50% 50%;
-}
-
 /* HOME CONTENT */
 
 .homeContent {
-  background: url('../../images/hundred-islands.jpg') no-repeat;
+  background: url('../../images/nwh_grass.jpg') no-repeat;
   background-size: cover;
   width: 100%;
   text-align: justify;

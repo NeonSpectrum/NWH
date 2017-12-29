@@ -4,7 +4,7 @@ require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:90%;background:rgba(255,255,255,0.9)">
-    <h1 style="text-align:center">Room and Rates</h1>
+    <h1 style="text-align:center">ROOM AND RATES</h1>
     <hr style="border-color:black"/>
     <div class="table-responsive">
       <table>

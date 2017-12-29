@@ -115,22 +115,31 @@ a[disabled], a[disabled]:hover {
   background-size: 30%;
 }
 
-/* MODAL */
-
-/*.modal-header {
-  background-color: #032B49;
-  color: white;
-}
-
-.modal-header .close {
-  margin-top: -2px;
-  color: white;
-  text-shadow: none;
-}*/
-
 img.white-border {
   -webkit-filter: drop-shadow(0.5px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white);
   filter: drop-shadow(0.5px 0.5px 0 white) drop-shadow(-0.5px -0.5px 0 white);
+}
+
+/* MODAL */
+
+.modal.center {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal.center:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+  /* Adjusts for spacing */
+}
+
+.modal.center>.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width:767px) {
