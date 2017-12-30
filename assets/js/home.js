@@ -1,25 +1,5 @@
 var home_slider = null;
 Pace.on('done', function() {
-  var options = {
-    $AutoPlay: 3000,
-    $PauseOnHover: 1,
-    $FillMode: 1,
-    $SlideWidth: 400,
-    $Cols: 2,
-    $Align: 100,
-    $DragOrientation: 1,
-    $BulletNavigatorOptions: {
-      $Class: $JssorBulletNavigator$
-    },
-    $ThumbnailNavigatorOptions: {
-      $Class: $JssorThumbnailNavigator$,
-      $Cols: 1,
-      $Orientation: 2,
-      $Align: 0,
-      $NoDrag: true
-    }
-  };
-  new $JssorSlider$('promo_slider_container', options);
   $("#modalPromo").modal("show");
   $('#modalPromo').on('show', function() {
     $(this).find('.modal-content').css({
@@ -123,6 +103,26 @@ $('.btnMoreInfo').click(function() {
   });
 });
 (function() {
+  var options = {
+    $AutoPlay: 3000,
+    $PauseOnHover: 1,
+    $FillMode: 1,
+    $SlideWidth: 400,
+    $Cols: 2,
+    $Align: 100,
+    $DragOrientation: 1,
+    $BulletNavigatorOptions: {
+      $Class: $JssorBulletNavigator$
+    },
+    $ThumbnailNavigatorOptions: {
+      $Class: $JssorThumbnailNavigator$,
+      $Cols: 1,
+      $Orientation: 2,
+      $Align: 0,
+      $NoDrag: true
+    }
+  };
+  new $JssorSlider$('promo_slider_container', options);
   var youtube = document.querySelectorAll(".youtube");
   for (var i = 0; i < youtube.length; i++) {
     var image = new Image();
