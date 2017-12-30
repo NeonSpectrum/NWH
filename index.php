@@ -128,10 +128,10 @@ if (!$db->connect_error) {
 <?php
 if (!$system->checkUserLevel(1)) {
   ?>
-<div id="modalPromo" class="modal fade center" role="dialog">
+<div id="modalPromo" class="modal animated zoomIn center" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1" data-dismiss="modal">&times;</button>
+      <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1;opacity:1" data-dismiss="modal">&times;</button>
       <div id="promo_slider_container" style="position: relative; top: 0px; left: 0px; width: 600px;height: 550px;">
         <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
           <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
