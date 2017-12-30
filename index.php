@@ -12,7 +12,7 @@ require_once 'files/navbar.php';
   <div id="home_slider" style="position:relative;margin:0 auto;top:0px;left:0px;width:960px;height:640px;overflow:hidden;visibility:hidden;">
       <!-- Loading Screen -->
     <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
-        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
+      <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
     </div>
     <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
 <?php
@@ -133,6 +133,9 @@ if (!$system->checkUserLevel(1)) {
     <div class="modal-content">
       <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1" data-dismiss="modal">&times;</button>
       <div id="promo_slider_container" style="position: relative; top: 0px; left: 0px; width: 600px;height: 550px;">
+        <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+          <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
+        </div>
         <div data-u="slides" style="position: absolute; left: 0px; top: 0px; width: 600px; height: 550px;overflow: hidden;">
           <?php echo $view->promoPictures(); ?>
         </div>
