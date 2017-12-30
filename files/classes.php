@@ -318,8 +318,7 @@ class Room extends System {
       }
     }
     shuffle($rooms);
-    $roomPicked = array_slice($rooms, 0, $quantity);
-    return $roomPicked;
+    return count($rooms) > 0 ? array_slice($rooms, 0, $quantity) : false;
   }
 
 }
@@ -344,7 +343,16 @@ class Book {
 }
 
 class View extends Room {
-
+  public function promoPictures() {
+    foreach (glob("images/promos/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
+      $filename = str_replace("images/promos/", "", $image);
+      echo "      ";
+      echo "<div>
+        <img data-u='image' src='$image?v=" . filemtime("$image") . "' alt='$filename'>
+        <div u='thumb'>Slide Description 001</div>
+      </div>\n";
+    }
+  }
   public function homeJssor() {
     foreach (glob("images/carousel/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
       $filename = str_replace("images/carousel/", "", $image);
@@ -413,14 +421,15 @@ class View extends Room {
 
   public function booking() {
     global $db, $root;
-    $result = $db->query("SELECT * FROM booking");
+    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$row['BookingID']}</td>";
       echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
       echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-      echo "<td id='txtCheckInDate'>{$row['CheckInDate']}</td>";
-      echo "<td id='txtCheckOutDate'>{$row['CheckOutDate']}</td>";
+      echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+      echo "<td id='txtCheckInDate'>" . date("Y/m/d", strtotime($row['CheckInDate'])) . "</td>";
+      echo "<td id='txtCheckOutDate'>" . date("Y/m/d", strtotime($row['CheckOutDate'])) . "</td>";
       echo "<td id='txtAdults'>{$row['Adults']}</td>";
       echo "<td id='txtChildren'>{$row['Children']}</td>";
       echo "<td>";

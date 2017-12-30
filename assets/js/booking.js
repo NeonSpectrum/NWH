@@ -6,6 +6,7 @@ $('.btnEditReservation').click(function() {
   var bookingID = $(this).attr("id");
   var email = $(this).closest("tr").find("#txtEmail").html();
   var roomID = $(this).closest("tr").find("#txtRoomID").html();
+  var roomType = $(this).closest("tr").find("#txtRoomType").html();
   var checkInDate = $(this).closest("tr").find("#txtCheckInDate").html();
   var checkOutDate = $(this).closest("tr").find("#txtCheckOutDate").html();
   var adults = $(this).closest("tr").find("#txtAdults").html();
@@ -13,11 +14,24 @@ $('.btnEditReservation').click(function() {
   $('#modalEditReservation').find('.modal-title').html("Booking ID: " + bookingID);
   $('#modalEditReservation').find('#cmbBookingID').val(bookingID);
   $('#modalEditReservation').find("#txtEmail").val(email);
+  $('#modalEditReservation').find("#cmbRoomType").val(roomType);
   $('#modalEditReservation').find("#txtRoomID").val(roomID);
-  $('#modalEditReservation').find("#txtCheckInDate").val(checkInDate);
-  $('#modalEditReservation').find("#txtCheckOutDate").val(checkOutDate);
+  $('#modalEditReservation').find("#txtCheckDate").val(checkInDate + " - " + checkOutDate);
   $('#modalEditReservation').find("#txtAdults").val(adults);
   $('#modalEditReservation').find("#txtChildren").val(children);
+});
+$("#btnGenerateRoomID").click(function() {
+  var roomType = $("#cmbRoomType").val().replace(" ", "_");
+  var checkDate = $("#txtCheckDate").val();
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/generateRoomID.php",
+    data: "roomType=" + roomType + "&checkDate=" + checkDate,
+    success: function(response) {
+      $(this).closest("#modalEditReservation").find("#txtRoomID").val(response);
+    }
+  });
 });
 $("#frmEditReservation").submit(function(e) {
   e.preventDefault();

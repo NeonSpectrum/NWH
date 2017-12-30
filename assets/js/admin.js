@@ -19,7 +19,7 @@ var Dashboard = function() {
     } else {
       // $('.c-menu__submenu.u-list').slideUp();
       $('.logo__txt').hide();
-      $('.logo__txt').html("NH");
+      $('.logo__txt').html("NWH");
       $('.logo__txt').fadeIn("slow");
     }
   };
@@ -33,10 +33,12 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
-$('input.datepicker').datepicker({
-  format: "yyyy-mm-dd",
-  autoclose: true,
-  todayHighlight: true
+$('input.checkDate').daterangepicker({
+  autoApply: true,
+  autoUpdateInput: true,
+  locale: {
+    format: DATE_FORMAT.toUpperCase()
+  }
 });
 $('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
   return false;
@@ -47,7 +49,6 @@ $(window).on('resize', function() {
 $('.modal').on('hidden.bs.modal', function() {
   $(this).find("form").trigger("reset");
   $(this).find('.lblDisplayError').html('');
-  grecaptcha.reset();
   $("#frmRegister").find('button[type=submit]').attr('disabled', true);
 });
 // GIT UPDATE

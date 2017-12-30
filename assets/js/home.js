@@ -1,5 +1,33 @@
 var home_slider = null;
 Pace.on('done', function() {
+  var options = {
+    $AutoPlay: 3000,
+    $PauseOnHover: 1,
+    $FillMode: 1,
+    $SlideWidth: 400,
+    $Cols: 2,
+    $Align: 100,
+    $DragOrientation: 1,
+    $BulletNavigatorOptions: {
+      $Class: $JssorBulletNavigator$
+    },
+    $ThumbnailNavigatorOptions: {
+      $Class: $JssorThumbnailNavigator$,
+      $Cols: 1,
+      $Orientation: 2,
+      $Align: 0,
+      $NoDrag: true
+    }
+  };
+  new $JssorSlider$('promo_slider_container', options);
+  $("#modalPromo").modal("show");
+  $('#modalPromo').on('show', function() {
+    $(this).find('.modal-content').css({
+      width: 'auto', //probably not needed
+      height: 'auto', //probably not needed 
+      'max-height': '100%'
+    });
+  });
   if ($("#modalForgotToChangePassword").length) {
     $("#modalForgotToChangePassword").modal({
       backdrop: "static",
@@ -9,14 +37,6 @@ Pace.on('done', function() {
   } else if ($("#tokenError").length) {
     alertNotif("error", $("#tokenError").html(), false);
   }
-  $("#modalPromo").modal("show");
-  $('#modalPromo').on('show', function() {
-    $(this).find('.modal-content').css({
-      width: 'auto', //probably not needed
-      height: 'auto', //probably not needed 
-      'max-height': '100%'
-    });
-  });
   if (home_slider != null) return;
   var home_transitions = [{
     $Duration: 800,
@@ -24,6 +44,7 @@ Pace.on('done', function() {
   }];
   var home_options = {
     $AutoPlay: true,
+    $PauseOnHover: 1,
     $Idle: 3000,
     $DragOrientation: 1,
     $PauseOnHover: 0,
@@ -101,18 +122,6 @@ $('.btnMoreInfo').click(function() {
     }
   });
 });
-// MODAL PROMO JSSOR
-var options = {
-  $FillMode: 2,
-  $DragOrientation: 1, //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $Cols is greater than 1, or parking position is not 0)
-  $ArrowNavigatorOptions: { //[Optional] Options to specify and enable arrow navigator or not
-    $Class: $JssorArrowNavigator$, //[Requried] Class to create arrow navigator instance
-    $ChanceToShow: 2, //[Required] 0 Never, 1 Mouse Over, 2 Always
-    $Steps: 1 //[Optional] Steps to go for each navigation request, default value is 1
-  }
-};
-new $JssorSlider$('promo_slider_container', options);
-// YOUTUBE
 (function() {
   var youtube = document.querySelectorAll(".youtube");
   for (var i = 0; i < youtube.length; i++) {

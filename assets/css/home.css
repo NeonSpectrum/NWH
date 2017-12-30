@@ -97,32 +97,25 @@
   cursor: pointer;
 }
 
-.jssorb064 .i .b {
-  fill: #000;
-  fill-opacity: .5;
-  stroke: #fff;
-  stroke-width: 400;
-  stroke-miterlimit: 10;
-  stroke-opacity: 0.5;
+.jssorb051 .i {
+  position: absolute;
+  cursor: pointer;
 }
 
-.jssorb064 .i:hover .b {
-  fill-opacity: .8;
+.jssorb051 .i .b {
+  fill: #fff;
+  fill-opacity: 0.5;
 }
 
-.jssorb064 .iav .b {
-  fill: #ffe200;
+.jssorb051 .i:hover .b {
+  fill-opacity: .7;
+}
+
+.jssorb051 .iav .b {
   fill-opacity: 1;
-  stroke: #ffaa00;
-  stroke-opacity: .7;
-  stroke-width: 2000;
 }
 
-.jssorb064 .iav:hover .b {
-  fill-opacity: .6;
-}
-
-.jssorb064 .i.idn {
+.jssorb051 .i.idn {
   opacity: .3;
 }
 

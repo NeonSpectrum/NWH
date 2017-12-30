@@ -125,34 +125,32 @@ if (!$db->connect_error) {
     </div>
   </div>
 </div>
+<?php
+if (!$system->checkUserLevel(1)) {
+  ?>
 <div id="modalPromo" class="modal fade center" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1" data-dismiss="modal">&times;</button>
       <div id="promo_slider_container" style="position: relative; top: 0px; left: 0px; width: 600px;height: 550px;">
         <div data-u="slides" style="position: absolute; left: 0px; top: 0px; width: 600px; height: 550px;overflow: hidden;">
-          <div>
-            <img data-u='image' src='images/background.jpg' alt=''>
-          </div>
-          <div>
-            <img data-u='image' src='images/hundred-islands.jpg' alt=''>
-          </div>
+          <?php echo $view->promoPictures(); ?>
         </div>
-        <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2"  data-scale-left="0.75">
-          <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-            <polyline class="a" points="11040,1920 4960,8000 11040,14080"></polyline>
-          </svg>
-        </div>
-        <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale-right="0.75">
-          <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-            <polyline class="a" points="4960,1920 11040,8000 4960,14080"></polyline>
-          </svg>
+        <div class="jssorb051" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75" data-u="navigator" style="position:absolute;bottom:7px;right:12px;z-index:2">
+          <div class="i" data-u="prototype" style="width:16px;height:16px;">
+            <svg style="position:absolute;top:0;left:0;width:100%;height:100%;" viewbox="0 0 16000 16000">
+              <circle class="b" cx="8000" cy="8000" r="5800">
+              </circle>
+            </svg>
+          </div>
         </div>
       </div>
+      <div style="background-color:rgba(0,0,0,0.4);position:absolute;bottom:0;left:0;width:600px;height:30px;z-index:1"></div>
     </div>
   </div>
 </div>
 <?php
+}
 if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToken($_GET['email'], $_GET['token'])) {
   ?>
 <div id="modalForgotToChangePassword" class="modal fade" role="dialog" backdrop="static">

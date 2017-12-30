@@ -18,6 +18,7 @@ $system->checkUserLevel(1, true);
             <th>Booking ID</th>
             <th>Email Address</th>
             <th>Room ID</th>
+            <th style="display:none">Room Type</th>
             <th>Check In Date</th>
             <th>Check Out Date</th>
             <th>Adults</th>
@@ -51,7 +52,7 @@ $view->booking();
             <label class="col-sm-3 control-label">Room Type</label>
             <div class="col-sm-7">
               <select id="cmbRoomType" name="cmbRoomType" class="form-control">
-                <option>Standard Single</option>
+                <option selected>Standard Single</option>
                 <option>Standard Double</option>
                 <option>Family Room</option>
                 <option>Junior Suites</option>
@@ -61,20 +62,20 @@ $view->booking();
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Check In Date</label>
-            <div class="col-sm-7">
-              <div class="input-group date">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckInDate" type="text" class="form-control checkInDate" id="txtCheckInDate" required readonly/>
-              </div>
+            <label class="col-sm-3 control-label">Room ID</label>
+            <div class="col-sm-4">
+              <input name="txtRoomID" type="text" class="form-control" id="txtRoomID" required readonly/>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" id="btnGenerateRoomID" class="btn btn-default">Generate</button>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Check Out Date</label>
+            <label class="col-sm-3 control-label">Check Date</label>
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckOutDate" type="text" class="form-control checkOutDate" id="txtCheckOutDate" required readonly/>
+                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" required readonly/>
               </div>
             </div>
           </div>

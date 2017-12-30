@@ -36,7 +36,7 @@ if ($system->checkUserLevel(2)) {
 </header>
 <div class="l-sidebar">
   <a class="logo" title="Go to home page" href="<?php echo $root; ?>" style="text-decoration:none">
-    <div class="logo__txt">NH</div>
+    <div class="logo__txt">NWH</div>
   </a>
   <div class="l-sidebar__content">
     <nav class="c-menu js-menu">
