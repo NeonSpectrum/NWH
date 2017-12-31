@@ -144,7 +144,7 @@ img.white-border {
 
 @media only screen and (max-width:767px) {
   .modal.center {
-    margin-top: 45%;
+    margin-top: 35%;
   }
   .loadingIcon {
     background-size: 75%;
