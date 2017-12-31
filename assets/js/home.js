@@ -12,8 +12,33 @@ $(window).on('load', function() {
         $Class: $JssorBulletNavigator$
       }
     };
-    promo_slider = new $JssorSlider$('promo_slider_container', options);
-    $("#modalPromo").modal("show");
+    var promo_slider = new $JssorSlider$('promo_slider_container', options);
+
+    function PromoScaleSlider() {
+      //reserve blank width for margin+padding: margin+padding-left (10) + margin+padding-right (10)
+      //minimum width should reserve for text
+      var parentElement = promo_slider.$Elmt.parentNode;
+      //evaluate parent container width
+      var parentWidth = parentElement.clientWidth;
+      if (parentWidth) {
+        //exclude blank width
+        //calculate slider width as 70% of available width
+        //slider width is maximum 600
+        parentWidth = Math.min(parentWidth, 600);
+        //slider width is minimum 200
+        parentWidth = Math.max(parentWidth, 200);
+        var clearFix = "both";
+        //clear fix for safari 3.1, chrome 3
+        var toClearElment = $Jssor$.$GetElement("clearFixDiv");
+        toClearElment && $Jssor$.$Css(toClearElment, "clear", clearFix);
+        promo_slider.$ScaleWidth(parentWidth);
+      } else $Jssor$.$Delay(PromoScaleSlider, 30);
+    }
+    PromoScaleSlider();
+    $(window).bind("load", PromoScaleSlider);
+    $(window).bind("resize", PromoScaleSlider);
+    $(window).bind("orientationchange", PromoScaleSlider);
+    $('#modalPromo').modal('show');
   }
   if ($("#modalForgotToChangePassword").length) {
     $("#modalForgotToChangePassword").modal({
@@ -44,13 +69,13 @@ var home_options = {
     $TransitionsOrder: 1
   },
 };
-home_slider = new $JssorSlider$("home_slider", home_options);
+var home_slider = new $JssorSlider$("home_slider", home_options);
 home_slider.$Elmt.style.margin = "";
 var MAX_WIDTH = 3000;
 var MAX_HEIGHT = 3000;
 var MAX_BLEEDING = 1;
 
-function ScaleSlider() {
+function HomeScaleSlider() {
   var containerElement = home_slider.$Elmt.parentNode;
   var containerWidth = containerElement.clientWidth;
   if (containerWidth) {
@@ -72,10 +97,10 @@ function ScaleSlider() {
 }
 /*ios disable scrolling and bounce effect*/
 //$Jssor$.$AddEvent(document, "touchmove", function(event){event.touches.length < 2 && $Jssor$.$CancelEvent(event);});
-ScaleSlider();
-$(window).bind("load", ScaleSlider);
-$(window).bind("resize", ScaleSlider);
-$(window).bind("orientationchange", ScaleSlider);
+HomeScaleSlider();
+$(window).bind("load", HomeScaleSlider);
+$(window).bind("resize", HomeScaleSlider);
+$(window).bind("orientationchange", HomeScaleSlider);
 // });
 // MORE INFO BUTTON
 var jssor, temp;

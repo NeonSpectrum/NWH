@@ -5,7 +5,6 @@ date_default_timezone_set(TIMEZONE);
 $date        = date("Y-m-d");
 $dateandtime = date("Y-m-d H:i:s");
 
-// COMPOSER
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once 'classes.php';
 
@@ -16,5 +15,4 @@ if (DEBUG) {
   ini_set('display_errors', TRUE);
   ini_set('display_startup_errors', TRUE);
 }
-
 ?>
