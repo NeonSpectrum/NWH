@@ -1,15 +1,18 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+define("PASSWORD", "yuanhua");
+if (isset($_POST['command']) && $_POST['password'] === PASSWORD) {
   $command = filter_var($_POST['command'], FILTER_SANITIZE_STRING);
   $path    = strtolower($_SERVER['SERVER_NAME']) != "localhost" ? 'export PATH=$PATH:~/git-2.9.5 && ' : '';
   echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path . $command))));
   return;
 }
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Northwood Hotel</title>
+<link rel="stylesheet" type="text/css" href="assets/css/required/1_bootstrap.min.css">
 <style>
 
 @font-face {
@@ -23,6 +26,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   margin:0;
+  user-select: none;
 }
 
 body {
@@ -125,7 +129,18 @@ textarea, input, button {
 </style>
 </head>
 <body>
-<div class="container">
+<?php
+if (!isset($_POST['password']) || $_POST['password'] !== PASSWORD) {
+  ?>
+<div style="width:100%;height:100%;position:fixed;z-index:1;background-color:rgba(255,255,255,0.7);padding:20% 40%">
+  <div class="well center-block">
+    <form method="POST">Access Code: <input type="password" name="password" class="form-control" autofocus></form>
+  </div>
+</div>
+<?php
+}
+?>
+<div class="container" style="margin:0;padding:0">
   <div class="window">
     <div class="handle">
       <span class="title"></span>
@@ -187,7 +202,7 @@ $(document).ready(function() {
           $.ajax({
             context: this,
             type: 'POST',
-            data: "command="+command,
+            data: "command="+command+"&password=<?php echo $_POST['password']; ?>",
             success: function(response) {
               if(response){
                 terminal.append(response);
@@ -204,7 +219,8 @@ $(document).ready(function() {
       }
       default:
       {
-        appendCommand(String.fromCharCode(keyCode));
+        if(!$("input[name=password]").is(":focus"))
+          appendCommand(String.fromCharCode(keyCode));
       }
     }
   });

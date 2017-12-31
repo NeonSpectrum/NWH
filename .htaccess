@@ -109,11 +109,11 @@ deny from all
 Options All -Indexes
 
 #Password Protect file
-<Files debug.php>
-  <If "%{HTTP_HOST} != 'localhost'">
-    AuthName "Prompt"
-    AuthType Basic
-    AuthUserFile /home/cp018101/public_html/.htpasswd
-    Require valid-user
-  </If>
-</Files>
+#<Files debug.php>
+#  <If "%{HTTP_HOST} != 'localhost'">
+#    AuthName "Prompt"
+#    AuthType Basic
+#    AuthUserFile /home/cp018101/public_html/.htpasswd
+#    Require valid-user
+#  </If>
+#</Files>
