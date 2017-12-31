@@ -1,7 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $path = strtolower($_SERVER['SERVER_NAME']) != "localhost" ? 'export PATH=$PATH:~/git-2.9.5 && ' : '';
-  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path . $_POST['command']))));
+  $command = filter_var($_POST['command'], FILTER_SANITIZE_STRING);
+  $path    = strtolower($_SERVER['SERVER_NAME']) != "localhost" ? 'export PATH=$PATH:~/git-2.9.5 && ' : '';
+  echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path . $command))));
   return;
 }
 ?>
