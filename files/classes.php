@@ -638,13 +638,19 @@ class System {
       if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
         if ($kick) {
           header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
-          exit();
         } else {
           return false;
         }
       } else {
         return true;
       }
+    } else {
+      if ($kick) {
+        header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
+      } else {
+        return false;
+      }
+
     }
   }
 
