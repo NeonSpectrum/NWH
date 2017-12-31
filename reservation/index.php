@@ -13,6 +13,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">
     <form id="frmBookNow">
+      <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
       <div id="smartwizard">
         <ul>
           <li style="width:25%"><a href="#step-1">Step 1<br /><small>Check In & Check Out Date</small></a></li>
@@ -44,6 +45,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           </div>
           <div id="step-2">
             <div id="txtRooms">
+
             </div>
           </div>
           <div id="step-3">
@@ -52,11 +54,15 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             <br/><br/>
             <div class="paymentWrap">
               <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
-                <label class="btn paymentMethod active">
+                <label class="btn paymentMethod active" title="Cash">
                   <div class="method cash"></div>
                     <input type="radio" name="txtPaymentMethod" value="Cash" checked>
                 </label>
-                <label class="btn paymentMethod">
+                <label class="btn paymentMethod" title="Bank">
+                  <div class="method bank"></div>
+                    <input type="radio" name="txtPaymentMethod" value="Bank">
+                </label>
+                <label class="btn paymentMethod" title="Paypal">
                   <div class="method paypal"></div>
                     <input type="radio" name="txtPaymentMethod" value="PayPal">
                 </label>
@@ -64,8 +70,8 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             </div>
           </div>
           <div id="step-4">
-            <h3>Your booking ID is <span id="txtBookingID"></span>
-            <h3>Your Room ID are:<br/> <span id="txtRoomID"></span>
+            <h3>Booking ID: <span id="txtBookingID"></span>
+            <h3>Room ID(s):<br/> <span id="txtRoomID"></span>
             <br/>
             <div class="text-right">
               <a id="btnPrint" class="btn btn-primary btn-lg" style="margin-left:20px" type="button">Print</a>
@@ -74,9 +80,9 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           </div>
         </div>
       </div>
-      <div class="btn-group navbar-btn pull-right" role="group">
-        <button class="btn btn-default" id="reset-btn" style="margin-right:10px" type="button">Reset</button>
-        <button class="btn btn-primary" id="next-btn" type="button">Next</button>
+      <div class="navbar-btn col-md-12" style="position:relative;height:50px" role="group">
+        <button class="btn btn-primary" id="next-btn" style="position:absolute;right:0" type="button">Next</button>
+        <button class="btn btn-default" id="reset-btn" style="margin-right:10px;position:absolute;right:55px" type="button">Reset</button>
       </div>
     </form>
   </div>

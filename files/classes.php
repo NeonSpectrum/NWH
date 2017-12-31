@@ -1,24 +1,33 @@
 <?php
 @session_start();
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
+/*--------------- VARIABLES --------------*/
+$levels = ["User", "Admin", "Manager", "Creator"];
+/*----------------------------------------*/
+
+/*----------------------------------------*/
+/*-------------Account Class--------------*/
+/*----------------------------------------*/
 class Account extends System {
 
   public function login($credentials) {
     global $db;
-    $email    = $db->real_escape_string($credentials['email']);
-    $password = $db->real_escape_string($credentials['password']);
+    $email    = $this->filter_input($credentials['email']);
+    $password = $this->filter_input($credentials['password'], true);
 
     $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");
     $row    = $result->fetch_assoc();
 
     if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
-      $_SESSION['email']         = $row['EmailAddress'];
-      $_SESSION['fname']         = $row['FirstName'];
-      $_SESSION['lname']         = $row['LastName'];
-      $_SESSION['picture']       = $row['ProfilePicture'];
-      $_SESSION['accountType']   = $row['AccountType'];
-      $_SESSION['birthDate']     = $row['BirthDate'];
-      $_SESSION['contactNumber'] = $row['ContactNumber'];
+      $_SESSION['account']['email']         = $row['EmailAddress'];
+      $_SESSION['account']['fname']         = $row['FirstName'];
+      $_SESSION['account']['lname']         = $row['LastName'];
+      $_SESSION['account']['picture']       = $row['ProfilePicture'];
+      $_SESSION['account']['accountType']   = $row['AccountType'];
+      $_SESSION['account']['birthDate']     = $row['BirthDate'];
+      $_SESSION['account']['contactNumber'] = $row['ContactNumber'];
 
       $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email");
       $this->createLog("login|account", $email);
@@ -29,34 +38,32 @@ class Account extends System {
   }
 
   public function logout() {
-    if (isSet($_COOKIE['nwhAuth'])) {
+    if (isset($_COOKIE['nwhAuth'])) {
       setcookie('nwhAuth', '', time() - (60 * 60 * 24 * 7), '/');
       unset($_COOKIE['nwhAuth']);
     }
-    if (session_destroy()) {
-      if (strpos($_SERVER['HTTP_REFERER'], "/reservation")) {
-        header("location: ../");
-      } else {
-        header("location:" . $_SERVER['HTTP_REFERER']);
-      }
-      return true;
+    unset($_SESSION['account']);
+    if (strpos($_SERVER['HTTP_REFERER'], "/reservation")) {
+      header("location: ../");
+    } else {
+      header("location:" . $_SERVER['HTTP_REFERER']);
     }
-    return false;
+    return true;
   }
 
   public function verifyRegistration($credentials) {
     global $db, $date, $root;
-    $fname         = ucwords(strtolower($db->real_escape_string($credentials['txtFirstName'])));
-    $lname         = ucwords(strtolower($db->real_escape_string($credentials['txtLastName'])));
-    $email         = $db->real_escape_string($credentials['txtEmail']);
-    $password      = password_hash($db->real_escape_string($credentials['txtPassword']), PASSWORD_DEFAULT);
-    $contactNumber = $db->real_escape_string($credentials['txtContactNumber']);
-    $birthDate     = $db->real_escape_string($credentials['txtBirthDate']);
+    $fname         = ucwords(strtolower($this->filter_input($credentials['txtFirstName'])));
+    $lname         = ucwords(strtolower($this->filter_input($credentials['txtLastName'])));
+    $email         = $this->filter_input($credentials['txtEmail']);
+    $password      = password_hash($this->filter_input($credentials['txtPassword'], true), PASSWORD_DEFAULT);
+    $contactNumber = $this->filter_input($credentials['txtContactNumber']);
+    $birthDate     = $this->filter_input($credentials['txtBirthDate']);
 
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
     if ($result->num_rows == 0) {
-      $data    = $this->nwh_encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
+      $data    = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
       $subject = "Northwood Hotel Account Creation";
       $body    = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/register.php?$data";
       if ($this->sendMail("$email", "$subject", "$body") == true) {
@@ -70,12 +77,12 @@ class Account extends System {
 
   public function register($credentials, $verify = true) {
     global $db, $date, $root;
-    $fname         = ucwords(strtolower($db->real_escape_string($credentials['txtFirstName'])));
-    $lname         = ucwords(strtolower($db->real_escape_string($credentials['txtLastName'])));
-    $email         = $db->real_escape_string($credentials['txtEmail']);
-    $password      = password_hash($db->real_escape_string($credentials['txtPassword']), PASSWORD_DEFAULT);
-    $contactNumber = $db->real_escape_string($credentials['txtContactNumber']);
-    $birthDate     = $db->real_escape_string($credentials['txtBirthDate']);
+    $fname         = ucwords(strtolower($this->filter_input($credentials['txtFirstName'])));
+    $lname         = ucwords(strtolower($this->filter_input($credentials['txtLastName'])));
+    $email         = $this->filter_input($credentials['txtEmail']);
+    $password      = password_hash($this->filter_input($credentials['txtPassword'], true), PASSWORD_DEFAULT);
+    $contactNumber = $this->filter_input($credentials['txtContactNumber']);
+    $birthDate     = $this->filter_input($credentials['txtBirthDate']);
 
     if (isset($credentials['expirydate']) && $this->isExpired($credentials['expirydate'])) {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
@@ -85,7 +92,7 @@ class Account extends System {
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
-        $this->createLog("insert|account.register|$email']}", $_SESSION['email']);
+        $this->createLog("insert|account.register|$email']}", $_SESSION['account']['email']);
         return true;
       } else {
         return ALREADY_REGISTERED;
@@ -208,10 +215,10 @@ class Account extends System {
       $output = NOTHING_CHANGED;
       if (isset($credentials['image'])) {
         $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
-        $filename  = basename($_SESSION['fname'] . $_SESSION['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
+        $filename  = basename($_SESSION['account']['fname'] . $_SESSION['account']['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
         $output    = $this->saveImage($credentials['image'], $directory, $filename);
         if ($output == true) {
-          $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['email']}'");
+          $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['account']['email']}'");
           $this->createLog("update|account.profilepicture");
           $_SESSION["picture"] = $filename;
         } else {
@@ -219,19 +226,19 @@ class Account extends System {
         }
       }
 
-      $email         = $db->real_escape_string($_SESSION['email']);
-      $fname         = $db->real_escape_string($credentials['fname']);
-      $lname         = $db->real_escape_string($credentials['lname']);
-      $birthDate     = $db->real_escape_string($credentials['birthDate']);
-      $contactNumber = $db->real_escape_string($credentials['contactNumber']);
+      $email         = $this->filter_input($_SESSION['account']['email']);
+      $fname         = $this->filter_input($credentials['fname']);
+      $lname         = $this->filter_input($credentials['lname']);
+      $birthDate     = $this->filter_input($credentials['birthDate']);
+      $contactNumber = $this->filter_input($credentials['contactNumber']);
 
       $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
-        $_SESSION['fname']         = $fname;
-        $_SESSION['lname']         = $lname;
-        $_SESSION['birthDate']     = $birthDate;
-        $_SESSION['contactNumber'] = $contactNumber;
+        $_SESSION['account']['fname']         = $fname;
+        $_SESSION['account']['lname']         = $lname;
+        $_SESSION['account']['birthDate']     = $birthDate;
+        $_SESSION['account']['contactNumber'] = $contactNumber;
         $this->createLog("update|account.profile");
         $output = true;
       }
@@ -241,7 +248,7 @@ class Account extends System {
 
   public function deleteAccount($email) {
     global $db;
-    if ($_SESSION['accountType'] == "Owner") {
+    if ($_SESSION['account']['accountType'] == "Owner") {
       $result = $db->query("DELETE FROM account WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
@@ -256,6 +263,9 @@ class Account extends System {
 
 }
 
+/*----------------------------------------*/
+/*----------------Room Class--------------*/
+/*----------------------------------------*/
 class Room extends System {
 
   public function editRoomDescription($roomType, $description) {
@@ -287,8 +297,10 @@ class Room extends System {
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row    = $result->fetch_assoc();
     if (mktime(0, 0, 0, 10, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 5, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
+      // September 1 - May 31
       $price = $row['PeakRate'];
     } else if (mktime(0, 0, 0, 7, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 8, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
+      // July 1 - August 31
       $price = $row['LeanRate'];
     } else {
       $price = $row['DiscountedRate'];
@@ -304,7 +316,7 @@ class Room extends System {
       $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}'");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
-          if ($this->isBetweenDate($roomRow['CheckInDate'], $roomRow['CheckOutDate'], $checkInDate, $checkOutDate)) {
+          if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate'])) {
             $roomAvailable = false;
             break;
           }
@@ -318,11 +330,14 @@ class Room extends System {
       }
     }
     shuffle($rooms);
-    return count($rooms) > 0 ? array_slice($rooms, 0, $quantity) : false;
+    return count($rooms) > 0 ? array_slice($rooms, 0, $quantity) : $rooms;
   }
 
 }
 
+/*----------------------------------------*/
+/*----------------Book Class--------------*/
+/*----------------------------------------*/
 class Book {
   public function showBookingInfo($bookingID) {
     global $db;
@@ -342,6 +357,9 @@ class Book {
   }
 }
 
+/*----------------------------------------*/
+/*---------------View Class---------------*/
+/*----------------------------------------*/
 class View extends Room {
   public function promoPictures() {
     foreach (glob("images/promos/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
@@ -540,7 +558,7 @@ class View extends Room {
         echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
         echo "&nbsp;&nbsp;";
       }
-      if ($_SESSION['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
+      if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
         echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
       }
       echo "</td>";
@@ -553,17 +571,17 @@ class View extends Room {
     $result = $db->query("SELECT * FROM log");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
-      echo "<td>{$row['id']}</td>";
-      echo "<td>{$row['user']}</td>";
-      echo "<td>" . str_replace("|", " | ", $row['action']) . "</td>";
-      echo "<td>{$row['timestamp']}</td>";
+      echo "<td>{$row['ID']}</td>";
+      echo "<td>{$row['EmailAddress']}</td>";
+      echo "<td>" . str_replace("|", " | ", $row['Action']) . "</td>";
+      echo "<td>{$row['TimeStamp']}</td>";
       echo "</tr>";
     }
   }
 
   public function listBookingID() {
     global $db;
-    $email  = $db->real_escape_string($_SESSION['email']);
+    $email  = $this->filter_input($_SESSION['account']['email']);
     $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
     while ($row = $result->fetch_assoc()) {
       $tomorrow = time() + 86400 * EDIT_RESERVATION_DAYS;
@@ -604,37 +622,19 @@ class View extends Room {
 
 }
 
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
-
+/*----------------------------------------*/
+/*--------------System Class--------------*/
+/*----------------------------------------*/
 class System {
 
   public function isLogged() {
-    if (isset($_SESSION['email'])) {
-      return true;
-    } else {
-      return false;
-    }
+    return isset($_SESSION['account']['email']) ? true : false;
   }
 
   public function checkUserLevel($reqLevel, $kick = false) {
-    global $root;
+    global $root, $levels;
     if ($this->isLogged()) {
-      $currentLevel = 0;
-      switch ($_SESSION['accountType']) {
-      case "User":{
-          $currentLevel = 0;
-          break;
-        }
-      case "Admin":{
-          $currentLevel = 1;
-          break;
-        }
-      case "Owner":{
-          $currentLevel = 2;
-          break;
-        }
-      }
+      $currentLevel = array_search($_SESSION['account']['accountType'], $levels);
       if ($currentLevel < $reqLevel && !($currentLevel == 1 && ALLOW_OWNER_PRIVILEGES)) {
         if ($kick) {
           header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
@@ -680,20 +680,23 @@ class System {
   }
 
   public function saveImage($image, $directory, $filename) {
-    if (move_uploaded_file($image["tmp_name"], $directory . $filename)) {
-      return true;
-    } else {
-      return UPLOAD_ERROR;
-    }
+    return move_uploaded_file($image["tmp_name"], $directory . $filename) ? true : UPLOAD_ERROR;
+  }
+
+  public function validateToken($token) {
+    return $_SESSION['csrf_token'] === $this->decrypt($token);
   }
 
   public function createLog($action, $email = "") {
     global $db;
-    $email = $email == "" && isset($_SESSION['email']) ? $_SESSION['email'] : $email;
+    $email = $email == "" && isset($_SESSION['account']['email']) ? $_SESSION['account']['email'] : $email;
     $date  = date("Y-m-d H:i:s");
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }
 
+  public function formatBookingID($id, $date) {
+    return "nwh" . date("mdy", strtotime($date)) . "-" . sprintf("% '04d\n", $id);
+  }
   public function verifyCaptcha($captcha) {
     if (!$captcha) {
       return 'Please check the the captcha form.';
@@ -712,19 +715,35 @@ class System {
     $seconds = $time * 60;
     return strtotime($date) + $seconds < strtotime("now");
   }
-  public function isBetweenDate($checkDate1, $checkDate2, $date1, $date2) {
-    $checkDate1 = strtotime($checkDate1);
-    $checkDate2 = strtotime($checkDate2);
-    $date1      = strtotime($date1);
-    $date2      = strtotime($date2);
 
-    if (($checkDate1 >= $date1 && $checkDate1 <= $date2) && ($checkDate2 >= $date1 && $checkDate2 <= $date2)) {
-      return true;
-    } else {
-      return false;
+  public function isBetweenDate($checkDate1, $checkDate2, $date1, $date2) {
+    $checkDate = $this->getDatesFromRange($checkDate1, $checkDate2);
+    $date      = $this->getDatesFromRange($date1, $date2);
+
+    foreach ($checkDate as $key => $value) {
+      if (in_array($value, $date)) {
+        return true;
+      }
     }
+    return false;
   }
-  public function getBetween($var1 = "", $var2 = "", $pool) {
+
+  public function getDatesFromRange($start, $end) {
+    $dates = [];
+
+    $end = new DateTime($end);
+    $end->add(new DateInterval('P1D'));
+
+    $period = new DatePeriod(new DateTime($start), new DateInterval('P1D'), $end);
+
+    foreach ($period as $date) {
+      $dates[] = $date->format("Y-m-d");
+    }
+
+    return $dates;
+  }
+
+  public function getBetweenString($var1 = "", $var2 = "", $pool) {
     $temp1  = strpos($pool, $var1) + strlen($var1);
     $result = substr($pool, $temp1, strlen($pool));
     $dd     = strpos($result, $var2);
@@ -746,11 +765,17 @@ class System {
     return $string;
   }
 
-  public function nwh_encrypt($string) {
+  public function filter_input($string, $isPassword = false) {
+    global $db;
+    $output = $db->real_escape_string($string);
+    return $isPassword == false ? filter_var($output, FILTER_SANITIZE_STRING) : $output;
+  }
+
+  public function encrypt($string) {
     return openssl_encrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
   }
 
-  public function nwh_decrypt($string) {
+  public function decrypt($string) {
     return openssl_decrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
   }
 

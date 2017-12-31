@@ -1,7 +1,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+08:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +30,7 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 ('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123', '2017-12-13', '2017-10-29', 'j5n0c4noiqmgdk44b2iou3jca5'),
 ('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'cuv527khttgpq9r22ufkv30ru0'),
 ('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Admin', 'KateBolanos.png', 'Kate', 'Bolanos', '123', '2017-12-13', '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('youngskymann@gmail.com', '$2y$10$luX9F27Y3LawOTgXiTXZh.VBNdGawSHEIdvpuE2wwz9y3rILcBZlC', 'Owner', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
+('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Owner', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -41,7 +41,14 @@ CREATE TABLE `booking` (
   `Children` int(11) NOT NULL,
   `AmountPaid` int(11) NOT NULL,
   `TotalAmount` int(11) DEFAULT NULL,
-  `PaymentMethod` varchar(10) NOT NULL
+  `PaymentMethod` varchar(10) NOT NULL,
+  `DateCreated` date NOT NULL,
+  `DateUpdated` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `booking_room` (
+  `BookingID` int(11) NOT NULL,
+  `RoomID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
@@ -80,7 +87,7 @@ INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES
 (112, 5, 'Enabled'),
 (201, 1, 'Enabled'),
 (202, 1, 'Enabled'),
-(203, 2, 'Enabled'),
+(203, 2, 'Disabled'),
 (204, 2, 'Enabled'),
 (205, 4, 'Enabled'),
 (206, 3, 'Enabled'),
@@ -117,6 +124,10 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`BookingID`,`EmailAddress`),
   ADD KEY `EmailAddress` (`EmailAddress`);
 
+ALTER TABLE `booking_room`
+  ADD KEY `BookingID` (`BookingID`),
+  ADD KEY `RoomID` (`RoomID`);
+
 ALTER TABLE `forgot_password`
   ADD PRIMARY KEY (`id`),
   ADD KEY `EmailAddress` (`EmailAddress`);
@@ -147,6 +158,10 @@ ALTER TABLE `room_type`
 
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
+
+ALTER TABLE `booking_room`
+  ADD CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`),
+  ADD CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`);
 
 ALTER TABLE `forgot_password`
   ADD CONSTRAINT `forgot_password_ibfk_1` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);

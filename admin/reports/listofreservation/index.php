@@ -26,7 +26,7 @@ $system->checkUserLevel(1, true);
             </thead>
             <tbody>
 <?php
-$view->listOfReservation("walk_in");
+// $view->listOfReservation("walk_in");
 ?>
             </tbody>
           </table>
@@ -46,7 +46,7 @@ $view->listOfReservation("walk_in");
             </thead>
             <tbody>
 <?php
-$view->listOfReservation("book");
+// $view->listOfReservation("book");
 ?>
             </tbody>
           </table>

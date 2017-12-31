@@ -3,7 +3,7 @@ $domain = strpos($_SERVER['REQUEST_URI'], "nwh") ? "{$_SERVER['SERVER_NAME']}/nw
 
 require_once '../files/autoload.php';
 
-parse_str(nwh_decrypt($_SERVER['QUERY_STRING']));
+parse_str(decrypt($_SERVER['QUERY_STRING']));
 
 if (isset($newPass)) {
   $newPass = password_hash($newPass, PASSWORD_DEFAULT);
@@ -17,15 +17,15 @@ if (isset($newPass)) {
   } else {
     echo $db->error;
   }
-} else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $email = $db->real_escape_string($_POST['txtEmail']);
+} else if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+  $email = $system->filter_input($_POST['txtEmail']);
 
   $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");
   $row    = $result->fetch_assoc();
 
   if ($result->num_rows == 1) {
     createLog("sent|forgot.password|$email");
-    $data    = nwh_encrypt("email=$email&newPass=" . getRandomString(8));
+    $data    = encrypt("email=$email&newPass=" . getRandomString(8));
     $subject = "Northwood Hotel Forgot Password";
     $body    = "Please proceed to this link to reset your password:<br/>http://$domain/files/checkForgot.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
 

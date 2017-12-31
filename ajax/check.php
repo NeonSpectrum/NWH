@@ -4,7 +4,7 @@ require_once '../files/autoload.php';
 $dateNow = date('Y-m-d H:i:s');
 $id      = $_POST['txtID'];
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   if ($_POST['type'] == "checkIn") {
     if ($_POST['table'] == "walk_in") {
       $db->query("INSERT INTO reservation VALUES(NULL, NULL, $id, '$dateNow', NULL, NULL)");

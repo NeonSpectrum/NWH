@@ -20,13 +20,6 @@ Pace.on('done', function() {
       $DragOrientation: 1,
       $BulletNavigatorOptions: {
         $Class: $JssorBulletNavigator$
-      },
-      $ThumbnailNavigatorOptions: {
-        $Class: $JssorThumbnailNavigator$,
-        $Cols: 1,
-        $Orientation: 2,
-        $Align: 0,
-        $NoDrag: true
       }
     };
     promo_slider = new $JssorSlider$('promo_slider_container', options);

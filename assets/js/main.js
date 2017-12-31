@@ -376,10 +376,13 @@ $("#frmEditProfile").submit(function(e) {
   }
   var form_data = new FormData();
   form_data.append("file", $('#imgProfilePic').prop('files')[0]);
+  form_data.append("mode", "editAccount");
+  form_data.append("csrf_token", $(this).find("input[name=csrf_token]").val());
+  form_data.append("data", $(this).serialize());
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'account/?' + $(this).serialize() + "&mode=editAccount",
+    url: root + 'account/',
     data: form_data,
     processData: false,
     contentType: false,

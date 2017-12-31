@@ -44,6 +44,7 @@ $view->booking();
       </div>
       <div class="modal-body">
         <form id="frmEditReservation" method="post" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

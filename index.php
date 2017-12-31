@@ -20,7 +20,6 @@ $view->homeJssor();
 ?>
     <!-- <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div> -->
     </div>
-    <!-- Arrow Navigator -->
     <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
       <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
         <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
@@ -53,7 +52,7 @@ $view->homeJssor();
       </div>
       <div class="form-group">
         <label></label>
-        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['email']) ? 'disabled' : ''; ?>><?php echo !isset($_SESSION['email']) ? 'Login First!' : 'Book Now'; ?></button>
+        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['account']['email']) ? 'disabled' : ''; ?>><?php echo !isset($_SESSION['account']['email']) ? 'Login First!' : 'Book Now'; ?></button>
       </div>
     </form>
   </div>
@@ -156,13 +155,14 @@ if (!$system->checkUserLevel(1)) {
 }
 if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToken($_GET['email'], $_GET['token'])) {
   ?>
-<div id="modalForgotToChangePassword" class="modal fade" role="dialog" backdrop="static">
+<div id="modalForgotToChangePassword" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" method="post" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -184,6 +184,7 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
         </div>
         <div class="modal-footer">
           <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
@@ -195,5 +196,5 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
 <span id="tokenError"><?php echo TOKEN_EXPIRED; ?></span>
 <?php
 }
+require_once 'footer.php';
 ?>
-<?php require_once 'footer.php';?>

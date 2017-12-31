@@ -12,6 +12,11 @@ $('.btnEditAccount').click(function() {
   $('#modalEditAccount').find("#txtFirstName").val(firstName);
   $('#modalEditAccount').find("#txtLastName").val(lastName);
   $('#modalEditAccount').find("#cmbAccountType").val(accountType);
+  if ($('#modalEditAccount').find("#cmbAccountType option[value='" + accountType + "']").val() === undefined) {
+    $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "none");
+  } else {
+    $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "block");
+  }
 });
 $('.btnDeleteAccount').click(function() {
   var email = $(this).attr("id");

@@ -1,12 +1,12 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $credentials                = [];
-  $credentials['email']       = $db->real_escape_string($_POST['txtEmail']);
-  $credentials['accountType'] = $db->real_escape_string($_POST['cmbAccountType']);
-  $credentials['firstName']   = $db->real_escape_string($_POST['txtFirstName']);
-  $credentials['lastName']    = $db->real_escape_string($_POST['txtLastName']);
+  $credentials['email']       = $system->filter_input($_POST['txtEmail']);
+  $credentials['accountType'] = $system->filter_input($_POST['cmbAccountType']);
+  $credentials['firstName']   = $system->filter_input($_POST['txtFirstName']);
+  $credentials['lastName']    = $system->filter_input($_POST['txtLastName']);
 
   echo $account->editProfile($credentials, true);
 }

@@ -1,9 +1,9 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $roomType        = $db->real_escape_string($_POST['txtRoomType']);
-  $roomDescription = $db->real_escape_string($_POST['txtDescription']);
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+  $roomType        = $system->filter_input($_POST['txtRoomType']);
+  $roomDescription = $system->filter_input($_POST['txtDescription']);
 
   echo $room->editRoomDescription($roomType, $roomDescription);
 }

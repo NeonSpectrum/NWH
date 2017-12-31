@@ -41,6 +41,7 @@ $view->accounts();
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmAddAccount" data-toggle="validator">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -132,6 +133,7 @@ $view->accounts();
       </div>
       <div class="modal-body">
         <form id="frmEditAccount" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -153,11 +155,11 @@ $view->accounts();
             <label class="col-sm-2 control-label">Account Type: </label>
             <div class="col-sm-5">
               <select id="cmbAccountType" name="cmbAccountType" class="form-control" required>
-                <option>User</option>
-                <option>Admin</option>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
 <?php
-if ($_SESSION['accountType'] == "Owner") {
-  echo "<option>Owner</option>";
+if ($system->checkUserLevel(2)) {
+  echo "<option value='Manager'>Manager</option>";
 }
 ?>
               </select>

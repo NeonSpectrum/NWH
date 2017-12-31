@@ -32,7 +32,7 @@ $system->checkUserLevel(1, true);
               </thead>
               <tbody>
 <?php
-$view->check("walk_in");
+// $view->check("walk_in");
 ?>
               </tbody>
             </table>
@@ -53,7 +53,7 @@ $view->check("walk_in");
               </thead>
               <tbody>
 <?php
-$view->check("book");
+// $view->check("book");
 ?>
               </tbody>
             </table>
@@ -72,6 +72,7 @@ $view->check("book");
       </div>
       <div class="modal-body">
         <form id="frmAddReservation" method="post" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

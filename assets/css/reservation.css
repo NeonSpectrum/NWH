@@ -1,5 +1,11 @@
+@media only screen and (max-width:767px) {
+  #txtRooms {
+    text-align: center;
+  }
+}
+
 .paymentWrap .paymentBtnGroup {
-  max-width: 400px;
+  max-width: 600px;
 }
 
 .paymentWrap .paymentBtnGroup .paymentMethod {
@@ -33,6 +39,10 @@
 
 .paymentWrap .paymentBtnGroup .paymentMethod .method.cash {
   background-image: url("../../images/cash.png");
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method.bank {
+  background-image: url("../../images/bank.png");
 }
 
 .paymentWrap .paymentBtnGroup .paymentMethod .method.paypal {
@@ -185,7 +195,7 @@
 
 @media screen and (max-width:768px) {
   .sw-theme-default>.nav-tabs>li {
-    float: none!important
+    float: none!important;
   }
 }
 
@@ -395,7 +405,8 @@
   }
   .sw-theme-arrows>.nav-tabs>li {
     float: none!important;
-    margin-bottom: 0
+    margin-bottom: 0;
+    width: 100% !important;
   }
   .sw-theme-arrows>ul.step-anchor>li>a, .sw-theme-arrows>ul.step-anchor>li>a:hover {
     padding-left: 15px;

@@ -1,8 +1,10 @@
 <?php
-// CONNECTING TO DATABASE
+// EXECUTE AUTOLOAD SCRIPT
 require_once 'files/autoload.php';
 
 @session_start();
+$csrf_token             = md5(uniqid(rand(), TRUE));
+$_SESSION['csrf_token'] = $csrf_token;
 
 // IF ADMIN PAGE KICK IF NOT ADMIN
 if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {

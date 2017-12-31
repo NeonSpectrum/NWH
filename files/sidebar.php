@@ -23,9 +23,9 @@ if (strpos($_SERVER['PHP_SELF'], 'booking')) {
     <div class="header-title">
       Admin Page
     </div>
-    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['picture']}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['picture']}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['fname']} {$_SESSION['lname']}"; ?></span>
+    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']['picture']}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']['picture']}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['account']['fname']} {$_SESSION['account']['lname']}"; ?></span>
 <?php
-if ($system->checkUserLevel(2)) {
+if ($system->checkUserLevel(3)) {
   ?>
     <a id="btnGitUpdate" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
     <?php
@@ -97,7 +97,7 @@ if (CHAT) {
               </a>
             </li>
 <?php
-if ($system->checkUserLevel(2)) {
+if ($system->checkUserLevel(3)) {
   ?>
             <li title="Event Logs">
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/eventlogs"><i class="fa fa-database"></i>

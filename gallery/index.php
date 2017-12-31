@@ -11,6 +11,7 @@ require_once '../files/navbar.php';
       <li><a data-toggle="tab" href="#function">Function Hall</a></li>
       <li><a data-toggle="tab" href="#bigbite">BigBite</a></li>
       <li><a data-toggle="tab" href="#pool">Swimming Pool</a></li>
+      <li><a data-toggle="tab" href="#events">Events</a></li>
     </ul>
     <div class="tab-content">
       <div id="rooms" class="tab-pane fade in active">
@@ -38,6 +39,13 @@ $view->gallery("bigbite");
         <div class="img-baguette">
 <?php
 $view->gallery("pool");
+?>
+        </div>
+      </div>
+      <div id="events" class="tab-pane fade">
+        <div class="img-baguette">
+<?php
+$view->gallery("events");
 ?>
         </div>
       </div>

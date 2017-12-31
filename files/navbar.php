@@ -1,8 +1,8 @@
 <?php
-$fname       = isset($_SESSION["fname"]) ? $_SESSION["fname"] : '';
-$lname       = isset($_SESSION["lname"]) ? $_SESSION["lname"] : '';
-$picture     = isset($_SESSION["picture"]) ? $_SESSION["picture"] : '';
-$accounttype = isset($_SESSION["accountType"]) ? $_SESSION["accountType"] : '';
+$fname       = isset($_SESSION['account']["fname"]) ? $_SESSION['account']["fname"] : '';
+$lname       = isset($_SESSION['account']["lname"]) ? $_SESSION['account']["lname"] : '';
+$picture     = isset($_SESSION['account']["picture"]) ? $_SESSION['account']["picture"] : '';
+$accounttype = isset($_SESSION['account']["accountType"]) ? $_SESSION['account']["accountType"] : '';
 ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -45,7 +45,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 </div>
               </div>
               <div class="form-group">
-                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['email']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['email']) ? 'Book Now' : 'Login First!'; ?></button>
+                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['account']['email']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['account']['email']) ? 'Book Now' : 'Login First!'; ?></button>
               </div>
             </form>
           </ul>
@@ -72,6 +72,7 @@ if (!$system->isLogged()) {
             <div class="row">
               <div class="col-md-12">
                 <form id="frmLogin">
+                  <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
                   <div class="lblDisplayError">
                     <!-- error will be shown here ! -->
                   </div>
@@ -151,6 +152,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -247,6 +249,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Forgot Password</h4>
       </div>
       <form id="frmForgot" method="post" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -277,6 +280,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" method="post" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -311,6 +315,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
       <form id="frmEditProfile" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -332,7 +337,7 @@ if (!$system->isLogged()) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" value="<?php echo $_SESSION['fname']; ?>" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" value="<?php echo $_SESSION['account']['fname']; ?>" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -341,7 +346,7 @@ if (!$system->isLogged()) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" value="<?php echo $_SESSION['lname']; ?>" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" value="<?php echo $_SESSION['account']['lname']; ?>" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -352,7 +357,7 @@ if (!$system->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" value="<?php echo $_SESSION['birthDate']; ?>" required readonly autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" value="<?php echo $_SESSION['account']['birthDate']; ?>" required readonly autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -361,7 +366,7 @@ if (!$system->isLogged()) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['contactNumber']; ?>" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['account']['contactNumber']; ?>" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -385,6 +390,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Edit Reservation</h4>
       </div>
       <form id="frmEditReservation" method="post" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->

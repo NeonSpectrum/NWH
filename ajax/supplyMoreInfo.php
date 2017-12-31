@@ -2,7 +2,7 @@
 require_once "../files/autoload.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $roomType = $db->real_escape_string($_POST['roomType']);
+  $roomType = $system->filter_input($_POST['roomType']);
 
   $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
   $row    = $result->fetch_assoc();

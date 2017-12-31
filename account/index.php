@@ -2,7 +2,7 @@
 @session_start();
 require_once '../files/autoload.php';
 
-if (isset($_POST['mode'])) {
+if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
   $credentials = [];
   switch ($_POST['mode']) {
   case "login":{
@@ -14,10 +14,10 @@ if (isset($_POST['mode'])) {
       break;
     }
   case "register":{
-      parse_str($system->nwh_decrypt($_SERVER['QUERY_STRING']), $credentials);
+      parse_str($system->decrypt($_SERVER['QUERY_STRING']), $credentials);
       if (isset($credentials['txtEmail'])) {
         echo $account->register($credentials);
-      } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
+      } else if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
         $credentials['txtFirstName']     = $_POST['txtFirstName'];
         $credentials['txtLastName']      = $_POST['txtLastName'];
         $credentials['txtEmail']         = $_POST['txtEmail'];
@@ -39,11 +39,11 @@ if (isset($_POST['mode'])) {
     }
   case "changePassword":{
       $forgot                 = isset($_POST['txtEmail']) ? true : false;
-      $email                  = isset($_SESSION['email']) ? $_SESSION['email'] : $_POST['txtEmail'];
-      $credentials['email']   = $db->real_escape_string($email);
-      $credentials['oldpass'] = $forgot ? null : $db->real_escape_string($_POST['txtOldPass']);
-      $credentials['newpass'] = password_hash($db->real_escape_string($_POST['txtNewPass']), PASSWORD_DEFAULT);
-      $credentials['token']   = isset($_POST['txtToken']) ? $db->real_escape_string($_POST['txtToken']) : null;
+      $email                  = isset($_SESSION['account']['email']) ? $_SESSION['account']['email'] : $_POST['txtEmail'];
+      $credentials['email']   = $system->filter_input($email);
+      $credentials['oldpass'] = $forgot ? null : $system->filter_input($_POST['txtOldPass'], true);
+      $credentials['newpass'] = password_hash($system->filter_input($_POST['txtNewPass'], true), PASSWORD_DEFAULT);
+      $credentials['token']   = isset($_POST['txtToken']) ? $system->filter_input($_POST['txtToken']) : null;
 
       if ($account->changePassword($credentials, $forgot) == true) {
         echo true;
@@ -53,7 +53,7 @@ if (isset($_POST['mode'])) {
       break;
     }
   case "forgotPassword":{
-      $email = $db->real_escape_string($_POST['txtEmail']);
+      $email = $system->filter_input($_POST['txtEmail']);
       if ($account->forgotPassword($email)) {
         echo true;
       } else {
@@ -61,8 +61,21 @@ if (isset($_POST['mode'])) {
       }
       break;
     }
+  case "editAccount":{
+      parse_str($_POST['data'], $data);
+      $credentials['email']         = $system->filter_input($_SESSION['account']['email']);
+      $credentials['fname']         = $system->filter_input($data['txtFirstName']);
+      $credentials['lname']         = $system->filter_input($data['txtLastName']);
+      $credentials['birthDate']     = $system->filter_input($data['txtBirthDate']);
+      $credentials['contactNumber'] = $system->filter_input($data['txtContactNumber']);
+      if (isset($_FILES['file'])) {
+        $credentials['image'] = $_FILES['file'];
+      }
+      echo $account->editProfile($credentials);
+      break;
+    }
   case "deleteAccount":{
-      $email = $db->real_escape_string($_POST['txtEmail']);
+      $email = $system->filter_input($_POST['txtEmail']);
       echo $account->deleteAccount($email);
       break;
     }
@@ -79,18 +92,6 @@ if (isset($_POST['mode'])) {
       } else {
         http_response_code(200);
       }
-      break;
-    }
-  case "editAccount":{
-      $credentials['email']         = $db->real_escape_string($_SESSION['email']);
-      $credentials['fname']         = $db->real_escape_string($_GET['txtFirstName']);
-      $credentials['lname']         = $db->real_escape_string($_GET['txtLastName']);
-      $credentials['birthDate']     = $db->real_escape_string($_GET['txtBirthDate']);
-      $credentials['contactNumber'] = $db->real_escape_string($_GET['txtContactNumber']);
-      if (isset($_FILES['file'])) {
-        $credentials['image'] = $_FILES['file'];
-      }
-      echo $account->editProfile($credentials);
       break;
     }
   }
