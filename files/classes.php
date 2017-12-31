@@ -636,21 +636,17 @@ class System {
     if ($this->isLogged()) {
       $currentLevel = array_search($_SESSION['account']['accountType'], $levels);
       if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
-        if ($kick) {
-          header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
-        } else {
-          return false;
-        }
+        goto kick;
       } else {
         return true;
       }
     } else {
+      kick:
       if ($kick) {
         header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
       } else {
         return false;
       }
-
     }
   }
 
@@ -703,6 +699,7 @@ class System {
   public function formatBookingID($id, $date) {
     return "nwh" . date("mdy", strtotime($date)) . "-" . sprintf("% '04d\n", $id);
   }
+
   public function verifyCaptcha($captcha) {
     if (!$captcha) {
       return 'Please check the the captcha form.';
