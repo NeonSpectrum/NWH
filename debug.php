@@ -207,7 +207,7 @@ $(document).ready(function() {
     }
   });
 
-  title.text("1. NeonSpectrum@<?php echo $_SERVER['SERVER_NAME']; ?>: ~ (sh)");
+  title.text("NeonSpectrum@<?php echo $_SERVER['SERVER_NAME']; ?>: ~ (sh)");
   terminal.append("Current Time: " + new Date() + "\n"); displayPrompt();
 });
 </script>
