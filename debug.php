@@ -1,6 +1,6 @@
 <?php
 define("PASSWORD", "yuanhua");
-if (isset($_POST['command']) && $_POST['password'] === PASSWORD) {
+if (isset($_POST['command']) && $_POST['accesscode'] === PASSWORD) {
   $command = filter_var($_POST['command'], FILTER_SANITIZE_STRING);
   $path    = strtolower($_SERVER['SERVER_NAME']) != "localhost" ? 'export PATH=$PATH:~/git-2.9.5 && ' : '';
   echo trim(preg_replace('/\s+/', ' ', nl2br(shell_exec($path . $command))));
@@ -130,11 +130,11 @@ textarea, input, button {
 </head>
 <body>
 <?php
-if (!isset($_POST['password']) || $_POST['password'] !== PASSWORD) {
+if (!isset($_POST['accesscode']) || $_POST['accesscode'] !== PASSWORD) {
   ?>
 <div style="width:100%;height:100%;position:fixed;z-index:1;background-color:rgba(255,255,255,0.7);padding:20% 40%">
   <div class="well center-block">
-    <form method="POST">Access Code: <input type="password" name="password" class="form-control" autofocus></form>
+    <form method="POST">Access Code: <input type="password" name="accesscode" class="form-control" autofocus></form>
   </div>
 </div>
 <?php
