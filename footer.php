@@ -57,7 +57,7 @@ if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
 if (file_exists(__DIR__ . "/assets/js/$currentDirectory.js") && $currentDirectory != 'admin') {
   echo "<script src='{$root}assets/js/$currentDirectory.js?v=" . filemtime(__DIR__ . "/assets/js/$currentDirectory.js") . "'></script>\n";
 }
-if ((isset($_SESSION['account']['accountType']) && $_SESSION['account']['accountType'] != "Owner") && $_SERVER['SERVER_NAME'] != "localhost") {
+if ($system->isLogged() && !$system->checkUserLevel(1) && $_SERVER['SERVER_NAME'] != "localhost") {
   echo "<script src='{$root}assets/js/verifyLoginSession.js?v=" . filemtime(__DIR__ . "/assets/js/verifyLoginSession.js") . "'></script>\n";
 }
 ?>

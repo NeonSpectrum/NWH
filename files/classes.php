@@ -628,14 +628,14 @@ class View extends Room {
 class System {
 
   public function isLogged() {
-    return isset($_SESSION['account']['email']) ? true : false;
+    return isset($_SESSION['account']) ? true : false;
   }
 
   public function checkUserLevel($reqLevel, $kick = false) {
     global $root, $levels;
     if ($this->isLogged()) {
       $currentLevel = array_search($_SESSION['account']['accountType'], $levels);
-      if ($currentLevel < $reqLevel && !($currentLevel == 1 && ALLOW_OWNER_PRIVILEGES)) {
+      if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
         if ($kick) {
           header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
           exit();

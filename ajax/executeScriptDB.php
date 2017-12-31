@@ -4,7 +4,7 @@ require_once "../files/classes.php";
 
 $db = new mysqli("localhost", "root", "");
 
-$contents = file_get_contents("../cp018101_nwh.sql");
+$contents = file_get_contents("../db.sql");
 
 $comment_patterns = array('/\/\*.*(\n)*.*(\*\/)?/',
   '/\s*--.*\n/',
