@@ -1,0 +1,19 @@
+[system]
+timezone = "Asia/Manila"
+debug = false
+allow_owner_privileges = false
+chat = false
+offline_mode = false
+
+[date]
+max_birth_year = 2009
+date_format = "mm/dd/yyyy"
+
+[expiration]
+email_expiration = 10   ;minutes
+forgot_expiration = 10  ;minutes
+
+[reservation]
+edit_reservation_days = 1
+max_adults = 10
+max_children = 10

@@ -8,7 +8,10 @@ define("PASSWORD", openssl_decrypt("zsR90qYBI8Lc39xSj9uuwg==", "AES-128-ECB", EN
 
 $jsonFile = file_get_contents(__DIR__ . "/../strings.json");
 $json     = json_decode($jsonFile, true);
-$config   = parse_ini_file(__DIR__ . "/../config.ini");
+if (!file_exists(__DIR__ . "/../config.ini")) {
+  copy(__DIR__ . "/../assets/config.example", __DIR__ . "/../config.ini");
+}
+$config = parse_ini_file(__DIR__ . "/../config.ini");
 foreach ($json as $string) {
   define($string['name'], $string['value']);
 }

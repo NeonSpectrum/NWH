@@ -30,7 +30,7 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 ('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123', '2017-12-13', '2017-10-29', 'j5n0c4noiqmgdk44b2iou3jca5'),
 ('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'cuv527khttgpq9r22ufkv30ru0'),
 ('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Admin', 'KateBolanos.png', 'Kate', 'Bolanos', '123', '2017-12-13', '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Owner', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
+('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -60,10 +60,10 @@ CREATE TABLE `forgot_password` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `log` (
-  `id` int(11) NOT NULL,
-  `user` varchar(100) DEFAULT NULL,
-  `action` varchar(100) NOT NULL,
-  `timestamp` datetime NOT NULL
+  `ID` int(11) NOT NULL,
+  `EmailAddress` varchar(100) DEFAULT NULL,
+  `Action` varchar(100) NOT NULL,
+  `TimeStamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `room` (
@@ -87,7 +87,7 @@ INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES
 (112, 5, 'Enabled'),
 (201, 1, 'Enabled'),
 (202, 1, 'Enabled'),
-(203, 2, 'Disabled'),
+(203, 2, 'Enabled'),
 (204, 2, 'Enabled'),
 (205, 4, 'Enabled'),
 (206, 3, 'Enabled'),

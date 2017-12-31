@@ -47,7 +47,7 @@ if (isset($_GET['BookingID'])) {
       $pdf->Write(0, date("F d, Y", strtotime($row['CheckOutDate'])));
 
       // GUEST
-      $pdf->SetXY(48, 97);
+      $pdf->SetXY(48, 96.9);
       $pdf->SetFont('Arial', 'B');
       $pdf->Write(0, "{$row['FirstName']} {$row['LastName']}");
       $pdf->SetFont('Arial');
@@ -59,7 +59,7 @@ if (isset($_GET['BookingID'])) {
       $pdf->Write(0, join(", ", array_slice($rooms, 4)));
 
       // BOOKING REF
-      $pdf->SetXY(48, 110);
+      $pdf->SetXY(48, 109.9);
       $pdf->Write(0, "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d\n", $row['BookingID']));
 
       // ETA
@@ -71,11 +71,11 @@ if (isset($_GET['BookingID'])) {
       $pdf->Write(0, "12:00nn");
 
       // GUEST TYPE
-      $pdf->SetXY(135, 97);
+      $pdf->SetXY(135, 96.9);
       $pdf->Write(0, $row['AccountType']);
 
       // TOTAL
-      $pdf->SetXY(135, 110);
+      $pdf->SetXY(135, 109.9);
       $pdf->Write(0, "P" . number_format($row['TotalAmount']));
 
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf", "I");
