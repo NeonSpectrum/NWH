@@ -312,11 +312,11 @@ class Room extends System {
   }
 
   public function generateRoomID($room, $quantity, $checkInDate, $checkOutDate) {
-    global $db;
+    global $db, $date;
     $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE RoomType = '$room'");
     while ($row = $result->fetch_assoc()) {
-      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}'");
+      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>'$date'");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
           if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate'])) {
@@ -454,8 +454,11 @@ class View extends Room {
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
+        $balance = $row['TotalAmount'] - $row['AmountPaid'];
+        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
         echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";

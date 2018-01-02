@@ -1,7 +1,7 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token']) && $system->validateToken($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $roomType     = $system->filter_input(str_replace(" ", "_", $_POST['cmbRoomType']));
   $email        = $system->filter_input($_POST['txtEmail']);
   $checkInDate  = $system->filter_input($_POST['txtCheckInDate']);

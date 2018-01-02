@@ -23,6 +23,7 @@ $system->checkUserLevel(1, true);
             <th>Check Out Date</th>
             <th>Adults</th>
             <th>Children</th>
+            <th>Balance</th>
             <th>Action</th>
           </thead>
           <tbody>
@@ -35,7 +36,36 @@ $view->booking();
     </div>
   </div>
 </main>
-<div id="modalEditReservation" class="modal fade" role="dialog">
+<div id="modalAddPayment" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmAddPayment" method="post" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <input type="hidden" id="txtBookingID" name="txtBookingID">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Amount: </label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control" name="txtPayment" id="txtPayment">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+   </div>
+</div>
+<div id="modalEditReservation" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

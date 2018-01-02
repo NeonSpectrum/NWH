@@ -3,7 +3,27 @@ var bookingID, email, roomID, roomType, checkInDate, checkOutDate, adults, child
 $('#tblReservation_length').find("select").addClass("form-control");
 $('#tblReservation_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
-$('.btnEditReservation').click(function () {
+$('#modalAddPayment').on('shown.bs.modal', function() {
+  $('#txtPayment').focus();
+});
+$(".btnAddPayment").click(function() {
+  $("#modalAddPayment").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
+  $("#modalAddPayment").find("#txtBookingID").val($(this).attr("id"));
+});
+$("#frmAddPayment").submit(function(e) {
+  e.preventDefault();
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/addPayment.php",
+    data: $(this).serialize(),
+    success: function(response) {
+      $(this).closest(".modal").modal("hide");
+      alertNotif("success", "Added Successfully", true);
+    }
+  });
+});
+$('.btnEditReservation').click(function() {
   bookingID = $(this).attr("id");
   email = $(this).closest("tr").find("#txtEmail").html();
   roomID = $(this).closest("tr").find("#txtRoomID").html();
@@ -26,14 +46,14 @@ $('.btnEditReservation').click(function () {
     url: root + "ajax/generateRoomID.php",
     data: "roomType=" + $("#cmbRoomType").val().replace(" ", "_") + "&checkDate=" + $("#txtCheckDate").val() + "&roomID=" + roomID,
     dataType: 'json',
-    success: function (response) {
+    success: function(response) {
       if (response) {
         $("#modalEditReservation").find("#cmbRoomType").val(response[0]);
         for (var i = 1; i < response.length; i++) {
           roomList.push(response[i]);
         }
         roomList.sort();
-        roomList.forEach(function (room) {
+        roomList.forEach(function(room) {
           var selected = room == roomID ? "selected" : "";
           $("#modalEditReservation").find("#cmbRoomID").append("<option value='" + room + "' " + selected + ">" + room + "</option>");
         });
@@ -44,7 +64,7 @@ $('.btnEditReservation').click(function () {
     }
   });
 });
-$("#cmbRoomType").change(function () {
+$("#cmbRoomType").change(function() {
   var roomList = [];
   if ($(this).val() == roomType) {
     $("#cmbRoomID").html(currentRoomIDs);
@@ -54,14 +74,14 @@ $("#cmbRoomType").change(function () {
       url: root + "ajax/generateRoomID.php",
       data: "roomType=" + $("#cmbRoomType").val().replace(" ", "_") + "&checkDate=" + $("#txtCheckDate").val(),
       dataType: 'json',
-      success: function (response) {
+      success: function(response) {
         if (response) {
           $("#modalEditReservation").find("#cmbRoomID").html('');
           for (var i = 0; i < response.length; i++) {
             roomList.push(response[i]);
           }
           roomList.sort();
-          roomList.forEach(function (room) {
+          roomList.forEach(function(room) {
             var selected = room == roomID ? "selected" : "";
             $("#modalEditReservation").find("#cmbRoomID").append("<option value='" + room + "' " + selected + ">" + room + "</option>");
           });
@@ -70,7 +90,7 @@ $("#cmbRoomType").change(function () {
     });
   }
 });
-$("#frmEditReservation").submit(function (e) {
+$("#frmEditReservation").submit(function(e) {
   e.preventDefault();
   $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnReservation').attr('disabled', true);
@@ -80,14 +100,14 @@ $("#frmEditReservation").submit(function (e) {
     type: 'POST',
     url: root + 'ajax/editReservation.php',
     data: $(this).serialize() + "&currentRoomID=" + roomID,
-    success: function (response) {
+    success: function(response) {
       if (response == true) {
         $('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', true);
       } else {
         $(this).find("#btnReservation").html('Update');
         $(this).find('#btnReservation').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function () {
+        $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })
       }

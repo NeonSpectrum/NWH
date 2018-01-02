@@ -137,7 +137,7 @@ if ($system->checkUserLevel(1)) {
 <?php
 if (!$system->isLogged()) {
   ?>
-<div id="modalRegistration" class="modal fade" role="dialog">
+<div id="modalRegistration" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -234,7 +234,7 @@ if (!$system->isLogged()) {
     </div>
   </div>
 </div>
-<div id="modalForgot" class="modal fade" role="dialog">
+<div id="modalForgot" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -265,7 +265,7 @@ if (!$system->isLogged()) {
 <?php
 } else {
   ?>
-<div id="modalChangePassword" class="modal fade" role="dialog">
+<div id="modalChangePassword" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -300,7 +300,7 @@ if (!$system->isLogged()) {
     </div>
    </div>
 </div>
-<div id="modalEditProfile" class="modal fade" role="dialog">
+<div id="modalEditProfile" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -376,7 +376,7 @@ if (!$system->isLogged()) {
   </div>
 </div>
 <form id="frmEditReservation" class="form-horizontal">
-  <div id="modalEditReservation" class="modal fade" role="dialog">
+  <div id="modalEditReservation" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -440,7 +440,7 @@ if (!$db->connect_error) {
       </div>
     </div>
   </div>
-  <div id="modalEditRoom" class="modal fade" role="dialog">
+  <div id="modalEditRoom" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">

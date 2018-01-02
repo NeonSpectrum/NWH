@@ -6,9 +6,6 @@ $(document).ready(function() {
   if ($(window).width() < 480 || $(window).height() < 480) {
     $('.contactbox').fadeOut();
   }
-  $("form").find("input").change(function() {
-    $(this).closest("form").find("[type=submit]").prop("disabled", false);
-  });
   // RESET FORM IF EXISTS IF MODAL IS EXITED
   $('.modal').on('hidden.bs.modal', function() {
     $(this).find("form").trigger("reset");

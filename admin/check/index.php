@@ -63,7 +63,7 @@ $system->checkUserLevel(1, true);
     </div>
   </div>
 </main>
-<div id="modalAddReservation" class="modal fade" role="dialog">
+<div id="modalAddReservation" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

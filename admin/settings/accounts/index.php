@@ -33,7 +33,7 @@ $view->accounts();
     </div>
   </div>
 </main>
-<div id="modalAddAccount" class="modal fade" role="dialog">
+<div id="modalAddAccount" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -124,7 +124,7 @@ $view->accounts();
     </div>
   </div>
 </div>
-<div id="modalEditAccount" class="modal fade" role="dialog">
+<div id="modalEditAccount" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
