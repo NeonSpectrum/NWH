@@ -72,7 +72,7 @@ $system->checkUserLevel(1, true);
       </div>
       <div class="modal-body">
         <form id="frmAddReservation" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

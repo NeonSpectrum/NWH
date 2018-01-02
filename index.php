@@ -128,7 +128,7 @@ if (!$db->connect_error) {
 if (!$system->checkUserLevel(1)) {
   ?>
 <div id="modalPromo" class="modal animated zoomIn center" role="dialog">
-  <div class="modal-dialog center-block">
+  <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1;opacity:1" data-dismiss="modal">&times;</button>
       <div style="display: block; overflow: hidden; width: 100%; max-width:600px; min-width: 240px; font-size: .8em; line-height: 1.5em;">
@@ -161,7 +161,7 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->

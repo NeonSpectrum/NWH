@@ -13,7 +13,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">
     <form id="frmBookNow">
-      <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+      <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <div id="smartwizard">
         <ul>
           <li style="width:25%"><a href="#step-1">Step 1<br /><small>Check In & Check Out Date</small></a></li>

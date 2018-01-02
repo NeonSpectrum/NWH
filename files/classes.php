@@ -63,12 +63,15 @@ class Account extends System {
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
     if ($result->num_rows == 0) {
-      $data    = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
-      $subject = "Northwood Hotel Account Creation";
-      $body    = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/register.php?$data";
-      if ($this->sendMail("$email", "$subject", "$body") == true) {
+      $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
+      $subject  = "Northwood Hotel Account Creation";
+      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/register.php?$data";
+      $sentMail = $this->sendMail("$email", "$subject", "$body");
+      if ($sentMail == true) {
         $this->createLog("sent|registration|$email");
         echo true;
+      } else {
+        echo $sentMail;
       }
     } else {
       echo ALREADY_REGISTERED;
@@ -341,19 +344,19 @@ class Room extends System {
 class Book {
   public function showBookingInfo($bookingID) {
     global $db;
-    $result = $db->query("SELECT * FROM booking JOIN room ON booking.RoomID = room.RoomID JOIN room_type ON room_type.RoomTypeID = room.RoomTypeID WHERE BookingID = $bookingID");
+    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
     $row    = $result->fetch_assoc();
 
-    if ($result->num_rows == 1) {
-      $arr    = [];
-      $arr[0] = $row['RoomType'];
-      $arr[1] = $row['CheckInDate'];
-      $arr[2] = $row['CheckOutDate'];
-      $arr[3] = $row['Adults'];
-      $arr[4] = $row['Childrens'];
+    $arr    = [];
+    $arr[1] = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
+    $arr[2] = $row['Adults'];
+    $arr[3] = $row['Children'];
 
-      return json_encode($arr);
+    $result->data_seek(0);
+    while ($row = $result->fetch_assoc()) {
+      $arr[0][] = $row['RoomID'];
     }
+    return json_encode($arr);
   }
 }
 
@@ -438,23 +441,25 @@ class View extends Room {
   }
 
   public function booking() {
-    global $db, $root;
+    global $db, $root, $date;
     $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
     while ($row = $result->fetch_assoc()) {
-      echo "<tr>";
-      echo "<td>{$row['BookingID']}</td>";
-      echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-      echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-      echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-      echo "<td id='txtCheckInDate'>" . date("Y/m/d", strtotime($row['CheckInDate'])) . "</td>";
-      echo "<td id='txtCheckOutDate'>" . date("Y/m/d", strtotime($row['CheckOutDate'])) . "</td>";
-      echo "<td id='txtAdults'>{$row['Adults']}</td>";
-      echo "<td id='txtChildren'>{$row['Children']}</td>";
-      echo "<td>";
-      echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-      echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID={$row['BookingID']}' title='Print'><i class='fa fa-print'></i></a>";
-      echo "</td>";
-      echo "</tr>";
+      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
+        echo "<tr>";
+        echo "<td>{$row['BookingID']}</td>";
+        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+        echo "<td id='txtAdults'>{$row['Adults']}</td>";
+        echo "<td id='txtChildren'>{$row['Children']}</td>";
+        echo "<td>";
+        echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "</td>";
+        echo "</tr>";
+      }
     }
   }
 
@@ -583,14 +588,41 @@ class View extends Room {
     global $db;
     $email  = $this->filter_input($_SESSION['account']['email']);
     $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
+    $first  = true;
     while ($row = $result->fetch_assoc()) {
-      $tomorrow = time() + 86400 * EDIT_RESERVATION_DAYS;
-      if ($tomorrow < strtotime($row['CheckInDate'])) {
+      $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
+      if ($tomorrow <= strtotime($row['CheckInDate'])) {
+        if ($first) {
+          $adults   = $row['Adults'];
+          $children = $row['Children'];
+          $first    = false;
+        }
         echo "                ";
-        echo "<option value='" . $row['BookingID'] . "'>" . $row['BookingID'] . "</option>\n";
+        echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "</option>\n";
       }
     }
   }
+
+  // public function listRoomID() {
+  //   global $db;
+  //   $email    = $this->filter_input($_SESSION['account']['email']);
+  //   $result   = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
+  //   $roomList = [];
+  //   while ($row = $result->fetch_assoc()) {
+  //     $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
+  //     if ($tomorrow <= strtotime($row['CheckInDate'])) {
+  //       $roomResult = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID={$row['BookingID']}");
+  //       while ($roomRow = $roomResult->fetch_assoc()) {
+  //         $roomList[] = $roomRow['RoomID'];
+  //       }
+  //       sort($roomList);
+  //       foreach ($roomList as $key => $value) {
+  //         echo "<option value='$value'>$value</option>\n";
+  //       }
+  //       break;
+  //     }
+  //   }
+  // }
 
   public function rooms($category) {
     global $db;
@@ -786,6 +818,7 @@ class System {
 
 $account = new Account();
 $room    = new Room();
+$book    = new Book();
 $view    = new View();
 $system  = new System();
 ?>

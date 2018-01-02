@@ -1,9 +1,3 @@
-<?php
-$fname       = isset($_SESSION['account']["fname"]) ? $_SESSION['account']["fname"] : '';
-$lname       = isset($_SESSION['account']["lname"]) ? $_SESSION['account']["lname"] : '';
-$picture     = isset($_SESSION['account']["picture"]) ? $_SESSION['account']["picture"] : '';
-$accounttype = isset($_SESSION['account']["accountType"]) ? $_SESSION['account']["accountType"] : '';
-?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -22,7 +16,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
         <li class="dropdown">
           <button class="btn btn-danger pulse" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
-            <form class="form frmBookCheck" method="post">
+            <form class="form frmBookCheck">
               <div class="form-group">
                 <label>Check Date:</label>
                 <div class="input-group">
@@ -45,7 +39,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 </div>
               </div>
               <div class="form-group">
-                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['account']['email']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['account']['email']) ? 'Book Now' : 'Login First!'; ?></button>
+                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['account']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['account']['email']) ? 'Book Now' : 'Login First!'; ?></button>
               </div>
             </form>
           </ul>
@@ -72,7 +66,7 @@ if (!$system->isLogged()) {
             <div class="row">
               <div class="col-md-12">
                 <form id="frmLogin">
-                  <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+                  <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
                   <div class="lblDisplayError">
                     <!-- error will be shown here ! -->
                   </div>
@@ -115,10 +109,9 @@ if (!$system->isLogged()) {
   ?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $picture;
-  echo "?v=" . filemtime(__DIR__ . "/../images/profilepics/$picture"); ?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']["picture"]}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']["picture"]}"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo "$fname $lname"; ?>
+              <?php echo "{$_SESSION['account']["fname"]} {$_SESSION['account']["lname"]}"; ?>
             </div>
             <span class="caret"></span>
           </a>
@@ -152,7 +145,7 @@ if (!$system->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -248,8 +241,8 @@ if (!$system->isLogged()) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Forgot Password</h4>
       </div>
-      <form id="frmForgot" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+      <form id="frmForgot" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -279,8 +272,8 @@ if (!$system->isLogged()) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
-      <form id="frmChange" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+      <form id="frmChange" class="form-horizontal">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -314,8 +307,8 @@ if (!$system->isLogged()) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
-      <form id="frmEditProfile" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+      <form id="frmEditProfile" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -382,22 +375,22 @@ if (!$system->isLogged()) {
     </div>
   </div>
 </div>
-<div id="modalEditReservation" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title text-center">Edit Reservation</h4>
-      </div>
-      <form id="frmEditReservation" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+<form id="frmEditReservation" class="form-horizontal">
+  <div id="modalEditReservation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">Edit Reservation</h4>
+        </div>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Booking ID</label>
-            <div class="col-sm-2">
+            <label class="col-sm-3 control-label">Booking ID: </label>
+            <div class="col-sm-7">
               <select class="form-control" id="cmbBookingID" name="cmbBookingID">
 <?php
 if (!$db->connect_error) {
@@ -408,49 +401,86 @@ if (!$db->connect_error) {
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Room Type</label>
-            <div class="col-sm-7">
-              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
-                <option>Standard Single</option>
-                <option>Standard Double</option>
-                <option>Family Room</option>
-                <option>Junior Suites</option>
-                <option>Studio Type</option>
-                <option>Barkada Room</option>
+            <label class="col-sm-3 control-label">Room ID: </label>
+            <div class="col-sm-5">
+              <select class="form-control" id="currentRoomID" name="currentRoomID">
               </select>
+            </div>
+            <div class="col-sm-2">
+              <button id="btnEditRoom" type="button" class="btn btn-default btn-block">Edit</button>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Check Date</label>
+            <label class="col-sm-3 control-label">Check Date: </label>
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" readonly required/>
+                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" value="<?php echo $checkDate; ?>" readonly required/>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Adults</label>
+            <label class="col-sm-3 control-label">Adults: </label>
             <div class="col-sm-3">
-              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" min="1" max="<?php echo MAX_ADULTS; ?>" value="1" required/>
+              <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Children</label>
+            <label class="col-sm-3 control-label">Children: </label>
             <div class="col-sm-3">
-              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="<?php echo MAX_CHILDREN; ?>" value="0" required/>
+              <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()" disabled>Print</button>
-          <button id="btnReservation" type="submit" class="btn btn-info" disabled>Update</button>
+          <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()">Print</button>
+          <button id="btnUpdate" type="submit" class="btn btn-info" disabled>Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
-      </form>
+      </div>
     </div>
-   </div>
-</div>
+  </div>
+  <div id="modalEditRoom" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Type: </label>
+            <div class="col-sm-9">
+              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
+                <option value="Standard_Single" selected>Standard Single</option>
+                <option value="Standard_Double">Standard Double</option>
+                <option value="Family_Room">Family Room</option>
+                <option value="Junior_Suites">Junior Suites</option>
+                <option value="Studio_Type">Studio Type</option>
+                <option value="Barkada_Room">Barkada Room</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Room ID: </label>
+            <div class="col-sm-6">
+              <select id="cmbNewRoomID" name="cmbNewRoomID" class="form-control">
+
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 <?php
 }
 ?>

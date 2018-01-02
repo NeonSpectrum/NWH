@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             {$row['RoomDescription']}<br/><br/>
             <span style='text-style:bold;font-size:20px;'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span>
           </div>";
-      echo "<div class='col-md-2' style='padding:85px 30px;height:220px' class='numberOfRooms'>";
+      echo "<div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
       echo "<select style='width:100%' class='form-control'>";
       for ($i = 0; $i <= $numberOfRooms; $i++) {
         echo "<option>$i</option>";

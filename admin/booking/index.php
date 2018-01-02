@@ -44,7 +44,7 @@ $view->booking();
       </div>
       <div class="modal-body">
         <form id="frmEditReservation" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $system->encrypt($csrf_token); ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -65,10 +65,9 @@ $view->booking();
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-4">
-              <input name="txtRoomID" type="text" class="form-control" id="txtRoomID" required readonly/>
-            </div>
-            <div class="col-sm-4">
-              <button type="button" id="btnGenerateRoomID" class="btn btn-default">Generate</button>
+              <select name="cmbRoomID" class="form-control" id="cmbRoomID" required/>
+
+              </select>
             </div>
           </div>
           <div class="form-group">
