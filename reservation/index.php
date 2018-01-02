@@ -74,8 +74,8 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
             <h3>Room ID(s):<br/> <span id="txtRoomID"></span>
             <br/>
             <div class="text-right">
-              <a id="btnPrint" class="btn btn-primary btn-lg" style="margin-left:20px" type="button">Print</a>
-              <a class="btn btn-default btn-lg" href="<?php echo $root; ?>" type="button">Go back to home</a>
+              <a id="btnPrint" class="btn btn-primary" style="margin-left:20px" type="button">Print</a>
+              <a class="btn btn-default" href="<?php echo $root; ?>" type="button">Go back to home</a>
             </div>
           </div>
         </div>
@@ -101,14 +101,27 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Rules and Regulation</h4>
       </div>
-      <div class="modal-body" style="padding:30px">
-        <li>To guarantee your reservation a down payment of 50% of the total package amount must be made as soon as the booking is confirmed (within 48 hours of guest confirmation) and full payment must be paid during check-in. Failure to deposit down payment will result in forfeiture of reservation. Failure to make full payment will nullify the booking and consequently bestows on Northwood Hotel the right to disallow the guest to use our facilities.</li><br/>
-        <li>Any Valid or Government issues Photo ID is required to check in at the hotel.</li><br/>
-        <li>All credit card payments incur a surcharge of 5% additionally to the amount charged.</li><br/>
-        <li>The rooms are all strictly non-smoking.</li>
+      <div class="modal-body" style="padding:30px;padding-right:50px">
+        <ol type="1">
+          <li><p align="justify">To Check-in, each person is asked to present a valid identity document (ID card or passport) and fill in the registration form/card.</p></li>
+          <li><p align="justify">Visitors are not allowed in rooms. Please use the lobby for socializing and meetings</p></li>
+          <li><p align="justify">Check-out time is 12:00nn; Check-in time is 2:00pm. Extension of stay will be charge at Php200.00 per hour with the maximum of three (3) hours stay only, exceeding the maximum time will be considered as one night stay and will be charged automaticall</p></li>
+          <li><p align="justify">Management is not liable for loss of personal property; Guests are advised to secure their personal belongings and valuables. Safety Deposit is available at the Front Desk for your valuables</p></li>
+          <li><p align="justify">If you like your rooms to be made up please inform the Front Desk prior to departing for the day. Make-up time is from 9:00am 4:00 pm only</p></li>
+          <li><p align="justify">Being an environmentally conscious hotel, change of bedding linens and towel is done on the second day of stay. Extra pillow, towels, soap and shampoo will incur a corresponding charge. Room inventory (pillows, linens, towels, etc.) are intended for you to use while staying in the Hotel and are not to be taken out</p></li>
+          <li><p align="justify">Please turn over key at Front Desk before departing the hotel. Lost key will be charged at Php200.00 per piece</p></li>
+          <li><p align="justify">Hotel guests are asked to respect the smoking and non-smoking areas. All rooms are non-smoking. A cleaning fee minimum of Php 500.00 will be charged to guests who do not abide by the no smoking policy</p></li>
+          <li><p align="justify">For security reasons it is not permitted to use own appliances. The exceptions are: cellphones, radio and personal computer. Guest is the responsible and liable for any damages caused by their use</p></li>
+          <li><p align="justify">Guests are asked not to move any of the room's equipment and not do interfere to the power line. Please take care of the Hotel inventory. All intentional damages occurring during your stay shall be charged on your accoun</p></li>
+          <li><p align="justify">No guarantee for electricity during blackout. However we will provide you an emergency light available at the Front Desk</p></li>
+          <li><p align="justify">It is not allowed to leave children in the room unattended. Parents are responsible for the safety of their children in all areas of the hotel. Do not bother other guests, such as singing loudly, or any other noisy actions, etc</p></li>
+          <li><p align="justify">When leaving the room, guest is asked to close all water taps, turn off the lights, air-con, TV, and other electrical appliances and please make sure all faucets I showers are properly turned-off when not in use. When unattended, please close room windows and keep doors locked</p></li>
+          <li><p align="justify">Before or at designated Check-out Time, please allow our Housekeeping staff to check your room. Missing items from the room will be charged to guest account. Please allow 10 minutes check out time to facilitate</p></li>
+          <li><p align="justify">Hotel management or reception staff will welcome all your suggestions for improving any of provided services. </p></li>
+        </ol>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <p style="text-align:center;font-size:18px">Thank you for your cooperation and have a nice and pleasant stay with us.<br/>We hope to see you all again in the future.</p>
       </div>
     </div>
   </div>
