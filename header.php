@@ -13,7 +13,7 @@ if (strpos(strtolower($_SERVER['REQUEST_URI']), "admin")) {
 
 // GET CURRENT DIRECTORY EXAMPLE: home, gallery, roomandrates, contactus
 $currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQUEST_URI']);
-$currentDirectory = substr(strtolower($currentDirectory), strrpos(strtolower($currentDirectory), "/", -2) + 1, -1);
+$currentDirectory = substr(strtolower($currentDirectory), @strrpos(strtolower($currentDirectory), "/", -2) + 1, -1);
 $currentDirectory = str_replace("nwh", "", $currentDirectory) == "" ? 'home' : $currentDirectory;
 ?>
 <!DOCTYPE html>
