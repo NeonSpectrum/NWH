@@ -41,7 +41,7 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
       $credentials['token']   = isset($_POST['txtToken']) ? $system->filter_input($_POST['txtToken']) : null;
 
       if ($account->changePassword($credentials, $forgot) == true) {
-        $account->logout();
+        unset($_SESSION['account']);
         echo true;
       } else {
         echo OLD_PASSWORD_ERROR;

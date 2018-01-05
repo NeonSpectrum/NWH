@@ -180,7 +180,7 @@ if (!$system->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="yyyy-mm-dd" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -323,7 +323,7 @@ if (!$system->isLogged()) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="object-fit: cover"/>
+                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']["picture"]}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']["picture"]}") ?>" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">

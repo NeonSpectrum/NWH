@@ -58,7 +58,7 @@ class Account extends System {
     $email         = $this->filter_input($credentials['txtEmail']);
     $password      = $this->filter_input($credentials['txtPassword'], true);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
-    $birthDate     = $this->filter_input($credentials['txtBirthDate']);
+    $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['txtBirthDate'])));
 
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
