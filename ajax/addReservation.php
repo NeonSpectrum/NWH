@@ -11,10 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $roomID       = $room->generateRoomID($roomType);
   $price        = $room->getRoomPrice($roomType);
 
-  $db->query("INSERT INTO walk_in VALUES(NULL, '$email', $roomID, '$checkInDate', '$checkOutDate', $adults, $children, 0, $price)");
+  $db->query("INSERT INTO `walk-in` VALUES(NULL, '$email', $roomID, '$checkInDate', '$checkOutDate', $adults, $children, 0, $price)");
 
   if ($db->affected_rows > 0) {
-    createLog("insert|walk_in|" . $db->insert_id);
+    createLog("insert|walk-in|" . $db->insert_id);
     echo true;
   }
 }
