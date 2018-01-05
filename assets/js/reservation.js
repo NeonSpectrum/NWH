@@ -423,7 +423,23 @@ $(document).ready(function() {
     return true;
   });
   $("#next-btn").on("click", function() {
-    $('#smartwizard').smartWizard("next");
+    if (location.hash == "#step-3") {
+      swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Submit'
+      }).then((result) => {
+        if (result.value) {
+          $('#smartwizard').smartWizard("next");
+        }
+      })
+    } else {
+      $('#smartwizard').smartWizard("next");
+    }
     return true;
   });
   if (location.search.includes("txtCheckDate") && location.search.includes("txtAdults") && location.search.includes("txtChildren")) {

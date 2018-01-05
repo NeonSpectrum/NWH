@@ -15,6 +15,7 @@ require_once '../files/navbar.php';
     </div>
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="form-group">
           <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" required />
         </div>

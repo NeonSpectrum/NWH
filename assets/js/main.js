@@ -75,6 +75,36 @@ $(document).ready(function() {
     // $(this).find("form").trigger("reset");
     // updateDate();
   });
+  var options = {
+    $AutoPlay: 3000,
+    $PauseOnHover: 1,
+    $FillMode: 1,
+    $SlideWidth: 400,
+    $Cols: 2,
+    $Align: 100,
+    $DragOrientation: 1,
+    $BulletNavigatorOptions: {
+      $Class: $JssorBulletNavigator$
+    }
+  };
+  var promo_slider = new $JssorSlider$('promo_slider_container', options);
+
+  function PromoScaleSlider() {
+    var parentElement = promo_slider.$Elmt.parentNode;
+    var parentWidth = parentElement.clientWidth;
+    if (parentWidth) {
+      parentWidth = Math.min(parentWidth, 600);
+      parentWidth = Math.max(parentWidth, 200);
+      var clearFix = "both";
+      var toClearElment = $Jssor$.$GetElement("clearFixDiv");
+      toClearElment && $Jssor$.$Css(toClearElment, "clear", clearFix);
+      promo_slider.$ScaleWidth(parentWidth);
+    } else $Jssor$.$Delay(PromoScaleSlider, 30);
+  }
+  PromoScaleSlider();
+  $(window).bind("load", PromoScaleSlider);
+  $(window).bind("resize", PromoScaleSlider);
+  $(window).bind("orientationchange", PromoScaleSlider);
 });
 Pace.track(function() {
   if (location.hostname.toLowerCase() == "localhost") {

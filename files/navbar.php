@@ -434,7 +434,7 @@ if (!$db->connect_error) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()">Print</button>
+          <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation/?BookingID='+$('#cmbBookingID option:selected').html()">Print</button>
           <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -482,6 +482,29 @@ if (!$db->connect_error) {
     </div>
   </div>
 </form>
+<div id="modalPromo" class="modal animated zoomIn center" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" style="position:absolute;top:5px;right:10px;font-size:30px;z-index:1;opacity:1" data-dismiss="modal">&times;</button>
+      <div style="display: block; overflow: hidden; width: 100%; max-width:600px; min-width: 240px; font-size: .8em; line-height: 1.5em;">
+        <div id="promo_slider_container" style="position: relative; float: left; top: 0px; left: 0px; width: 600px;height: 550px; overflow: hidden;">
+          <div style="position: absolute; left: 0px; top: 0px; width: 600px; height: 550px;overflow: hidden;" u="slides">
+<?php $view->promoPictures();?>
+          </div>
+          <div class="jssorb051" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75" data-u="navigator" style="position:absolute;bottom:7px;right:12px;z-index:2">
+            <div class="i" data-u="prototype" style="width:16px;height:16px;">
+              <svg style="position:absolute;top:0;left:0;width:100%;height:100%;" viewbox="0 0 16000 16000">
+                <circle class="b" cx="8000" cy="8000" r="5800">
+                </circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="background-bullet" style="background-color:rgba(0,0,0,0.4);position:absolute;bottom:0;left:0;width:100%;height:30px;z-index:1;overflow:hidden"></div>
+    </div>
+  </div>
+</div>
 <?php
 }
 ?>

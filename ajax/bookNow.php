@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $system->createLog("insert|booking|" . $bookingID);
       $totalRoomPrice = 0;
 
-      $arr[0] = $system->formatBookingID($bookingID, $date);
+      $arr[0] = $system->formatBookingID($bookingID);
       $arr[1] = "<br/><ul style='list-style-type:none'>";
       $table  = "<table border='1'><thead><th style='padding:10px'>Room Type</th><th style='padding:10px'>Quantity</th><th style='padding:10px'>Room Number(s)</th></thead><tbody>";
       foreach ($_POST['rooms'] as $key => $rooms) {
@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $subject = "Northwood Hotel Reservation Confirmation";
 
       $body = "Dear {$_SESSION['account']['fname']} {$_SESSION['account']['lname']},<br/><br/>";
-      $body .= "Booking ID: " . $system->formatBookingID($bookingID, $date) . "<br/>";
+      $body .= "Booking ID: " . $system->formatBookingID($bookingID) . "<br/>";
       $body .= "Guest Type: {$_SESSION['account']['type']}<br/><br/>";
       $body .= "$table<br/><br/>";
-      $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID, $date);
+      $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID);
 
       $system->sendMail($_SESSION['account']['email'], $subject, $body);
       echo json_encode($arr);

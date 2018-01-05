@@ -448,7 +448,7 @@ class View extends Room {
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
         echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -476,7 +476,7 @@ class View extends Room {
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
         echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -618,7 +618,7 @@ class View extends Room {
           $first    = false;
         }
         echo "                ";
-        echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "</option>\n";
+        echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID']) . "</option>\n";
       }
     }
   }
@@ -782,8 +782,11 @@ class System {
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }
 
-  public function formatBookingID($id, $date) {
-    return "nwh" . date("mdy", strtotime($date)) . "-" . sprintf("% '04d\n", $id);
+  public function formatBookingID($id) {
+    global $db;
+    $result = $db->query("SELECT * FROM booking WHERE BookingID=$id");
+    $row    = $result->fetch_assoc();
+    return "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d\n", $id);
   }
 
   public function verifyCaptcha($captcha) {
