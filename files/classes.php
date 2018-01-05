@@ -102,13 +102,15 @@ class Account extends System {
       }
     } else {
       if ($db->affected_rows > 0) {
-        $_SESSION['account']['email']         = $email;
-        $_SESSION['account']['fname']         = $fname;
-        $_SESSION['account']['lname']         = $lname;
-        $_SESSION['account']['picture']       = "default.png";
-        $_SESSION['account']['type']          = "User";
-        $_SESSION['account']['birthDate']     = $birthDate;
-        $_SESSION['account']['contactNumber'] = $contactNumber;
+        if (AUTO_LOGIN_AT_REGISTER) {
+          $_SESSION['account']['email']         = $email;
+          $_SESSION['account']['fname']         = $fname;
+          $_SESSION['account']['lname']         = $lname;
+          $_SESSION['account']['picture']       = "default.png";
+          $_SESSION['account']['type']          = "User";
+          $_SESSION['account']['birthDate']     = $birthDate;
+          $_SESSION['account']['contactNumber'] = $contactNumber;
+        }
         $this->createLog("registered|account|$email");
         return "<script>alert('Registered Successfully!');location.href='$root';</script>";
       } else {

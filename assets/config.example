@@ -1,9 +1,10 @@
 [system]
 timezone = "Asia/Manila"
 debug = false
-allow_owner_privileges = false
+allow_creator_privileges = false
 chat = false
 offline_mode = false
+auto_login_at_register = false
 
 [date]
 max_birth_year = 2009
