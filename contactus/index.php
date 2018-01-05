@@ -26,7 +26,7 @@ require_once '../files/navbar.php';
           <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['contactNumber'] . '" readonly' : '"'; ?>/>
         </div>
         <div class="form-group">
-          <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>
+          <textarea id="txtMessage" style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>
         </div>
         <div class="form-group">
           <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:90%">Send</button>
