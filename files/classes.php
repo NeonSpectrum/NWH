@@ -374,9 +374,10 @@ class View extends Room {
   public function homeRooms() {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      echo "      ";
-      echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        echo "      ";
+        echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
         <figure class='imghvr-fade-in'>
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
@@ -392,6 +393,7 @@ class View extends Room {
           <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='width:50%;position:absolute;right:0'>Book Now</button>
         </div>
       </div>\n";
+      }
     }
   }
 
@@ -405,52 +407,56 @@ class View extends Room {
   public function roomandrates() {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      echo "<tr>";
-      echo "<td class='img-baguette'>";
-      $first = true;
-      foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
-        $filename = str_replace("../gallery/images/rooms/", "", $image);
-        $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
-        echo "<a href='$image' data-caption='$caption' style='";
-        echo $first == true ? "" : "display:none";
-        echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' height='200px'></a>\n";
-        $first = false;
-      }
-      echo "</td>";
-      echo "<td style='vertical-align:top'>
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td class='img-baguette'>";
+        $first = true;
+        foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
+          $filename = str_replace("../gallery/images/rooms/", "", $image);
+          $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
+          echo "<a href='$image' data-caption='$caption' style='";
+          echo $first == true ? "" : "display:none";
+          echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' height='200px'></a>\n";
+          $first = false;
+        }
+        echo "</td>";
+        echo "<td style='vertical-align:top'>
           <h3><b>" . str_replace("_", " ", $row['RoomType']) . "</b></h3><br/>
           {$row['RoomDescription']}
         </td>";
-      echo "<td><center>From<br/><br/><span style='font-size:20px;'><b>₱&nbsp;" . number_format($this->getRoomPrice($row['RoomType'])) . "</b></span></center></td>";
-      echo "</tr>";
+        echo "<td><center>From<br/><br/><span style='font-size:20px;'><b>₱&nbsp;" . number_format($this->getRoomPrice($row['RoomType'])) . "</b></span></center></td>";
+        echo "</tr>";
+      }
     }
   }
 
   public function booking() {
     global $db, $root, $date;
     $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
-        echo "<tr>";
-        echo "<td>{$row['BookingID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
-        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        $balance = $row['TotalAmount'] - $row['AmountPaid'];
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
-        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
-        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
-        echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
-        echo "</td>";
-        echo "</tr>";
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        if (strtotime($row['CheckInDate']) >= strtotime($date)) {
+          echo "<tr>";
+          echo "<td>{$row['BookingID']}</td>";
+          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+          echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+          echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+          echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+          echo "<td id='txtAdults'>{$row['Adults']}</td>";
+          echo "<td id='txtChildren'>{$row['Children']}</td>";
+          $balance = $row['TotalAmount'] - $row['AmountPaid'];
+          echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
+          echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
+          echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
+          echo "<td>";
+          echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+          echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
+          echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+          echo "</td>";
+          echo "</tr>";
+        }
       }
     }
   }
@@ -458,27 +464,29 @@ class View extends Room {
   public function walkin() {
     global $db, $root, $date;
     $result = $db->query("SELECT * FROM `walk-in` JOIN `walk-in_room` ON `walk-in`.WalkInID=`walk-in_room`.WalkInID JOIN room ON room.RoomID=`walk-in_room`.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
-        echo "<tr>";
-        echo "<td>{$row['WalkInID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
-        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        $balance = $row['TotalAmount'] - $row['AmountPaid'];
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
-        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
-        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
-        echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
-        echo "</td>";
-        echo "</tr>";
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        if (strtotime($row['CheckInDate']) >= strtotime($date)) {
+          echo "<tr>";
+          echo "<td>{$row['WalkInID']}</td>";
+          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+          echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+          echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+          echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+          echo "<td id='txtAdults'>{$row['Adults']}</td>";
+          echo "<td id='txtChildren'>{$row['Children']}</td>";
+          $balance = $row['TotalAmount'] - $row['AmountPaid'];
+          echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
+          echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
+          echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
+          echo "<td>";
+          echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+          echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
+          echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+          echo "</td>";
+          echo "</tr>";
+        }
       }
     }
   }
@@ -487,52 +495,56 @@ class View extends Room {
     global $db;
     if ($category == "walk_in") {
       $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
-      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-        $checkInStatus  = $row['CheckIn'] == '' ? false : true;
-        $checkOutStatus = $row['CheckOut'] == '' ? false : true;
-        if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
-          echo "<tr>";
-          echo "<td>{$row['WalkInID']}</td>";
-          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-          echo "<td id='txtAdults'>{$row['Adults']}</td>";
-          echo "<td id='txtChildren'>{$row['Children']}</td>";
-          echo "<td>";
-          echo "<a title='Check In' class='btnCheckIn' id='{$row['WalkInID']}' style='cursor:pointer'";
-          echo $checkInStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-plus-o'></i></a>";
-          echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['WalkInID']}' style='cursor:pointer'";
-          echo $checkOutStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-minus-o'></i></a>";
-          echo "</td>";
-          echo "</tr>";
+      if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+          $checkInStatus  = $row['CheckIn'] == '' ? false : true;
+          $checkOutStatus = $row['CheckOut'] == '' ? false : true;
+          if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
+            echo "<tr>";
+            echo "<td>{$row['WalkInID']}</td>";
+            echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+            echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+            echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
+            echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
+            echo "<td id='txtAdults'>{$row['Adults']}</td>";
+            echo "<td id='txtChildren'>{$row['Children']}</td>";
+            echo "<td>";
+            echo "<a title='Check In' class='btnCheckIn' id='{$row['WalkInID']}' style='cursor:pointer'";
+            echo $checkInStatus ? ' disabled' : '';
+            echo "><i class='fa fa-calendar-plus-o'></i></a>";
+            echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['WalkInID']}' style='cursor:pointer'";
+            echo $checkOutStatus ? ' disabled' : '';
+            echo "><i class='fa fa-calendar-minus-o'></i></a>";
+            echo "</td>";
+            echo "</tr>";
+          }
         }
       }
     } else if ($category == "book") {
       $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-        $checkInStatus  = $row['CheckIn'] == '' ? false : true;
-        $checkOutStatus = $row['CheckOut'] == '' ? false : true;
-        if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
-          echo "<tr>";
-          echo "<td>{$row['BookingID']}</td>";
-          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-          echo "<td id='txtAdults'>{$row['Adults']}</td>";
-          echo "<td id='txtChildren'>{$row['Children']}</td>";
-          echo "<td>";
-          echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
-          echo $checkInStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-plus-o'></i></a>";
-          echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'";
-          echo $checkOutStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-minus-o'></i></a>";
-          echo "</td>";
-          echo "</tr>";
+      if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+          $checkInStatus  = $row['CheckIn'] == '' ? false : true;
+          $checkOutStatus = $row['CheckOut'] == '' ? false : true;
+          if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
+            echo "<tr>";
+            echo "<td>{$row['BookingID']}</td>";
+            echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+            echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+            echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
+            echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
+            echo "<td id='txtAdults'>{$row['Adults']}</td>";
+            echo "<td id='txtChildren'>{$row['Children']}</td>";
+            echo "<td>";
+            echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
+            echo $checkInStatus ? ' disabled' : '';
+            echo "><i class='fa fa-calendar-plus-o'></i></a>";
+            echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'";
+            echo $checkOutStatus ? ' disabled' : '';
+            echo "><i class='fa fa-calendar-minus-o'></i></a>";
+            echo "</td>";
+            echo "</tr>";
+          }
         }
       }
     }
@@ -542,29 +554,33 @@ class View extends Room {
     global $db;
     if ($category == "walk_in") {
       $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
-      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>{$row['WalkInID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-        echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "</tr>";
+      if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr>";
+          echo "<td>{$row['WalkInID']}</td>";
+          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
+          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
+          echo "<td id='txtAdults'>{$row['Adults']}</td>";
+          echo "<td id='txtChildren'>{$row['Children']}</td>";
+          echo "</tr>";
+        }
       }
     } else if ($category == "book") {
       $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>{$row['BookingID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-        echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "</tr>";
+      if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr>";
+          echo "<td>{$row['BookingID']}</td>";
+          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
+          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
+          echo "<td id='txtAdults'>{$row['Adults']}</td>";
+          echo "<td id='txtChildren'>{$row['Children']}</td>";
+          echo "</tr>";
+        }
       }
     }
   }
@@ -572,35 +588,39 @@ class View extends Room {
   public function accounts() {
     global $db;
     $result = $db->query("SELECT * FROM account");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      echo "<tr>";
-      echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-      echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
-      echo "<td id='txtLastName'>{$row['LastName']}</td>";
-      echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
-      echo "<td>";
-      if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {
-        echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
-        echo "&nbsp;&nbsp;";
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+        echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
+        echo "<td id='txtLastName'>{$row['LastName']}</td>";
+        echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
+        echo "<td>";
+        if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {
+          echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+          echo "&nbsp;&nbsp;";
+        }
+        if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
+          echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+        }
+        echo "</td>";
+        echo "</tr>";
       }
-      if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
-        echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
-      }
-      echo "</td>";
-      echo "</tr>";
     }
   }
 
   public function eventLogs() {
     global $db;
     $result = $db->query("SELECT * FROM log");
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      echo "<tr>";
-      echo "<td>{$row['ID']}</td>";
-      echo "<td>{$row['EmailAddress']}</td>";
-      echo "<td>" . str_replace("|", " | ", $row['Action']) . "</td>";
-      echo "<td>{$row['TimeStamp']}</td>";
-      echo "</tr>";
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>{$row['ID']}</td>";
+        echo "<td>{$row['EmailAddress']}</td>";
+        echo "<td>" . str_replace("|", " | ", $row['Action']) . "</td>";
+        echo "<td>{$row['TimeStamp']}</td>";
+        echo "</tr>";
+      }
     }
   }
 
@@ -609,16 +629,18 @@ class View extends Room {
     $email  = $this->filter_input($_SESSION['account']['email']);
     $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
     $first  = true;
-    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-      $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
-      if ($tomorrow <= strtotime($row['CheckInDate'])) {
-        if ($first) {
-          $adults   = $row['Adults'];
-          $children = $row['Children'];
-          $first    = false;
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
+        if ($tomorrow <= strtotime($row['CheckInDate'])) {
+          if ($first) {
+            $adults   = $row['Adults'];
+            $children = $row['Children'];
+            $first    = false;
+          }
+          echo "                ";
+          echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "</option>\n";
         }
-        echo "                ";
-        echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "</option>\n";
       }
     }
   }
@@ -628,7 +650,7 @@ class View extends Room {
   //   $email    = $this->filter_input($_SESSION['account']['email']);
   //   $result   = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
   //   $roomList = [];
-  //   while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
+  //   while ($row = $result->fetch_assoc()) {
   //     $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
   //     if ($tomorrow <= strtotime($row['CheckInDate'])) {
   //       $roomResult = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID={$row['BookingID']}");
@@ -661,15 +683,16 @@ class View extends Room {
       }
     } else if ($category == "descriptions") {
       $result = $db->query("SELECT RoomType, RoomDescription FROM room_type");
-      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
-        echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
-        echo "</tr>";
+      if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr>";
+          echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+          echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
+          echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
+          echo "</tr>";
+        }
       }
     }
-
   }
 
 }
