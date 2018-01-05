@@ -56,16 +56,16 @@ class Account extends System {
     $fname         = ucwords(strtolower($this->filter_input($credentials['txtFirstName'])));
     $lname         = ucwords(strtolower($this->filter_input($credentials['txtLastName'])));
     $email         = $this->filter_input($credentials['txtEmail']);
-    $password      = password_hash($this->filter_input($credentials['txtPassword'], true), PASSWORD_DEFAULT);
+    $password      = $this->filter_input($credentials['txtPassword'], true);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
     $birthDate     = $this->filter_input($credentials['txtBirthDate']);
 
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
     if ($result->num_rows == 0) {
-      $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
+      $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&TimeStamp=" . strtotime("now"));
       $subject  = "Northwood Hotel Account Creation";
-      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&$data";
+      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&token=$data";
       $sentMail = $this->sendMail($email, $subject, $body);
       if ($sentMail == true) {
         $this->createLog("sent|registration|$email");
@@ -87,7 +87,7 @@ class Account extends System {
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
     $birthDate     = $this->filter_input($credentials['txtBirthDate']);
 
-    if (isset($credentials['expirydate']) && $this->isExpired($credentials['expirydate'])) {
+    if (isset($credentials['expirydate']) && $this->isExpired($credentials['TimeStamp'], EMAIL_EXPIRATION)) {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
     }
 

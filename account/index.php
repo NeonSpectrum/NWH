@@ -14,25 +14,20 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
       break;
     }
   case "register":{
-      parse_str($system->decrypt($_SERVER['QUERY_STRING']), $credentials);
-      if (isset($credentials['txtEmail'])) {
-        echo $account->register($credentials);
-      } else if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
-        $credentials['txtFirstName']     = $_POST['txtFirstName'];
-        $credentials['txtLastName']      = $_POST['txtLastName'];
-        $credentials['txtEmail']         = $_POST['txtEmail'];
-        $credentials['txtPassword']      = $_POST['txtPassword'];
-        $credentials['txtContactNumber'] = $_POST['txtContactNumber'];
-        $credentials['txtBirthDate']     = $_POST['txtBirthDate'];
-        if ($_POST['verify'] == "false") {
-          echo $account->register($credentials, false);
+      $credentials['txtFirstName']     = $_POST['txtFirstName'];
+      $credentials['txtLastName']      = $_POST['txtLastName'];
+      $credentials['txtEmail']         = $_POST['txtEmail'];
+      $credentials['txtPassword']      = $_POST['txtPassword'];
+      $credentials['txtContactNumber'] = $_POST['txtContactNumber'];
+      $credentials['txtBirthDate']     = $_POST['txtBirthDate'];
+      if ($_POST['verify'] == "false") {
+        echo $account->register($credentials, false);
+      } else {
+        $captcha = $system->verifyCaptcha($_POST['g-recaptcha-response']);
+        if ($captcha) {
+          echo $account->verifyRegistration($credentials, true);
         } else {
-          $captcha = $system->verifyCaptcha($_POST['g-recaptcha-response']);
-          if ($captcha) {
-            echo $account->verifyRegistration($credentials, true);
-          } else {
-            echo $captcha;
-          }
+          echo $captcha;
         }
       }
       break;
@@ -82,6 +77,16 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
   }
 } else if (isset($_GET['mode'])) {
   switch ($_GET['mode']) {
+  case "register":{
+      // echo $system->decrypt(str_replace(" ", "+", $_GET['token']));
+      // return;
+      parse_str($system->decrypt(str_replace(" ", "+", $_GET['token'])), $credentials);
+      if (isset($credentials['txtEmail'])) {
+        echo $account->register($credentials);
+        echo print_r($credentials);
+      }
+      break;
+    }
   case "logout":{
       $account->logout();
       break;
