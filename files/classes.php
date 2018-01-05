@@ -29,7 +29,7 @@ class Account extends System {
       $_SESSION['account']['birthDate']     = $row['BirthDate'];
       $_SESSION['account']['contactNumber'] = $row['ContactNumber'];
 
-      $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email");
+      $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email'");
       $this->createLog("login|account", $email);
       return true;
     } else {
