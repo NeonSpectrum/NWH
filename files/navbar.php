@@ -435,7 +435,7 @@ if (!$db->connect_error) {
         </div>
         <div class="modal-footer">
           <button id="btnPrint" type="button" class="btn btn-info" onclick="location.href='<?php echo $root; ?>files/generateReservationConfirmation.php?BookingID='+$('#cmbBookingID').val()">Print</button>
-          <button id="btnUpdate" type="submit" class="btn btn-info" disabled>Update</button>
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
