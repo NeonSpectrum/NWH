@@ -1,6 +1,3 @@
-$('#tblAccount_length').find("select").addClass("form-control");
-$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
-$('input[type="search"]').focus();
 $('.btnEditAccount').click(function() {
   var email = $(this).attr("id");
   var firstName = $(this).closest("tr").find("#txtFirstName").html();
@@ -97,7 +94,7 @@ $("#frmAddAccount").validator().submit(function(e) {
 });
 $('#frmEditAccount').submit(function(e) {
   e.preventDefault();
-  $(this).find("#btnUpdate").html('<img src="' + root + '/images/btn-ajax-loader.gif" height="20px" width="20px" /> &nbsp; Updating ...');
+  $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> &nbsp; Updating ...');
   $(this).find("#btnUpdate").attr('disabled', true);
   if ($(this).find('#cmbAccountType').val() != "User" && $(this).find('#cmbAccountType').val() != "Admin") {
     $(this).find(".lblDisplayError").show(function() {
@@ -128,3 +125,6 @@ $('#frmEditAccount').submit(function(e) {
   });
 });
 $('#tblAccount').DataTable();
+$('#tblAccount_length').find("select").addClass("form-control");
+$('#tblAccount_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();

@@ -1,5 +1,4 @@
 var bookingID, email, roomID, roomType, checkInDate, checkOutDate, adults, childrens, currentRoomIDs;
-$('input[type="search"]').focus();
 $('#modalAddPayment').on('shown.bs.modal', function() {
   $('#txtPayment').focus();
 });
@@ -116,3 +115,4 @@ $("#frmEditReservation").submit(function(e) {
 $('#tblReservation').DataTable();
 $('#tblReservation_length').find("select").addClass("form-control");
 $('#tblReservation_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();

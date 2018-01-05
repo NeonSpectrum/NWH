@@ -65,7 +65,7 @@ class Account extends System {
     if ($result->num_rows == 0) {
       $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&TimeStamp=" . strtotime("now"));
       $subject  = "Northwood Hotel Account Creation";
-      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&token=$data";
+      $body     = "Please proceed to this link to register your account:<br/>Click <a href='http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&token=$data'>here</a> to register.";
       $sentMail = $this->sendMail($email, $subject, $body);
       if ($sentMail == true) {
         $this->createLog("sent|registration|$email");
@@ -160,7 +160,7 @@ class Account extends System {
       $this->createLog("sent|forgot.password|$email");
       $data    = "email=$email&token=" . $this->generateForgotToken($email);
       $subject = "Northwood Hotel Forgot Password";
-      $body    = "Please proceed to this link to reset your password:<br/>http://{$_SERVER['SERVER_NAME']}{$root}?$data";
+      $body    = "Please proceed to this link to reset your password:<br/>Click <a href='http://{$_SERVER['SERVER_NAME']}{$root}?$data'>here</a> to change your password.";
 
       return $this->sendMail("$email", "$subject", "$body");
     }
@@ -201,6 +201,7 @@ class Account extends System {
 
   public function editProfile($credentials, $admin = false) {
     global $db, $root;
+    $output = NOTHING_CHANGED;
     if ($admin) {
       $email       = $credentials['email'];
       $accountType = $credentials['accountType'];
@@ -212,10 +213,9 @@ class Account extends System {
         $this->createLog("update|account|$email");
         echo true;
       } else {
-        echo $db->error;
+        echo $output;
       }
     } else {
-      $output = NOTHING_CHANGED;
       if (isset($credentials['image'])) {
         $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
         $filename  = basename($_SESSION['account']['fname'] . $_SESSION['account']['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
