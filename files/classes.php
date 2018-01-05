@@ -374,7 +374,7 @@ class View extends Room {
   public function homeRooms() {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       echo "      ";
       echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
         <figure class='imghvr-fade-in'>
@@ -405,7 +405,7 @@ class View extends Room {
   public function roomandrates() {
     global $db;
     $result = $db->query("SELECT * FROM room_type");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td class='img-baguette'>";
       $first = true;
@@ -430,7 +430,7 @@ class View extends Room {
   public function booking() {
     global $db, $root, $date;
     $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       if (strtotime($row['CheckInDate']) >= strtotime($date)) {
         echo "<tr>";
         echo "<td>{$row['BookingID']}</td>";
@@ -458,7 +458,7 @@ class View extends Room {
   public function walkin() {
     global $db, $root, $date;
     $result = $db->query("SELECT * FROM `walk-in` JOIN `walk-in_room` ON `walk-in`.WalkInID=`walk-in_room`.WalkInID JOIN room ON room.RoomID=`walk-in_room`.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       if (strtotime($row['CheckInDate']) >= strtotime($date)) {
         echo "<tr>";
         echo "<td>{$row['WalkInID']}</td>";
@@ -487,7 +487,7 @@ class View extends Room {
     global $db;
     if ($category == "walk_in") {
       $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
-      while ($row = $result->fetch_assoc()) {
+      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
         $checkInStatus  = $row['CheckIn'] == '' ? false : true;
         $checkOutStatus = $row['CheckOut'] == '' ? false : true;
         if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
@@ -512,7 +512,7 @@ class View extends Room {
       }
     } else if ($category == "book") {
       $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($row = $result->fetch_assoc()) {
+      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
         $checkInStatus  = $row['CheckIn'] == '' ? false : true;
         $checkOutStatus = $row['CheckOut'] == '' ? false : true;
         if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
@@ -542,7 +542,7 @@ class View extends Room {
     global $db;
     if ($category == "walk_in") {
       $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
-      while ($row = $result->fetch_assoc()) {
+      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>{$row['WalkInID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
@@ -555,7 +555,7 @@ class View extends Room {
       }
     } else if ($category == "book") {
       $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($row = $result->fetch_assoc()) {
+      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
@@ -572,7 +572,7 @@ class View extends Room {
   public function accounts() {
     global $db;
     $result = $db->query("SELECT * FROM account");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
       echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
@@ -594,7 +594,7 @@ class View extends Room {
   public function eventLogs() {
     global $db;
     $result = $db->query("SELECT * FROM log");
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$row['ID']}</td>";
       echo "<td>{$row['EmailAddress']}</td>";
@@ -609,7 +609,7 @@ class View extends Room {
     $email  = $this->filter_input($_SESSION['account']['email']);
     $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
     $first  = true;
-    while ($row = $result->fetch_assoc()) {
+    while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
       $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
       if ($tomorrow <= strtotime($row['CheckInDate'])) {
         if ($first) {
@@ -628,7 +628,7 @@ class View extends Room {
   //   $email    = $this->filter_input($_SESSION['account']['email']);
   //   $result   = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
   //   $roomList = [];
-  //   while ($row = $result->fetch_assoc()) {
+  //   while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
   //     $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
   //     if ($tomorrow <= strtotime($row['CheckInDate'])) {
   //       $roomResult = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID={$row['BookingID']}");
@@ -661,7 +661,7 @@ class View extends Room {
       }
     } else if ($category == "descriptions") {
       $result = $db->query("SELECT RoomType, RoomDescription FROM room_type");
-      while ($row = $result->fetch_assoc()) {
+      while ($result->num_rows > 0 && $row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
         echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
