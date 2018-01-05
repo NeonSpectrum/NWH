@@ -741,7 +741,7 @@ class System {
       $mail->SMTPAuth   = true;
       $mail->Username   = NOREPLY_EMAIL;
       $mail->Password   = PASSWORD;
-      $mail->SMTPSecure = 'tls';
+      $mail->SMTPSecure = 'ssl';
       $mail->Port       = 465;
 
       $mail->setFrom(NOREPLY_EMAIL, "Northwood Hotel");
