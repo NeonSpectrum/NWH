@@ -738,7 +738,7 @@ class System {
 
   public function sendContactForm($name, $email, $contactNumber, $message) {
     $subject = "Message from $email";
-    $body    = "Name: $name<br/>Email: $email<br/>ContactNumber: $contactNumber<br/>Message: $message";
+    $body    = "Name: $name<br/>Email: $email<br/>Contact Number: $contactNumber<br/>Message: $message";
     return $this->sendMail(SUPPORT_EMAIL, $subject, $body, "Northwood Hotel Support");
   }
 
