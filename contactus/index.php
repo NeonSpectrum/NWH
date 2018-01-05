@@ -17,13 +17,13 @@ require_once '../files/navbar.php';
       <form class="form-horizontal center-block text-center" id="frmContact">
         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
         <div class="form-group">
-          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['fname'] . " " . $_SESSION['account']['lname'] : "" ?>"required />
+          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['fname'] . ' ' . $_SESSION['account']['lname'] . '" readonly' : '"'; ?> required />
         </div>
         <div class="form-group">
-          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['email'] : "" ?>" required/>
+          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['email'] . '" readonly' : '"'; ?> required />
         </div>
         <div class="form-group">
-          <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['contactNumber'] : "" ?>"/>
+          <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)" value="<?php echo isset($_SESSION['account']) ? $_SESSION['account']['contactNumber'] . '" readonly' : '"'; ?>/>
         </div>
         <div class="form-group">
           <textarea style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" required></textarea>

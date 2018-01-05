@@ -530,6 +530,9 @@ $('#frmContact').submit(function(e) {
     $('#txtEmail').focus();
     return;
   }
+  if ($(this).find("#txtMessage").val().trim() == "") {
+    return;
+  }
   $(this).find("#btnSubmit").html('<i class="fa fa-spinner fa-pulse"></i> Sending ...');
   $(this).find("#btnSubmit").prop('disabled', true);
   $.ajax({
