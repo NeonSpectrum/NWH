@@ -12,7 +12,7 @@ $comment_patterns = array('/\/\*.*(\n)*.*(\*\/)?/',
 );
 $contents = preg_replace($comment_patterns, "\n", $contents);
 
-$statements = explode(";\n", $contents);
+$statements = explode(";", $contents);
 $statements = preg_replace("/\s/", ' ', $statements);
 foreach ($statements as $query) {
   if (trim($query) != '') {
