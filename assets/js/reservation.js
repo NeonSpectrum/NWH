@@ -281,14 +281,14 @@
 // SCRIPT
 var rooms = [];
 $(document).ready(function() {
-  $('#modalRules').modal("show");
+  if (!isLogged) {
+    location.href = "//" + location.hostname + root + "account/login.php?redirect=" + encodeURIComponent(location.hostname + root + "reservation/" + location.search);
+  }
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     //alert("You are on step "+stepNumber+" now");
     if (stepPosition === 'final') {
-      $("#next-btn").remove();
-    } else {
-      $("#next-btn").removeClass('disabled');
+      $(".navbar-btn").remove();
     }
   });
   // Smart Wizard
@@ -297,7 +297,7 @@ $(document).ready(function() {
     keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
     autoAdjustHeight: true, // Automatically adjust content height
     cycleSteps: false, // Allows to cycle the navigation of steps
-    backButtonSupport: true, // Enable the back button support
+    backButtonSupport: false, // Enable the back button support
     useURLhash: false, // Enable selection of the step based on url hash
     lang: { // Language variables
       next: 'Next',
@@ -310,7 +310,7 @@ $(document).ready(function() {
       anchorClickable: true, // Enable/Disable anchor navigation
       enableAllAnchors: false, // Activates all anchors clickable all times
       markDoneStep: true, // add done css
-      enableAnchorOnDoneStep: false // Enable/Disable the done steps navigation
+      enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
     },
     contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
     disabledSteps: [], // Array Steps disabled
@@ -321,92 +321,101 @@ $(document).ready(function() {
   });
   // Leave Step
   $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-    if (stepNumber == 0) {
-      var checkDate = $('#frmBookNow').find("#txtCheckDate").val().split(" - ");
-      var checkIn = new Date(checkDate[0]);
-      var checkOut = new Date(checkDate[1]);
-      if (checkIn > checkOut) {
-        alertNotif("error", "Check Out date must be greater than Check In date.");
-        return false;
-      }
-      if (parseInt($('#frmBookNow').find('#txtAdults').val()) <= 0) {
-        alertNotif("error", "An adult is a must!");
-        return false;
-      }
-      $("#loadingMode").fadeIn();
-      $.ajax({
-        type: 'POST',
-        url: root + 'ajax/getRooms.php',
-        data: $('#frmBookNow').serialize(),
-        success: function(response) {
-          $('#txtRooms').html(response);
-          baguetteBox.run('.img-baguette', {
-            animation: 'fadeIn',
-            fullscreen: true
-          });
-          $('input[type="checkbox"]').change(function() {
-            $('input[type="checkbox"]').not(this).prop('checked', false);
-          });
-          addBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>");
-          $("#loadingMode").fadeOut();
+    if (stepDirection == "forward") {
+      if (stepNumber == 0) {
+        $('#prev-btn').css("display", "block");
+        var checkDate = $('#frmBookNow').find("#txtCheckDate").val().split(" - ");
+        var checkIn = new Date(checkDate[0]);
+        var checkOut = new Date(checkDate[1]);
+        if (checkIn > checkOut) {
+          alertNotif("error", "Check Out date must be greater than Check In date.");
+          return false;
         }
-      });
-    } else if (stepNumber == 1) {
-      var roomSelected = false;
-      $('.numberOfRooms').each(function() {
-        if ($(this).find("select").val() != 0) {
-          roomSelected = true;
+        if (parseInt($('#frmBookNow').find('#txtAdults').val()) <= 0) {
+          alertNotif("error", "An adult is a must!");
+          return false;
         }
-      });
-      if (!roomSelected) {
-        alertNotif("error", "Please choose a room before proceeding to next step.");
-        return false;
-      }
-      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
-      var total = 0;
-      $("#loadingMode").fadeIn();
-      $('.numberOfRooms').each(function() {
-        if ($(this).find("select").val() != 0) {
-          var roomName = $(this).parent().find("#roomName").html();
-          var roomQuantity = $(this).find("select").val();
-          rooms.push({
-            roomType: roomName,
-            roomQuantity: roomQuantity
-          });
-          addBookingSummary(roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>");
-          $("#loadingMode").fadeOut();
-        }
-        total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
-      });
-      $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-      addBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>");
-      addBookingSummary("Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
-    } else if (stepNumber == 2) {
-      $('#reset-btn').css("display", "none");
-      $("#loadingMode").fadeIn();
-      $.ajax({
-        context: this,
-        type: 'POST',
-        url: root + 'ajax/bookNow.php',
-        dataType: "json",
-        data: {
+        $("#loadingMode").fadeIn();
+        $.ajax({
+          type: 'POST',
+          url: root + 'ajax/getRooms.php',
           data: $('#frmBookNow').serialize(),
-          rooms: rooms
-        },
-        success: function(response) {
-          $('span#txtBookingID').html(response[0]);
-          $('span#txtRoomID').html(response[1]);
-          $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
-          addBookingSummary("<br/>Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>");
-          $("#loadingMode").fadeOut();
+          success: function(response) {
+            $('#txtRooms').html(response);
+            baguetteBox.run('.img-baguette', {
+              animation: 'fadeIn',
+              fullscreen: true
+            });
+            $('input[type="checkbox"]').change(function() {
+              $('input[type="checkbox"]').not(this).prop('checked', false);
+            });
+            editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>", "info");
+            $("#loadingMode").fadeOut();
+          }
+        });
+      } else if (stepNumber == 1) {
+        var roomSelected = false;
+        $('.numberOfRooms').each(function() {
+          if ($(this).find("select").val() != 0) {
+            roomSelected = true;
+          }
+        });
+        if (!roomSelected && stepDirection != "backward") {
+          alertNotif("error", "Please choose a room before proceeding to next step.");
+          return false;
         }
-      });
+        var total = 0,
+          roomHtml = "";
+        $("#loadingMode").fadeIn();
+        $('.numberOfRooms').each(function() {
+          if ($(this).find("select").val() != 0) {
+            var roomName = $(this).parent().find("#roomName").html();
+            var roomQuantity = $(this).find("select").val();
+            rooms.push({
+              roomType: roomName,
+              roomQuantity: roomQuantity
+            });
+            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>";
+            $("#loadingMode").fadeOut();
+          }
+          total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
+        });
+        $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+        editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
+      } else if (stepNumber == 2) {
+        $('#reset-btn').css("display", "none");
+        $('#modalRules').modal("show");
+        $("#loadingMode").fadeIn();
+        $.ajax({
+          context: this,
+          type: 'POST',
+          url: root + 'ajax/bookNow.php',
+          dataType: "json",
+          data: {
+            data: $('#frmBookNow').serialize(),
+            rooms: rooms
+          },
+          success: function(response) {
+            $('span#txtBookingID').html(response[0]);
+            $('span#txtRoomID').html(response[1]);
+            $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+            editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
+            $("#loadingMode").fadeOut();
+            $('#smartwizard ul').find("a").css("pointer-events", "none");
+          }
+        });
+      }
+    } else {
+      if (stepNumber == 1) {
+        $("#prev-btn").css("display", "none");
+      }
     }
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
     $('#smartwizard').smartWizard("reset");
     $('#bookingSummary').html('');
+    $('#prev-btn').css("display", "none");
     return true;
   });
   $("#prev-btn").on("click", function() {
@@ -422,7 +431,8 @@ $(document).ready(function() {
   }
 });
 
-function addBookingSummary(html) {
-  var nextLine = $('#bookingSummary').html().trim() != "" && !$('#bookingSummary').html().includes("<hr") ? "<br/>" : "";
-  $('#bookingSummary').hide().html($('#bookingSummary').html() + nextLine + html).fadeIn();
+function editBookingSummary(html, type) {
+  $('#bookingSummary').hide();
+  $('#bookingSummary').find("#" + type).html(html);
+  $('#bookingSummary').fadeIn();
 }

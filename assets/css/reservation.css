@@ -2,6 +2,9 @@
   #txtRooms {
     text-align: center;
   }
+  .numberOfRooms {
+    margin: -50px 0;
+  }
 }
 
 .paymentWrap .paymentBtnGroup {
@@ -270,7 +273,7 @@
 }
 
 .sw-theme-arrows>.sw-container {
-  min-height: 200px
+  min-height: 200px !important
 }
 
 .sw-theme-arrows .step-content {
@@ -364,8 +367,8 @@
 }
 
 .sw-theme-arrows>ul.step-anchor>li.clickable>a:hover {
-  color: #4285f4!important;
-  background: #46b8da!important
+  /*color: #4285f4!important;
+  background: #46b8da!important*/
 }
 
 .sw-theme-arrows>ul.step-anchor>li.active>a {

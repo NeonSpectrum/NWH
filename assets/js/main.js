@@ -130,14 +130,27 @@ Pace.on('done', function() {
   });
   $('input.checkDate').keypress(function() {
     return false;
-  })
-  $('input.checkDate').daterangepicker({
-    autoApply: true,
-    autoUpdateInput: true,
-    minDate: moment(new Date()).add(1, 'days'),
-    endDate: moment(new Date()).add(1, 'days'),
-    locale: {
-      format: DATE_FORMAT.toUpperCase()
+  });
+  $("input.checkDate").each(function() {
+    if (!$(this).val()) {
+      $(this).daterangepicker({
+        autoApply: true,
+        autoUpdateInput: true,
+        minDate: moment(new Date()).add(1, 'days'),
+        endDate: moment(new Date()).add(1, 'days'),
+        locale: {
+          format: DATE_FORMAT.toUpperCase()
+        }
+      });
+    } else {
+      $(this).daterangepicker({
+        autoApply: true,
+        autoUpdateInput: true,
+        minDate: moment(new Date()).add(1, 'days'),
+        locale: {
+          format: DATE_FORMAT.toUpperCase()
+        }
+      });
     }
   });
   // $('input.checkInDate, input.checkOutDate').datepicker({
@@ -170,6 +183,11 @@ Pace.on('done', function() {
         $('.mylivechat_collapsed').fadeOut();
       } else {
         $('.mylivechat_collapsed').fadeIn();
+      }
+    } else {
+      // $('.dropdown.open .dropdown-toggle').dropdown('toggle');
+      if ($('.dropdown.open').length) {
+        $("body").trigger("click");
       }
     }
     // BACK TO TOP  
@@ -220,7 +238,14 @@ $("#frmLogin").submit(function(e) {
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
-        alertNotif("success", LOGIN_SUCCESS, true);
+        alertNotif("success", LOGIN_SUCCESS, false);
+        setTimeout(function() {
+          if (getQueryVariable("redirect")) {
+            location.href = "//" + decodeURIComponent(getQueryVariable("redirect"));
+          } else {
+            location.reload();
+          }
+        }, 1300);
       } else {
         $(this).find("#btnLogin").html('Sign In');
         $(this).find("#btnLogin").attr('disabled', false);
@@ -406,7 +431,7 @@ $("#frmEditRoom").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + 'ajax/editReservation.php',
-    data: $(this).serialize(),
+    data: $(this).serialize() + "&type=booking",
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
@@ -433,7 +458,7 @@ $("#frmEditReservation").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + 'ajax/editReservation.php',
-    data: $(this).serialize(),
+    data: $(this).serialize() + "&type=booking",
     success: function(response) {
       if (response == true) {
         $(this).find(".modal").each(function() {

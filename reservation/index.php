@@ -2,10 +2,6 @@
 require_once '../header.php';
 require_once '../files/navbar.php';
 
-if (!$system->isLogged()) {
-  echo "<script>alert('Login First!');location.href='../';</script>";
-}
-
 $checkDate = isset($_GET['txtCheckDate']) ? $_GET['txtCheckDate'] : '';
 $adults    = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
 $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
@@ -16,10 +12,10 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
       <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <div id="smartwizard">
         <ul>
-          <li style="width:25%"><a href="#step-1">Step 1<br /><small>Check In & Check Out Date</small></a></li>
-          <li style="width:25%"><a href="#step-2">Step 2<br /><small>Select Rooms</small></a></li>
-          <li style="width:25%"><a href="#step-3">Step 3<br /><small>Payment</small></a></li>
-          <li style="width:25%"><a href="#step-4">Step 4<br /><small>Finish</small></a></li>
+          <li style="width:25%"><a href="#step-1">Step 1<br/><small>Check In & Check Out Date</small></a></li>
+          <li style="width:25%"><a href="#step-2">Step 2<br/><small>Select Rooms</small></a></li>
+          <li style="width:25%"><a href="#step-3">Step 3<br/><small>Payment</small></a></li>
+          <li style="width:25%"><a href="#step-4">Step 4<br/><small>Finish</small></a></li>
         </ul>
         <div style="min-height: 200px">
           <div id="loadingMode"></div>
@@ -59,7 +55,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
                     <input type="radio" name="txtPaymentMethod" value="Cash" checked>
                 </label>
                 <label class="btn paymentMethod" title="Bank">
-                  <div class="method bank"></div>
+              c    <div class="method bank"></div>
                     <input type="radio" name="txtPaymentMethod" value="Bank">
                 </label>
                 <label class="btn paymentMethod" title="Paypal">
@@ -80,9 +76,10 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
           </div>
         </div>
       </div>
-      <div class="navbar-btn col-md-12" style="position:relative;height:50px" role="group">
-        <button class="btn btn-primary" id="next-btn" style="position:absolute;right:0" type="button">Next</button>
-        <button class="btn btn-default" id="reset-btn" style="margin-right:10px;position:absolute;right:55px" type="button">Reset</button>
+      <div class="navbar-btn col-md-12 btn-group" style="height:50px" role="group">
+        <button class="btn btn-primary pull-right" style="margin-left:5px" id="next-btn" type="button">Next</button>
+        <button class="btn btn-primary pull-right" style="margin-left:5px" id="prev-btn" type="button">Previous</button>
+        <button class="btn btn-default pull-right" id="reset-btn" type="button">Reset</button>
       </div>
     </form>
   </div>
@@ -90,6 +87,9 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
     <div style="border:1px solid #ccc">
       <div style="background-color:rgb(142, 196, 231);padding:20px;text-align:center;border-bottom:1px solid #ccc;font-size:16pt">Booking Summary</div>
       <div style="padding:5px" id="bookingSummary">
+        <div id="info"></div>
+        <div id="roomList"></div>
+        <div id="paymentMethod"></div>
       </div>
     </div>
   </div>

@@ -25,7 +25,7 @@ class Account extends System {
       $_SESSION['account']['fname']         = $row['FirstName'];
       $_SESSION['account']['lname']         = $row['LastName'];
       $_SESSION['account']['picture']       = $row['ProfilePicture'];
-      $_SESSION['account']['accountType']   = $row['AccountType'];
+      $_SESSION['account']['type']          = $row['AccountType'];
       $_SESSION['account']['birthDate']     = $row['BirthDate'];
       $_SESSION['account']['contactNumber'] = $row['ContactNumber'];
 
@@ -65,8 +65,8 @@ class Account extends System {
     if ($result->num_rows == 0) {
       $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&expirydate=" . (strtotime("now") + (60 * 10)));
       $subject  = "Northwood Hotel Account Creation";
-      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/register.php?$data";
-      $sentMail = $this->sendMail("$email", "$subject", "$body");
+      $body     = "Please proceed to this link to register your account:<br/>http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&$data";
+      $sentMail = $this->sendMail($email, $subject, $body);
       if ($sentMail == true) {
         $this->createLog("sent|registration|$email");
         echo true;
@@ -223,7 +223,7 @@ class Account extends System {
         if ($output == true) {
           $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['account']['email']}'");
           $this->createLog("update|account.profilepicture");
-          $_SESSION["picture"] = $filename;
+          $_SESSION['account']["picture"] = $filename;
         } else {
           return $output;
         }
@@ -232,7 +232,7 @@ class Account extends System {
       $email         = $this->filter_input($_SESSION['account']['email']);
       $fname         = $this->filter_input($credentials['fname']);
       $lname         = $this->filter_input($credentials['lname']);
-      $birthDate     = $this->filter_input($credentials['birthDate']);
+      $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['birthDate'])));
       $contactNumber = $this->filter_input($credentials['contactNumber']);
 
       $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
@@ -251,7 +251,7 @@ class Account extends System {
 
   public function deleteAccount($email) {
     global $db;
-    if ($_SESSION['account']['accountType'] == "Owner") {
+    if ($this->checkUserLevel(3)) {
       $result = $db->query("DELETE FROM account WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
@@ -336,28 +336,6 @@ class Room extends System {
     return count($rooms) > 0 ? array_slice($rooms, 0, $quantity) : $rooms;
   }
 
-}
-
-/*----------------------------------------*/
-/*----------------Book Class--------------*/
-/*----------------------------------------*/
-class Book {
-  public function showBookingInfo($bookingID) {
-    global $db;
-    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
-    $row    = $result->fetch_assoc();
-
-    $arr    = [];
-    $arr[1] = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
-    $arr[2] = $row['Adults'];
-    $arr[3] = $row['Children'];
-
-    $result->data_seek(0);
-    while ($row = $result->fetch_assoc()) {
-      $arr[0][] = $row['RoomID'];
-    }
-    return json_encode($arr);
-  }
 }
 
 /*----------------------------------------*/
@@ -455,11 +433,41 @@ class View extends Room {
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
         $balance = $row['TotalAmount'] - $row['AmountPaid'];
+        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
         echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
+        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
         echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
         echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "</td>";
+        echo "</tr>";
+      }
+    }
+  }
+
+  public function walkin() {
+    global $db, $root, $date;
+    $result = $db->query("SELECT * FROM `walk-in` JOIN `walk-in_room` ON `walk-in`.WalkInID=`walk-in_room`.WalkInID JOIN room ON room.RoomID=`walk-in_room`.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
+    while ($row = $result->fetch_assoc()) {
+      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
+        echo "<tr>";
+        echo "<td>{$row['WalkInID']}</td>";
+        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+        echo "<td id='txtAdults'>{$row['Adults']}</td>";
+        echo "<td id='txtChildren'>{$row['Children']}</td>";
+        $balance = $row['TotalAmount'] - $row['AmountPaid'];
+        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
+        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
+        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
+        echo "<td>";
+        echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID'], $row['DateCreated']) . "' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -662,6 +670,40 @@ class View extends Room {
 /*----------------------------------------*/
 class System {
 
+  public function getAllEmailAddress() {
+    global $db;
+    $result = $db->query("SELECT * FROM account");
+    $list   = [];
+    while ($row = $result->fetch_assoc()) {
+      $list[] = $row['EmailAddress'];
+    }
+    return $list;
+  }
+
+  public function getNextWalkInID() {
+    global $db;
+    $result = $db->query("SHOW TABLE STATUS LIKE 'walk-in'");
+    $row    = $result->fetch_assoc();
+    return $row['Auto_increment'];
+  }
+
+  public function showBookingInfo($bookingID) {
+    global $db;
+    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
+    $row    = $result->fetch_assoc();
+
+    $arr    = [];
+    $arr[1] = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
+    $arr[2] = $row['Adults'];
+    $arr[3] = $row['Children'];
+
+    $result->data_seek(0);
+    while ($row = $result->fetch_assoc()) {
+      $arr[0][] = $row['RoomID'];
+    }
+    return json_encode($arr);
+  }
+
   public function isLogged() {
     return isset($_SESSION['account']) ? true : false;
   }
@@ -669,7 +711,7 @@ class System {
   public function checkUserLevel($reqLevel, $kick = false) {
     global $root, $levels;
     if ($this->isLogged()) {
-      $currentLevel = array_search($_SESSION['account']['accountType'], $levels);
+      $currentLevel = array_search($_SESSION['account']['type'], $levels);
       if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
         goto kick;
       } else {
@@ -821,7 +863,6 @@ class System {
 
 $account = new Account();
 $room    = new Room();
-$book    = new Book();
 $view    = new View();
 $system  = new System();
 ?>

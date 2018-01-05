@@ -1,3 +1,4 @@
+var date = new Date();
 var Dashboard = function() {
   var menuChangeActive = function menuChangeActive(el) {
     if ($(el).hasClass("has-submenu")) {
@@ -33,6 +34,12 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
+$('input.birthDate').datepicker({
+  format: DATE_FORMAT,
+  autoclose: true,
+  startView: 2,
+  endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
+});
 $('input.checkDate').daterangepicker({
   autoApply: true,
   autoUpdateInput: true,

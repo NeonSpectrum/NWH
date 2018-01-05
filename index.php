@@ -31,6 +31,11 @@ $view->homeJssor();
       </svg>
     </div>
   </div>
+  <div style="position:absolute;right:5px;bottom:10px;">
+    <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7)">
+      <i class="fa fa-arrow-down" aria-hidden="true"></i>
+    </a>
+  </div>
 </div>
 <div class="booknow center-block">
   <div class="booknow-content text-center">
@@ -52,12 +57,12 @@ $view->homeJssor();
       </div>
       <div class="form-group">
         <label></label>
-        <button id="btnCheck" type="submit" class="btn btn-primary" <?php echo !isset($_SESSION['account']['email']) ? 'disabled' : ''; ?>><?php echo !isset($_SESSION['account']['email']) ? 'Login First!' : 'Book Now'; ?></button>
+        <button id="btnCheck" type="submit" class="btn btn-primary">Book Now</button>
       </div>
     </form>
   </div>
 </div>
-<div class="panel panel-default" style="border-top-width:0px;">
+<div class="panel panel-default" style="border-top-width:0px;" id="roomTypesArea">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">ROOM TYPES</h1></div>
   <div class="panel-body center-block" style="width:90%">
     <div class="row">

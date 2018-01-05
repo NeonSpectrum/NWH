@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
       $arr[0] = $system->formatBookingID($bookingID, $date);
       $arr[1] = "<br/><ul style='list-style-type:none'>";
-
+      $table  = "<table border='1'><thead><th style='padding:10px'>Room Type</th><th style='padding:10px'>Quantity</th><th style='padding:10px'>Room Number(s)</th></thead><tbody>";
       foreach ($_POST['rooms'] as $key => $rooms) {
         $roomType     = str_replace(" ", "_", $rooms['roomType']);
         $roomQuantity = $system->filter_input($rooms['roomQuantity']);
@@ -35,11 +35,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           $roomID = $system->filter_input($roomIDs[$i - 1]);
           $db->query("INSERT INTO booking_room VALUES($bookingID, $roomID)");
         }
+        $table .= "<tr><td style='padding:5px'>{$rooms['roomType']}</td><td style='padding:5px'>$roomQuantity</td><td style='padding:5px'>" . join(', ', $roomIDs) . "</td>";
         $arr[1] .= "<li>" . str_replace("_", " ", $roomType) . ": " . join(', ', $roomIDs) . "</li>";
       }
 
       $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice WHERE BookingID=$bookingID");
+      $table .= "</tbody></table>";
       $arr[1] .= "</ul>";
+
+      $subject = "Northwood Hotel Reservation Confirmation";
+
+      $body = "Dear {$_SESSION['account']['fname']} {$_SESSION['account']['lname']},<br/><br/>";
+      $body .= "Booking ID: " . $system->formatBookingID($bookingID, $date) . "<br/>";
+      $body .= "Guest Type: {$_SESSION['account']['type']}<br/><br/>";
+      $body .= "$table<br/><br/>";
+      $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID, $date);
+
+      $system->sendMail($_SESSION['account']['email'], $subject, $body);
       echo json_encode($arr);
     } else {
       echo "There's something wrong in your book!";

@@ -39,7 +39,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
                 </div>
               </div>
               <div class="form-group">
-                <button id="btnCheck" type="submit" class="btn btn-primary btn-block" <?php echo !isset($_SESSION['account']) ? 'disabled' : ''; ?>><?php echo isset($_SESSION['account']['email']) ? 'Book Now' : 'Login First!'; ?></button>
+                <button id="btnCheck" type="submit" class="btn btn-primary btn-block">Book Now</button>
               </div>
             </form>
           </ul>
@@ -53,6 +53,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
             <li><a href="<?php echo $root; ?>">Home</a></li>
             <li><a href="<?php echo $root; ?>gallery">Gallery</a></li>
             <li><a href="<?php echo $root; ?>roomandrates">Room & Rates</a></li>
+            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#modalPromo">Promos</a></li>
             <li><a href="<?php echo $root; ?>contactus">Contact Us</a></li>
           </ul>
         </li>
@@ -350,7 +351,7 @@ if (!$system->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker" value="<?php echo $_SESSION['account']['birthDate']; ?>" required readonly autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker birthDate" value="<?php echo $_SESSION['account']['birthDate']; ?>" required readonly autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -415,7 +416,7 @@ if (!$db->connect_error) {
             <div class="col-sm-7">
               <div class="input-group date">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" value="<?php echo $checkDate; ?>" readonly required/>
+                <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" readonly required/>
               </div>
             </div>
           </div>

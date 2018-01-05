@@ -1,6 +1,6 @@
 <?php
 // IF NOT ADMIN SHOW FOOTER
-if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
+if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !strpos(strtolower($_SERVER['PHP_SELF']), "account/login")) {
   ?>
 <div class="footer">
   <div class="center-block" style="width:80%;padding-left:5%;font-size:15px">
@@ -28,7 +28,7 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   </div>
 </div>
 <div class="footer-copyright">
-  &copy; 2017 Northwood Hotel. All Rights Reserved
+  &copy; 2018 Northwood Hotel. All Rights Reserved
 </div>
 
 <!-- REQUIRED JS -->

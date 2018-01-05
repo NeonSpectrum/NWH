@@ -2,6 +2,7 @@
 require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+  $hasRooms     = false;
   $guests       = $system->filter_input($_POST['txtAdults']);
   $checkDate    = explode(" - ", $_POST['txtCheckDate']);
   $checkInDate  = date("Y-m-d", strtotime($checkDate[0]));
@@ -37,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       echo "</select>";
       echo "<small class='text-center center-block'>Only $numberOfRooms left.</small></div></div>";
       $hasRooms = true;
-    } else {
-      $hasRooms = false;
     }
   }
   echo $hasRooms ? "\n</div>\n</table>" : "<div style='padding:15% 0%;width:100%;text-align:center;font-size:22px'>No Rooms Available</div>\n</div>\n</table>";

@@ -33,7 +33,7 @@ $('.btnDeleteAccount').click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'account/',
-        data: "txtEmail=" + email + "&mode=deleteAccount",
+        data: "txtEmail=" + email + "&csrf_token=" + $("input[name='csrf_token']").val() + "&mode=deleteAccount",
         success: function(response) {
           if (response == true) {
             swal({

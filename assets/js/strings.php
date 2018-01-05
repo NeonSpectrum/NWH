@@ -7,7 +7,19 @@ String.prototype.includes = function (str) {
 
   return returnValue;
 }
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    console.log('Query variable %s not found', variable);
+}
 <?php
+@session_start();
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");
 $jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
@@ -24,9 +36,10 @@ foreach ($config as $name => $value) {
   $value = $value == false ? "false" : $value;
   echo "," . strtoupper($name) . "=\"$value\"";
 }
-echo ";const root=\"$root\";";
+echo ";const root=\"$root\", isLogged=";
+echo isset($_SESSION['account']) ? "true;" : "false;";
 ?>
-function alertNotif(type, message, reload, timeout) {
+function alertNotif(type, message, reload = false, timeout = 1300) {
   $.notify({
     icon:'glyphicon glyphicon-exclamation-sign',
     message: '<div style=\'text-align:center;margin-top:-20px\'>' + message + '</div>'
@@ -45,5 +58,5 @@ function alertNotif(type, message, reload, timeout) {
       location.reload();
     else
       return
-  }, timeout != null ? timeout : 1300);
+  }, timeout);
 }

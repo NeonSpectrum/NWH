@@ -30,7 +30,7 @@ $(window).on('load', function() {
     $(window).bind("load", PromoScaleSlider);
     $(window).bind("resize", PromoScaleSlider);
     $(window).bind("orientationchange", PromoScaleSlider);
-    $('#modalPromo').modal('show');
+    // $('#modalPromo').modal('show');
   }
   if ($("#modalForgotToChangePassword").length) {
     $("#modalForgotToChangePassword").modal({
