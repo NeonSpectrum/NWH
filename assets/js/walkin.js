@@ -19,7 +19,6 @@ $("#btnAddRoomSlot").click(function() {
                 </div>\
               </div>");
 });
-$
 $('input[type="search"]').focus();
 $('#modalAddPayment').on('shown.bs.modal', function() {
   $('#txtPayment').focus();
