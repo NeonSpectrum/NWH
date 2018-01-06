@@ -12,6 +12,7 @@ $(document).ready(function() {
           center: 'title',
           right: 'month,agendaWeek,agendaDay,listWeek'
         },
+        displayEventTime: false,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         eventLimit: true, // allow "more" link when too many events
