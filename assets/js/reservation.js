@@ -287,7 +287,10 @@ $(document).ready(function() {
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     //alert("You are on step "+stepNumber+" now");
-    if (stepPosition === 'final') {
+    console.log(stepPosition);
+    if (stepPosition === 'first') {
+      $('#prev-btn').css("display", "none");
+    } else if (stepPosition === 'final') {
       $(".navbar-btn").remove();
     }
   });
