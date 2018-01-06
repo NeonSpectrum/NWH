@@ -408,10 +408,6 @@ $(document).ready(function() {
           }
         });
       }
-    } else {
-      if (stepNumber == 1) {
-        $("#prev-btn").css("display", "none");
-      }
     }
   });
   // External Button Events

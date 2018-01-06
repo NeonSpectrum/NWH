@@ -165,9 +165,8 @@ Pace.on('done', function() {
     if (!$(this).val()) {
       $(this).daterangepicker({
         autoApply: true,
-        autoUpdateInput: true,
         minDate: moment(new Date()).add(1, 'days'),
-        endDate: moment(new Date()).add(1, 'days'),
+        endDate: moment(new Date()).add(2, 'days'),
         locale: {
           format: DATE_FORMAT.toUpperCase()
         }
@@ -175,12 +174,17 @@ Pace.on('done', function() {
     } else {
       $(this).daterangepicker({
         autoApply: true,
-        autoUpdateInput: true,
         minDate: moment(new Date()).add(1, 'days'),
         locale: {
           format: DATE_FORMAT.toUpperCase()
         }
       });
+    }
+  });
+  $("input.checkDate").on('apply.daterangepicker', function(ev, picker) {
+    if (picker.startDate.format('MM/DD/YYYY') == picker.endDate.format('MM/DD/YYYY')) {
+      var nextDay = moment(picker.startDate).add(1, 'days').format("MM/DD/YYYY");
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + " - " + nextDay);
     }
   });
   // $('input.checkInDate, input.checkOutDate').datepicker({
