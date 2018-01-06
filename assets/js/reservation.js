@@ -413,9 +413,7 @@ $(document).ready(function() {
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
-    $('#smartwizard').smartWizard("reset");
-    $('#bookingSummary').html('');
-    $('#prev-btn').css("display", "none");
+    location.reload();
     return true;
   });
   $("#prev-btn").on("click", function() {
