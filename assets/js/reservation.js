@@ -399,12 +399,18 @@ $(document).ready(function() {
             rooms: rooms
           },
           success: function(response) {
-            $('span#txtBookingID').html(response[0]);
-            $('span#txtRoomID').html(response[1]);
-            $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
-            editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
-            $("#loadingMode").fadeOut();
-            $('#smartwizard ul').find("a").css("pointer-events", "none");
+            if (!response[0]) {
+              $('span#txtBookingID').html(response[0]);
+              $('span#txtRoomID').html(response[1]);
+              $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+              editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
+              $("#loadingMode").fadeOut();
+              $('#smartwizard ul').find("a").css("pointer-events", "none");
+            } else {
+              $("#loadingMode").fadeOut();
+              alert("Sorry, The room was already reserved. Please reserve another room.");
+              location.href = "//" + location.hostname + root + "reservation";
+            }
           }
         });
       }

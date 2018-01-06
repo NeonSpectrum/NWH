@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID);
 
       $system->sendMail($_SESSION['account']['email'], $subject, $body);
-      echo json_encode($arr);
     } else {
-      echo "There's something wrong in your book!";
+      $arr[0] = false;
     }
+    echo json_encode($arr);
   }
 }
 ?>
