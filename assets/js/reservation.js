@@ -413,7 +413,7 @@ $(document).ready(function() {
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
-    location.reload();
+    location.href = "//" + location.hostname + root + "reservation";
     return true;
   });
   $("#prev-btn").on("click", function() {
