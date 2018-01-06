@@ -1,0 +1,8 @@
+#calendar {
+  padding: 10px;
+}
+
+.fc-scroller {
+  height: auto!important;
+  overflow-y: auto;
+}

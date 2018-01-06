@@ -1,7 +1,9 @@
 <?php
 echo CHAT;
-$dashboard = $booking = $walkin = $check = $chat = $reports = $settings = '';
-if (strpos($_SERVER['PHP_SELF'], 'booking')) {
+$dashboard = $calendar = $booking = $walkin = $check = $chat = $reports = $settings = '';
+if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
+  $calendar = ' is-active';
+} elseif (strpos($_SERVER['PHP_SELF'], 'booking')) {
   $booking = ' is-active';
 } elseif (strpos($_SERVER['PHP_SELF'], 'walkin')) {
   $walkin = ' is-active';
@@ -46,6 +48,11 @@ if ($system->checkUserLevel(3)) {
         <li class="c-menu__item <?php echo $dashboard; ?>" title="Dashboard">
           <a class="c-menu__item__inner" href="<?php echo $root; ?>admin"><i class="fa fa-id-card-o"></i>
             <div class="c-menu-item__title"><span>Dashboard</span></div>
+          </a>
+        </li>
+        <li class="c-menu__item has-submenu <?php echo $calendar; ?>" title="Calendar">
+          <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/calendar"><i class="fa fa-calendar"></i>
+            <div class="c-menu-item__title"><span>Calendar</span></div>
           </a>
         </li>
         <li class="c-menu__item has-submenu <?php echo $booking; ?>" title="Booking">
