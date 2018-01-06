@@ -6,15 +6,20 @@ require_once 'files/autoload.php';
 $csrf_token             = $system->encrypt(isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : md5(uniqid(rand(), TRUE)));
 $_SESSION['csrf_token'] = $system->decrypt($csrf_token);
 
-// IF ADMIN PAGE KICK IF NOT ADMIN
-if (strpos(strtolower($_SERVER['REQUEST_URI']), "admin")) {
-  $system->checkUserLevel(1, true);
+if (!isset($_SESSION['new_visitor'])) {
+  $_SESSION['new_visitor'] = true;
+  $system->addVisitorCount();
 }
 
 // GET CURRENT DIRECTORY EXAMPLE: home, gallery, roomandrates, contactus
 $currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQUEST_URI']);
 $currentDirectory = substr(strtolower($currentDirectory), @strrpos(strtolower($currentDirectory), "/", -2) + 1, -1);
-$currentDirectory = str_replace("nwh", "", $currentDirectory) == "" ? 'home' : $currentDirectory;
+if (!strpos(strtolower($_SERVER['REQUEST_URI']), "admin")) {
+  $currentDirectory = str_replace("nwh", "", $currentDirectory) == "" ? 'home' : $currentDirectory;
+} else {
+  $currentDirectory = $currentDirectory == "admin" ? 'dashboard' : $currentDirectory;
+  $system->checkUserLevel(1, true);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

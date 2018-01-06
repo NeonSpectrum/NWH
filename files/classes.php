@@ -680,6 +680,16 @@ class View extends Room {
 /*----------------------------------------*/
 class System {
 
+  public function addVisitorCount() {
+    global $db, $date;
+    $result = $db->query("SELECT * FROM `visitor-count` WHERE Date='$date'");
+    if ($result->num_rows == 0) {
+      $db->query("INSERT INTO `visitor-count` VALUES('$date','1')");
+    } else {
+      $db->query("UPDATE `visitor-count` SET Count=Count+1 WHERE Date='$date'");
+    }
+  }
+
   public function getAllEmailAddress() {
     global $db;
     $result = $db->query("SELECT * FROM account");

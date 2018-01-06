@@ -55,7 +55,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
                     <input type="radio" name="txtPaymentMethod" value="Cash" checked>
                 </label>
                 <label class="btn paymentMethod" title="Bank">
-              c    <div class="method bank"></div>
+                    <div class="method bank"></div>
                     <input type="radio" name="txtPaymentMethod" value="Bank">
                 </label>
                 <label class="btn paymentMethod" title="Paypal">

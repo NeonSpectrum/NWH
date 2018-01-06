@@ -73,6 +73,22 @@ if (CHAT) {
 <?php
 }
 ?>
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Rooms Chart</div>
+          <div class="panel-body">
+            <canvas id="roomChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Site Visitors Chart</div>
+          <div class="panel-body">
+            <canvas id="visitorChart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>

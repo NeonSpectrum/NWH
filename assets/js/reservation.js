@@ -286,8 +286,6 @@ $(document).ready(function() {
   }
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
-    //alert("You are on step "+stepNumber+" now");
-    console.log(stepPosition);
     if (stepPosition === 'first') {
       $('#prev-btn').css("display", "none");
     } else if (stepPosition === 'final') {
@@ -370,6 +368,7 @@ $(document).ready(function() {
         var total = 0,
           roomHtml = "",
           diffDays;
+        rooms = [];
         $("#loadingMode").fadeIn();
         $('.numberOfRooms').each(function() {
           if ($(this).find("select").val() != 0) {
@@ -414,7 +413,7 @@ $(document).ready(function() {
             } else {
               $("#loadingMode").fadeOut();
               alert("Sorry, The room was already reserved. Please reserve another room.");
-              location.href = "//" + location.hostname + root + "reservation";
+              // location.href = "//" + location.hostname + root + "reservation";
             }
           }
         });
@@ -423,7 +422,10 @@ $(document).ready(function() {
   });
   // External Button Events
   $("#reset-btn").on("click", function() {
-    location.href = "//" + location.hostname + root + "reservation";
+    $('#smartwizard').smartWizard("reset");
+    $('#bookingSummary').html('');
+    $('#prev-btn').css("display", "none");
+    $("#bookingSummary").html("<div id='info'></div><div id='roomList'></div><div id='paymentMethod'></div>");
     return true;
   });
   $("#prev-btn").on("click", function() {
