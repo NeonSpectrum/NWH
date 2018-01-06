@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       }
     }
   }
-  $arr[0] = $dates;
-  $arr[1] = $count;
+  $arr[0] = array_reverse($dates);
+  $arr[1] = array_reverse($count);
   echo json_encode($arr);
 }
 ?>
