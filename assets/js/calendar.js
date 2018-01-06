@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $("#loadingMode").fadeIn();
   $.ajax({
     type: 'POST',
     url: root + "ajax/getAllBooking.php/",
@@ -19,6 +20,7 @@ $(document).ready(function() {
       $(window).on('resize', function() {
         $('#calendar').fullCalendar('option', 'contentHeight', $("main.l-main").height() - 70);
       });
+      $("#loadingMode").fadeOut();
     }
   })
 });

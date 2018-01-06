@@ -31,6 +31,17 @@ body {
   color: #c3c3c3;
 }
 
+#loadingMode {
+  display: none;
+  background: #fff url('../../images/loading.gif') no-repeat;
+  background-position: 45% 40%;
+  background-size: 10%;
+  position: absolute;
+  z-index: 5000;
+  height: 100%;
+  width: 100%;
+}
+
 /* CUSTOM BOOTSTRAP */
 
 label>sup {
