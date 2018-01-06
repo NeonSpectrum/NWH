@@ -31,6 +31,10 @@ body {
   color: #c3c3c3;
 }
 
+.l-sidebar::-webkit-scrollbar {
+  width: 0!important;
+}
+
 #loadingMode {
   display: none;
   background: #fff url('../../images/loading.gif') no-repeat;
@@ -350,13 +354,15 @@ a[disabled], a[disabled]:hover {
 }
 
 .l-sidebar {
+  -ms-overflow-style: none;
   width: 70px;
   position: absolute;
   z-index: 10;
   left: 0;
   top: 0;
   bottom: 0;
-  height: 1000000px;
+  height: 100%;
+  overflow: auto;
   background: #102c58;
   -webkit-transition: width 0.5s ease-in-out;
   -moz-transition: width 0.5s ease-in-out;

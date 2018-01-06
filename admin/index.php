@@ -2,7 +2,6 @@
 require_once '../header.php';
 $system->checkUserLevel(1, true);
 ?>
-<style>body{overflow-y:hidden}</style>
 <?php require_once '../files/sidebar.php';?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">

@@ -43,11 +43,11 @@ $view->homeJssor();
       </div>
       <div class="form-group">
         <label>Adults: </label>
-        <input class="form-control" type="number" id="txtAdults" name="txtAdults" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
+        <input class="form-control" type="number" id="txtAdults" name="txtAdults" size="20" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
       </div>
       <div class="form-group">
         <label>Children: </label>
-        <input class="form-control" type="number" id="txtChildren" name="txtChildren" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
+        <input class="form-control" type="number" id="txtChildren" name="txtChildren" size="20" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
       </div>
       <div class="form-group">
         <label></label>

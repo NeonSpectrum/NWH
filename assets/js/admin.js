@@ -34,6 +34,11 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
+$(".l-sidebar").mousewheel(function(event, delta) {
+  var scrollTop = this.scrollTop;
+  this.scrollTop = (scrollTop + ((event.deltaY * event.deltaFactor) * -1));
+  console.log("hi");
+});
 $('input.birthDate').datepicker({
   format: DATE_FORMAT,
   autoclose: true,
