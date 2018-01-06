@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $countUsed[] = $row['Count'];
   }
   $arr    = [];
-  $arr[0] = $roomIDs;
-  $arr[1] = $countUsed;
+  $arr[0] = array_reverse($roomIDs);
+  $arr[1] = array_reverse($countUsed);
   echo json_encode($arr);
 }
 ?>

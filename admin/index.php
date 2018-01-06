@@ -26,9 +26,9 @@ $row    = mysqli_fetch_assoc($result)['rows'];
       </div>
       <div class="col-md-4">
         <div class="panel panel-default">
-          <div class="panel-heading">Books Ongoing</div>
+          <div class="panel-heading">Books Ongoing Today</div>
 <?php
-$query  = "SELECT count(*) as rows FROM booking WHERE CheckInDate >= CURDATE()";
+$query  = "SELECT count(*) as rows FROM booking WHERE CheckInDate >= CURDATE() AND CheckOutDate <= CURDATE()";
 $result = mysqli_query($db, $query);
 $row    = mysqli_fetch_assoc($result)['rows'];
 ?>
@@ -81,11 +81,19 @@ if (CHAT) {
           </div>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">Site Visitors Chart</div>
           <div class="panel-body">
             <canvas id="visitorChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Booking Chart</div>
+          <div class="panel-body">
+            <canvas id="bookingChart"></canvas>
           </div>
         </div>
       </div>

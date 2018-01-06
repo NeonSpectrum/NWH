@@ -58,3 +58,33 @@ $.ajax({
     });
   }
 });
+$.ajax({
+  type: 'POST',
+  url: root + "ajax/getBookingChart.php",
+  dataType: 'json',
+  success: function(response) {
+    var roomChart = new Chart($("#bookingChart"), {
+      type: 'line',
+      data: {
+        labels: response[0],
+        datasets: [{
+          label: '# of Users',
+          data: response[1],
+          backgroundColor: ['lightgreen'],
+          borderColor: ['green'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+});
