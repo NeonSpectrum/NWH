@@ -13,7 +13,7 @@
 <?php
 if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
   ?>
-        <li class="dropdown">
+        <!-- <li class="dropdown">
           <button class="btn btn-danger pulse" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
           <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
             <form class="form frmBookCheck">
@@ -43,7 +43,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
               </div>
             </form>
           </ul>
-        </li>
+        </li> -->
 <?php
 }
 ?>
