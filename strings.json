@@ -70,4 +70,7 @@
 }, {
   "name": "INVALID_CHECK_DATE",
   "value": "Check Out date must be greater than Check In date."
+}, {
+  "name": "ALREADY_RESERVED",
+  "value": "Sorry, The room was already reserved. Please reserve another room."
 }]

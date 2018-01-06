@@ -288,6 +288,7 @@ $(document).ready(function() {
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     if (stepPosition === 'first') {
       $('#prev-btn').css("display", "none");
+      $("#next-btn").prop("disabled", false);
     } else if (stepPosition === 'final') {
       $(".navbar-btn").remove();
     }
@@ -342,6 +343,9 @@ $(document).ready(function() {
           url: root + 'ajax/getRooms.php',
           data: $('#frmBookNow').serialize(),
           success: function(response) {
+            if (response.includes("No Rooms Available")) {
+              $("#next-btn").prop("disabled", true);
+            }
             $('#txtRooms').html(response);
             baguetteBox.run('.img-baguette', {
               animation: 'fadeIn',
@@ -365,8 +369,8 @@ $(document).ready(function() {
           alertNotif("error", "Please choose a room before proceeding to next step.");
           return false;
         }
-        var total = 0,
-          roomHtml = "",
+        var roomHtml = "",
+          total = 0,
           diffDays;
         rooms = [];
         $("#loadingMode").fadeIn();
@@ -383,15 +387,14 @@ $(document).ready(function() {
             var date2 = new Date(dates[1]);
             diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
             roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>";
+            total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
             $("#loadingMode").fadeOut();
           }
-          total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
         });
         $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
         editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
       } else if (stepNumber == 2) {
         $('#reset-btn').css("display", "none");
-        $('#modalRules').modal("show");
         $("#loadingMode").fadeIn();
         $.ajax({
           context: this,
@@ -403,7 +406,8 @@ $(document).ready(function() {
             rooms: rooms
           },
           success: function(response) {
-            if (response[0] != false) {
+            if (response[0] == false) {
+              $('#modalRules').modal("show");
               $('span#txtBookingID').html(response[0]);
               $('span#txtRoomID').html(response[1]);
               $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
@@ -412,7 +416,17 @@ $(document).ready(function() {
               $('#smartwizard ul').find("a").css("pointer-events", "none");
             } else {
               $("#loadingMode").fadeOut();
-              alert("Sorry, The room was already reserved. Please reserve another room.");
+              $("#step-4").html("<div style='width:100%;text-align:center;font-size:30px;padding:100px'>Something went wrong!</div>");
+              swal({
+                title: 'Something went wrong!',
+                text: ALREADY_RESERVED,
+                type: 'error',
+                allowOutsideClick: false
+              }).then((result) => {
+                if (result.value) {
+                  location.reload();
+                }
+              });
               // location.href = "//" + location.hostname + root + "reservation";
             }
           }
@@ -426,6 +440,8 @@ $(document).ready(function() {
     $('#bookingSummary').html('');
     $('#prev-btn').css("display", "none");
     $("#bookingSummary").html("<div id='info'></div><div id='roomList'></div><div id='paymentMethod'></div>");
+    $("form").trigger("reset");
+    $(".checkDate").val(moment(new Date()).add(1, 'days').format("MM/DD/YYYY") + " - " + moment(new Date()).add(2, 'days').format("MM/DD/YYYY"));
     return true;
   });
   $("#prev-btn").on("click", function() {
@@ -452,7 +468,7 @@ $(document).ready(function() {
     }
     return true;
   });
-  if (location.search.includes("txtCheckDate") && location.search.includes("txtAdults") && location.search.includes("txtChildren")) {
+  if ($("#step-1").hasClass("skip")) {
     $('#smartwizard').smartWizard("next");
   }
 });

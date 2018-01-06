@@ -75,36 +75,6 @@ $(document).ready(function() {
     // $(this).find("form").trigger("reset");
     // updateDate();
   });
-  var options = {
-    $AutoPlay: 3000,
-    $PauseOnHover: 1,
-    $FillMode: 1,
-    $SlideWidth: 400,
-    $Cols: 2,
-    $Align: 100,
-    $DragOrientation: 1,
-    $BulletNavigatorOptions: {
-      $Class: $JssorBulletNavigator$
-    }
-  };
-  var promo_slider = new $JssorSlider$('promo_slider_container', options);
-
-  function PromoScaleSlider() {
-    var parentElement = promo_slider.$Elmt.parentNode;
-    var parentWidth = parentElement.clientWidth;
-    if (parentWidth) {
-      parentWidth = Math.min(parentWidth, 600);
-      parentWidth = Math.max(parentWidth, 200);
-      var clearFix = "both";
-      var toClearElment = $Jssor$.$GetElement("clearFixDiv");
-      toClearElment && $Jssor$.$Css(toClearElment, "clear", clearFix);
-      promo_slider.$ScaleWidth(parentWidth);
-    } else $Jssor$.$Delay(PromoScaleSlider, 30);
-  }
-  PromoScaleSlider();
-  $(window).bind("load", PromoScaleSlider);
-  $(window).bind("resize", PromoScaleSlider);
-  $(window).bind("orientationchange", PromoScaleSlider);
 });
 Pace.track(function() {
   if (location.hostname.toLowerCase() == "localhost") {
@@ -511,7 +481,6 @@ $("#frmEditReservation").submit(function(e) {
 });
 // BOOK NOW BUTTON
 $('.frmBookCheck').submit(function(e) {
-  e.preventDefault();
   var checkIn = new Date($(this).find("#txtCheckInDate").val());
   var checkOut = new Date($(this).find("#txtCheckOutDate").val());
   if (checkIn > checkOut) {
@@ -524,7 +493,7 @@ $('.frmBookCheck').submit(function(e) {
   }
   $(this).find("#btnBookNow").html('<i class="fa fa-spinner fa-pulse"></i> Booking...');
   $(this).find("#btnBookNow").prop('disabled', true);
-  location.href = root + "reservation/?" + $(this).serialize();
+  $(this).submit();
 });
 // CONTACT US FORM
 $('#frmContact').submit(function(e) {

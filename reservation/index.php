@@ -2,9 +2,9 @@
 require_once '../header.php';
 require_once '../files/navbar.php';
 
-$checkDate = isset($_GET['txtCheckDate']) ? $_GET['txtCheckDate'] : '';
-$adults    = isset($_GET['txtAdults']) ? $_GET['txtAdults'] : '1';
-$children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
+$checkDate = isset($_POST['txtCheckDate']) ? $_POST['txtCheckDate'] : '';
+$adults    = isset($_POST['txtAdults']) ? $_POST['txtAdults'] : '1';
+$children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
 ?>
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">
@@ -19,7 +19,7 @@ $children  = isset($_GET['txtChildren']) ? $_GET['txtChildren'] : '0';
         </ul>
         <div style="min-height: 200px">
           <div id="loadingMode"></div>
-          <div id="step-1" style="padding:20px">
+          <div id="step-1" style="padding:20px" class="<?php echo isset($_POST['txtCheckDate']) ? " skip" : ""; ?>">
             <div id="form-step-0" >
               <div class="form-group">
                 <label>Check Date:</label>
