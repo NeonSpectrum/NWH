@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       echo "<div class='col-md-6' style='vertical-align:top;padding:10px'>
             <h3 id='roomName'>" . str_replace("_", " ", $row['RoomType']) . "</h3><br/>
             {$row['RoomDescription']}<br/><br/>
-            <span style='text-style:bold;font-size:20px;'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span>
+            <span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small>
           </div>";
       echo "<div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
       echo "<select style='width:100%' class='form-control'>";

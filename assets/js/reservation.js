@@ -363,12 +363,13 @@ $(document).ready(function() {
             roomSelected = true;
           }
         });
-        if (!roomSelected && stepDirection != "backward") {
+        if (!roomSelected) {
           alertNotif("error", "Please choose a room before proceeding to next step.");
           return false;
         }
         var total = 0,
-          roomHtml = "";
+          roomHtml = "",
+          diffDays;
         $("#loadingMode").fadeIn();
         $('.numberOfRooms').each(function() {
           if ($(this).find("select").val() != 0) {
@@ -378,10 +379,14 @@ $(document).ready(function() {
               roomType: roomName,
               roomQuantity: roomQuantity
             });
-            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val())).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>";
+            var dates = $(this).closest("form").find("#txtCheckDate").val().split(" - ");
+            var date1 = new Date(dates[0]);
+            var date2 = new Date(dates[1]);
+            diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>";
             $("#loadingMode").fadeOut();
           }
-          total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val());
+          total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
         });
         $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
         editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
@@ -399,7 +404,7 @@ $(document).ready(function() {
             rooms: rooms
           },
           success: function(response) {
-            if (!response[0]) {
+            if (response[0] != false) {
               $('span#txtBookingID').html(response[0]);
               $('span#txtRoomID').html(response[1]);
               $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
