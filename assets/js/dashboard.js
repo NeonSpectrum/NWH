@@ -8,7 +8,7 @@ $.ajax({
       data: {
         labels: response[0],
         datasets: [{
-          label: '# of Users',
+          label: '# of Used',
           data: response[1],
           backgroundColor: ['lightblue'],
           borderColor: ['blue'],
