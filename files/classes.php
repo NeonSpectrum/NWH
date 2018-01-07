@@ -504,7 +504,7 @@ class View extends Room {
       $checkOutStatus = $row['CheckOut'] == '' ? false : true;
       $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckIn'])) : "";
       $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckOut'])) : "";
-      if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
+      if (true/*strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)*/) {
         echo "<tr>";
         echo "<td>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
