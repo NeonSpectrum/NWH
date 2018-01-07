@@ -414,7 +414,7 @@ class View extends Room {
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
         $filename = str_replace("../gallery/images/rooms/", "", $image);
         $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
-        echo "<a href='$image' data-caption='$caption' style='";
+        echo "<a href='$image' title='Click to view images' data-caption='$caption' style='";
         echo $first == true ? "" : "display:none";
         echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' height='200px'></a>\n";
         $first = false;
