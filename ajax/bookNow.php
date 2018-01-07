@@ -55,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $body .= "$table<br/><br/>";
       $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID);
 
-      $system->sendMail($_SESSION['account']['email'], $subject, $body);
+      if (!isset($data['txtEmail'])) {
+        $system->sendMail($email, $subject, $body);
+      }
     }
   } else {
     $arr[0] = false;
