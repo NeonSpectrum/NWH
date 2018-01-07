@@ -124,6 +124,9 @@ $('#frmEditAccount').submit(function(e) {
     }
   });
 });
+$('#tblAccount').on('init.dt', function(e, settings, json) {
+  $("#loadingMode").fadeOut();
+});
 $('#tblAccount').DataTable();
 $('#tblAccount_length').find("select").addClass("form-control");
 $('#tblAccount_filter').find("input[type=search]").addClass("form-control");

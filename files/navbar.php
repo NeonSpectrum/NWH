@@ -166,7 +166,7 @@ if (!$system->isLogged()) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z][a-zA-Z ]+" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -175,7 +175,7 @@ if (!$system->isLogged()) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z][a-zA-Z ]+" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

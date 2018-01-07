@@ -1,3 +1,6 @@
+$('#tblWalkIn').on('init.dt', function(e, settings, json) {
+  $("#loadingMode").fadeOut();
+});
 $('#tblWalkIn').DataTable();
 $('#tblBook').DataTable();
 $('#tblWalkIn_length').find("select").addClass("form-control");

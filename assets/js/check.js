@@ -1,22 +1,5 @@
 var date = new Date();
 var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-$('#tblWalkIn').DataTable();
-$('#tblBook').DataTable();
-$('#tblWalkIn').parent().find('input[type="search"]').attr("placeholder", "Walk In ID");
-$('#tblWalkIn').parent().find('input[type="search"]').on('keyup change', function(e) {
-  e.preventDefault();
-  $('#tblWalkIn').DataTable().column(0).search($(this).val()).draw();
-});
-$('#tblBook').parent().find('input[type="search"]').attr("placeholder", "Booking ID");
-$('#tblBook').parent().find('input[type="search"]').on('keyup change', function(e) {
-  e.preventDefault();
-  $('#tblBook').DataTable().column(0).search($(this).val()).draw();
-});
-$('#tblWalkIn_length').find("select").addClass("form-control");
-$('#tblWalkIn_filter').find("input[type=search]").addClass("form-control");
-$('#tblBook_length').find("select").addClass("form-control");
-$('#tblBook_filter').find("input[type=search]").addClass("form-control");
-$('input[type="search"]').focus();
 $('input.checkInDate, input.checkOutDate').datepicker({
   format: "yyyy-mm-dd",
   startDate: '0d',
@@ -29,6 +12,13 @@ $(".checkInDate, .checkOutDate").each(function() {
 $('input.checkInDate').change(function() {
   $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val());
   $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
+});
+$('#modalAddPayment').on('shown.bs.modal', function() {
+  $('#txtPayment').focus();
+});
+$(".btnAddPayment").click(function() {
+  $("#modalAddPayment").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
+  $("#modalAddPayment").find("#txtBookingID").val($(this).attr("id"));
 });
 $('.btnCheckIn').click(function() {
   var table = $(this).closest("table").attr("id") == "tblWalkIn" ? "walk_in" : "booking";
@@ -45,7 +35,7 @@ $('.btnCheckIn').click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtID=" + $(this).attr("id") + "&type=checkIn&table=" + table,
+        data: "txtBookingID=" + $(this).attr("id") + "&type=checkIn&table=" + table + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             var date = new Date();
@@ -89,7 +79,7 @@ $('.btnCheckOut').click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtID=" + $(this).attr("id") + "&type=checkOut&table=" + table,
+        data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&table=" + table + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             var date = new Date();
@@ -105,6 +95,18 @@ $('.btnCheckOut').click(function() {
           }
         }
       });
+    }
+  });
+});
+$("#frmAddPayment").submit(function(e) {
+  e.preventDefault();
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/addPayment.php",
+    data: $(this).serialize() + "&type=check",
+    success: function(response) {
+      location.reload();
     }
   });
 });
@@ -132,3 +134,15 @@ $("#frmAddReservation").submit(function(e) {
     }
   });
 });
+$('#tblBook').on('init.dt', function(e, settings, json) {
+  $("#loadingMode").fadeOut();
+});
+$('#tblBook').DataTable();
+$('#tblBook').parent().find('input[type="search"]').attr("placeholder", "Booking ID");
+$('#tblBook').parent().find('input[type="search"]').on('keyup change', function(e) {
+  e.preventDefault();
+  $('#tblBook').DataTable().column(0).search($(this).val()).draw();
+});
+$('#tblBook_length').find("select").addClass("form-control");
+$('#tblBook_filter').find("input[type=search]").addClass("form-control");
+$('input[type="search"]').focus();

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $checkInDate  = date("Y-m-d", strtotime($checkDate[0]));
   $checkOutDate = date("Y-m-d", strtotime($checkDate[1]));
 
-  $result = $db->query("SELECT DISTINCT(RoomType), RoomDescription, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= $guests GROUP BY room_type.RoomTypeID");
+  $result = $db->query("SELECT DISTINCT(RoomType), RoomDescription, RoomSimplifiedDescription, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= $guests GROUP BY room_type.RoomTypeID");
 
   while ($row = $result->fetch_assoc()) {
     $numberOfRooms = count($room->generateRoomID($row['RoomType'], $row['NumberOfRooms'], $checkInDate, $checkOutDate));
@@ -28,8 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       echo "<div class='col-md-6' style='vertical-align:top;padding:10px'>
             <h3 id='roomName'>" . str_replace("_", " ", $row['RoomType']) . "</h3><br/>
             {$row['RoomDescription']}<br/><br/>
-            <span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small>
-          </div>";
+            <span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small>";
+      echo "<span id='roomSimpDesc' style='display:none'><ul>";
+      $roomSimpDesc = explode("\n", $row['RoomSimplifiedDescription']);
+      foreach ($roomSimpDesc as $key => $value) {
+        echo "<li>$value</li>";
+      }
+      echo "</ul></span></div>";
       echo "<div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
       echo "<select style='width:100%' class='form-control'>";
       for ($i = 0; $i <= $numberOfRooms; $i++) {

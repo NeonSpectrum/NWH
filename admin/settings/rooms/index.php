@@ -4,6 +4,7 @@ $system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
+  <div id="loadingMode" style="display:block"></div>
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Room Management</h1>
     <div class="well">
@@ -31,6 +32,7 @@ $view->rooms("statuses");
             <thead>
               <th>Room Type</th>
               <th>Room Description</th>
+              <th>Room Simplified Description</th>
               <th>Action</th>
             </thead>
             <tbody>
@@ -59,9 +61,14 @@ $view->rooms("descriptions");
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Description</label>
-              <div class="col-sm-10">
-                <textarea id="txtDescription" name="txtDescription" type="text" class="form-control" style="resize:none" placeholder="Description" rows="10" required></textarea>
-              </div>
+            <div class="col-sm-10">
+              <textarea id="txtDescription" name="txtDescription" type="text" class="form-control" style="resize:none" placeholder="Description" rows="5" required></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Simp. Description</label>
+            <div class="col-sm-10">
+              <textarea id="txtRoomSimpDesc" name="txtRoomSimpDesc" type="text" class="form-control" style="resize:none" placeholder="Description" rows="5" required></textarea>
             </div>
           </div>
           <div class="modal-footer">

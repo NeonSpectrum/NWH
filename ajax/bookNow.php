@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
 
   $arr = array();
 
-  $db->query("INSERT INTO booking VALUES(NULL, '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod','$date','$date')");
+  $db->query("INSERT INTO booking VALUES(NULL, 'reservation', '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod','$date','$date')");
 
   if ($db->affected_rows > 0) {
     $bookingID = $db->insert_id;

@@ -141,6 +141,9 @@ $("#frmEditReservation").submit(function(e) {
     }
   });
 });
-$('#tblReservation').DataTable();
-$('#tblReservation_length').find("select").addClass("form-control");
-$('#tblReservation_filter').find("input[type=search]").addClass("form-control");
+$('#tblWalkIn').on('init.dt', function(e, settings, json) {
+  $("#loadingMode").fadeOut();
+});
+$('#tblWalkIn').DataTable();
+$('#tblWalkIn_length').find("select").addClass("form-control");
+$('#tblWalkIn_filter').find("input[type=search]").addClass("form-control");

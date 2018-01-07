@@ -386,13 +386,13 @@ $(document).ready(function() {
             var date1 = new Date(dates[0]);
             var date2 = new Date(dates[1]);
             diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
-            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>";
+            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html();
             total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
             $("#loadingMode").fadeOut();
           }
         });
         $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-        editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
+        editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Subtotal: <span class='pull-right'>₱" + (total - (total * 1.12 * .12)).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>VAT: <span class='pull-right'>₱" + (total * 1.12 * .12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
       } else if (stepNumber == 2) {
         $('#reset-btn').css("display", "none");
         $("#loadingMode").fadeIn();
@@ -406,7 +406,7 @@ $(document).ready(function() {
             rooms: rooms
           },
           success: function(response) {
-            if (response[0] == false) {
+            if (response[0] != false) {
               $('#modalRules').modal("show");
               $('span#txtBookingID').html(response[0]);
               $('span#txtRoomID').html(response[1]);

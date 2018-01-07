@@ -4,6 +4,7 @@ $system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../../files/sidebar.php';?>
 <main class="l-main">
+  <div id="loadingMode" style="display:block"></div>
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">List of Reservation</h1>
     <div class="well">

@@ -4,6 +4,7 @@ $system->checkUserLevel(1, true);
 ?>
 <?php require_once '../../files/sidebar.php';?>
 <main class="l-main">
+  <div id="loadingMode" style="display:block"></div>
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">
       Check
@@ -12,57 +13,58 @@ $system->checkUserLevel(1, true);
       </span>
     </h1>
     <div class="well">
-      <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a data-toggle="tab" href="#walkin">Walk In</a></li>
-        <li><a data-toggle="tab" href="#book">Book</a></li>
-      </ul>
-      <div class="tab-content" style="margin-top:20px">
-        <div id="walkin" class="tab-pane fade in active">
-          <div class="table-responsive">
-            <table id="tblWalkIn" class="table table-striped table-bordered table-hover">
-              <thead>
-                <th>Walk In ID</th>
-                <th>Email Address</th>
-                <th>Room ID</th>
-                <th>Check In</th>
-                <th>Check Out</th>
-                <th>Adults</th>
-                <th>Children</th>
-                <th>Action</th>
-              </thead>
-              <tbody>
+      <div class="table-responsive">
+        <table id="tblBook" class="table table-striped table-bordered table-hover">
+          <thead>
+            <th>Booking ID</th>
+            <th>Email Address</th>
+            <th>Room ID(s)</th>
+            <th>Adults</th>
+            <th>Children</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Extra Charges</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
 <?php
-// $view->check("walk_in");
+$view->check("book");
 ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id="book" class="tab-pane fade">
-          <div class="table-responsive">
-            <table id="tblBook" class="table table-striped table-bordered table-hover">
-              <thead>
-                <th>Booking ID</th>
-                <th>Email Address</th>
-                <th>Room ID</th>
-                <th>Check In</th>
-                <th>Check Out</th>
-                <th>Adults</th>
-                <th>Children</th>
-                <th>Action</th>
-              </thead>
-              <tbody>
-<?php
-// $view->check("book");
-?>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </main>
+<div id="modalAddPayment" class="modal" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmAddPayment" method="post" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <input type="hidden" id="txtBookingID" name="txtBookingID">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Amount: </label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control" name="txtPayment" id="txtPayment">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+   </div>
+</div>
 <div id="modalAddReservation" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -70,8 +72,8 @@ $system->checkUserLevel(1, true);
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Add Reservation</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddReservation" method="post" class="form-horizontal">
+      <form id="frmAddReservation" method="post" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -134,11 +136,28 @@ while ($row = mysqli_fetch_assoc($result)) {
               <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnReservation" type="submit" class="btn btn-info">Add</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+          <button id="btnReservation" type="submit" class="btn btn-info">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="modalReceipt" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center"></h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button id="btnReservation" type="submit" class="btn btn-info">Add</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
    </div>

@@ -280,9 +280,9 @@ class Account extends System {
 /*----------------------------------------*/
 class Room extends System {
 
-  public function editRoomDescription($roomType, $description) {
+  public function editRoomDescription($roomType, $description, $simpDesc) {
     global $db;
-    $db->query("UPDATE room_type SET RoomDescription='$description' WHERE RoomType='$roomType'");
+    $db->query("UPDATE room_type SET RoomDescription='$description', RoomSimplifiedDescription='$simpDesc' WHERE RoomType='$roomType'");
 
     if ($db->affected_rows > 0) {
       $this->log("update|room_type|$roomType");
@@ -450,13 +450,13 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
         if (!$cancelled) {
           echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Cancel'><i class='fa fa-ban'></i></a>";
         } else {
           echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Revert'><i class='fa fa-refresh'></i></a>";
         }
+        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -491,57 +491,39 @@ class View extends Room {
     }
   }
 
-  public function check($category) {
+  public function check() {
     global $db;
-    if ($category == "walk_in") {
-      $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
-      while ($row = $result->fetch_assoc()) {
-        $checkInStatus  = $row['CheckIn'] == '' ? false : true;
-        $checkOutStatus = $row['CheckOut'] == '' ? false : true;
-        if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
-          echo "<tr>";
-          echo "<td>{$row['WalkInID']}</td>";
-          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-          echo "<td id='txtAdults'>{$row['Adults']}</td>";
-          echo "<td id='txtChildren'>{$row['Children']}</td>";
-          echo "<td>";
-          echo "<a title='Check In' class='btnCheckIn' id='{$row['WalkInID']}' style='cursor:pointer'";
-          echo $checkInStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-plus-o'></i></a>";
-          echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['WalkInID']}' style='cursor:pointer'";
-          echo $checkOutStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-minus-o'></i></a>";
-          echo "</td>";
-          echo "</tr>";
-        }
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    while ($row = $result->fetch_assoc()) {
+      $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
+      $rooms      = [];
+      while ($roomRow = $roomResult->fetch_assoc()) {
+        $rooms[] = $roomRow['RoomID'];
       }
-    } else if ($category == "book") {
-      $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($row = $result->fetch_assoc()) {
-        $checkInStatus  = $row['CheckIn'] == '' ? false : true;
-        $checkOutStatus = $row['CheckOut'] == '' ? false : true;
-        if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)) {
-          echo "<tr>";
-          echo "<td>{$row['BookingID']}</td>";
-          echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-          echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-          echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-          echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-          echo "<td id='txtAdults'>{$row['Adults']}</td>";
-          echo "<td id='txtChildren'>{$row['Children']}</td>";
-          echo "<td>";
-          echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
-          echo $checkInStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-plus-o'></i></a>";
-          echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'";
-          echo $checkOutStatus ? ' disabled' : '';
-          echo "><i class='fa fa-calendar-minus-o'></i></a>";
-          echo "</td>";
-          echo "</tr>";
-        }
+      $checkInStatus  = $row['CheckIn'] == '' ? false : true;
+      $checkOutStatus = $row['CheckOut'] == '' ? false : true;
+      $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckIn'])) : "";
+      $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckOut'])) : "";
+      if (true/*strtotime(date('Y-m-d')) == strtotime($row['CheckInDate']) && !($checkInStatus && $checkOutStatus)*/) {
+        echo "<tr>";
+        echo "<td>{$row['BookingID']}</td>";
+        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
+        echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
+        echo "<td id='txtAdults'>{$row['Adults']}</td>";
+        echo "<td id='txtChildren'>{$row['Children']}</td>";
+        echo "<td id='txtCheckIn'>$checkIn</td>";
+        echo "<td id='txtCheckOut'>$checkOut</td>";
+        echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
+        echo "<td>";
+        echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
+        echo $checkInStatus ? ' disabled' : '';
+        echo "><i class='fa fa-calendar-plus-o'></i></a>";
+        echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'";
+        echo $checkOutStatus || !$checkInStatus ? ' disabled' : '';
+        echo "><i class='fa fa-calendar-minus-o'></i></a>";
+        echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>" : "";
+        echo "</td>";
+        echo "</tr>";
       }
     }
   }
@@ -668,11 +650,12 @@ class View extends Room {
         echo "</tr>";
       }
     } else if ($category == "descriptions") {
-      $result = $db->query("SELECT RoomType, RoomDescription FROM room_type");
+      $result = $db->query("SELECT RoomType, RoomDescription, RoomSimplifiedDescription FROM room_type");
       while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td style='width:60%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
+        echo "<td style='width:40%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
+        echo "<td style='width:20%' id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
         echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
         echo "</tr>";
       }

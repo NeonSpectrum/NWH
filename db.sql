@@ -31,11 +31,12 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 ('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'cuv527khttgpq9r22ufkv30ru0'),
 ('jasonallego@gmail.com', '$2y$10$2yIzczzn3a2bKPagrBPq7uiDE4kF.Mv1mY.vI7y4rED7RPB1o1F7e', 'User', 'JasonnnAllego.jpg', 'Jasonnn', 'Allego', '09154949632', '1998-08-22', '2018-01-03', NULL),
 ('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Admin', 'KateBolanos.png', 'Kate', 'Bolanos', '123', '2017-12-13', '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('neonspectrumph@gmail.com', '$2y$10$2VgBdAjy4MGjuDXyza7y7uVFzgbrZiAHeDwoSNvgNI61jOVqIRGsm', 'User', 'default.png', 'Manny', 'Young', '12312312312', '0000-00-00', '2018-01-05', NULL),
-('youngskymann@gmail.com', '$2y$10$SmGzGLkglgJbVdJvYbhAwuK11jBih8mlXuk3oGgpvYhYyUIxSmMjW', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'b2072e6d62916910c93b2f339fffe770');
+('neonspectrumph@gmail.com', '$2y$10$dN4w8mXxLSNlFsWNWbUbqOhBKPMCLbYFXfYKM32/DqaR0uEUGs3xC', 'User', 'default.png', 'Manny', 'Young', '1231231', '2004-07-21', '2018-01-05', NULL),
+('youngskymann@gmail.com', '$2y$10$pOAZskKoy6tllQHjdrPpO.ltVtZzcc7daO/WAHVZjKRRoUhmNydXK', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '1998-10-07', '2017-11-25', '0upq0migbdkpkjpd8f0n4e15ei');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
+  `Type` varchar(20) NOT NULL,
   `EmailAddress` varchar(100) NOT NULL,
   `CheckInDate` date NOT NULL,
   `CheckOutDate` date NOT NULL,
@@ -48,26 +49,22 @@ CREATE TABLE `booking` (
   `DateUpdated` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `booking_room` (
+CREATE TABLE `booking_cancelled` (
   `BookingID` int(11) NOT NULL,
-  `RoomID` int(11) NOT NULL
+  `DateCancelled` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `check-book` (
+CREATE TABLE `booking_check` (
   `CheckID` int(11) NOT NULL,
+  `BookingID` int(11) NOT NULL,
   `CheckIn` datetime NOT NULL,
-  `CheckOut` datetime NOT NULL,
+  `CheckOut` datetime DEFAULT NULL,
   `ExtraCharges` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `check-book_booking` (
-  `CheckID` int(11) NOT NULL,
-  `BookingID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `check-book_walk-in` (
-  `CheckID` int(11) NOT NULL,
-  `WalkInID` int(11) NOT NULL
+CREATE TABLE `booking_room` (
+  `BookingID` int(11) NOT NULL,
+  `RoomID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
@@ -121,37 +118,24 @@ CREATE TABLE `room_type` (
   `RoomTypeID` int(11) NOT NULL,
   `RoomType` varchar(50) NOT NULL,
   `RoomDescription` text NOT NULL,
+  `RoomSimplifiedDescription` text NOT NULL,
   `Capacity` int(11) NOT NULL,
   `PeakRate` int(11) NOT NULL,
   `LeanRate` int(11) NOT NULL,
   `DiscountedRate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `Capacity`, `PeakRate`, `LeanRate`, `DiscountedRate`) VALUES
-(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast) Total Room Inventory: 7 rooms Size: 18 sqm., with front-view glass window Bed Configuration: 1 Queen bed Bathroom with hotcold shower HD Signal Caable TV.', 2, 2250, 1350, 1650),
-(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single & double beds Bathroom with hot & cold shower...', 3, 2900, 1850, 2300),
-(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With Smart TV...', 4, 3850, 3000, 3500),
-(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With...', 4, 4900, 3800, 4500),
-(5, 'Studio_Type', 'I AM STUDIO TYPE', 2, 1500, 1100, 1300),
-(6, 'Barkada_Room', 'I AM BARKADA ROOM', 4, 3500, 2000, 2600);
+INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `RoomSimplifiedDescription`, `Capacity`, `PeakRate`, `LeanRate`, `DiscountedRate`) VALUES
+(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast) Total Room Inventory: 7 rooms Size: 18 sqm., with front-view glass window Bed Configuration: 1 Queen bed Bathroom with hotcold shower HD Signal Caable TV.', 'Good for 2 persons', 2, 2250, 1350, 1650),
+(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single & double beds Bathroom with hot & cold shower...', 'Good for 3 persons', 3, 2900, 1850, 2300),
+(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With Smart TV...', 'Good for 4 persons', 4, 3850, 3000, 3500),
+(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With...', 'Good for 4 persons', 4, 4900, 3800, 4500),
+(5, 'Studio_Type', 'I AM STUDIO TYPE', 'Good for 4 persons', 4, 1500, 1100, 1300),
+(6, 'Barkada_Room', 'I AM BARKADA ROOM', 'Good for 5 persons', 5, 3500, 2000, 2600);
 
-CREATE TABLE `walk-in` (
-  `WalkInID` int(11) NOT NULL,
-  `EmailAddress` varchar(100) NOT NULL,
-  `CheckInDate` date NOT NULL,
-  `CheckOutDate` date NOT NULL,
-  `Adults` int(11) NOT NULL,
-  `Children` int(11) NOT NULL,
-  `AmountPaid` int(11) NOT NULL,
-  `TotalAmount` int(11) NOT NULL,
-  `PaymentMethod` varchar(10) NOT NULL,
-  `DateCreated` date NOT NULL,
-  `DateUpdated` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `walk-in_room` (
-  `WalkInID` int(11) NOT NULL,
-  `RoomID` int(11) NOT NULL
+CREATE TABLE `visitor-count` (
+  `Date` date NOT NULL,
+  `Count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -162,18 +146,16 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`BookingID`,`EmailAddress`),
   ADD KEY `EmailAddress` (`EmailAddress`);
 
+ALTER TABLE `booking_cancelled`
+  ADD KEY `BookingID` (`BookingID`);
+
+ALTER TABLE `booking_check`
+  ADD PRIMARY KEY (`CheckID`),
+  ADD KEY `BookingID` (`BookingID`);
+
 ALTER TABLE `booking_room`
   ADD KEY `BookingID` (`BookingID`),
   ADD KEY `RoomID` (`RoomID`);
-
-ALTER TABLE `check-book`
-  ADD PRIMARY KEY (`CheckID`);
-
-ALTER TABLE `check-book_booking`
-  ADD KEY `BookingID` (`BookingID`);
-
-ALTER TABLE `check-book_walk-in`
-  ADD KEY `WalkInID` (`WalkInID`);
 
 ALTER TABLE `forgot_password`
   ADD PRIMARY KEY (`id`),
@@ -189,55 +171,41 @@ ALTER TABLE `room`
 ALTER TABLE `room_type`
   ADD PRIMARY KEY (`RoomTypeID`);
 
-ALTER TABLE `walk-in`
-  ADD PRIMARY KEY (`WalkInID`);
-
-ALTER TABLE `walk-in_room`
-  ADD KEY `RoomID` (`RoomID`),
-  ADD KEY `WalkInID` (`WalkInID`);
-
 
 ALTER TABLE `booking`
   MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `check-book`
+ALTER TABLE `booking_check`
   MODIFY `CheckID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `forgot_password`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `log`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 ALTER TABLE `room_type`
   MODIFY `RoomTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
-ALTER TABLE `walk-in`
-  MODIFY `WalkInID` int(11) NOT NULL AUTO_INCREMENT;
 
 
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
+ALTER TABLE `booking_cancelled`
+  ADD CONSTRAINT `booking_cancelled_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
+
+ALTER TABLE `booking_check`
+  ADD CONSTRAINT `booking_check_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
+
 ALTER TABLE `booking_room`
   ADD CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`),
   ADD CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`);
-
-ALTER TABLE `check-book_booking`
-  ADD CONSTRAINT `check-book_booking_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
-
-ALTER TABLE `check-book_walk-in`
-  ADD CONSTRAINT `check-book_walk-in_ibfk_1` FOREIGN KEY (`WalkInID`) REFERENCES `walk-in` (`WalkInID`);
 
 ALTER TABLE `forgot_password`
   ADD CONSTRAINT `forgot_password_ibfk_1` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
 ALTER TABLE `room`
   ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`RoomTypeID`) REFERENCES `room_type` (`RoomTypeID`);
-
-ALTER TABLE `walk-in_room`
-  ADD CONSTRAINT `walk-in_room_ibfk_1` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`),
-  ADD CONSTRAINT `walk-in_room_ibfk_2` FOREIGN KEY (`WalkInID`) REFERENCES `walk-in` (`WalkInID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

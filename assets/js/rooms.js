@@ -1,5 +1,3 @@
-$('#tblRooms').fadeIn();
-$('#tblRoomTypes').fadeIn();
 $('.cbxRoom').change(function() {
   var status = $(this).prop('checked') ? "Enabled" : "Disabled";
   $.ajax({
@@ -11,8 +9,10 @@ $('.cbxRoom').change(function() {
 $('.btnEditRoom').click(function() {
   var roomType = $(this).attr("id").replace("_", " ");
   var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html();
+  var roomSimpDesc = $(this).parent().parent().find("#txtRoomSimpDesc").html().split("<br>").join("");
   $('.modal-title').html(roomType);
-  $("#txtDescription").val(roomDescription);
+  $("#modalEditRoom").find("#txtDescription").val(roomDescription);
+  $("#modalEditRoom").find("#txtRoomSimpDesc").val(roomSimpDesc);
 });
 $('#frmChangeRoom').submit(function(e) {
   e.preventDefault();
@@ -26,7 +26,7 @@ $('#frmChangeRoom').submit(function(e) {
     success: function(response) {
       if (response == true) {
         $('#modalEditRoom').modal('hide');
-        alertNotif("success", "Updated Successfully!", true);
+        alertNotif("success", UPDATE_SUCCESS, true);
       } else {
         $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
@@ -37,3 +37,4 @@ $('#frmChangeRoom').submit(function(e) {
     }
   });
 });
+$("#loadingMode").fadeOut();

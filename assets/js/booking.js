@@ -131,10 +131,9 @@ $("#frmAddPayment").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + "ajax/addPayment.php",
-    data: $(this).serialize(),
+    data: $(this).serialize() + "&type=booking",
     success: function(response) {
-      $(this).closest(".modal").modal("hide");
-      alertNotif("success", "Added Successfully", true);
+      location.reload();
     }
   });
 });
@@ -188,7 +187,10 @@ $("#frmEditReservation").submit(function(e) {
     }
   });
 });
-$('#tblReservation').DataTable();
-$('#tblReservation_length').find("select").addClass("form-control");
-$('#tblReservation_filter').find("input[type=search]").addClass("form-control");
+$('#tblBooking').on('init.dt', function(e, settings, json) {
+  $("#loadingMode").fadeOut();
+});
+$('#tblBooking').DataTable();
+$('#tblBooking_length').find("select").addClass("form-control");
+$('#tblBooking_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
