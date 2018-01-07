@@ -6,15 +6,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $bookingID = $system->filter_input($_POST['txtBookingID']);
   if ($_POST['mode'] == "cancel") {
     $db->query("INSERT INTO booking_cancelled VALUES($bookingID,'$date')");
-    $system->log("insert|booking|cancelled|$bookingID");
+    if ($db->affected_rows > 0) {
+      $system->log("insert|booking|cancelled|$bookingID");
+      echo true;
+    } else {
+      echo $db->error;
+    }
   } else if ($_POST['mode'] == "revert") {
     $db->query("DELETE FROM booking_cancelled WHERE BookingID=$bookingID");
-    $system->log("delete|booking|cancelled|$bookingID");
-  }
-  if ($db->affected_rows > 0) {
-    echo true;
-  } else {
-    echo $db->error;
+    if ($db->affected_rows > 0) {
+      $system->log("delete|booking|cancelled|$bookingID");
+      echo true;
+    } else {
+      echo $db->error;
+    }
   }
 }
 ?>
