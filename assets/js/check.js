@@ -20,6 +20,22 @@ $(".btnAddPayment").click(function() {
   $("#modalAddPayment").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
   $("#modalAddPayment").find("#txtBookingID").val($(this).attr("id"));
 });
+$(".checkDate").change(function() {
+  $.ajax({
+    type: 'POST',
+    url: root + "ajax/getQuantityRooms.php",
+    data: "checkDate=" + $(this).val(),
+    dataType: 'json',
+    success: function(response) {
+      $("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
+      $("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
+      $("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
+      $("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
+      $("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
+      $("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
+    }
+  });
+});
 $('.btnCheckIn').click(function() {
   var table = $(this).closest("table").attr("id") == "tblWalkIn" ? "walk_in" : "booking";
   swal({
@@ -134,8 +150,9 @@ $("#frmAddBooking").submit(function(e) {
       data: $(this).serialize() + "&type=walkin",
       rooms: rooms
     },
+    dataType: 'json',
     success: function(response) {
-      if (response == true) {
+      if (response[0] != false) {
         $('#modalAddBooking').modal('hide');
         alertNotif('success', 'Added Successfully!', true);
       } else {
