@@ -2,7 +2,7 @@
 require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $result = $db->query("SELECT CheckInDate, CheckOutDate, COUNT(*) AS CountUser FROM `booking` GROUP BY CheckInDate,CheckOutDate ORDER BY CheckInDate DESC");
+  $result = $db->query("SELECT CheckInDate, CheckOutDate, COUNT(*) AS CountUser FROM `booking` WHERE Type='reservation' GROUP BY CheckInDate,CheckOutDate ORDER BY CheckInDate DESC");
   $dates  = $arr  = [];
   for ($i = 0; $i < 7; $i++) {
     $dates[$i] = date("Y-m-d", strtotime('now') - 86400 * $i);

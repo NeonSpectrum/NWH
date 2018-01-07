@@ -86,17 +86,25 @@ if (CHAT) {
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading">Site Visitors Chart</div>
+          <div class="panel-heading">Booking Chart</div>
           <div class="panel-body">
-            <canvas id="visitorChart"></canvas>
+            <canvas id="bookingChart"></canvas>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading">Booking Chart</div>
+          <div class="panel-heading">Walk In Chart</div>
           <div class="panel-body">
-            <canvas id="bookingChart"></canvas>
+            <canvas id="walkInChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Site Visitors Chart</div>
+          <div class="panel-body">
+            <canvas id="visitorChart"></canvas>
           </div>
         </div>
       </div>
