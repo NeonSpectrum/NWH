@@ -119,19 +119,20 @@ CREATE TABLE `room_type` (
   `RoomType` varchar(50) NOT NULL,
   `RoomDescription` text NOT NULL,
   `RoomSimplifiedDescription` text NOT NULL,
+  `Icons` text NOT NULL,
   `Capacity` int(11) NOT NULL,
   `PeakRate` int(11) NOT NULL,
   `LeanRate` int(11) NOT NULL,
   `DiscountedRate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `RoomSimplifiedDescription`, `Capacity`, `PeakRate`, `LeanRate`, `DiscountedRate`) VALUES
-(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast) Total Room Inventory: 7 rooms Size: 18 sqm., with front-view glass window Bed Configuration: 1 Queen bed Bathroom with hotcold shower HD Signal Caable TV.', 'Good for 2 persons', 2, 2250, 1350, 1650),
-(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single & double beds Bathroom with hot & cold shower...', 'Good for 3 persons', 3, 2900, 1850, 2300),
-(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With Smart TV...', 'Good for 4 persons', 4, 3850, 3000, 3500),
-(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With...', 'Good for 4 persons', 4, 4900, 3800, 4500),
-(5, 'Studio_Type', 'I AM STUDIO TYPE', 'Good for 4 persons', 4, 1500, 1100, 1300),
-(6, 'Barkada_Room', 'I AM BARKADA ROOM', 'Good for 5 persons', 5, 3500, 2000, 2600);
+INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `RoomSimplifiedDescription`, `Icons`, `Capacity`, `PeakRate`, `LeanRate`, `DiscountedRate`) VALUES
+(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast) Total Room Inventory: 7 rooms Size: 18 sqm., with front-view glass window Bed Configuration: 1 Queen bed Bathroom with hotcold shower HD Signal Caable TV.', 'Good for 2 persons', 'bed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 2, 2250, 1350, 1650),
+(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single & double beds Bathroom with hot & cold shower...', 'Good for 3 persons', 'snowflake-o\r\nbed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 3, 2900, 1850, 2300),
+(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With Smart TV...', 'Good for 4 persons', 'snowflake-o\r\nbed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 4, 3850, 3000, 3500),
+(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With...', 'Good for 4 persons', 'snowflake-o\r\nbed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 4, 4900, 3800, 4500),
+(5, 'Studio_Type', 'I AM STUDIO TYPE', 'Good for 4 persons', 'snowflake-o\r\nbed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 4, 1500, 1100, 1300),
+(6, 'Barkada_Room', 'I AM BARKADA ROOM', 'Good for 5 persons', 'snowflake-o\r\nbed\r\nshower\r\ntelevision\r\nwifi\r\nphone', 5, 3500, 2000, 2600);
 
 CREATE TABLE `visitor-count` (
   `Date` date NOT NULL,

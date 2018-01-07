@@ -33,6 +33,7 @@ $view->rooms("statuses");
               <th>Room Type</th>
               <th>Room Description</th>
               <th>Room Simplified Description</th>
+              <th>Icons</th>
               <th>Action</th>
             </thead>
             <tbody>
@@ -69,6 +70,12 @@ $view->rooms("descriptions");
             <label class="col-sm-2 control-label">Simp. Description</label>
             <div class="col-sm-10">
               <textarea id="txtRoomSimpDesc" name="txtRoomSimpDesc" type="text" class="form-control" style="resize:none" placeholder="Description" rows="5" required></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Icons</label>
+            <div class="col-sm-10">
+              <textarea id="txtIcon" name="txtIcon" type="text" class="form-control" style="resize:none" placeholder="Description" rows="5" required></textarea>
             </div>
           </div>
           <div class="modal-footer">

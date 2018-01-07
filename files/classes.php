@@ -280,9 +280,9 @@ class Account extends System {
 /*----------------------------------------*/
 class Room extends System {
 
-  public function editRoomDescription($roomType, $description, $simpDesc) {
+  public function editRoomDescription($roomType, $description, $simpDesc, $icon) {
     global $db;
-    $db->query("UPDATE room_type SET RoomDescription='$description', RoomSimplifiedDescription='$simpDesc' WHERE RoomType='$roomType'");
+    $db->query("UPDATE room_type SET RoomDescription='$description', RoomSimplifiedDescription='$simpDesc', Icons='$icon' WHERE RoomType='$roomType'");
 
     if ($db->affected_rows > 0) {
       $this->log("update|room_type|$roomType");
@@ -650,13 +650,14 @@ class View extends Room {
         echo "</tr>";
       }
     } else if ($category == "descriptions") {
-      $result = $db->query("SELECT RoomType, RoomDescription, RoomSimplifiedDescription FROM room_type");
+      $result = $db->query("SELECT RoomType, RoomDescription, RoomSimplifiedDescription, Icons FROM room_type");
       while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td style='width:10%'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
         echo "<td style='width:40%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
         echo "<td style='width:20%' id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
-        echo "<td style='width:20%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
+        echo "<td style='width:20%' id='txtIcon'>" . nl2br($row['Icons']) . "</td>";
+        echo "<td style='width:10%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
         echo "</tr>";
       }
     }
