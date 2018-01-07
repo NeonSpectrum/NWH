@@ -320,10 +320,11 @@ class Room extends System {
     return $price;
   }
 
-  public function generateRoomID($room, $quantity, $checkInDate, $checkOutDate) {
+  public function generateRoomID($room = 1, $quantity, $checkInDate, $checkOutDate) {
     global $db, $date;
+    $room   = $room != 1 ? "RoomType = '$room'" : $room;
     $rooms  = [];
-    $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE RoomType = '$room'");
+    $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>'$date'");
       if ($roomResult->num_rows > 0) {

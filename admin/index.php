@@ -32,7 +32,7 @@ $result = mysqli_query($db, $query);
 $row    = mysqli_fetch_assoc($result)['rows'];
 ?>
           <div class="panel-body">
-            <?php echo $row; ?><br/>
+<?php echo $row; ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/booking">View more...</a>
@@ -41,14 +41,12 @@ $row    = mysqli_fetch_assoc($result)['rows'];
       </div>
       <div class="col-md-4">
         <div class="panel panel-default">
-          <div class="panel-heading">Total Rooms</div>
-          <?php
-$query  = "SELECT count(*) as rows FROM room";
-$result = mysqli_query($db, $query);
-$row    = mysqli_fetch_assoc($result)['rows'];
+          <div class="panel-heading">Total Available Rooms</div>
+<?php
+$row = count($room->generateRoomID(null, null, $date, $date));
 ?>
           <div class="panel-body">
-            <?php echo $row; ?><br/>
+<?php echo $row; ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/settings/rooms">View more...</a>
