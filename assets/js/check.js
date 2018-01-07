@@ -110,23 +110,37 @@ $("#frmAddPayment").submit(function(e) {
     }
   });
 });
-$("#frmAddReservation").submit(function(e) {
+$("#frmAddBooking").submit(function(e) {
   e.preventDefault();
-  $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnReservation').attr('disabled', true);
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
+  $(this).find('#btnAdd').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
+  var rooms = [];
+  $(this).find(".cmbQuantity").each(function() {
+    if ($(this).val() != 0) {
+      var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
+      var quantity = $(this).val();
+      rooms.push({
+        roomType: roomType,
+        roomQuantity: quantity
+      });
+    }
+  });
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + 'ajax/addReservation.php',
-    data: $(this).serialize(),
+    url: root + 'ajax/bookNow.php',
+    data: {
+      data: $(this).serialize() + "&type=walkin",
+      rooms: rooms
+    },
     success: function(response) {
       if (response == true) {
-        $('#modalAddReservation').modal('hide');
+        $('#modalAddBooking').modal('hide');
         alertNotif('success', 'Added Successfully!', true);
       } else {
-        $(this).find("#btnReservation").html('Update');
-        $(this).find('#btnReservation').attr('disabled', false);
+        $(this).find("#btnAdd").html('Add');
+        $(this).find('#btnAdd').attr('disabled', false);
         $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })

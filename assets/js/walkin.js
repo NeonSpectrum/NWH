@@ -1,24 +1,4 @@
 var bookingID, email, roomID, roomType, checkInDate, checkOutDate, adults, childrens, currentRoomIDs;
-$("#btnAddRoomSlot").click(function() {
-  $(this).parent().before("<div class='form-group'>\
-                <div class='col-sm-8'>\
-                  <select name='cmbRoomType' class='form-control cmbRoomType'>\
-                    <option value='Standard_Single' selected>Standard Single</option>\
-                    <option value='Standard_Double'>Standard Double</option>\
-                    <option value='Family_Room'>Family Room</option>\
-                    <option value='Junior_Suites'>Junior Suites</option>\
-                    <option value='Studio_Type'>Studio Type</option>\
-                    <option value='Barkada_Room'>Barkada Room</option>\
-                  </select>\
-                </div>\
-                <div class='col-sm-3'>\
-                  <input type='number' id='txtQuantity' name='txtQuantity' class='form-control'>\
-                </div>\
-                <div style='margin:6px 0'>\
-                  <a style='cursor:pointer;text-decoration:none' onclick='$(this).parent().parent().remove()'>X</a>\
-                </div>\
-              </div>");
-});
 $('input[type="search"]').focus();
 $('#modalAddPayment').on('shown.bs.modal', function() {
   $('#txtPayment').focus();

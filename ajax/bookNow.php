@@ -4,7 +4,7 @@ require_once '../files/autoload.php';
 
 parse_str($_POST['data'], $data);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_token'])) {
-  $email         = $system->filter_input($_SESSION['account']['email']);
+  $email         = isset($data['txtEmail']) ? $system->filter_input($data['txtEmail']) : $system->filter_input($_SESSION['account']['email']);
   $checkDate     = explode(" - ", $data['txtCheckDate']);
   $checkInDate   = date("Y-m-d", strtotime($checkDate[0]));
   $checkOutDate  = date("Y-m-d", strtotime($checkDate[1]));
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
 
   $arr = array();
 
-  $db->query("INSERT INTO booking VALUES(NULL, 'reservation', '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod','$date','$date')");
+  $db->query("INSERT INTO booking VALUES(NULL, '{$data['type']}', '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod','$date','$date')");
 
   if ($db->affected_rows > 0) {
     $bookingID = $db->insert_id;
@@ -30,8 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $roomIDs      = $room->generateRoomID($roomType, $roomQuantity, $checkInDate, $checkOutDate);
       if (count($roomIDs) > 0) {
         for ($i = 1; $i <= $roomQuantity; $i++) {
-          $roomPrice = $system->filter_input($room->getRoomPrice($roomType));
-          $totalRoomPrice += $roomPrice;
+          $totalRoomPrice += $system->filter_input($room->getRoomPrice($roomType));
           $roomID = $system->filter_input($roomIDs[$i - 1]);
           $db->query("INSERT INTO booking_room VALUES($bookingID, $roomID)");
         }
@@ -43,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $arr[1] .= "<li>" . str_replace("_", " ", $roomType) . ": " . join(', ', $roomIDs) . "</li>";
     }
     if ($arr[0] != false) {
+      $totalRoomPrice *= count($system->getDatesFromRange($checkInDate, $checkOutDate));
       $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice WHERE BookingID=$bookingID");
       $table .= "</tbody></table>";
       $arr[1] .= "</ul>";

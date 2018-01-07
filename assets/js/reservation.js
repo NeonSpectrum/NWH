@@ -402,7 +402,7 @@ $(document).ready(function() {
           url: root + 'ajax/bookNow.php',
           dataType: "json",
           data: {
-            data: $('#frmBookNow').serialize(),
+            data: $('#frmBookNow').serialize() + "&type=reservation",
             rooms: rooms
           },
           success: function(response) {

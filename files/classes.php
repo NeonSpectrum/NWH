@@ -691,9 +691,9 @@ class System {
     return $list;
   }
 
-  public function getNextWalkInID() {
+  public function getNextBookingID() {
     global $db;
-    $result = $db->query("SHOW TABLE STATUS LIKE 'walk-in'");
+    $result = $db->query("SHOW TABLE STATUS LIKE 'booking'");
     $row    = $result->fetch_assoc();
     return $row['Auto_increment'];
   }

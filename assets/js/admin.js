@@ -40,11 +40,24 @@ $('input.birthDate').datepicker({
   startView: 2,
   endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
 });
-$('input.checkDate').daterangepicker({
-  autoApply: true,
-  autoUpdateInput: true,
-  locale: {
-    format: DATE_FORMAT.toUpperCase()
+$("input.checkDate").each(function() {
+  if (!$(this).val()) {
+    $(this).daterangepicker({
+      autoApply: true,
+      minDate: moment(new Date()).add(0, 'days'),
+      endDate: moment(new Date()).add(1, 'days'),
+      locale: {
+        format: DATE_FORMAT.toUpperCase()
+      }
+    });
+  } else {
+    $(this).daterangepicker({
+      autoApply: true,
+      minDate: moment(new Date()).add(0, 'days'),
+      locale: {
+        format: DATE_FORMAT.toUpperCase()
+      }
+    });
   }
 });
 $('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
