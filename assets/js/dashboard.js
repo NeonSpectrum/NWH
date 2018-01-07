@@ -10,9 +10,10 @@ $.ajax({
         datasets: [{
           label: '# of Used',
           data: response[1],
-          backgroundColor: ['lightblue'],
-          borderColor: ['blue'],
-          borderWidth: 1
+          backgroundColor: ['transparent'],
+          borderColor: ['rgb(30,144,255)'],
+          borderWidth: 2,
+          cubicInterpolationMode: "monotone",
         }]
       },
       options: {
@@ -40,9 +41,10 @@ $.ajax({
         datasets: [{
           label: '# of Users',
           data: response[1],
-          backgroundColor: ['lightgreen'],
+          backgroundColor: ['transparent'],
           borderColor: ['green'],
-          borderWidth: 1
+          borderWidth: 3,
+          cubicInterpolationMode: "monotone"
         }]
       },
       options: {
@@ -70,9 +72,10 @@ $.ajax({
         datasets: [{
           label: '# of Users',
           data: response[1],
-          backgroundColor: ['rgb(255, 77, 77)'],
+          backgroundColor: ['transparent'],
           borderColor: ['red'],
-          borderWidth: 1
+          borderWidth: 3,
+          cubicInterpolationMode: "monotone"
         }]
       },
       options: {
@@ -100,9 +103,10 @@ $.ajax({
         datasets: [{
           label: '# of Users',
           data: response[1],
-          backgroundColor: ['gray'],
+          backgroundColor: ['transparent'],
           borderColor: ['black'],
-          borderWidth: 1
+          borderWidth: 3,
+          cubicInterpolationMode: "monotone"
         }]
       },
       options: {
