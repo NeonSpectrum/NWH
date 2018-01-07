@@ -426,7 +426,10 @@ class View extends Room {
       echo "<div style='padding: 10px 10px'>";
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
-        echo "<i class='fa fa-$value fa-2x' style='padding-right:20px'></i>";
+        $iconArr = explode("=", $value);
+        $icon    = isset($iconArr[0]) ? $iconArr[0] : "";
+        $title   = isset($iconArr[1]) ? $iconArr[1] : "";
+        echo "<i class='fa fa-$icon fa-2x' title='$title'style='padding-right:20px'></i>";
       }
       echo "</div>";
       echo "</td>";
