@@ -422,8 +422,14 @@ class View extends Room {
       echo "</td>";
       echo "<td style='vertical-align:top'>
           <h3><b>" . str_replace("_", " ", $row['RoomType']) . "</b></h3><br/>
-          {$row['RoomDescription']}
-        </td>";
+          {$row['RoomDescription']}";
+      echo "<div style='padding: 10px 10px'>";
+      $icons = explode("\n", $row['Icons']);
+      foreach ($icons as $key => $value) {
+        echo "<i class='fa fa-$value fa-2x' style='padding-right:20px'></i>";
+      }
+      echo "</div>";
+      echo "</td>";
       echo "<td><center>From<br/><br/><span style='font-size:20px;'><b>₱&nbsp;" . number_format($this->getRoomPrice($row['RoomType'])) . "</b></span></center></td>";
       echo "</tr>";
     }
