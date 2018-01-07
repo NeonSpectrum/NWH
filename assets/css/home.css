@@ -175,6 +175,7 @@
 
 .booknow {
   position: absolute;
+  user-select: none;
   bottom: 10px;
   height: auto;
   width: 100%;
@@ -235,6 +236,7 @@ input[type="date"]::-webkit-inner-spin-button {
 /* HOME CONTENT */
 
 .homeContent {
+  user-select: none;
   background: url('../../images/nwh_grass.jpg') no-repeat;
   background-size: cover;
   width: 100%;

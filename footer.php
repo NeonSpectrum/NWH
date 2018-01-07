@@ -8,7 +8,7 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !strpos(strtolower($_S
     <div class="col-md-4 footer-content">
       <span class="glyphicon glyphicon-map-marker"></span> LOCATION<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
-      <a class="anchor-animate" href="<?php echo strpos(strtolower($_SERVER['PHP_SELF']), "contactus") ? '#googleMap' : '/contactus/#googleMap'; ?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
+      <a class="anchor-animate" href="<?php echo strpos(strtolower($_SERVER['PHP_SELF']), "contactus") ? "#googleMap" : "$root/contactus/#googleMap"; ?>" style="color:#333">No. 21 Quezon Ave. Poblacion, <br/>Alaminos City Pangasinan</a>
     </div>
     <div class="col-md-4 footer-content">
       <span class="glyphicon glyphicon-search"></span> FOLLOW US<br/>
@@ -19,7 +19,7 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !strpos(strtolower($_S
       </div>
     </div>
     <div class="col-md-4 footer-content">
-      <span class=" glyphicon glyphicon-envelope"></span> CONTACT US<br/>
+      <span class="glyphicon glyphicon-envelope"></span> CONTACT US<br/>
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
       <span class="glyphicon glyphicon-phone-alt"></span> (075) 636-0910 / (075) 205-0647<br/>
       <span class="glyphicon glyphicon-phone"></span> 0929-789-0088 / 0995-408-6292
