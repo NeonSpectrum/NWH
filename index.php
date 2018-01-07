@@ -31,7 +31,13 @@ $view->homeJssor();
       </svg>
     </div>
   </div>
-  <div class="booknow">
+  <div style="position:absolute;right:5px;bottom:10px;">
+    <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7)">
+      <i class="fa fa-arrow-down" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>
+<div class="booknow">
   <div class="booknow-content text-center center-block">
     <form class="form-inline frmBookCheck" method="post" action="reservation/">
       <div class="form-group">
@@ -54,12 +60,6 @@ $view->homeJssor();
         <button id="btnCheck" type="submit" class="btn btn-primary">Book Now</button>
       </div>
     </form>
-  </div>
-</div>
-  <div style="position:absolute;right:5px;bottom:10px;">
-    <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7)">
-      <i class="fa fa-arrow-down" aria-hidden="true"></i>
-    </a>
   </div>
 </div>
 <div class="panel panel-default" style="border-top-width:0px;" id="roomTypesArea">

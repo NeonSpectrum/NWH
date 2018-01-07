@@ -203,6 +203,9 @@
 
 @media only screen and (max-width: 768px) {
   .booknow {
+    position: static;
+    border: 1px solid #ddd;
+    border-width: 1px 0px;
     width: 100%;
     border-radius: 0px;
   }
