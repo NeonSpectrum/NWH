@@ -131,7 +131,8 @@ $("#frmAddBooking").submit(function(e) {
   $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
   $(this).find('#btnAdd').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
-  var rooms = [];
+  var rooms = [],
+    roomSelected = false;
   $(this).find(".cmbQuantity").each(function() {
     if ($(this).val() != 0) {
       var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
@@ -140,8 +141,17 @@ $("#frmAddBooking").submit(function(e) {
         roomType: roomType,
         roomQuantity: quantity
       });
+      roomSelected = true;
     }
   });
+  if (!roomSelected) {
+    $(this).find("#btnAdd").html('Add');
+    $(this).find('#btnAdd').attr('disabled', false);
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + CHOOSE_ROOM_TO_PROCEED + '</div>');
+    })
+    return;
+  }
   $.ajax({
     context: this,
     type: 'POST',

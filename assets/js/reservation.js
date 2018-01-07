@@ -366,7 +366,7 @@ $(document).ready(function() {
           }
         });
         if (!roomSelected) {
-          alertNotif("error", "Please choose a room before proceeding to next step.");
+          alertNotif("error", CHOOSE_ROOM_TO_PROCEED);
           return false;
         }
         var roomHtml = "",

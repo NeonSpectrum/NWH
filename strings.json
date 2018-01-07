@@ -73,4 +73,7 @@
 }, {
   "name": "ALREADY_RESERVED",
   "value": "Sorry, The room was already reserved. Please reserve another room."
+}, {
+  "name": "CHOOSE_ROOM_TO_PROCEED",
+  "value": "Please choose a room before proceeding."
 }]
