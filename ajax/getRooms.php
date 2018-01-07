@@ -17,11 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       echo "<div class='col-md-4 img-baguette' style='padding:10px'>";
       $first = true;
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
-        $filename = str_replace("../gallery/images/rooms/", "", $image);
-        $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
+        $filename  = str_replace("../gallery/images/rooms/", "", $image);
+        $caption   = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
+        $thumbnail = str_replace("../gallery/images/rooms/", "../gallery/images/rooms/thumbnail/", $image);
         echo "<a href='$image' title='Click to view images' data-caption='$caption' style='";
         echo $first == true ? "" : "display:none";
-        echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' style='width:100%'></a>\n";
+        echo "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>\n";
         $first = false;
       }
       echo "</div>";
