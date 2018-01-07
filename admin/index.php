@@ -27,12 +27,18 @@ $row    = mysqli_fetch_assoc($result)['rows'];
         <div class="panel panel-default">
           <div class="panel-heading">Books Ongoing Today</div>
 <?php
-$query  = "SELECT count(*) as rows FROM booking WHERE CheckInDate >= CURDATE() AND CheckOutDate <= CURDATE()";
+$count  = 0;
+$query  = "SELECT * FROM booking";
 $result = mysqli_query($db, $query);
-$row    = mysqli_fetch_assoc($result)['rows'];
+while ($row = $result->fetch_assoc()) {
+  $dates = $system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate']);
+  if (in_array($date, $dates)) {
+    $count++;
+  }
+}
 ?>
           <div class="panel-body">
-<?php echo $row; ?><br/>
+<?php echo $count; ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/booking">View more...</a>

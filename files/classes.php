@@ -758,12 +758,10 @@ class System {
     try {
       $mail = new PHPMailer(true);
       $mail->isSMTP();
-      $mail->Host       = "ssl://cpanel02wh.sin1.cloud.z.com";
-      $mail->SMTPAuth   = true;
-      $mail->Username   = NOREPLY_EMAIL;
-      $mail->Password   = PASSWORD;
-      $mail->SMTPSecure = 'ssl';
-      $mail->Port       = 465;
+      $mail->Host     = "ssl://cpanel02wh.sin1.cloud.z.com:465";
+      $mail->SMTPAuth = true;
+      $mail->Username = NOREPLY_EMAIL;
+      $mail->Password = PASSWORD;
 
       $mail->setFrom(NOREPLY_EMAIL, "Northwood Hotel");
       $mail->addAddress($email);
