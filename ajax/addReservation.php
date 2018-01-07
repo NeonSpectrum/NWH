@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $db->query("INSERT INTO `walk-in` VALUES(NULL, '$email', $roomID, '$checkInDate', '$checkOutDate', $adults, $children, 0, $price)");
 
   if ($db->affected_rows > 0) {
-    createLog("insert|walk-in|" . $db->insert_id);
+    log("insert|walk-in|" . $db->insert_id);
     echo true;
   }
 }

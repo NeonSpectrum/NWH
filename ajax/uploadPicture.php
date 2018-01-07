@@ -12,7 +12,7 @@ $target_file   = basename($name) . "." . strtolower($imageFileType);
 
 if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir . $target_file)) {
   $db->query("UPDATE account SET ProfilePicture='$target_file' WHERE EmailAddress='$email'");
-  createLog("update|account.profilepic");
+  log("update|account.profilepic");
   $_SESSION["picture"] = $target_file;
   echo true;
 } else {

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   }
 
   if (!$db->error) {
-    $system->createLog("update|booking|$bookingID");
+    $system->log("update|booking|$bookingID");
     echo true;
   } else {
     echo $db->error;

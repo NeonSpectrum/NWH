@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
 
   if ($db->affected_rows > 0) {
     $bookingID = $db->insert_id;
-    $system->createLog("insert|booking|" . $bookingID);
+    $system->log("insert|booking|" . $bookingID);
     $totalRoomPrice = 0;
 
     $arr[0] = $system->formatBookingID($bookingID);

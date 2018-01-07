@@ -30,7 +30,7 @@ class Account extends System {
       $_SESSION['account']['contactNumber'] = $row['ContactNumber'];
 
       $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email'");
-      $this->createLog("login|account", $email);
+      $this->log("login|account", $email);
       return true;
     } else {
       return false;
@@ -68,7 +68,7 @@ class Account extends System {
       $body     = "Please proceed to this link to register your account:<br/>Click <a href='http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&token=$data'>here</a> to register.";
       $sentMail = $this->sendMail($email, $subject, $body);
       if ($sentMail == true) {
-        $this->createLog("sent|registration|$email");
+        $this->log("sent|registration|$email");
         echo true;
       } else {
         echo $sentMail;
@@ -95,7 +95,7 @@ class Account extends System {
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
-        $this->createLog("insert|account.register|$email']}", $_SESSION['account']['email']);
+        $this->log("insert|account.register|$email']}", $_SESSION['account']['email']);
         return true;
       } else {
         return ALREADY_REGISTERED;
@@ -111,7 +111,7 @@ class Account extends System {
           $_SESSION['account']['birthDate']     = $birthDate;
           $_SESSION['account']['contactNumber'] = $contactNumber;
         }
-        $this->createLog("registered|account|$email");
+        $this->log("registered|account|$email");
         return "<script>alert('Registered Successfully!');location.href='$root';</script>";
       } else {
         return "<script>alert('Already Registered!');location.href='$root';</script>";
@@ -138,7 +138,7 @@ class Account extends System {
     if ($forgot == true) {
       $db->query("UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'");
       if ($db->affected_rows > 0) {
-        $this->createLog("update|user.password|$email");
+        $this->log("update|user.password|$email");
         $this->expireToken($email, $credentials['token']);
         return true;
       } else {
@@ -151,7 +151,7 @@ class Account extends System {
       if ($result->num_rows == 1 && password_verify($oldpass, $row['Password'])) {
         $result = $db->query("UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'");
         if ($db->affected_rows > 0) {
-          $this->createLog("update|user.password");
+          $this->log("update|user.password");
           return true;
         } else {
           return $db->error;
@@ -166,7 +166,7 @@ class Account extends System {
     $row    = $result->fetch_assoc();
 
     if ($result->num_rows > 0) {
-      $this->createLog("sent|forgot.password|$email");
+      $this->log("sent|forgot.password|$email");
       $data    = "email=$email&token=" . $this->generateForgotToken($email);
       $subject = "Northwood Hotel Forgot Password";
       $body    = "Please proceed to this link to reset your password:<br/>Click <a href='http://{$_SERVER['SERVER_NAME']}{$root}?$data'>here</a> to change your password.";
@@ -180,7 +180,7 @@ class Account extends System {
     $token = $this->getRandomString(50);
     $db->query("INSERT INTO forgot_password VALUES(NULL, '$email', '$token', 0, '$dateandtime')");
     if ($db->affected_rows > 0) {
-      $this->createLog("insert|account.generate.token|$email");
+      $this->log("insert|account.generate.token|$email");
       return $token;
     } else {
       return $db->error;
@@ -219,7 +219,7 @@ class Account extends System {
 
       $result = $db->query("UPDATE `account` SET AccountType='$accountType',FirstName='$firstName',LastName='$lastName' WHERE EmailAddress='$email'");
       if ($db->affected_rows > 0) {
-        $this->createLog("update|account|$email");
+        $this->log("update|account|$email");
         echo true;
       } else {
         echo $output;
@@ -231,7 +231,7 @@ class Account extends System {
         $output    = $this->saveImage($credentials['image'], $directory, $filename);
         if ($output == true) {
           $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['account']['email']}'");
-          $this->createLog("update|account.profilepicture");
+          $this->log("update|account.profilepicture");
           $_SESSION['account']["picture"] = $filename;
         } else {
           return $output;
@@ -251,7 +251,7 @@ class Account extends System {
         $_SESSION['account']['lname']         = $lname;
         $_SESSION['account']['birthDate']     = $birthDate;
         $_SESSION['account']['contactNumber'] = $contactNumber;
-        $this->createLog("update|account.profile");
+        $this->log("update|account.profile");
         $output = true;
       }
       return $output;
@@ -264,7 +264,7 @@ class Account extends System {
       $result = $db->query("DELETE FROM account WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
-        $this->createLog("delete|account|$email");
+        $this->log("delete|account|$email");
         echo true;
       } else {
         echo $db->error;
@@ -285,7 +285,7 @@ class Room extends System {
     $db->query("UPDATE room_type SET RoomDescription='$description' WHERE RoomType='$roomType'");
 
     if ($db->affected_rows > 0) {
-      $this->createLog("update|room_type|$roomType");
+      $this->log("update|room_type|$roomType");
       return true;
     } else {
       return NOTHING_CHANGED;
@@ -297,7 +297,7 @@ class Room extends System {
     $result = $db->query("UPDATE room SET Status = '$status' WHERE RoomID = $roomID");
 
     if ($db->affected_rows > 0) {
-      $this->createLog("update|room.status|$roomID|$status");
+      $this->log("update|room.status|$roomID|$status");
       echo true;
     } else {
       echo ERROR_OCCURED;
@@ -431,10 +431,11 @@ class View extends Room {
 
   public function booking() {
     global $db, $root, $date;
-    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, RoomType, booking_room.RoomID, DateCancelled FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
     while ($row = $result->fetch_assoc()) {
+      $cancelled = $row['DateCancelled'] == null ? false : true;
       if (strtotime($row['CheckInDate']) >= strtotime($date)) {
-        echo "<tr>";
+        echo $cancelled ? "<tr style='color:red'>" : "<tr>";
         echo "<td>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
@@ -451,6 +452,11 @@ class View extends Room {
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
         echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
         echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        if (!$cancelled) {
+          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Cancel'><i class='fa fa-ban'></i></a>";
+        } else {
+          echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Revert'><i class='fa fa-refresh'></i></a>";
+        }
         echo "</td>";
         echo "</tr>";
       }
@@ -785,7 +791,7 @@ class System {
     return $_SESSION['csrf_token'] === $this->decrypt($token);
   }
 
-  public function createLog($action, $email = "") {
+  public function log($action, $email = "") {
     global $db;
     $email = $email == "" && isset($_SESSION['account']['email']) ? $_SESSION['account']['email'] : $email;
     $date  = date("Y-m-d H:i:s");

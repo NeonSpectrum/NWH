@@ -11,7 +11,7 @@ if (isset($newPass)) {
   $result = $db->query("UPDATE account SET Password='$newPass' WHERE EmailAddress='$email'");
 
   if ($db->affected_rows > 0) {
-    createLog("update|account.password|$email");
+    log("update|account.password|$email");
     echo '<script>alert("Reset Successfully!");location.href="../";</script>';
     exit();
   } else {
@@ -24,7 +24,7 @@ if (isset($newPass)) {
   $row    = $result->fetch_assoc();
 
   if ($result->num_rows == 1) {
-    createLog("sent|forgot.password|$email");
+    log("sent|forgot.password|$email");
     $data    = encrypt("email=$email&newPass=" . getRandomString(8));
     $subject = "Northwood Hotel Forgot Password";
     $body    = "Please proceed to this link to reset your password:<br/>http://$domain/files/checkForgot.php?$data<br/><br/>Your new password will be: <b>$randomNumber</b>";
