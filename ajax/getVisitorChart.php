@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $result = $db->query("SELECT * FROM `visitor-count` ORDER BY Date DESC LIMIT 7");
   $dates  = [];
   for ($i = 0; $i < 7; $i++) {
-    $dates[$i] = date("Y-m-d", strtotime('now') - 86400 * ($i + 1));
+    $dates[$i] = date("Y-m-d", strtotime('now') - 86400 * $i);
   }
   $count = array_fill(0, count($dates), 0);
   while ($row = $result->fetch_assoc()) {

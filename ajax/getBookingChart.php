@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $result = $db->query("SELECT CheckInDate, CheckOutDate, COUNT(*) AS CountUser FROM `booking` GROUP BY CheckInDate,CheckOutDate ORDER BY CheckInDate DESC");
   $dates  = $arr  = [];
   for ($i = 0; $i < 7; $i++) {
-    $dates[$i] = date("Y-m-d", strtotime('now') - 86400 * ($i + 1));
+    $dates[$i] = date("Y-m-d", strtotime('now') - 86400 * $i);
   }
   $count = array_fill(0, 7, 0);
   while ($row = $result->fetch_assoc()) {
