@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $first = false;
       }
       echo "</div>";
-      echo "<div class='col-md-6' style='vertical-align:top;padding:10px'>
-            <h3 id='roomName'>" . str_replace("_", " ", $row['RoomType']) . "</h3><br/>
+      echo "<div class='col-md-6'>
+            <h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>
             {$row['RoomDescription']}<br/>";
 
       echo "<div style='padding: 10px 10px'>";
