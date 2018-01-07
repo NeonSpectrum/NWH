@@ -138,11 +138,6 @@ $('#tblBook').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();
 });
 $('#tblBook').DataTable();
-$('#tblBook').parent().find('input[type="search"]').attr("placeholder", "Booking ID");
-$('#tblBook').parent().find('input[type="search"]').on('keyup change', function(e) {
-  e.preventDefault();
-  $('#tblBook').DataTable().column(0).search($(this).val()).draw();
-});
 $('#tblBook_length').find("select").addClass("form-control");
 $('#tblBook_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
