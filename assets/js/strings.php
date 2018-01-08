@@ -34,7 +34,9 @@ foreach ($json as $string) {
 }
 foreach ($config as $name => $value) {
   $value = $value == false ? "false" : $value;
-  echo "," . strtoupper($name) . "=\"$value\"";
+  if (!strpos($name, "paypal")) {
+    echo "," . strtoupper($name) . "=\"$value\"";
+  }
 }
 echo ";const root=\"$root\", isLogged=";
 echo isset($_SESSION['account']) ? "true;" : "false;";

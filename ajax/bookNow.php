@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $table .= "</tbody></table>";
       $arr[1] .= "</ul>";
       $roomsJson = json_encode($_POST['rooms']);
-      $arr[2]    = "http://{$_SERVER['SERVER_NAME']}{$root}ajax/paypal.php/?" . $system->encrypt("txtBookingID=$bookingID&txtAmount=$totalRoomPrice&rooms=$roomsJson");
+      $arr[2]    = "http://{$_SERVER['SERVER_NAME']}{$root}payment/process.php/?" . $system->encrypt("txtBookingID=$bookingID&txtAmount=$totalRoomPrice&rooms=$roomsJson");
       $subject   = "Northwood Hotel Reservation Confirmation";
 
       $body = "Dear {$_SESSION['account']['fname']} {$_SESSION['account']['lname']},<br/><br/>";

@@ -18,3 +18,7 @@ forgot_expiration = 10  ;minutes
 edit_reservation_days = 1
 max_adults = 10
 max_children = 10
+
+[paypal]
+paypal_client_id = 
+paypal_secret = 
