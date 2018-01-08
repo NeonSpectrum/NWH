@@ -52,15 +52,15 @@ $children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
               <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
                 <label class="btn paymentMethod active" title="Cash">
                   <div class="method cash"></div>
-                    <input type="radio" name="txtPaymentMethod" value="Cash" checked>
+                  <input type="radio" name="txtPaymentMethod" value="Cash" checked>
                 </label>
                 <label class="btn paymentMethod" title="Bank">
-                    <div class="method bank"></div>
-                    <input type="radio" name="txtPaymentMethod" value="Bank">
+                  <div class="method bank"></div>
+                  <input type="radio" name="txtPaymentMethod" value="Bank">
                 </label>
                 <label class="btn paymentMethod" title="Paypal">
                   <div class="method paypal"></div>
-                    <input type="radio" name="txtPaymentMethod" value="PayPal">
+                  <input type="radio" name="txtPaymentMethod" value="PayPal">
                 </label>
               </div>
             </div>

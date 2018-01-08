@@ -323,6 +323,7 @@ $(document).ready(function() {
   });
   // Leave Step
   $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+    var total = 0;
     if (stepDirection == "forward") {
       if (stepNumber == 0) {
         $('#prev-btn').css("display", "block");
@@ -370,8 +371,8 @@ $(document).ready(function() {
           return false;
         }
         var roomHtml = "",
-          total = 0,
           diffDays;
+        total = 0;
         rooms = [];
         $("#loadingMode").fadeIn();
         $('.numberOfRooms').each(function() {
@@ -410,6 +411,10 @@ $(document).ready(function() {
               $('#modalRules').modal("show");
               $('span#txtBookingID').html(response[0]);
               $('span#txtRoomID').html(response[1]);
+              if ($("input[name=txtPaymentMethod]:checked").val().toLowerCase() == "paypal") {
+                $("#step-4").find("#btnPrint").before("<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='location.href=\"" + response[2] + "\";$(\"#loadingMode\").fadeIn();'>Pay now with Paypal</button>");
+              }
+              $('#btnPrint').before("<button></button>")
               $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
               editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
               $("#loadingMode").fadeOut();
@@ -427,7 +432,6 @@ $(document).ready(function() {
                   location.reload();
                 }
               });
-              // location.href = "//" + location.hostname + root + "reservation";
             }
           }
         });

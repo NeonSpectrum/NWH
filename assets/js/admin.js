@@ -34,6 +34,7 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
+$('[data-toggle="tooltip"]').tooltip();
 $('input.birthDate').datepicker({
   format: DATE_FORMAT,
   autoclose: true,

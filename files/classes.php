@@ -306,6 +306,7 @@ class Room extends System {
 
   public function getRoomPrice($room) {
     global $db;
+    $room   = str_replace(" ", "_", $room);
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row    = $result->fetch_assoc();
     if (mktime(0, 0, 0, 10, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 5, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
@@ -502,7 +503,7 @@ class View extends Room {
 
   public function check() {
     global $db;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -523,6 +524,9 @@ class View extends Room {
         echo "<td id='txtCheckIn'>$checkIn</td>";
         echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
+        echo "<td id='txtDiscount'>";
+        echo strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount']);
+        echo "</td>";
         echo "<td>";
         echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
         echo $checkInStatus ? ' disabled' : '';
@@ -531,6 +535,7 @@ class View extends Room {
         echo $checkOutStatus || !$checkInStatus ? ' disabled' : '';
         echo "><i class='fa fa-calendar-minus-o'></i></a>";
         echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>" : "";
+        echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddDiscount' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddDiscount' title='Add Discount'><i class='fa fa-tag'></i></a>" : "";
         echo "</td>";
         echo "</tr>";
       }
@@ -877,7 +882,7 @@ class System {
   }
 
   public function decrypt($string) {
-    return openssl_decrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
+    return openssl_decrypt(str_replace(" ", "+", $string), "AES-128-ECB", ENCRYPT_KEYWORD);
   }
 
 }

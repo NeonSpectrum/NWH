@@ -46,8 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice WHERE BookingID=$bookingID");
       $table .= "</tbody></table>";
       $arr[1] .= "</ul>";
-
-      $subject = "Northwood Hotel Reservation Confirmation";
+      $roomsJson = json_encode($_POST['rooms']);
+      $arr[2]    = "http://{$_SERVER['SERVER_NAME']}{$root}ajax/paypal.php/?" . $system->encrypt("txtBookingID=$bookingID&txtAmount=$totalRoomPrice&rooms=$roomsJson");
+      $subject   = "Northwood Hotel Reservation Confirmation";
 
       $body = "Dear {$_SESSION['account']['fname']} {$_SESSION['account']['lname']},<br/><br/>";
       $body .= "Booking ID: " . $system->formatBookingID($bookingID) . "<br/>";

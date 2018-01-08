@@ -14,12 +14,9 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
+            'Psr\\Log\\' => 8,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'B' => 
-        array (
-            'Braintree\\' => 10,
         ),
     );
 
@@ -32,6 +29,10 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
@@ -40,18 +41,14 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'Braintree\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
-        ),
     );
 
     public static $prefixesPsr0 = array (
-        'B' => 
+        'P' => 
         array (
-            'Braintree' => 
+            'PayPal' => 
             array (
-                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
+                0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
             ),
         ),
     );

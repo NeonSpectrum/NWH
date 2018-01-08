@@ -14,11 +14,18 @@ $('input.checkInDate').change(function() {
   $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
 });
 $('#modalAddPayment').on('shown.bs.modal', function() {
-  $('#txtPayment').focus();
+  $(this).find('#txtPayment').focus();
+});
+$('#modalAddDiscount').on('shown.bs.modal', function() {
+  $(this).find('#txtDiscount').focus();
 });
 $(".btnAddPayment").click(function() {
   $("#modalAddPayment").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
   $("#modalAddPayment").find("#txtBookingID").val($(this).attr("id"));
+});
+$(".btnAddDiscount").click(function() {
+  $("#modalAddDiscount").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
+  $("#modalAddDiscount").find("#txtBookingID").val($(this).attr("id"));
 });
 $(".checkDate").change(function() {
   $.ajax({
@@ -121,6 +128,18 @@ $("#frmAddPayment").submit(function(e) {
     type: 'POST',
     url: root + "ajax/addPayment.php",
     data: $(this).serialize() + "&type=check",
+    success: function(response) {
+      location.reload();
+    }
+  });
+});
+$("#frmAddDiscount").submit(function(e) {
+  e.preventDefault();
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/addDiscount.php",
+    data: $(this).serialize(),
     success: function(response) {
       location.reload();
     }

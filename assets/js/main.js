@@ -28,6 +28,7 @@ $(document).ready(function() {
       $(this).val(max);
     }
   });
+  $('[data-toggle="tooltip"]').tooltip();
   // // CONTACT BOX
   // $('.contactbox__title').on('click', function() {
   //   $('.contactbox').toggleClass('contactbox--tray');

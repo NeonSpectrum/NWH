@@ -1,7 +1,7 @@
 <?php
 require_once "../header.php";
 ?>
-<div class="panel panel-default center-block" style="width:30%;border-radius:0">
+<div class="panel panel-default center-block col-md-4" style="float:none;border-radius:0">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">Login Page</h1></div>
   <div class="panel-body center-block" style="width:90%">
     <div class="row">

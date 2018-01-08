@@ -15,4 +15,12 @@ if (DEBUG) {
   ini_set('display_errors', TRUE);
   ini_set('display_startup_errors', TRUE);
 }
+
+// PAYPAL CREDENTIALS
+$apiContext = new \PayPal\Rest\ApiContext(
+  new \PayPal\Auth\OAuthTokenCredential(
+    'Aemf_RWl8szBshCXucOarBPFyP2hx12OxsTrt-7R9MUoTXhmEcq91breJ8M8hL-ho8dc5FwHMnlYeB9I',
+    'ECydcgfF0tTJzy8TVLUBXJyjFxdlcveYY9BTbfrKs9AQZ0KK0omVfCe9Sl3CRaj55C0B0gMz1HDdYiHd'
+  )
+);
 ?>
