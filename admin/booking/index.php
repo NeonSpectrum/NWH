@@ -98,7 +98,7 @@ $view->booking();
           <div class="form-group">
             <label class="col-sm-3 control-label">Room ID</label>
             <div class="col-sm-4">
-              <select name="cmbRoomID" class="form-control" id="cmbRoomID" required/>
+              <select name="cmbNewRoomID" class="form-control" id="cmbNewRoomID" required/>
 
               </select>
             </div>
