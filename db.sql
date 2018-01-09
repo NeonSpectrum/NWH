@@ -25,14 +25,31 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `DateRegistered`, `SessionID`) VALUES
-('arias_louie@hotmail.com', '$2y$10$psTt7F23OHGFeEvCGxEq0O55urRDQ89LvJWYuHsnW0E01X6KMYkl6', 'Admin', 'default.png', 'Arias', 'Louie', '123', '1998-08-22', '2017-12-23', '11bfab5d094090fb6086d87ae0c27563'),
+('arias_louie@hotmail.com', '$2y$10$psTt7F23OHGFeEvCGxEq0O55urRDQ89LvJWYuHsnW0E01X6KMYkl6', 'Admin', 'default.png', 'Arias', 'Louie', '123', '0000-00-00', '2017-12-23', '11bfab5d094090fb6086d87ae0c27563'),
+('ashellehinautan@gmail.com', '$2y$10$LWS0wRcliDo6EZo3.ZnFz.ScCDA.O1jaS1QD9mxGQQkG9PuN8GQLO', 'Admin', 'AshelleHinautan.jpg', 'Ashelle', 'Hinautan', '09086430087', '1999-04-19', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
 ('beajewelcvines@gmail.com', '$2y$10$VFNjVijVyv73K1tq8Fs5.uds4JwDpaRvMh1yy2BWKETxlj9PQ7Aw2', 'Admin', 'default.png', 'Bea Jewel', 'Vines', '123', '2017-12-13', '2017-12-04', 'ioccmabmgrhh7j9700gbi3ni0h'),
-('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123', '2017-12-13', '2017-10-29', 'j5n0c4noiqmgdk44b2iou3jca5'),
-('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'cuv527khttgpq9r22ufkv30ru0'),
-('jasonallego@gmail.com', '$2y$10$2yIzczzn3a2bKPagrBPq7uiDE4kF.Mv1mY.vI7y4rED7RPB1o1F7e', 'User', 'JasonnnAllego.jpg', 'Jasonnn', 'Allego', '09154949632', '1998-08-22', '2018-01-03', NULL),
+('cheliterkim@gmail.com', '$2y$10$CGYjMnOkjFMjeWs7opVK8uVqw3GUCVthztacaWEBkOXd42Qm1SbNm', 'User', 'default.png', 'Roth ', 'Fernando', '09765412', '1998-12-23', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('cheljung09@gmail.com', '$2y$10$7jbddQl2vyVI52PIZ3hJcOAQLaBhNphV5rcAPc7kTfLTbdy9N9Xmu', 'Admin', 'RochelleHinautan.jpeg', 'Rochelle', 'Hinautan', '09084056076', '1999-04-19', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('chelkim77@gmail.com', '$2y$10$nxj8sSFwJU2URrr08DuC9e8cVRyWI5VWfopug0rX39esTCqRHTR2a', 'User', 'default.png', 'Chel', 'Espiritu', '10628841', '1999-11-06', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('chimeisha@yahoo.com', '$2y$10$oWZxqcjtghHtxR8Sc/40DOfpZvWYx1YzOu/EUohjdZydM5sdIiIn2', 'User', 'default.png', 'Chime', 'Isha', '123', '1998-09-05', '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default.png', 'Rica', 'Guno', '123123123', '2017-12-13', '2017-10-29', 'cee3d1be858890883b9d572b721edd9a'),
+('jasonallego01@gmail.com', '$2y$10$/OLoYaSBOhkVkBnuLkF6JOPoIExvQG4px4pgWg5i8UF02cTz62MjS', 'User', 'default.png', 'Jason', 'Allego', '1', '0000-00-00', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego02@gmail.com', '$2y$10$E7.5GwVcYbbPUzvOy5zmYOA8ZSsYPRrSFCMIHmWv0Qr8V2Yu/T1Ky', 'User', 'default.png', 'Facundo', 'Allego', '1', '0000-00-00', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego03@gmail.com', '$2y$10$OpiMkglUqkh6O33Jbn3ziuMT6uKlCs5KCdDjkHeR2RH/03Zr.C54.', 'User', 'default.png', 'Facundo', 'Allego', '1', '0000-00-00', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego04@gmail.com', '$2y$10$1/zPF/A3QwY392DfSMpl3.D0rPi3PR8fm2TtUp/t76Zb5a3BG1p7y', 'User', 'default.png', 'Fritos', 'Allego', '1', '0000-00-00', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego05@gmail.com', '$2y$10$.TSwZHJQpHfK8DY7W5RrBOp3ydjrZqnZXanT0PsrGl4/w07WFmYHW', 'User', 'default.png', 'Fujian', 'Allego', '1', '0000-00-00', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego06@gmail.com', '$2y$10$0xLi0Hv6XuBFMhriLLP15.WgE2uY7gwW79tF7yOK0ZntJl25XAZR6', 'User', 'default.png', 'Horizon', 'MiddleOfNoWhere', '1', '1970-01-01', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego07@gmail.com', '$2y$10$Th3QIsSReBWe15pYVUAPq.p1Fs0/YGB.wplMn.J6sYro2xw88VnTS', 'User', 'ChitoMelodrama.jpg', 'Chito', 'Melodrama', '1', '1970-01-01', '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego08@gmail.com', '$2y$10$FmDkJc0xJwpN6DMpnR16U.RjGsyLODqVUJvfUorWwlCdsipdY/e1C', 'Admin', 'JasonAllego.jpg', 'Jason', 'Allego', '123', '2017-12-13', '2017-11-20', 'bfd101bea12ba0eb5ea48e7a15ccff02'),
 ('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Admin', 'KateBolanos.png', 'Kate', 'Bolanos', '123', '2017-12-13', '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('neonspectrumph@gmail.com', '$2y$10$dN4w8mXxLSNlFsWNWbUbqOhBKPMCLbYFXfYKM32/DqaR0uEUGs3xC', 'User', 'default.png', 'Manny', 'Young', '1231231', '2004-07-21', '2018-01-05', NULL),
-('youngskymann@gmail.com', '$2y$10$pOAZskKoy6tllQHjdrPpO.ltVtZzcc7daO/WAHVZjKRRoUhmNydXK', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '1998-10-07', '2017-11-25', '3drcql42kcc09lp72642djrtg8');
+('neonspectrumph@gmail.com', '$2y$10$CMRnT3VukkwNwqYrx9Sb6OhAOmkvEl0fVq3Emv0f8UHMnL28.1IVO', 'Admin', 'default.png', 'Manny', 'Young', '0123123123', '0000-00-00', '2018-01-09', NULL),
+('r.guno1@yahoo.com', '$2y$10$FnU2/9Al7DnznudnujLApO4cpRAAlf0yiEX3l/kin7uKUgre1tUf.', 'Admin', 'default.png', 'Ririiiii', 'Chi', '123', '0000-00-00', '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno2@yahoo.com', '$2y$10$gokdgeo85TC/scoaGPW9JuWMgut4u/L0IstBpfcrEJEii9sBai0qO', 'User', 'default.png', 'Riri', 'Chiii', '123', '0000-00-00', '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno3@yahoo.com', '$2y$10$6a7d1LYtEhWbVUZhBndeieft/CPxylpwj3YeVqWw4BUuTagzm4vHW', 'User', 'default.png', 'Taho', 'Vendor', '123', '1998-09-05', '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno4@yahoo.com', '$2y$10$JqlqoTenN5qrU0R6yCrh.eTw2wT7q1O901dq4tgWGUqgL92ijSd6O', 'User', 'default.png', 'Microsoft', 'Word', '123', '2000-10-25', '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno5@yahoo.com', '$2y$10$XRraga//dTbGxqzAT8tWhuDwh/vhWtqpzRU2RU9elnQX126Zxk2Pu', 'Admin', 'default.png', 'Ri', 'Ri', '1', '2007-09-24', '2018-01-07', NULL),
+('rochellehinautan@gmail.com', '$2y$10$QXzyvj4lmo1lONkhqOY0We3uYsWU5yj9hjuDIR/TssGt0NUrgZkze', 'User', 'default.png', 'Cheche', 'Hinautan', '09367916', '1999-11-06', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'f82f22926887a85fe4d02174c55d1ca0');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -68,7 +85,7 @@ CREATE TABLE `booking_paypal` (
   `PayerID` varchar(50) NOT NULL,
   `PaymentID` varchar(50) NOT NULL,
   `Token` varchar(50) NOT NULL,
-  `Amount` int(11) NOT NULL,
+  `PaymentAmount` int(11) NOT NULL,
   `TimeStamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -78,11 +95,11 @@ CREATE TABLE `booking_room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
-  `id` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
   `EmailAddress` varchar(100) NOT NULL,
-  `token` varchar(50) NOT NULL,
-  `used` tinyint(1) NOT NULL DEFAULT '0',
-  `timestamp` datetime NOT NULL
+  `Token` varchar(50) NOT NULL,
+  `Used` tinyint(1) NOT NULL DEFAULT '0',
+  `TimeStamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `log` (

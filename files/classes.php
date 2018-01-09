@@ -190,9 +190,9 @@ class Account extends System {
 
   public function verifyForgotToken($email, $token) {
     global $db;
-    $result = $db->query("SELECT * FROM forgot_password WHERE EmailAddress='$email' AND token='$token'");
+    $result = $db->query("SELECT * FROM forgot_password WHERE EmailAddress='$email' AND Token='$token'");
     $row    = $result->fetch_assoc();
-    if ($result->num_rows > 0 && !$row['used'] && !$this->isExpired($row['timestamp'], FORGOT_EXPIRATION)) {
+    if ($result->num_rows > 0 && !$row['Used'] && !$this->isExpired($row['TimeStamp'], FORGOT_EXPIRATION)) {
       return true;
     } else {
       return $db->error;
@@ -201,7 +201,7 @@ class Account extends System {
 
   public function expireToken($email, $token) {
     global $db;
-    $db->query("UPDATE forgot_password SET used=1 WHERE EmailAddress='$email' AND token='$token'");
+    $db->query("UPDATE forgot_password SET Used=1 WHERE EmailAddress='$email' AND Token='$token'");
     if ($db->affected_rows > 0) {
       return true;
     } else {
