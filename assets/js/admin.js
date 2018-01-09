@@ -34,7 +34,17 @@ var Dashboard = function() {
   };
 }();
 Dashboard.init();
-$('[data-toggle="tooltip"]').tooltip();
+$('[data-tooltip="tooltip"]').tooltip({
+  container: 'body'
+});
+$(".content-wrapper").click(function() {
+  if ($("body").hasClass("sidebar-is-expanded")) {
+    $("body").removeClass("sidebar-is-expanded").addClass("sidebar-is-reduced");
+    $('.logo__txt').hide();
+    $('.logo__txt').html("NWH");
+    $('.logo__txt').fadeIn("slow");
+  }
+});
 $('input.birthDate').datepicker({
   format: DATE_FORMAT,
   autoclose: true,

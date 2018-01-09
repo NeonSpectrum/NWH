@@ -439,12 +439,12 @@ class View extends Room {
     $result = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
-      echo "<td class='img-baguette'>";
+      echo "<td class='img-baguette' data-tooltip='tooltip' data-placement='bottom' title='Click to view images'>";
       $first = true;
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
         $filename = str_replace("../gallery/images/rooms/", "", $image);
         $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
-        echo "<a href='$image' title='Click to view images' data-caption='$caption' style='";
+        echo "<a href='$image' data-caption='$caption' style='";
         echo $first == true ? "" : "display:none";
         echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' height='200px'></a>\n";
         $first = false;
@@ -459,7 +459,7 @@ class View extends Room {
         $iconArr = explode("=", $value);
         $icon    = isset($iconArr[0]) ? $iconArr[0] : "";
         $title   = isset($iconArr[1]) ? $iconArr[1] : "";
-        echo "<i class='fa fa-$icon fa-2x' title='$title'style='padding-right:20px'></i>";
+        echo "<i class='fa fa-$icon fa-2x' data-tooltip='tooltip' data-placement='bottom' title='$title' style='margin-right:20px'></i>";
       }
       echo "</div>";
       echo "</td>";
@@ -494,14 +494,14 @@ class View extends Room {
         echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $amountPaid)) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
+        echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></a>";
         if (!$cancelled) {
-          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Cancel'><i class='fa fa-ban'></i></a>";
+          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'><i class='fa fa-ban'></i></a>";
         } else {
-          echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' title='Revert'><i class='fa fa-refresh'></i></a>";
+          echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh'></i></a>";
         }
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -527,9 +527,9 @@ class View extends Room {
         echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID']) . "' title='Print'><i class='fa fa-print'></i></a>";
+        echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></a>";
+        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money'></i></a>";
+        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID']) . "' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -605,11 +605,11 @@ class View extends Room {
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       echo "<td>";
       if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {
-        echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+        echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
         echo "&nbsp;&nbsp;";
       }
       if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(3)) {
-        echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+        echo "<a class='btnDeleteAccount' data-tooltip='tooltip' data-placement='bottom' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
       }
       echo "</td>";
       echo "</tr>";
@@ -648,27 +648,6 @@ class View extends Room {
     }
   }
 
-  // public function listRoomID() {
-  //   global $db;
-  //   $email    = $this->filter_input($_SESSION['account']['email']);
-  //   $result   = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
-  //   $roomList = [];
-  //   while ($row = $result->fetch_assoc()) {
-  //     $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
-  //     if ($tomorrow <= strtotime($row['CheckInDate'])) {
-  //       $roomResult = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID={$row['BookingID']}");
-  //       while ($roomRow = $roomResult->fetch_assoc()) {
-  //         $roomList[] = $roomRow['RoomID'];
-  //       }
-  //       sort($roomList);
-  //       foreach ($roomList as $key => $value) {
-  //         echo "<option value='$value'>$value</option>\n";
-  //       }
-  //       break;
-  //     }
-  //   }
-  // }
-
   public function rooms($category) {
     global $db;
     if ($category == "statuses") {
@@ -692,7 +671,7 @@ class View extends Room {
         echo "<td style='width:40%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
         echo "<td style='width:20%' id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
         echo "<td style='width:20%' id='txtIcon'>" . nl2br($row['Icons']) . "</td>";
-        echo "<td style='width:10%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
+        echo "<td style='width:10%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
         echo "</tr>";
       }
     }

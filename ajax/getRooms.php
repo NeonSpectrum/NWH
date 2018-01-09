@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   for ($i = 0; $row = $result->fetch_assoc(); $i++) {
     $numberOfRooms = count($room->generateRoomID($row['RoomType'], $row['NumberOfRooms'], $checkInDate, $checkOutDate));
     if ($numberOfRooms > 0) {
-      $htmls[$i] .= "<div class='row'><div class='col-md-4 img-baguette' style='padding:10px'>";
+      $htmls[$i] .= "<div class='row'><div class='col-md-4 img-baguette' style='padding:10px' data-tooltip='tooltip' data-placement='bottom' title='Click to view images'>";
       $first = true;
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
         $filename  = str_replace("../gallery/images/rooms/", "", $image);
         $thumbnail = str_replace("../gallery/images/rooms/", "../gallery/images/rooms/thumbnail/", $image);
-        $htmls[$i] .= "<a href='$image' title='Click to view images' style='" . ($first == true ? "" : "display:none") . "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>";
+        $htmls[$i] .= "<a href='$image' style='" . ($first == true ? "" : "display:none") . "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>";
         $first = false;
       }
       $htmls[$i] .= "</div><div class='col-md-6'><h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>{$row['RoomDescription']}<br/><div style='padding: 10px 10px'>";
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $iconArr = explode("=", $value);
         $icon    = isset($iconArr[0]) ? $iconArr[0] : "";
         $title   = isset($iconArr[1]) ? $iconArr[1] : "";
-        $htmls[$i] .= "<i class='fa fa-$icon fa-2x' title='$title'style='padding-right:20px'></i>";
+        $htmls[$i] .= "<i class='fa fa-$icon fa-2x' data-tooltip='tooltip' data-placement='bottom' title='$title'style='margin-right:20px'></i>";
       }
       $htmls[$i] .= "</div><span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small><span id='roomSimpDesc' style='display:none'><ul>";
       $roomSimpDesc = explode("\n", $row['RoomSimplifiedDescription']);

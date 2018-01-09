@@ -35,7 +35,9 @@ $(document).ready(function() {
       $(this).val(max);
     }
   });
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-tooltip="tooltip"]').tooltip({
+    container: 'body'
+  });
   // // CONTACT BOX
   // $('.contactbox__title').on('click', function() {
   //   $('.contactbox').toggleClass('contactbox--tray');
@@ -460,7 +462,9 @@ $("#frmEditRoom").submit(function(e) {
   });
 });
 $('#modalEditReservation').on('show.bs.modal', function() {
-  displayBookingInfo();
+  if ($(this).find("#cmbBookingID").val() != null) {
+    displayBookingInfo();
+  }
 });
 $("#frmEditReservation").submit(function(e) {
   e.preventDefault();
@@ -543,9 +547,9 @@ function displayBookingInfo() {
     data: "cmbBookingID=" + $("#modalEditReservation").find("#cmbBookingID").val(),
     success: function(response) {
       $("#modalEditReservation").closest("form").find("#currentRoomID").html('');
-      response[0].forEach(function(roomID) {
-        $("#modalEditReservation").closest("form").find("#currentRoomID").append("<option value='" + roomID + "'>" + roomID + "</option>")
-      });
+      for (var i = 0; i < response[0].length; i++) {
+        $("#modalEditReservation").closest("form").find("#currentRoomID").append("<option value='" + response[0][i] + "'>" + response[0][i] + "</option>")
+      }
       $("#modalEditReservation").closest("form").find("#txtCheckDate").val(response[1]);
       $("#modalEditReservation").closest("form").find("#txtAdults").val(response[2]);
       $("#modalEditReservation").closest("form").find("#txtChildren").val(response[3]);

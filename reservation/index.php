@@ -48,7 +48,7 @@ $children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
             <div id="txtOtherRooms" style="display:none">
 
             </div>
-            <button id="btnShowMore" type="button" class="btn btn-default btn-block">Show Other Rooms</button>
+            <button id="btnShowMore" style="margin-bottom:10px" type="button" class="btn btn-default btn-block">Show Other Rooms</button>
           </div>
           <div id="step-3">
             <h3> Step 3 - Payment</h3>

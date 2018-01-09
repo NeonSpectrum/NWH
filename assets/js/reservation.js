@@ -367,6 +367,9 @@ $(document).ready(function() {
                 }
               }
             }
+            $('[data-tooltip="tooltip"]').tooltip({
+              container: 'body'
+            });
             baguetteBox.run('.img-baguette', {
               animation: 'fadeIn',
               fullscreen: true
