@@ -48,7 +48,7 @@ class Account extends System {
     if (strpos($referrer, "/reservation")) {
       header("location: ../");
     } else {
-      header("location: /nwh");
+      header("location: $referrer");
     }
     return true;
   }
