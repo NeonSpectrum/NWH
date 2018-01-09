@@ -652,7 +652,7 @@ class View extends Room {
       }
     }
     if ($type == "get") {
-      return $bookingIDs;
+      return count($bookingIDs) > 0 ? $bookingIDs : false;
     }
   }
 

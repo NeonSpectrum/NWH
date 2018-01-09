@@ -406,7 +406,7 @@ $view->listBookingID("combobox");
                 </div>
               </div>
 <?php
-$result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=" . $view->listBookingID()[0]);
+$result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID[0] : 0));
   $row           = $result->fetch_assoc();
   $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
   $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
