@@ -32,6 +32,7 @@ $('.btnDeleteAccount').click(function() {
         data: "txtEmail=" + email + "&csrf_token=" + $("input[name='csrf_token']").val() + "&mode=deleteAccount",
         success: function(response) {
           if (response == true) {
+            console.log(response);
             swal({
               title: 'Deleted!',
               text: 'The account has been deleted.',
@@ -44,7 +45,7 @@ $('.btnDeleteAccount').click(function() {
           } else {
             swal({
               title: 'Error',
-              text: 'There was an error deleting the account!',
+              text: 'Can\'t delete this account because it has an existing reservation!',
               type: 'error'
             });
           }

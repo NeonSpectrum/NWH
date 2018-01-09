@@ -266,9 +266,9 @@ class Account extends System {
 
       if ($db->affected_rows > 0) {
         $this->log("delete|account|$email");
-        echo true;
+        return true;
       } else {
-        echo $db->error;
+        return $db->error;
       }
     }
     return ERROR_OCCURED;
@@ -622,7 +622,7 @@ class View extends Room {
         echo "<a class='btnEditAccount' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
         echo "&nbsp;&nbsp;";
       }
-      if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(2)) {
+      if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(3)) {
         echo "<a class='btnDeleteAccount' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash' aria-hidden='true'></i></a>";
       }
       echo "</td>";
