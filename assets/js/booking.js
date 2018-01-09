@@ -127,6 +127,9 @@ $(".btnRevertCancel").click(function() {
 });
 $("#frmAddPayment").submit(function(e) {
   e.preventDefault();
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
+  $(this).find('#btnAdd').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     context: this,
     type: 'POST',
@@ -167,8 +170,8 @@ $("#cmbRoomType").change(function() {
 });
 $("#frmEditReservation").submit(function(e) {
   e.preventDefault();
-  $(this).find("#btnReservation").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
-  $(this).find('#btnReservation').attr('disabled', true);
+  $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
+  $(this).find('#btnUpdate').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $.ajax({
     context: this,
@@ -180,8 +183,8 @@ $("#frmEditReservation").submit(function(e) {
         $('#modalEditReservation').modal('hide');
         alertNotif('success', 'Updated Successfully!', true);
       } else {
-        $(this).find("#btnReservation").html('Update');
-        $(this).find('#btnReservation').attr('disabled', false);
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find('#btnUpdate').attr('disabled', false);
         $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })

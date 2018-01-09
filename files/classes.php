@@ -884,11 +884,11 @@ class System {
   }
 
   public function encrypt($string) {
-    return openssl_encrypt($string, "AES-128-ECB", ENCRYPT_KEYWORD);
+    return openssl_encrypt($string, "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR);
   }
 
   public function decrypt($string) {
-    return openssl_decrypt(str_replace(" ", "+", $string), "AES-128-ECB", ENCRYPT_KEYWORD);
+    return openssl_decrypt(str_replace(" ", "+", $string), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR);
   }
 
 }

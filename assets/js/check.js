@@ -123,6 +123,9 @@ $('.btnCheckOut').click(function() {
 });
 $("#frmAddPayment").submit(function(e) {
   e.preventDefault();
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
+  $(this).find('#btnAdd').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     context: this,
     type: 'POST',
@@ -135,6 +138,9 @@ $("#frmAddPayment").submit(function(e) {
 });
 $("#frmAddDiscount").submit(function(e) {
   e.preventDefault();
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
+  $(this).find('#btnAdd').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
   $.ajax({
     context: this,
     type: 'POST',

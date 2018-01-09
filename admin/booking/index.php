@@ -60,7 +60,7 @@ $view->booking();
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
+            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>
@@ -125,7 +125,7 @@ $view->booking();
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
+            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>
