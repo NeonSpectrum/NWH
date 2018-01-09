@@ -2,60 +2,51 @@
 require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  $hasRooms     = false;
+  $htmls = array_fill(0, count($room->getRoomTypeList()), "");
+
   $guests       = $system->filter_input($_POST['txtAdults']);
   $checkDate    = explode(" - ", $_POST['txtCheckDate']);
   $checkInDate  = date("Y-m-d", strtotime($checkDate[0]));
   $checkOutDate = date("Y-m-d", strtotime($checkDate[1]));
+  $result       = $db->query("SELECT DISTINCT(RoomType), RoomDescription, RoomSimplifiedDescription, Icons, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= $guests GROUP BY room_type.RoomTypeID");
 
-  $result = $db->query("SELECT DISTINCT(RoomType), RoomDescription, RoomSimplifiedDescription, Icons, COUNT(*) As NumberOfRooms FROM room_type JOIN room ON room_type.RoomTypeID = room.RoomTypeID WHERE Capacity >= $guests GROUP BY room_type.RoomTypeID");
-
-  while ($row = $result->fetch_assoc()) {
+  for ($i = 0; $row = $result->fetch_assoc(); $i++) {
     $numberOfRooms = count($room->generateRoomID($row['RoomType'], $row['NumberOfRooms'], $checkInDate, $checkOutDate));
     if ($numberOfRooms > 0) {
-      echo "<div class='row'>";
-      echo "<div class='col-md-4 img-baguette' style='padding:10px'>";
+      $htmls[$i] .= "<div class='row'><div class='col-md-4 img-baguette' style='padding:10px'>";
       $first = true;
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
         $filename  = str_replace("../gallery/images/rooms/", "", $image);
-        $caption   = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
         $thumbnail = str_replace("../gallery/images/rooms/", "../gallery/images/rooms/thumbnail/", $image);
-        echo "<a href='$image' title='Click to view images' data-caption='$caption' style='";
-        echo $first == true ? "" : "display:none";
-        echo "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>\n";
+        $htmls[$i] .= "<a href='$image' title='Click to view images' style='" . ($first == true ? "" : "display:none") . "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>";
         $first = false;
       }
-      echo "</div>";
-      echo "<div class='col-md-6'>
-            <h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>
-            {$row['RoomDescription']}<br/>";
-
-      echo "<div style='padding: 10px 10px'>";
+      $htmls[$i] .= "</div><div class='col-md-6'><h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>{$row['RoomDescription']}<br/><div style='padding: 10px 10px'>";
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
         $iconArr = explode("=", $value);
         $icon    = isset($iconArr[0]) ? $iconArr[0] : "";
         $title   = isset($iconArr[1]) ? $iconArr[1] : "";
-        echo "<i class='fa fa-$icon fa-2x' title='$title'style='padding-right:20px'></i>";
+        $htmls[$i] .= "<i class='fa fa-$icon fa-2x' title='$title'style='padding-right:20px'></i>";
       }
-      echo "</div><span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small>";
-
-      echo "<span id='roomSimpDesc' style='display:none'><ul>";
+      $htmls[$i] .= "</div><span style='text-style:bold;font-size:20px;margin-right:5px'>Price: ₱&nbsp;<span id='roomPrice'>" . number_format($room->getRoomPrice($row['RoomType'])) . "</span></span><small>(Per night)</small><span id='roomSimpDesc' style='display:none'><ul>";
       $roomSimpDesc = explode("\n", $row['RoomSimplifiedDescription']);
       foreach ($roomSimpDesc as $key => $value) {
-        echo "<li>$value</li>";
+        $htmls[$i] .= "<li>$value</li>";
       }
-      echo "</ul></span></div>";
-      echo "<div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
-      echo "<select style='width:100%' class='form-control'>";
-      for ($i = 0; $i <= $numberOfRooms; $i++) {
-        echo "<option>$i</option>";
+      $htmls[$i] .= "</ul></span></div><div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
+      $htmls[$i] .= "<select style='width:100%' class='form-control'>";
+      for ($j = 0; $j <= $numberOfRooms; $j++) {
+        $htmls[$i] .= "<option>$j</option>";
       }
-      echo "</select>";
-      echo "<small class='text-center center-block'>Only $numberOfRooms left.</small></div></div>";
-      $hasRooms = true;
+      $htmls[$i] .= "</select>";
+      $htmls[$i] .= "<small class='text-center center-block'>Only $numberOfRooms left.</small></div></div></div>";
     }
   }
-  echo $hasRooms ? "\n</div>\n</table>" : "<div style='padding:15% 0%;width:100%;text-align:center;font-size:22px'>No Rooms Available</div>\n</div>\n</table>";
+  if (strlen(implode($htmls)) == 0) {
+    echo json_encode([false]);
+  } else {
+    echo json_encode($htmls);
+  }
 }
 ?>

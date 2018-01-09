@@ -320,7 +320,7 @@ $(document).ready(function() {
   });
   // Leave Step
   $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-    var total = 0;
+    $(window).scrollTop(0);
     if (stepDirection == "forward") {
       if (stepNumber == 0) {
         $('#prev-btn').css("display", "block");
@@ -340,17 +340,36 @@ $(document).ready(function() {
           type: 'POST',
           url: root + 'ajax/getRooms.php',
           data: $('#frmBookNow').serialize(),
+          dataType: 'json',
           success: function(response) {
-            if (response.includes("No Rooms Available")) {
+            $("btnShowMore").html("Show Other Rooms");
+            $("#txtSuggestedRooms").html('');
+            $("#txtOtherRooms").html('').hide();
+            if (response[0] === false) {
               $("#next-btn").prop("disabled", true);
+              $("#txtSuggestedRooms").html("<div style='padding:15% 0%;width:100%;text-align:center;font-size:22px'>No Rooms Available</div>")
+              $("#btnShowMore").hide();
+            } else {
+              $("#next-btn").prop("disabled", false);
+              $("#btnShowMore").show();
+              response = response.filter(function(a) {
+                return a !== ''
+              })
+              if (response.length == 1) {
+                $("#btnShowMore").hide();
+              }
+              for (var i = 0, first = true; i < response.length; i++) {
+                if (first === true) {
+                  $("#txtSuggestedRooms").html(response[i]);
+                  first = false;
+                } else {
+                  $("#txtOtherRooms").append(response[i]);
+                }
+              }
             }
-            $('#txtRooms').html(response);
             baguetteBox.run('.img-baguette', {
               animation: 'fadeIn',
               fullscreen: true
-            });
-            $('input[type="checkbox"]').change(function() {
-              $('input[type="checkbox"]').not(this).prop('checked', false);
             });
             editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>", "info");
             $("#loadingMode").fadeOut();
@@ -368,8 +387,7 @@ $(document).ready(function() {
           return false;
         }
         var roomHtml = "",
-          diffDays;
-        total = 0;
+          diffDays, total = 0;
         rooms = [];
         $("#loadingMode").fadeIn();
         $('.numberOfRooms').each(function() {
@@ -468,6 +486,16 @@ $(document).ready(function() {
       $('#smartwizard').smartWizard("next");
     }
     return true;
+  });
+  $("#btnShowMore").click(function() {
+    var btn = $(this);
+    $("#txtOtherRooms").fadeToggle(function() {
+      if ($(this).css("display") == "none") {
+        btn.html("Show Other Rooms");
+      } else {
+        btn.html("Hide Other Rooms");
+      }
+    });
   });
   if ($("#step-1").hasClass("skip")) {
     $('#smartwizard').smartWizard("next");
