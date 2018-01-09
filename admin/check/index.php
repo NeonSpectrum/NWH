@@ -186,7 +186,7 @@ for ($i = 0; $i <= $count; $i++) {
         </form>
       </div>
     </div>
-   </div>
+  </div>
 </div>
 <div id="modalAddPayment" class="modal" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-sm">
@@ -244,7 +244,7 @@ for ($i = 0; $i <= $count; $i++) {
         </form>
       </div>
     </div>
-   </div>
+  </div>
 </div>
 <div id="modalReceipt" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
@@ -260,6 +260,6 @@ for ($i = 0; $i <= $count; $i++) {
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-   </div>
+  </div>
 </div>
 <?php require_once '../../footer.php';?>

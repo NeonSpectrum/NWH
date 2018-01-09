@@ -203,7 +203,7 @@ Pace.on('done', function() {
       if ($('.dropdown.open').length) {
         $("body").trigger("click");
       }
-      // $(".frmBookCheck").find("input.checkDate").data("daterangepicker").hide();
+      $(".frmBookCheck").find("input.checkDate").data("daterangepicker").hide();
     }
     // BACK TO TOP  
     if ($(this).scrollTop() <= 200) {
@@ -236,8 +236,60 @@ baguetteBox.run('.img-baguette', {
   fullscreen: true
 });
 // DISPLAY BOOKING ID
-$("#cmbBookingID").change(function() {
-  displayBookingInfo();
+$('#modalEditReservation').find("#cmbBookingID").change(function() {
+  $.ajax({
+    url: root + 'ajax/cmbBookingIdDisplay.php',
+    type: "POST",
+    dataType: "json",
+    data: "cmbBookingID=" + $(this).val(),
+    success: function(response) {
+      $("#modalEditReservation").find("#txtCheckDate").val(response[0]);
+      $("#modalEditReservation").find("#txtAdults").val(parseInt(response[1]));
+      $("#modalEditReservation").find("#txtChildren").val(parseInt(response[2]));
+      $("#modalEditReservation").find("#txtPaymentMethod").val(response[3]);
+      for (var i = 0; i < response[4][0].length; i++) {
+        $('#modalEditReservation').find("label#" + response[4][0][i]).parent().find(".cmbQuantity").html(response[4][1][i]);
+      }
+    }
+  });
+});
+var currentDate = $('#modalEditReservation').find("#txtCheckDate").val();
+var currentRoomQuantity = [
+  $('#modalEditReservation').find("label#Standard_Single").parent().find(".cmbQuantity").html(),
+  $('#modalEditReservation').find("label#Standard_Double").parent().find(".cmbQuantity").html(),
+  $('#modalEditReservation').find("label#Family_Room").parent().find(".cmbQuantity").html(),
+  $('#modalEditReservation').find("label#Junior_Suites").parent().find(".cmbQuantity").html(),
+  $('#modalEditReservation').find("label#Studio_Type").parent().find(".cmbQuantity").html(),
+  $('#modalEditReservation').find("label#Barkada_Room").parent().find(".cmbQuantity").html()
+];
+$("#modalEditReservation").on("shown.bs.modal", function() {
+  $('#modalEditReservation').find(".checkDate").change(function() {
+    var checkDate = $(this).val().split(" - ");
+    if (checkDate[0] == checkDate[1]) return;
+    if ($(this).val() == currentDate) {
+      $('#modalEditReservation').find("label#Standard_Single").parent().find(".cmbQuantity").html(currentRoomQuantity[0]);
+      $('#modalEditReservation').find("label#Standard_Double").parent().find(".cmbQuantity").html(currentRoomQuantity[1]);
+      $('#modalEditReservation').find("label#Family_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[2]);
+      $('#modalEditReservation').find("label#Junior_Suites").parent().find(".cmbQuantity").html(currentRoomQuantity[3]);
+      $('#modalEditReservation').find("label#Studio_Type").parent().find(".cmbQuantity").html(currentRoomQuantity[4]);
+      $('#modalEditReservation').find("label#Barkada_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[5]);
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: root + "ajax/getQuantityRooms.php",
+        data: "checkDate=" + $(this).val(),
+        dataType: 'json',
+        success: function(response) {
+          $('#modalEditReservation').find("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
+          $('#modalEditReservation').find("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
+          $('#modalEditReservation').find("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
+          $('#modalEditReservation').find("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
+          $('#modalEditReservation').find("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
+          $('#modalEditReservation').find("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
+        }
+      });
+    }
+  });
 });
 // LOGIN
 $("#frmLogin").submit(function(e) {
@@ -461,32 +513,50 @@ $("#frmEditRoom").submit(function(e) {
     }
   });
 });
-$('#modalEditReservation').on('show.bs.modal', function() {
-  if ($(this).find("#cmbBookingID").val() != null) {
-    displayBookingInfo();
-  }
-});
 $("#frmEditReservation").submit(function(e) {
   e.preventDefault();
   $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
   $(this).find('#btnUpdate').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
+  var rooms = [],
+    roomSelected = false;
+  $(this).find(".cmbQuantity").each(function() {
+    if ($(this).val() != 0) {
+      var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
+      var quantity = $(this).val();
+      rooms.push({
+        roomType: roomType,
+        roomQuantity: quantity
+      });
+      roomSelected = true;
+    }
+  });
+  if (!roomSelected) {
+    $(this).find("#btnUpdate").html('Update');
+    $(this).find('#btnUpdate').attr('disabled', false);
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + CHOOSE_ROOM_TO_PROCEED + '</div>');
+    })
+    return;
+  }
   $.ajax({
     context: this,
     type: 'POST',
     url: root + 'ajax/editReservation.php',
-    data: $(this).serialize() + "&type=booking",
+    data: {
+      data: $(this).serialize() + "&type=booking",
+      rooms: rooms
+    },
+    dataType: 'json',
     success: function(response) {
-      if (response == true) {
-        $(this).find(".modal").each(function() {
-          $(this).modal("hide");
-        });
-        alertNotif('success', UPDATE_SUCCESS, true);
+      if (response[0] === true) {
+        $('#modalEditReservation').modal('hide');
+        alertNotif('success', 'Updated Successfully!', true);
       } else {
         $(this).find("#btnUpdate").html('Update');
         $(this).find('#btnUpdate').attr('disabled', false);
         $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + ERROR_OCCURED + '</div>');
         })
       }
     }
@@ -538,24 +608,6 @@ $('#frmContact').submit(function(e) {
     }
   });
 })
-
-function displayBookingInfo() {
-  $.ajax({
-    url: root + 'ajax/cmbBookingIdDisplay.php',
-    type: "POST",
-    dataType: "json",
-    data: "cmbBookingID=" + $("#modalEditReservation").find("#cmbBookingID").val(),
-    success: function(response) {
-      $("#modalEditReservation").closest("form").find("#currentRoomID").html('');
-      for (var i = 0; i < response[0].length; i++) {
-        $("#modalEditReservation").closest("form").find("#currentRoomID").append("<option value='" + response[0][i] + "'>" + response[0][i] + "</option>")
-      }
-      $("#modalEditReservation").closest("form").find("#txtCheckDate").val(response[1]);
-      $("#modalEditReservation").closest("form").find("#txtAdults").val(response[2]);
-      $("#modalEditReservation").closest("form").find("#txtChildren").val(response[3]);
-    }
-  });
-}
 
 function generateRoomID() {
   var roomType = $("#frmEditReservation").find("#cmbRoomType").val();

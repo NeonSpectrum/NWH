@@ -629,22 +629,30 @@ class View extends Room {
     }
   }
 
-  public function listBookingID() {
+  public function listBookingID($type = "get") {
     global $db;
-    $email  = $this->filter_input($_SESSION['account']['email']);
-    $result = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
-    $first  = true;
+    $email      = $this->filter_input($_SESSION['account']['email']);
+    $result     = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
+    $first      = true;
+    $bookingIDs = [];
     while ($row = $result->fetch_assoc()) {
       $tomorrow = strtotime(date("Y-m-d")) + 86400 * EDIT_RESERVATION_DAYS;
       if ($tomorrow <= strtotime($row['CheckInDate'])) {
-        if ($first) {
-          $adults   = $row['Adults'];
-          $children = $row['Children'];
-          $first    = false;
+        if ($type == "combobox") {
+          if ($first) {
+            $adults   = $row['Adults'];
+            $children = $row['Children'];
+            $first    = false;
+          }
+          echo "                ";
+          echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID']) . "</option>\n";
+        } else {
+          $bookingIDs[] = $row['BookingID'];
         }
-        echo "                ";
-        echo "<option value='" . $row['BookingID'] . "'>" . $this->formatBookingID($row['BookingID']) . "</option>\n";
       }
+    }
+    if ($type == "get") {
+      return $bookingIDs;
     }
   }
 
@@ -710,23 +718,6 @@ class System {
     $result = $db->query("SHOW TABLE STATUS LIKE 'booking'");
     $row    = $result->fetch_assoc();
     return $row['Auto_increment'];
-  }
-
-  public function showBookingInfo($bookingID) {
-    global $db;
-    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
-    $row    = $result->fetch_assoc();
-
-    $arr    = [];
-    $arr[1] = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
-    $arr[2] = $row['Adults'];
-    $arr[3] = $row['Children'];
-
-    $result->data_seek(0);
-    while ($row = $result->fetch_assoc()) {
-      $arr[0][] = $row['RoomID'];
-    }
-    return json_encode($arr);
   }
 
   public function computeBill($bookingID) {

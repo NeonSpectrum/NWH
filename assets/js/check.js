@@ -19,12 +19,12 @@ $(".checkDate").change(function() {
     data: "checkDate=" + $(this).val(),
     dataType: 'json',
     success: function(response) {
-      $("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
-      $("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
-      $("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
-      $("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
-      $("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
-      $("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
+      $('#modalAddBooking').find("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
+      $('#modalAddBooking').find("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
+      $('#modalAddBooking').find("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
+      $('#modalAddBooking').find("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
+      $('#modalAddBooking').find("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
+      $('#modalAddBooking').find("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
     }
   });
 });

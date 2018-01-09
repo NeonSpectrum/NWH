@@ -400,38 +400,57 @@ if (!$system->isLogged()) {
                 <div class="col-sm-8">
                   <select name="cmbBookingID" class="form-control" id="cmbBookingID">
 <?php
-$view->listBookingID();
+$view->listBookingID("combobox");
   ?>
                   </select>
                 </div>
               </div>
+<?php
+$result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=" . $view->listBookingID()[0]);
+  $row           = $result->fetch_assoc();
+  $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
+  $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
+  $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
+  $adults        = $row['Adults'];
+  $children      = $row['Children'];
+  $paymentMethod = $row['PaymentMethod'];
+  $roomTypes     = $room->getRoomTypeList();
+  $roomQuantity  = array_fill(0, count($roomTypes), 0);
+
+  $result->data_seek(0);
+  while ($row = $result->fetch_assoc()) {
+    $roomType = $room->getRoomType($row['RoomID']);
+    $roomQuantity[array_search($roomType, $roomTypes)]++;
+  }
+  ?>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Check Date: </label>
                 <div class="col-sm-8">
                   <div class="input-group date">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" readonly required/>
+                    <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" value="<?php echo $checkDate; ?>" readonly required/>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Adults: </label>
                 <div class="col-sm-4">
-                  <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" value="1" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
+                  <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" value="<?php echo $adults; ?>" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Children: </label>
                 <div class="col-sm-4">
-                  <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" value="0" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
+                  <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" value="<?php echo $children; ?>" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Payment Method: </label>
                 <div class="col-sm-4">
                   <select name="txtPaymentMethod" class="form-control" id="txtPaymentMethod">
-                    <option value="Cash">Cash</option>
-                    <option value="Bank">Bank</option>
+                    <option value="Cash"<?php echo $paymentMethod == "Cash" ? " selected" : ""; ?>>Cash</option>
+                    <option value="Bank"<?php echo $paymentMethod == "Bank" ? " selected" : ""; ?>>Bank</option>
+                    <option value="PayPal"<?php echo $paymentMethod == "PayPal" ? " selected" : ""; ?>>PayPal</option>
                   </select>
                 </div>
               </div>
@@ -442,9 +461,9 @@ $view->listBookingID();
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Single", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -455,9 +474,9 @@ $count = count($room->generateRoomID("Standard_Single", null, $date, date("m/d/Y
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Double", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -468,9 +487,9 @@ $count = count($room->generateRoomID("Standard_Double", null, $date, date("m/d/Y
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Family_Room", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -481,9 +500,9 @@ $count = count($room->generateRoomID("Family_Room", null, $date, date("m/d/Y", s
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Junior_Suites", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -494,9 +513,9 @@ $count = count($room->generateRoomID("Junior_Suites", null, $date, date("m/d/Y",
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Studio_Type", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -507,9 +526,9 @@ $count = count($room->generateRoomID("Studio_Type", null, $date, date("m/d/Y", s
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Barkada_Room", null, $date, date("m/d/Y", strtotime($date) + 86500)));
-  for ($i = 0; $i <= $count; $i++) {
-    echo "<option value='$i'>$i</option>";
+$count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : "") . ">$i</option>";
   }
   ?>
                   </select>
@@ -518,7 +537,7 @@ $count = count($room->generateRoomID("Barkada_Room", null, $date, date("m/d/Y", 
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
+            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>

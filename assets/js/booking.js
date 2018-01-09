@@ -177,7 +177,7 @@ $("#frmEditReservation").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + 'ajax/editReservation.php',
-    data: $(this).serialize() + "&currentRoomID=" + roomID,
+    data: $(this).serialize() + "&currentRoomID=" + roomID + "&type=admin",
     success: function(response) {
       if (response == true) {
         $('#modalEditReservation').modal('hide');
