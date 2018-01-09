@@ -573,26 +573,18 @@ class View extends Room {
 
   public function listOfReservation($category) {
     global $db;
-    if ($category == "walk_in") {
-      $result = $db->query("SELECT walk_in.WalkInID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM walk_in LEFT JOIN reservation ON walk_in.WalkInID=reservation.WalkInID");
+    if ($category == "booking") {
+      $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
       while ($row = $result->fetch_assoc()) {
+        $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
+        $rooms      = [];
+        while ($roomRow = $roomResult->fetch_assoc()) {
+          $rooms[] = $roomRow['RoomID'];
+        }
         echo "<tr>";
-        echo "<td>{$row['WalkInID']}</td>";
+        echo "<td id='txtBookingID'>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-        echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "</tr>";
-      }
-    } else if ($category == "book") {
-      $result = $db->query("SELECT booking.BookingID, EmailAddress, RoomID, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN reservation ON booking.BookingID=reservation.BookingID");
-      while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>{$row['BookingID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+        echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
         echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
         echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
