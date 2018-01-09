@@ -11,19 +11,31 @@ use PayPal\Api\Transaction;
 
 parse_str($system->decrypt($_SERVER['QUERY_STRING']), $query);
 
-$price     = $query['txtAmount'];
-$bookingID = $query['txtBookingID'];
-$data      = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
-$rooms     = json_decode($query['rooms'], true);
+$price          = $query['txtAmount'];
+$bookingID      = $query['txtBookingID'];
+$data           = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
+$roomIDs        = $room->getRoomIDList($bookingID);
+$roomTypes      = $room->getRoomTypeList();
+$roomQuantities = array_fill(0, count($roomTypes), 0);
+
+for ($i = 0; $i < count($roomIDs); $i++) {
+  $roomType = $room->getRoomType($roomIDs[$i]);
+  $index    = array_search($roomType, $roomTypes);
+  $roomQuantities[$index]++;
+}
 
 $payer = new Payer();
 $payer->setPaymentMethod('paypal');
-for ($i = 0; $i < count($rooms); $i++) {
-  $item[$i] = new Item();
-  $item[$i]->setName($rooms[$i]['roomType'])
+for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
+  if ($roomQuantities[$i] == 0) {
+    continue;
+  }
+  $item[$j] = new Item();
+  $item[$j]->setName(str_replace("_", " ", $roomTypes[$i]))
     ->setCurrency('PHP')
-    ->setQuantity($rooms[$i]['roomQuantity'])
-    ->setPrice($room->getRoomPrice($rooms[$i]['roomType']));
+    ->setQuantity($roomQuantities[$i])
+    ->setPrice($room->getRoomPrice($roomTypes[$i]));
+  $j++;
 }
 
 $itemList = new ItemList();

@@ -304,6 +304,34 @@ class Room extends System {
     }
   }
 
+  public function getRoomIDList($bookingID) {
+    global $db;
+    $rooms  = [];
+    $result = $db->query("SELECT * FROM booking_room WHERE BookingID=$bookingID");
+    while ($row = $result->fetch_assoc()) {
+      $rooms[] = $row['RoomID'];
+    }
+    sort($rooms);
+    return $rooms;
+  }
+
+  public function getRoomTypeList() {
+    global $db;
+    $roomType = [];
+    $result   = $db->query("SELECT * FROM room_type");
+    while ($row = $result->fetch_assoc()) {
+      $roomType[] = $row['RoomType'];
+    }
+    return $roomType;
+  }
+
+  public function getRoomType($roomID) {
+    global $db;
+    $result = $db->query("SELECT * FROM room JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE RoomID=$roomID");
+    $row    = $result->fetch_assoc();
+    return $row['RoomType'];
+  }
+
   public function getRoomPrice($room) {
     global $db;
     $room   = str_replace(" ", "_", $room);
@@ -327,7 +355,7 @@ class Room extends System {
     $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
-      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>'$date'");
+      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date'");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
           if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate'])) {
@@ -830,7 +858,7 @@ class System {
 
   public function isBetweenDate($checkDate1, $checkDate2, $date1, $date2) {
     $checkDate = $this->getDatesFromRange($checkDate1, $checkDate2);
-    $date      = $this->getDatesFromRange($date1, $date2);
+    $date      = $this->getDatesFromRange($date1, date("Y-m-d", strtotime($date2) - 86400));
 
     foreach ($checkDate as $key => $value) {
       if (in_array($value, $date)) {
