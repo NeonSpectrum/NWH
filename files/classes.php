@@ -495,8 +495,8 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></a>";
-        if (!$cancelled) {
-          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'><i class='fa fa-ban'></i></a>";
+        if (!$cancelled || !$this->checkUserLevel(2)) {
+          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban'></i></a>";
         } else {
           echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh'></i></a>";
         }

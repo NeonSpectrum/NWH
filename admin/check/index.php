@@ -29,7 +29,7 @@ $system->checkUserLevel(1, true);
           </thead>
           <tbody>
 <?php
-$view->check("book");
+$view->check();
 ?>
           </tbody>
         </table>
