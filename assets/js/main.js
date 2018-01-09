@@ -198,10 +198,10 @@ Pace.on('done', function() {
         $('.mylivechat_collapsed').fadeIn();
       }
     } else {
-      // $('.dropdown.open .dropdown-toggle').dropdown('toggle');
       if ($('.dropdown.open').length) {
         $("body").trigger("click");
       }
+      // $(".frmBookCheck").find("input.checkDate").data("daterangepicker").hide();
     }
     // BACK TO TOP  
     if ($(this).scrollTop() <= 200) {

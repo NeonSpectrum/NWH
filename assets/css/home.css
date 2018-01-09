@@ -171,6 +171,12 @@
   pointer-events: none;
 }
 
+/* DATE RANGE PICKER */
+
+.daterangepicker.dropdown-menu {
+  z-index: 99;
+}
+
 /* BOOK NOW CONTENT */
 
 .booknow {
