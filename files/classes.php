@@ -45,12 +45,11 @@ class Account extends System {
     }
     unset($_SESSION['account']);
     $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $root;
-    if (strpos($referrer, "/reservation")) {
-      header("location: ../");
+    if (stripos($referrer, "/reservation") || stripos($referrer, "/admin")) {
+      header("location: $root");
     } else {
       header("location: $referrer");
     }
-    return true;
   }
 
   public function verifyRegistration($credentials) {

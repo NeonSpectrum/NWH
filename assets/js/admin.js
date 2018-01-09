@@ -85,6 +85,20 @@ $('#btnGitUpdate').click(function() {
     }
   });
 })
+$('#btnLogout').click(function() {
+  swal({
+    title: 'Do you want to logout?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Logout'
+  }).then((result) => {
+    if (result.value) {
+      location.href = "//" + location.hostname + root + "account/?mode=logout";
+    }
+  })
+});
 
 function disableKey(evt, key) {
   var charCode = (evt.which) ? evt.which : event.keyCode

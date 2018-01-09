@@ -32,7 +32,7 @@ if ($system->checkUserLevel(3)) {
     <?php
 }
 ?>
-    <a href="<?php echo $root; ?>account?mode=logout" title="Logout" style="text-decoration:none" class="c-header-icon"><i class="fa fa-power-off"></i></a>
+    <a id="btnLogout" title="Logout" style="text-decoration:none;cursor:pointer" class="c-header-icon"><i class="fa fa-power-off"></i></a>
   </div>
 </header>
 <div class="l-sidebar">
