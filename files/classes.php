@@ -444,6 +444,13 @@ class View extends Room {
     $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, RoomType, booking_room.RoomID, DateCancelled FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
     while ($row = $result->fetch_assoc()) {
       $cancelled = $row['DateCancelled'] == null ? false : true;
+      if ($row['PaymentMethod'] == "PayPal") {
+        $paypalResult = $db->query("SELECT BookingID, SUM(Amount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
+        $paypalRow    = $paypalResult->fetch_assoc();
+        $amountPaid   = $row['AmountPaid'] + $paypalRow['TotalAmount'];
+      } else {
+        $amountPaid = $row['AmountPaid'];
+      }
       if (strtotime($row['CheckInDate']) >= strtotime($date)) {
         echo $cancelled ? "<tr style='color:red'>" : "<tr>";
         echo "<td>{$row['BookingID']}</td>";
@@ -454,9 +461,8 @@ class View extends Room {
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
-        $balance = $row['TotalAmount'] - $row['AmountPaid'];
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
-        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
+        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($amountPaid) . "</td>";
+        echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $amountPaid)) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' title='Edit'><i class='fa fa-pencil'></i></a>";

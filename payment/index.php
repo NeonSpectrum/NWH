@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $amount    = $system->filter_input($data['txtAmount']);
     $db->query("INSERT INTO booking_paypal VALUES($bookingID,'$payerID','$paymentID','$token',$amount,'$dateandtime')");
     if ($db->affected_rows > 0) {
-      $system->log("insert|payment.paypal.success|$bookingID");
+      $system->log("insert|payment.paypal.success|$bookingID|₱&nbsp;" . number_format($amount));
       echo "<script>alert('Payment Successfully Added!');location.href='../';</script>";
     } else {
       echo "<script>alert('Something went wrong!');location.href='../';</script>";
