@@ -9,57 +9,59 @@ require_once 'header.php';
 require_once 'files/navbar.php';
 ?>
 <div style="position:relative;top:0;left:0;width:100%;height:100%;overflow:hidden;">
-  <div id="home_slider" style="position:relative;margin:0 auto;top:0px;left:0px;width:960px;height:640px;overflow:hidden;visibility:hidden;">
-      <!-- Loading Screen -->
-    <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
-      <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
-    </div>
-    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
-<?php
+  <div style="position:relative">
+    <div id="home_slider" style="position:relative;margin:0 auto;top:0px;left:0px;width:960px;height:640px;overflow:hidden;visibility:hidden;">
+        <!-- Loading Screen -->
+      <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
+      </div>
+      <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
+    <?php
 $view->homeJssor();
 ?>
-    <!-- <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div> -->
+      <!-- <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div> -->
+      </div>
+      <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+          <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+        </svg>
+      </div>
+      <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+        <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+          <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+        </svg>
+      </div>
     </div>
-    <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
-      <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-        <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
-      </svg>
-    </div>
-    <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
-      <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-        <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
-      </svg>
+    <div style="position:absolute;right:5px;bottom:10px;z-index:1">
+      <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7);">
+        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+      </a>
     </div>
   </div>
-  <div style="position:absolute;right:5px;bottom:10px;z-index:1">
-    <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7);">
-      <i class="fa fa-arrow-down" aria-hidden="true"></i>
-    </a>
-  </div>
-</div>
-<div class="booknow">
-  <div class="booknow-content text-center center-block">
-    <form class="form-inline frmBookCheck" method="post" action="reservation/">
-      <div class="form-group">
-        <label>Check Date: </label>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          <input class="form-control checkDate" type="text" id="txtCheckDate" name="txtCheckDate" style="width:250px" readonly required/>
+  <div class="booknow">
+    <div class="booknow-content text-center center-block">
+      <form class="form-inline frmBookCheck" method="post" action="reservation/">
+        <div class="form-group">
+          <label>Check Date: </label>
+          <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            <input class="form-control checkDate" type="text" id="txtCheckDate" name="txtCheckDate" style="width:250px" readonly required/>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>Adults: </label>
-        <input class="form-control" type="number" id="txtAdults" name="txtAdults" size="20" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
-      </div>
-      <div class="form-group">
-        <label>Children: </label>
-        <input class="form-control" type="number" id="txtChildren" name="txtChildren" size="20" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
-      </div>
-      <div class="form-group">
-        <label></label>
-        <button id="btnCheck" type="submit" class="btn btn-primary">Book Now</button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label>Adults: </label>
+          <input class="form-control" type="number" id="txtAdults" name="txtAdults" size="20" value="1" onkeypress="return disableKey(event,'letter')" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
+        </div>
+        <div class="form-group">
+          <label>Children: </label>
+          <input class="form-control" type="number" id="txtChildren" name="txtChildren" size="20" value="0" onkeypress="return disableKey(event,'letter')" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
+        </div>
+        <div class="form-group">
+          <label></label>
+          <button id="btnCheck" type="submit" class="btn btn-primary">Book Now</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <div class="panel panel-default" style="border-top-width:0px;" id="roomTypesArea">
