@@ -411,6 +411,7 @@ $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.
   $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
   $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
   $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
+  $checkDate     = $row['CheckInDate'] == "" && $row['CheckOutDate'] == "" ? date("m/d/Y", strtotime($date) + 86400) . " - " . date("m/d/Y", strtotime($date) + 86400 * 2) : $checkDate;
   $adults        = $row['Adults'];
   $children      = $row['Children'];
   $paymentMethod = $row['PaymentMethod'];
