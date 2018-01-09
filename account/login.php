@@ -1,5 +1,8 @@
 <?php
 require_once "../header.php";
+if ($system->isLogged()) {
+  header("Location: $root");
+}
 ?>
 <div class="panel panel-default center-block col-md-4" style="float:none;border-radius:0">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">Login Page</h1></div>

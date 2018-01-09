@@ -1,5 +1,4 @@
 <?php
-echo CHAT;
 $dashboard = $calendar = $booking = $check = $chat = $reports = $settings = '';
 if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
   $calendar = ' is-active';

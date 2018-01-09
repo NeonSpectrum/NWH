@@ -53,7 +53,7 @@ if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
             <li><a href="<?php echo $root; ?>">Home</a></li>
             <li><a href="<?php echo $root; ?>gallery">Gallery</a></li>
             <li><a href="<?php echo $root; ?>roomandrates">Room & Rates</a></li>
-            <?php
+<?php
 if ($currentDirectory == "home") {
   echo '<li><a style="cursor:pointer" data-toggle="modal" data-target="#modalPromo">Promos</a></li>';
 }

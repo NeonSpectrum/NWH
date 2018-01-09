@@ -3,7 +3,6 @@ setInterval(function() {
     $.ajax({
       url: root + 'ajax/verifyLoginSession.php',
       success: function(response) {
-        console.log(response);
         if (!response) {
           $.ajax({
             url: root + 'account?mode=logout',

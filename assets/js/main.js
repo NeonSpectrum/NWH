@@ -528,7 +528,6 @@ $('#frmContact').submit(function(e) {
 })
 
 function displayBookingInfo() {
-  console.log($("#modalEditReservation").find("#cmbBookingID").val());
   $.ajax({
     url: root + 'ajax/cmbBookingIdDisplay.php',
     type: "POST",
@@ -616,7 +615,9 @@ function capsLock(e) {
   var kc = e.keyCode ? e.keyCode : e.which;
   var sk = e.shiftKey ? e.shiftKey : kc === 16;
   var display = ((kc >= 65 && kc <= 90) && !sk) || ((kc >= 97 && kc <= 122) && sk) ? 'block' : 'none';
-  document.getElementById('caps').style.display = display;
+  if (!(kc >= 48 && kc <= 57)) {
+    $('#caps').css("display", display);
+  }
 }
 // SCROLLING FUNCTION
 function scrolling(enable) {

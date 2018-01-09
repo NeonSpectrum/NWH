@@ -79,8 +79,6 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
 } else if (isset($_GET['mode'])) {
   switch ($_GET['mode']) {
   case "register":{
-      // echo $system->decrypt(str_replace(" ", "+", $_GET['token']));
-      // return;
       parse_str($system->decrypt(str_replace(" ", "+", $_GET['token'])), $credentials);
       if (isset($credentials['txtEmail'])) {
         echo $account->register($credentials);

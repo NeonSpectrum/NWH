@@ -281,9 +281,6 @@
 // SCRIPT
 var rooms = [];
 $(document).ready(function() {
-  if (!isLogged) {
-    location.href = "//" + location.hostname + root + "account/login.php?redirect=" + encodeURIComponent(location.hostname + root + "reservation/" + location.search);
-  }
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
     if (stepPosition === 'first') {

@@ -38,15 +38,17 @@ class Account extends System {
   }
 
   public function logout() {
+    global $root;
     if (isset($_COOKIE['nwhAuth'])) {
       setcookie('nwhAuth', '', time() - (60 * 60 * 24 * 7), '/');
       unset($_COOKIE['nwhAuth']);
     }
     unset($_SESSION['account']);
-    if (strpos($_SERVER['HTTP_REFERER'], "/reservation")) {
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $root;
+    if (strpos($referrer, "/reservation")) {
       header("location: ../");
     } else {
-      header("location:" . $_SERVER['HTTP_REFERER']);
+      header("location: /nwh");
     }
     return true;
   }
@@ -772,17 +774,25 @@ class System {
     if ($this->isLogged()) {
       $currentLevel = array_search($_SESSION['account']['type'], $levels);
       if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
-        goto kick;
+        if ($kick) {
+          header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
+        } else {
+          return false;
+        }
       } else {
         return true;
       }
-    } else {
-      kick:
-      if ($kick) {
-        header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
-      } else {
-        return false;
-      }
+    } else if ($kick) {
+      $this->redirectLogin();
+    }
+  }
+
+  public function redirectLogin() {
+    global $root;
+    $referrer = "//" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+    $url      = rawurlencode($referrer);
+    if (!$this->isLogged()) {
+      echo "<script>location.replace('//{$_SERVER['SERVER_NAME']}{$root}account/login.php?redirect=$url')</script>";
     }
   }
 

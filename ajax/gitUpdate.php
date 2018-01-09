@@ -1,6 +1,8 @@
 <?php
 require_once "../files/autoload.php";
-
+if (!$system->isLogged()) {
+  header("Location: http://localhost/nwh/");
+}
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;
 } else if ($system->checkUserLevel(3)) {
