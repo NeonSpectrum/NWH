@@ -92,8 +92,8 @@ foreach ($emails as $key => $value) {
                 <label class="col-sm-4 control-label">Payment Method: </label>
                 <div class="col-sm-4">
                   <select name="txtPaymentMethod" class="form-control" id="txtPaymentMethod">
-                    <option value="cash">Cash</option>
-                    <option value="bank">Bank</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank">Bank</option>
                   </select>
                 </div>
               </div>
@@ -257,7 +257,6 @@ for ($i = 0; $i <= $count; $i++) {
 
       </div>
       <div class="modal-footer">
-        <button id="btnReservation" type="submit" class="btn btn-info">Add</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

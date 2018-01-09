@@ -6,6 +6,7 @@
 //   exit();
 // }
 require_once 'header.php';
+echo $system->computeBill(12);
 require_once 'files/navbar.php';
 ?>
 <div style="position:relative;top:0;left:0;width:100%;height:100%;overflow:hidden;">

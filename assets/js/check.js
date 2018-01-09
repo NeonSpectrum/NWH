@@ -1,18 +1,3 @@
-var date = new Date();
-var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-$('input.checkInDate, input.checkOutDate').datepicker({
-  format: "yyyy-mm-dd",
-  startDate: '0d',
-  autoclose: true,
-  todayHighlight: true
-});
-$(".checkInDate, .checkOutDate").each(function() {
-  $(this).datepicker("setDate", today);
-});
-$('input.checkInDate').change(function() {
-  $(this).closest("form").find(".checkOutDate").datepicker('setStartDate', $(this).val());
-  $(this).closest("form").find(".checkOutDate").datepicker('update', $(this).val());
-});
 $('#modalAddPayment').on('shown.bs.modal', function() {
   $(this).find('#txtPayment').focus();
 });
@@ -100,6 +85,7 @@ $('.btnCheckOut').click(function() {
   }).then((result) => {
     if (result.value) {
       $.ajax({
+        context: this,
         type: 'POST',
         url: root + 'ajax/check.php',
         data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&table=" + table + "&csrf_token=" + $("input[name=csrf_token]").val(),
@@ -112,7 +98,20 @@ $('.btnCheckOut').click(function() {
               type: 'success'
             }).then((result) => {
               if (result.value) {
-                location.reload();
+                $.ajax({
+                  context: this,
+                  type: 'POST',
+                  url: root + "ajax/getBill.php",
+                  data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
+                  success: function(response) {
+                    $("#modalReceipt").find(".modal-title").html("Booking ID: " + $(this).closest("tr").find("#txtBookingID").html());
+                    $("#modalReceipt").find(".modal-body").html("<h1 style='text-align:center'>Total Amount: ₱&nbsp;" + parseInt(response).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</h1>");
+                    $("#modalReceipt").modal("show");
+                    $("#modalReceipt").on("hidden.bs.modal", function() {
+                      location.reload();
+                    });
+                  }
+                });
               }
             });
           }

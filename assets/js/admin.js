@@ -64,11 +64,23 @@ $("input.checkDate").each(function() {
 $('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
   return false;
 })
+$("input.checkDate").on('apply.daterangepicker', function(ev, picker) {
+  if (picker.startDate.format('MM/DD/YYYY') == picker.endDate.format('MM/DD/YYYY')) {
+    var nextDay = moment(picker.startDate).add(1, 'days').format("MM/DD/YYYY");
+    $(this).val(picker.startDate.format('MM/DD/YYYY') + " - " + nextDay);
+    $(this).data('daterangepicker').setEndDate(nextDay);
+  }
+});
 $(window).on('resize', function() {
   $('.l-sidebar').height($(window).height() + 100);
 });
+var tempCheckDate;
+$('.modal').on('shown.bs.modal', function() {
+  tempCheckDate = $(this).find("form").find("input.checkDate").val();
+});
 $('.modal').on('hidden.bs.modal', function() {
   $(this).find("form").trigger("reset");
+  $(this).find("form").find("input.checkDate").val(tempCheckDate);
   $(this).find('.lblDisplayError').html('');
   $("#frmRegister").find('button[type=submit]').attr('disabled', true);
 });

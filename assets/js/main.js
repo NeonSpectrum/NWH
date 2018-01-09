@@ -7,10 +7,17 @@ $(document).ready(function() {
     $('.contactbox').fadeOut();
   }
   // RESET FORM IF EXISTS IF MODAL IS EXITED
+  var tempCheckDate;
+  $('.modal').on('shown.bs.modal', function() {
+    tempCheckDate = $(this).find("form").find("input.checkDate").val();
+  });
   $('.modal').on('hidden.bs.modal', function() {
     $(this).find("form").trigger("reset");
+    $(this).find("form").find("input.checkDate").val(tempCheckDate);
     $(this).find('.lblDisplayError').html('');
-    grecaptcha.reset();
+    if (typeof grecaptcha != 'undefined') {
+      grecaptcha.reset();
+    }
     $("#frmRegister").find('button[type=submit]').attr('disabled', true);
   });
   // FOCUS ON SELECT
@@ -156,6 +163,7 @@ Pace.on('done', function() {
     if (picker.startDate.format('MM/DD/YYYY') == picker.endDate.format('MM/DD/YYYY')) {
       var nextDay = moment(picker.startDate).add(1, 'days').format("MM/DD/YYYY");
       $(this).val(picker.startDate.format('MM/DD/YYYY') + " - " + nextDay);
+      $(this).data('daterangepicker').setEndDate(nextDay);
     }
   });
   // $('input.checkInDate, input.checkOutDate').datepicker({

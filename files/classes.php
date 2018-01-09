@@ -474,7 +474,7 @@ class View extends Room {
     while ($row = $result->fetch_assoc()) {
       $cancelled = $row['DateCancelled'] == null ? false : true;
       if ($row['PaymentMethod'] == "PayPal") {
-        $paypalResult = $db->query("SELECT BookingID, SUM(Amount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
+        $paypalResult = $db->query("SELECT BookingID, SUM(PaymentAmount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
         $paypalRow    = $paypalResult->fetch_assoc();
         $amountPaid   = $row['AmountPaid'] + $paypalRow['TotalAmount'];
       } else {
@@ -551,7 +551,7 @@ class View extends Room {
       $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckOut'])) : "";
       if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate'])) {
         echo "<tr>";
-        echo "<td>{$row['BookingID']}</td>";
+        echo "<td id='txtBookingID'>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
@@ -559,16 +559,10 @@ class View extends Room {
         echo "<td id='txtCheckIn'>$checkIn</td>";
         echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
-        echo "<td id='txtDiscount'>";
-        echo strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount']);
-        echo "</td>";
+        echo "<td id='txtDiscount'>" . (strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'])) . "</td>";
         echo "<td>";
-        echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'";
-        echo $checkInStatus ? ' disabled' : '';
-        echo "><i class='fa fa-calendar-plus-o'></i></a>";
-        echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'";
-        echo $checkOutStatus || !$checkInStatus ? ' disabled' : '';
-        echo "><i class='fa fa-calendar-minus-o'></i></a>";
+        echo "<a title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o'></i></a>";
+        echo "&nbsp;&nbsp;<a title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o'></i></a>";
         echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' title='Add Payment'><i class='fa fa-money'></i></a>" : "";
         echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddDiscount' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddDiscount' title='Add Discount'><i class='fa fa-tag'></i></a>" : "";
         echo "</td>";
@@ -764,6 +758,19 @@ class System {
     return json_encode($arr);
   }
 
+  public function computeBill($bookingID) {
+    global $db;
+    $result      = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
+    $row         = $result->fetch_assoc();
+    $totalAmount = $row['TotalAmount'] + $row['ExtraCharges'];
+    $amountPaid  = $row['AmountPaid'] + $row['PaymentAmount'];
+    if (strpos($row['Discount'], "%")) {
+      return $totalAmount - ($totalAmount * $this->percentToDecimal($row['Discount'])) - $amountPaid;
+    } else {
+      return $totalAmount - $row['Discount'] - $amountPaid;
+    }
+  }
+
   public function isLogged() {
     return isset($_SESSION['account']) ? true : false;
   }
@@ -866,7 +873,7 @@ class System {
   }
 
   public function isBetweenDate($checkDate1, $checkDate2, $date1, $date2) {
-    $checkDate = $this->getDatesFromRange($checkDate1, $checkDate2);
+    $checkDate = $this->getDatesFromRange($checkDate1, date("Y-m-d", strtotime($checkDate2) - 86400));
     $date      = $this->getDatesFromRange($date1, date("Y-m-d", strtotime($date2) - 86400));
 
     foreach ($checkDate as $key => $value) {
@@ -890,6 +897,11 @@ class System {
     }
 
     return $dates;
+  }
+
+  public function percentToDecimal($percent) {
+    $percent = str_replace('%', '', $percent);
+    return $percent / 100;
   }
 
   public function getBetweenString($var1 = "", $var2 = "", $pool) {
