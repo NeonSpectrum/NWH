@@ -407,7 +407,7 @@ class View extends Room {
     $result = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
       echo "      ";
-      echo "<div class='wow slideInUp col-md-4' style='margin-bottom:40px'>
+      echo "<div class='wow slideInUp center-block text-center col-md-4' style='margin-bottom:40px'>
         <figure class='imghvr-fade-in'>
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
