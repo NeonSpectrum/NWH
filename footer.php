@@ -54,7 +54,7 @@ if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
 } else {
   echo "<script src='{$root}assets/js/main.js?v=" . filemtime(__DIR__ . "/assets/js/main.js") . "'></script>\n";
 }
-if (file_exists(__DIR__ . "/assets/js/$currentDirectory.js") && $currentDirectory != 'admin') {
+if (file_exists(__DIR__ . "/assets/js/$currentDirectory.js")) {
   echo "<script src='{$root}assets/js/$currentDirectory.js?v=" . filemtime(__DIR__ . "/assets/js/$currentDirectory.js") . "'></script>\n";
 }
 if ($system->isLogged() && !$system->checkUserLevel(1) && $_SERVER['SERVER_NAME'] != "localhost") {
