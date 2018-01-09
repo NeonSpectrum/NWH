@@ -13,7 +13,7 @@ parse_str($system->decrypt($_SERVER['QUERY_STRING']), $query);
 
 $price     = $query['txtAmount'];
 $bookingID = $query['txtBookingID'];
-$data      = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID");
+$data      = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
 $rooms     = json_decode($query['rooms'], true);
 
 $payer = new Payer();

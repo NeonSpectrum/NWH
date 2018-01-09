@@ -41,7 +41,7 @@ body {
   background-position: 45% 40%;
   background-size: 10%;
   position: absolute;
-  z-index: 100;
+  z-index: 99;
   height: 100%;
   width: 100%;
 }

@@ -5,9 +5,12 @@ use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
+  parse_str($system->decrypt($_GET['data']), $data);
   if ($_GET['type'] == "success" && isset($_GET['paymentId'])) {
-    parse_str($system->decrypt($_GET['data']), $data);
-
+    if (!$system->validateToken($data['csrf_token'])) {
+      echo "<script>alert('Token was invalid');location.href='../';</script>";
+      exit();
+    }
     $paymentId = $_GET['paymentId'];
     $payment   = Payment::get($paymentId, $apiContext);
     $execution = new PaymentExecution();
