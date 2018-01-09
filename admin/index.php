@@ -58,23 +58,6 @@ $row = count($room->generateRoomID(null, null, $date, $date));
           </div>
         </div>
       </div>
-<?php
-if (CHAT) {
-  ?>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">Chat Console</div>
-          <div class="panel-body">
-
-          </div>
-          <div class="panel-footer">
-            <a href="<?php echo $root; ?>admin/chat">View more...</a>
-          </div>
-        </div>
-      </div>
-<?php
-}
-?>
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">Rooms Chart</div>
