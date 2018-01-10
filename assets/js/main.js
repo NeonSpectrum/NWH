@@ -203,7 +203,9 @@ Pace.on('done', function() {
       if ($('.dropdown.open').length) {
         $("body").trigger("click");
       }
-      $(".frmBookCheck").find("input.checkDate").data("daterangepicker").hide();
+      if ($(".frmBookCheck").length) {
+        $(".frmBookCheck").find("input.checkDate").data("daterangepicker").hide();
+      }
     }
     // BACK TO TOP  
     if ($(this).scrollTop() <= 200) {

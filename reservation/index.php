@@ -14,10 +14,10 @@ $children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
       <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <div id="smartwizard">
         <ul>
-          <li style="width:25%"><a href="#step-1">Step 1<br/><small>Check In & Check Out Date</small></a></li>
-          <li style="width:25%"><a href="#step-2">Step 2<br/><small>Select Rooms</small></a></li>
-          <li style="width:25%"><a href="#step-3">Step 3<br/><small>Payment</small></a></li>
-          <li style="width:25%"><a href="#step-4">Step 4<br/><small>Finish</small></a></li>
+          <li style="width:25%"><a style="pointer-events:none" href="#step-1">Step 1<br/><small>Check In & Check Out Date</small></a></li>
+          <li style="width:25%"><a style="pointer-events:none" href="#step-2">Step 2<br/><small>Select Rooms</small></a></li>
+          <li style="width:25%"><a style="pointer-events:none" href="#step-3">Step 3<br/><small>Payment</small></a></li>
+          <li style="width:25%"><a style="pointer-events:none" href="#step-4">Step 4<br/><small>Finish</small></a></li>
         </ul>
         <div style="min-height: 200px">
           <div id="loadingMode"></div>

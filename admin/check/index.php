@@ -9,7 +9,7 @@ $system->checkUserLevel(1, true);
     <h1 class="page-title">
       Check
       <span class="pull-right">
-        <a style="cursor:pointer" data-toggle="modal" data-target="#modalAddBooking"><span class="fa fa-plus"></span></a>
+        <a style="cursor:pointer" data-toggle="modal" data-target="#modalAddBooking" data-tooltip="tooltip" data-placement="bottom" title="Add Walk In"><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">
@@ -205,7 +205,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Amount: </label>
             <div class="col-sm-9">
-              <input type="number" class="form-control" name="txtPayment" id="txtPayment">
+              <input type="number" class="form-control" name="txtPayment" id="txtPayment" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -234,7 +234,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Discount: </label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount">
+              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" required>
             </div>
           </div>
           <div class="modal-footer">
