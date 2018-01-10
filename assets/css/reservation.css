@@ -4,6 +4,9 @@
 }
 
 @media only screen and (max-width:767px) {
+  #smartwizard {
+    margin-top: 20px;
+  }
   #txtIcons i {
     font-size: 20px;
   }
