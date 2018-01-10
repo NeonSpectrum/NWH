@@ -82,7 +82,7 @@ $children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
           </div>
         </div>
       </div>
-      <div class="navbar-btn col-md-12 btn-group" style="height:50px" role="group">
+      <div class="navbar-btn col-md-12 btn-group" style="height:50px;display:block" role="group">
         <button class="btn btn-primary pull-right" style="margin-left:5px" id="next-btn" type="button">Next</button>
         <button class="btn btn-primary pull-right" style="margin-left:5px" id="prev-btn" type="button">Previous</button>
         <button class="btn btn-default pull-right" id="reset-btn" type="button">Reset</button>

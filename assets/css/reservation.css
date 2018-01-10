@@ -1,9 +1,18 @@
+.numberOfRooms {
+  padding: 85px 30px;
+  height: 220px;
+}
+
 @media only screen and (max-width:767px) {
+  #txtIcons i {
+    font-size: 20px;
+  }
   #txtRooms {
     text-align: center;
   }
   .numberOfRooms {
-    margin: -50px 0;
+    height: 100px;
+    padding: 30px 30px;
   }
 }
 

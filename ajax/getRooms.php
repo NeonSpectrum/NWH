@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $htmls[$i] .= "<a href='$image' style='" . ($first == true ? "" : "display:none") . "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>";
         $first = false;
       }
-      $htmls[$i] .= "</div><div class='col-md-6'><h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>{$row['RoomDescription']}<br/><div style='padding: 10px 10px'>";
+      $htmls[$i] .= "</div><div class='col-md-6' id='txtRooms'><h3 id='roomName' style='margin-bottom:20px'>" . str_replace("_", " ", $row['RoomType']) . "</h3>{$row['RoomDescription']}<br/><div style='padding: 10px 10px' id='txtIcons'>";
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
         $iconArr = explode("=", $value);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       foreach ($roomSimpDesc as $key => $value) {
         $htmls[$i] .= "<li>$value</li>";
       }
-      $htmls[$i] .= "</ul></span></div><div class='col-md-2 numberOfRooms' style='padding:85px 30px;height:220px'>";
+      $htmls[$i] .= "</ul></span></div><div class='col-md-2 numberOfRooms'>";
       $htmls[$i] .= "<select style='width:100%' class='form-control'>";
       for ($j = 0; $j <= $numberOfRooms; $j++) {
         $htmls[$i] .= "<option>$j</option>";
