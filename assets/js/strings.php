@@ -43,12 +43,12 @@ echo isset($_SESSION['account']) ? "true;" : "false;";
 function alertNotif(type, message, reload = false, timeout = 1300) {
   $.notify({
     icon:'glyphicon glyphicon-exclamation-sign',
-    message: '<div style=\'text-align:center;margin-top:-20px\'>' + message + '</div>'
+    message: "<div style='text-align:center;margin-top:-20px'>" + message + "</div>"
   }, {
-    type: type == 'error' ? 'danger' : type,
+    type: type == "error" ? "danger" : type,
     placement: {
-      from: 'top',
-      align: 'center'
+      from: "top",
+      align: "center"
     },
     newest_on_top: true,
     mouse_over: true,
