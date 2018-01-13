@@ -19,11 +19,13 @@ io.on('connection', function(client) {
     log(data + " accessed: " + client.handshake.headers.referer);
   });
   client.on("notification", function(data) {
-    log(data.messages);
+    if (!data.messages.startsWith("Logged")) {
+      log(data.messages.replace("<br/>", " "));
+    }
     io.emit('notification', data);
   });
   client.on("login", function(data) {
-    log(data + "has logged in.")
+    log(data + " has logged in.")
   });
 });
 
