@@ -104,7 +104,9 @@ $('#btnGitUpdate').click(function() {
         alertNotif("error", "Not Available for localhost");
       } else {
         alertNotif("success", response, false);
-        socket.emit("restart");
+        if (response.includes("live.js")) {
+          socket.emit("restart");
+        }
       }
     }
   });
