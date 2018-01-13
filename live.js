@@ -3,7 +3,7 @@ var app = express();
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-var io = require('socket.io').listen(http.createServer(app).listen(port = 8080, function() {
+var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
   console.log("Server started at port " + port);
 }));
 io.on('connection', function(client) {
