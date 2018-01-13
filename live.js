@@ -15,8 +15,10 @@ var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, 
   log("Server started at port " + port);
 }));
 io.on('connection', function(client) {
-  log("Connected: " + client.handshake.address.replace("::1", "localhost"));
-  client.on('notification', function(data) {
+  client.on("access", function(data) {
+    log(data + " accessed: " + client.handshake.headers.referer);
+  });
+  client.on("notification", function(data) {
     log(data.messages);
     io.emit('notification', data);
   });
