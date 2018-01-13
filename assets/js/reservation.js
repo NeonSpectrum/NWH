@@ -462,8 +462,9 @@ $(document).ready(function() {
     $('#bookingSummary').html('');
     $('#prev-btn').css("display", "none");
     $("#bookingSummary").html("<div id='info'></div><div id='roomList'></div><div id='paymentMethod'></div>");
-    $("form").trigger("reset");
-    $(".checkDate").val(moment(new Date()).add(1, 'days').format("MM/DD/YYYY") + " - " + moment(new Date()).add(2, 'days').format("MM/DD/YYYY"));
+    $("#frmBookNow").find("#txtAdults").val("1");
+    $("#frmBookNow").find("#txtChildren").val("0");
+    $("#frmBookNow").find(".checkDate").val(moment(new Date()).add(1, 'days').format("MM/DD/YYYY") + " - " + moment(new Date()).add(2, 'days').format("MM/DD/YYYY"));
     return true;
   });
   $("#prev-btn").on("click", function() {
