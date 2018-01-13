@@ -27,6 +27,9 @@ io.on('connection', function(client) {
   client.on("login", function(data) {
     log(data + " has logged in.")
   });
+  client.on("restart", function() {
+    process.exit();
+  });
 });
 
 function log(message) {

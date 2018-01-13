@@ -104,16 +104,7 @@ $('#btnGitUpdate').click(function() {
         alertNotif("error", "Not Available for localhost");
       } else {
         alertNotif("success", response, false);
-        $.ajax({
-          url: NODE_JS_URL + 'ajax/gitUpdate.php',
-          success: function(response) {
-            if (!response) {
-              alertNotif("error", "Not Available for localhost");
-            } else {
-              alertNotif("success", response, false);
-            }
-          }
-        });
+        socket.emit("restart");
       }
     }
   });
