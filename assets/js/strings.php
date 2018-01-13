@@ -49,7 +49,9 @@ if(location.hostname != "localhost"){
   });
 }
 socket.on('connect', function(){
-  socket.emit("access", (email_address == "" ? "Someone" : email_address));
+  Pace.ignore(function(){
+    socket.emit("access", (email_address == "" ? "Someone" : email_address));
+  });
 });
 function alertNotif(type, message, reload = false, timeout = 1300) {
   $.notify({
