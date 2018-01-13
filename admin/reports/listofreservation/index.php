@@ -1,6 +1,5 @@
 <?php
 require_once '../../../header.php';
-$system->checkUserLevel(1, true);
 require_once '../../../files/sidebar.php';
 ?>
 <main class="l-main">

@@ -126,7 +126,6 @@ $('#btnLogout').click(function() {
   })
 });
 socket.on('notification', function(data) {
-  console.log(data);
   $.notify({
     icon: 'glyphicon glyphicon-bell',
     message: "<div style='text-align:center;margin-top:-20px'>" + data.user + "<br/>" + data.messages + "</div>"
@@ -136,7 +135,6 @@ socket.on('notification', function(data) {
       from: "bottom",
       align: "right"
     },
-    newest_on_top: true,
     mouse_over: true,
     delay: 10000
   });

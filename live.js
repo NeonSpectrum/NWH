@@ -19,9 +19,9 @@ io.on('connection', function(client) {
   });
   client.on("notification", function(data) {
     if (!data.messages.startsWith("Logged")) {
-      log(data.messages.replace("<br/>", " "));
+      log(data.user + " | " + data.messages.replace("<br/>", " "));
     }
-    io.emit('notification', data);
+    client.broadcast.emit('notification', data);
   });
   client.on("login", function(data) {
     log(data + " has logged in.")
