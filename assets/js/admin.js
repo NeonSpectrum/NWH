@@ -98,6 +98,7 @@ $('.modal').on('hidden.bs.modal', function() {
 // GIT UPDATE
 $('#btnGitUpdate').click(function() {
   $.ajax({
+    type: 'POST',
     url: root + 'ajax/gitUpdate.php',
     success: function(response) {
       if (!response) {
