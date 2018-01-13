@@ -9,7 +9,6 @@ var moment = require('moment');
 var express = require('express');
 var app = express();
 var http = require('http');
-var path = require('path');
 var fs = require('fs');
 var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
   log("Server started at port " + port);
