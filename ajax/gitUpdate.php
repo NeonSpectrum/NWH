@@ -1,7 +1,7 @@
 <?php
 require_once "../files/autoload.php";
-if (!$system->isLogged()) {
-  header("Location: http://localhost/nwh/");
+if (!$system->isLogged() && !stripos($_SERVER['SERVER_NAME'], NODE_JS_URL)) {
+  header("Location: $root");
 }
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;
