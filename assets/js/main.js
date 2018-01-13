@@ -312,6 +312,7 @@ $("#frmLogin").submit(function(e) {
           user: $(this).find("#txtEmail").val(),
           messages: "Logged in at " + date.toLocaleString()
         });
+        socket.emit('login', $(this).find("#txtEmail").val());
         setTimeout(function() {
           if (getQueryVariable("redirect")) {
             location.href = "//" + decodeURIComponent(getQueryVariable("redirect"));
