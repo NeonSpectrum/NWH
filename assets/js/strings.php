@@ -40,9 +40,14 @@ foreach ($config as $name => $value) {
 echo ";const root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
 echo ", email_address=\"" . (isset($_SESSION['account']) ? "{$_SESSION['account']['email']}" : "") . "\";";
 ?>
-var socket = io(NODE_JS_URL, {
-  reconnection: false
-});
+var socket;
+if(location.hostname != "localhost"){
+  socket = io(NODE_JS_URL);
+} else {
+  socket = io(NODE_JS_URL, {
+    reconnection: false
+  });
+}
 socket.on('connect', function(){
   socket.emit("access", (email_address == "" ? "Someone" : email_address));
 });
