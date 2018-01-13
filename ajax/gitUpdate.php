@@ -1,6 +1,6 @@
 <?php
 require_once "../files/autoload.php";
-if (!$system->isLogged() && !stripos($_SERVER['SERVER_NAME'], NODE_JS_URL)) {
+if (!$system->isLogged() && !stripos(NODE_JS_URL, $_SERVER['SERVER_NAME'])) {
   header("Location: $root");
 }
 if ($_SERVER['SERVER_NAME'] == "localhost") {
