@@ -32,7 +32,7 @@ $view->homeJssor();
         </svg>
       </div>
     </div>
-    <div style="position:absolute;right:5px;bottom:10px;z-index:1">
+    <div style="position:absolute;right:5px;bottom:10px;z-index:1" id="arrowDown">
       <a class="btn btn-default anchor-animate" href="#roomTypesArea" style="background:rgba(255,255,255,0.7);">
         <i class="fa fa-arrow-down" aria-hidden="true"></i>
       </a>

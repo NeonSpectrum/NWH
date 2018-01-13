@@ -37,9 +37,11 @@ foreach ($config as $name => $value) {
     echo "," . strtoupper($name) . "=\"$value\"";
   }
 }
-echo ";const root=\"$root\", isLogged=";
-echo isset($_SESSION['account']) ? "true;" : "false;";
+echo ";const root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
+echo ", email_address=\"" . (isset($_SESSION['account']) ? "{$_SESSION['account']['email']}" : "") . "\";";
 ?>
+Pace.options.ajax.trackWebSockets = false;
+var socket = io(NODE_JS_URL);
 function alertNotif(type, message, reload = false, timeout = 1300) {
   $.notify({
     icon:'glyphicon glyphicon-exclamation-sign',

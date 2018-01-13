@@ -56,7 +56,7 @@ $(document).ready(function() {
   $('a[href^="#"].anchor-animate').click(function() {
     if ($(window).width() > 480) {
       $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top - 60
+        scrollTop: $($.attr(this, 'href')).offset().top - 80
       }, 500);
     } else {
       $('html, body').animate({
@@ -188,7 +188,7 @@ Pace.on('done', function() {
   // ANIMATE TO HASH
   if (window.location.hash && $(window.location.hash).offset() != null && location.pathname.includes("/contactus/")) {
     $('html, body').animate({
-      scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 60 : $(window.location.hash).offset().top - 10 + 'px'
+      scrollTop: screen.width > 480 ? $(window.location.hash).offset().top - 80 : $(window.location.hash).offset().top - 10 + 'px'
     }, 1000, 'swing');
   }
   // BACK TO TOP
@@ -308,6 +308,10 @@ $("#frmLogin").submit(function(e) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");
         alertNotif("success", LOGIN_SUCCESS, false);
+        socket.emit('notification', {
+          user: $(this).find("#txtEmail").val(),
+          messages: "Logged in at " + date.toLocaleString()
+        });
         setTimeout(function() {
           if (getQueryVariable("redirect")) {
             location.href = "//" + decodeURIComponent(getQueryVariable("redirect"));

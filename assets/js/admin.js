@@ -1,3 +1,4 @@
+setInterval("location.reload()", ADMIN_RELOAD_INTERVAL * 1000);
 var date = new Date();
 var Dashboard = function() {
   var menuChangeActive = function menuChangeActive(el) {
@@ -120,6 +121,22 @@ $('#btnLogout').click(function() {
       location.href = "//" + location.hostname + root + "account/?mode=logout";
     }
   })
+});
+socket.on('notification', function(data) {
+  console.log(data);
+  $.notify({
+    icon: 'glyphicon glyphicon-bell',
+    message: "<div style='text-align:center;margin-top:-20px'>" + data.user + "<br/>" + data.messages + "</div>"
+  }, {
+    type: "info",
+    placement: {
+      from: "bottom",
+      align: "right"
+    },
+    newest_on_top: true,
+    mouse_over: true,
+    delay: 10000
+  });
 });
 
 function disableKey(evt, key) {

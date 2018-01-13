@@ -1,3 +1,10 @@
+$(window).scroll(function() {
+  if ($(this).scrollTop() < 400) {
+    $("#arrowDown").fadeIn();
+  } else {
+    $("#arrowDown").fadeOut();
+  }
+});
 $(window).on('load', function() {
   if ($("#modalPromo").length) {
     var options = {

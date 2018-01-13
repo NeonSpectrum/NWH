@@ -1,0 +1,21 @@
+td {
+  width: 100px;
+  height: 100px;
+  border: 1px solid white;
+}
+
+td.available {
+  background-color: green;
+  color: white;
+}
+
+td.using {
+  background-color: red;
+  color: white;
+}
+
+td.cleaning {
+  background-color: blue;
+  color: white;
+  ;
+}
