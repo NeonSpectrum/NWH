@@ -770,7 +770,7 @@ class System {
 
   public function redirectLogin() {
     global $root;
-    if (!strpos($_SERVER['QUERY_STRING'], $_SERVER['SERVER_NAME'])) {
+    if (!strpos($_SERVER['QUERY_STRING'], $_SERVER['SERVER_NAME']) && !$this->isLogged()) {
       $referrer = "//" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
       $url      = rawurlencode($referrer);
       echo "<script>location.replace('//{$_SERVER['SERVER_NAME']}{$root}account/login.php?redirect=$url')</script>";
