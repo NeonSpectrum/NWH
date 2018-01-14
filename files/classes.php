@@ -96,7 +96,7 @@ class Account extends System {
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
-        $this->log("insert|account.register|$email']}", $_SESSION['account']['email']);
+        $this->log("insert|account.register|$email']}", (VERIFY_REGISTER ? $_SESSION['account']['email'] : ""));
         return true;
       } else {
         return ALREADY_REGISTERED;
