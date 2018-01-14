@@ -232,7 +232,7 @@ if (!$system->isLogged()) {
         </div>
         <div class="modal-footer">
           <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
-          <button id="btnRegister" type="submit" class="btn btn-info"<?php echo VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-info"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
