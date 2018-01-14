@@ -336,11 +336,13 @@ $("#frmRegister").validator().submit(function(e) {
     return;
   }
   e.preventDefault();
-  if (!(grecaptcha && grecaptcha.getResponse().length !== 0)) {
-    $(this).find(".lblDisplayError").show(function() {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + CAPTCHA_ERROR + '</div>');
-    });
-    return;
+  if (VERIFY_REGISTER) {
+    if (!(grecaptcha && grecaptcha.getResponse().length !== 0)) {
+      $(this).find(".lblDisplayError").show(function() {
+        $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + CAPTCHA_ERROR + '</div>');
+      });
+      return;
+    }
   }
   var pass = $(this).find('#txtPassword').val();
   var rpass = $(this).find('#txtRetypePassword').val();
@@ -358,7 +360,7 @@ $("#frmRegister").validator().submit(function(e) {
     context: this,
     type: 'POST',
     url: root + 'account/',
-    data: $(this).serialize() + "&verify=true&mode=register",
+    data: $(this).serialize() + "&verify=" + VERIFY_REGISTER + "&mode=register",
     success: function(response) {
       if (response == true) {
         $(this).closest(".modal").modal("hide");

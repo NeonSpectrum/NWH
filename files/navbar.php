@@ -232,7 +232,7 @@ if (!$system->isLogged()) {
         </div>
         <div class="modal-footer">
           <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
-          <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-info"<?php echo VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -380,6 +380,9 @@ if (!$system->isLogged()) {
     </div>
   </div>
 </div>
+<?php
+if (!$db->connect_error) {
+    ?>
 <div id="modalEditReservation" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -401,29 +404,29 @@ if (!$system->isLogged()) {
                   <select name="cmbBookingID" class="form-control" id="cmbBookingID">
 <?php
 $view->listBookingID("combobox");
-  ?>
+    ?>
                   </select>
                 </div>
               </div>
 <?php
 $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
-  $row           = $result->fetch_assoc();
-  $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
-  $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
-  $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
-  $checkDate     = $row['CheckInDate'] == "" && $row['CheckOutDate'] == "" ? date("m/d/Y", strtotime($date) + 86400) . " - " . date("m/d/Y", strtotime($date) + 86400 * 2) : $checkDate;
-  $adults        = $row['Adults'];
-  $children      = $row['Children'];
-  $paymentMethod = $row['PaymentMethod'];
-  $roomTypes     = $room->getRoomTypeList();
-  $roomQuantity  = array_fill(0, count($roomTypes), 0);
+    $row           = $result->fetch_assoc();
+    $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
+    $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
+    $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
+    $checkDate     = $row['CheckInDate'] == "" && $row['CheckOutDate'] == "" ? date("m/d/Y", strtotime($date) + 86400) . " - " . date("m/d/Y", strtotime($date) + 86400 * 2) : $checkDate;
+    $adults        = $row['Adults'];
+    $children      = $row['Children'];
+    $paymentMethod = $row['PaymentMethod'];
+    $roomTypes     = $room->getRoomTypeList();
+    $roomQuantity  = array_fill(0, count($roomTypes), 0);
 
-  $result->data_seek(0);
-  while ($row = $result->fetch_assoc()) {
-    $roomType = $room->getRoomType($row['RoomID']);
-    $roomQuantity[array_search($roomType, $roomTypes)]++;
-  }
-  ?>
+    $result->data_seek(0);
+    while ($row = $result->fetch_assoc()) {
+      $roomType = $room->getRoomType($row['RoomID']);
+      $roomQuantity[array_search($roomType, $roomTypes)]++;
+    }
+    ?>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Check Date: </label>
                 <div class="col-sm-8">
@@ -463,10 +466,10 @@ $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -476,10 +479,10 @@ $count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $che
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -489,10 +492,10 @@ $count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $che
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -502,10 +505,10 @@ $count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOu
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -515,10 +518,10 @@ $count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $check
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -528,10 +531,10 @@ $count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOu
                   <select class="form-control cmbQuantity">
 <?php
 $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : "") . ">$i</option>";
-  }
-  ?>
+    for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
+      echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : "") . ">$i</option>";
+    }
+    ?>
                   </select>
                 </div>
               </div>
@@ -547,5 +550,6 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
   </div>
 </div>
 <?php
+}
 }
 ?>
