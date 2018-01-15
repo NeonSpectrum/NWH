@@ -4,9 +4,9 @@ require_once '../files/navbar.php';
 
 $system->redirectLogin();
 
-$checkDate = isset($_POST['txtCheckDate']) ? $_POST['txtCheckDate'] : '';
-$adults    = isset($_POST['txtAdults']) ? $_POST['txtAdults'] : '1';
-$children  = isset($_POST['txtChildren']) ? $_POST['txtChildren'] : '0';
+$checkDate = $_POST['txtCheckDate'] ?? '';
+$adults    = $_POST['txtAdults'] ?? '1';
+$children  = $_POST['txtChildren'] ?? '0';
 ?>
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">

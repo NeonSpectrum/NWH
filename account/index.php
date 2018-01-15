@@ -34,7 +34,7 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
     }
   case "changePassword":{
       $forgot                 = isset($_POST['txtEmail']) ? true : false;
-      $email                  = isset($_SESSION['account']['email']) ? $_SESSION['account']['email'] : $_POST['txtEmail'];
+      $email                  = $_SESSION['account']['email'] ?? $_POST['txtEmail'];
       $credentials['email']   = $system->filter_input($email);
       $credentials['oldpass'] = $forgot ? null : $system->filter_input($_POST['txtOldPass'], true);
       $credentials['newpass'] = password_hash($system->filter_input($_POST['txtNewPass'], true), PASSWORD_DEFAULT);

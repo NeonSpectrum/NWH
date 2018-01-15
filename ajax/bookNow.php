@@ -4,7 +4,7 @@ require_once '../files/autoload.php';
 
 parse_str($_POST['data'], $data);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_token'])) {
-  $email         = isset($data['txtEmail']) ? $system->filter_input($data['txtEmail']) : $system->filter_input($_SESSION['account']['email']);
+  $email         = $system->filter_input($data['txtEmail'] ?? $_SESSION['account']['email']);
   $checkDate     = explode(" - ", $data['txtCheckDate']);
   $checkInDate   = date("Y-m-d", strtotime($checkDate[0]));
   $checkOutDate  = date("Y-m-d", strtotime($checkDate[1]));

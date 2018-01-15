@@ -38,7 +38,7 @@ foreach ($config as $name => $value) {
   }
 }
 echo ";const root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
-echo ", email_address=\"" . (isset($_SESSION['account']) ? "{$_SESSION['account']['email']}" : "") . "\";";
+echo ", email_address=\"" . ($_SESSION['account']['email'] ?? "") . "\";";
 ?>
 var socket;
 if(location.hostname != "localhost"){

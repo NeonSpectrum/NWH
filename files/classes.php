@@ -44,7 +44,7 @@ class Account extends System {
       unset($_COOKIE['nwhAuth']);
     }
     unset($_SESSION['account']);
-    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $root;
+    $referrer = $_SERVER['HTTP_REFERER'] ?? $root;
     if (stripos($referrer, "/reservation") || stripos($referrer, "/admin")) {
       header("location: $root");
     } else {
@@ -471,8 +471,8 @@ class View extends Room {
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
         $iconArr = explode("=", $value);
-        $icon    = isset($iconArr[0]) ? $iconArr[0] : "";
-        $title   = isset($iconArr[1]) ? $iconArr[1] : "";
+        $icon    = $iconArr[0] ?? "";
+        $title   = $iconArr[1] ?? "";
         echo "<i class='fa fa-$icon fa-2x' data-tooltip='tooltip' data-placement='bottom' title='$title' style='margin-right:20px'></i>";
       }
       echo "</div>";
