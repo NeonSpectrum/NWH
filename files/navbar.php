@@ -547,7 +547,7 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" onclick="location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info">Print</button>
+            <button type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() == '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info">Print</button>
             <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
