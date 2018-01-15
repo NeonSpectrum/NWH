@@ -17,8 +17,8 @@ $(document).ready(function() {
     $(this).find('.lblDisplayError').html('');
     if (typeof grecaptcha != 'undefined') {
       grecaptcha.reset();
+      $("#frmRegister").find('button[type=submit]').attr('disabled', true);
     }
-    $("#frmRegister").find('button[type=submit]').attr('disabled', true);
   });
   // FOCUS ON SELECT
   $('input').focus(function() {

@@ -231,7 +231,13 @@ if (!$system->isLogged()) {
           </div>
         </div>
         <div class="modal-footer">
+<?php
+if (VERIFY_REGISTER) {
+    ?>
           <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
+<?php
+}
+  ?>
           <button id="btnRegister" type="submit" class="btn btn-info"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

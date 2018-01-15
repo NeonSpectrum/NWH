@@ -307,10 +307,11 @@ class Room extends System {
 
   public function getRoomIDList($bookingID = null) {
     global $db;
+    $rooms = [];
     if ($bookingID != null) {
       $result = $db->query("SELECT * FROM booking_room WHERE BookingID=$bookingID");
     } else {
-      $result = $db->query("SELECT * FROM booking_room");
+      $result = $db->query("SELECT * FROM room");
     }
     while ($row = $result->fetch_assoc()) {
       $rooms[] = $row['RoomID'];
@@ -321,7 +322,8 @@ class Room extends System {
 
   public function getRoomTypeList() {
     global $db;
-    $result = $db->query("SELECT * FROM room_type");
+    $roomType = [];
+    $result   = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
       $roomType[] = $row['RoomType'];
     }
@@ -354,6 +356,7 @@ class Room extends System {
 
   public function getUsingRoomList() {
     global $db;
+    $rooms  = [];
     $result = $db->query("SELECT RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NULL");
     while ($row = $result->fetch_assoc()) {
       $rooms[] = $row['RoomID'];

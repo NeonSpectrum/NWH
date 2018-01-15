@@ -204,7 +204,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Amount: </label>
             <div class="col-sm-9">
-              <input type="number" class="form-control" name="txtPayment" id="txtPayment" required>
+              <input type="number" class="form-control" name="txtPayment" id="txtPayment" min="0" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -233,7 +233,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Discount: </label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" required>
+              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" pattern="[0-9]+%?" required>
             </div>
           </div>
           <div class="modal-footer">
