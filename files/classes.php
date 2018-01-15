@@ -357,7 +357,7 @@ class Room extends System {
   public function getUsingRoomList() {
     global $db, $date;
     $rooms  = [];
-    $result = $db->query("SELECT RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NULL AND CheckIn=$date");
+    $result = $db->query("SELECT RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NULL AND CheckInDate='$date'");
     while ($row = $result->fetch_assoc()) {
       $rooms[] = $row['RoomID'];
     }
