@@ -15,7 +15,7 @@ $(document).ready(function() {
     $(this).find("form").trigger("reset");
     $(this).find("form").find("input.checkDate").val(tempCheckDate);
     $(this).find('.lblDisplayError').html('');
-    if (typeof grecaptcha != 'undefined') {
+    if ($(this).find(".g-recaptcha").length > 0) {
       grecaptcha.reset();
       $("#frmRegister").find('button[type=submit]').attr('disabled', true);
     }
@@ -160,6 +160,13 @@ Pace.on('done', function() {
           format: DATE_FORMAT.toUpperCase()
         }
       });
+    }
+  });
+  $(".frmBookCheck").find("input.checkDate").on('showCalendar.daterangepicker', function(ev, picker) {
+    if ($(window).scrollTop() < 280 && !($(window).width() < 480 || $(window).height() < 480)) {
+      picker.drops = 'up';
+    } else {
+      picker.drops = 'down';
     }
   });
   $("input.checkDate").on('apply.daterangepicker', function(ev, picker) {
