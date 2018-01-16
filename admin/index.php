@@ -27,10 +27,9 @@ $row    = mysqli_fetch_assoc($result)['rows'];
           <div class="panel-heading">Books Ongoing Today</div>
 <?php
 $count  = 0;
-$query  = "SELECT * FROM booking";
-$result = mysqli_query($db, $query);
+$result = $db->query("SELECT * FROM booking");
 while ($row = $result->fetch_assoc()) {
-  $dates = $system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate']);
+  $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
   if (in_array($date, $dates)) {
     $count++;
   }
