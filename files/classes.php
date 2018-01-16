@@ -496,7 +496,7 @@ class View extends Room {
       }
       if (strtotime($row['CheckInDate']) >= strtotime($date)) {
         echo $cancelled ? "<tr style='color:red'>" : "<tr>";
-        echo "<td>{$row['BookingID']}</td>";
+        echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
         echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
@@ -524,34 +524,6 @@ class View extends Room {
     }
   }
 
-  public function walkin() {
-    global $db, $root, $date;
-    $result = $db->query("SELECT * FROM `walk-in` JOIN `walk-in_room` ON `walk-in`.WalkInID=`walk-in_room`.WalkInID JOIN room ON room.RoomID=`walk-in_room`.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID");
-    while ($row = $result->fetch_assoc()) {
-      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
-        echo "<tr>";
-        echo "<td>{$row['WalkInID']}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
-        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        $balance = $row['TotalAmount'] - $row['AmountPaid'];
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']) . "</td>";
-        echo "<td id='txtBalance'>₱&nbsp;" . number_format($balance) . "</td>";
-        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
-        echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></a>";
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['WalkInID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?WalkInID=" . $this->formatBookingID($row['BookingID']) . "' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print'></i></a>";
-        echo "</td>";
-        echo "</tr>";
-      }
-    }
-  }
-
   public function check() {
     global $db, $date;
     $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
@@ -568,7 +540,7 @@ class View extends Room {
       $dates          = $this->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
       if (in_array($date, $dates)) {
         echo "<tr>";
-        echo "<td id='txtBookingID'>{$row['BookingID']}</td>";
+        echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
