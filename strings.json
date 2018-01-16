@@ -76,4 +76,7 @@
 }, {
   "name": "CHOOSE_ROOM_TO_PROCEED",
   "value": "Please choose a room before proceeding."
+}, {
+  "name": "REVERT_TAKEN_ERROR",
+  "value": "You cannot revert it because the room was already taken."
 }]

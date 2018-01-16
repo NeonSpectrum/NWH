@@ -116,7 +116,7 @@ $(".btnRevertCancel").click(function() {
           } else {
             swal({
               title: 'Error',
-              text: 'There was an error cancelling the booking!',
+              text: response,
               type: 'error'
             });
           }
