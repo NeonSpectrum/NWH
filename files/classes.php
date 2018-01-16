@@ -553,7 +553,7 @@ class View extends Room {
   }
 
   public function check() {
-    global $db;
+    global $db, $date;
     $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
@@ -565,7 +565,8 @@ class View extends Room {
       $checkOutStatus = $row['CheckOut'] == '' ? false : true;
       $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckIn'])) : "";
       $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckOut'])) : "";
-      if (strtotime(date('Y-m-d')) == strtotime($row['CheckInDate'])) {
+      $dates          = $this->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
+      if (in_array($date, $dates)) {
         echo "<tr>";
         echo "<td id='txtBookingID'>{$row['BookingID']}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
