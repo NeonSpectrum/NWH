@@ -10,6 +10,7 @@ node_js_url = http://localhost:8755
 verify_register = true
 
 [date]
+min_birth_year = 1930
 max_birth_year = 2009
 date_format = mm/dd/yyyy
 
