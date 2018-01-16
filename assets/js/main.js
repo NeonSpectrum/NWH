@@ -163,7 +163,7 @@ Pace.on('done', function() {
     }
   });
   $(".frmBookCheck").find("input.checkDate").on('showCalendar.daterangepicker', function(ev, picker) {
-    if ($(window).scrollTop() < 280 && !($(window).width() < 480 || $(window).height() < 480)) {
+    if (picker.element.offset().top - $(window).scrollTop() + picker.container.outerHeight() > $(window).height() && !($(window).width() < 480 || $(window).height() < 480)) {
       picker.drops = 'up';
     } else {
       picker.drops = 'down';
