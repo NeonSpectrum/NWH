@@ -136,6 +136,7 @@ Pace.on('done', function() {
     format: DATE_FORMAT,
     autoclose: true,
     startView: 2,
+    startDate: "-" + (date.getFullYear() - parseInt(MIN_BIRTH_YEAR)) + "y",
     endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
   });
   $('input.checkDate').keypress(function() {

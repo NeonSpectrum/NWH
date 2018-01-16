@@ -370,7 +370,7 @@ class Room extends System {
     $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
-      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date'");
+      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date' AND DateCancelled IS NULL");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
           if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate'])) {
@@ -509,10 +509,12 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>";
-        if (!$cancelled || !$this->checkUserLevel(2)) {
-          echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
-        } else {
-          echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh fa-2x'></i></a>";
+        if ($this->checkUserLevel(2)) {
+          if (!$cancelled) {
+            echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
+          } else {
+            echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh fa-2x'></i></a>";
+          }
         }
         echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>";
         echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
@@ -616,6 +618,8 @@ class View extends Room {
       echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
       echo "<td id='txtFirstName'>{$row['FirstName']}</td>";
       echo "<td id='txtLastName'>{$row['LastName']}</td>";
+      echo "<td id='txtBirthDate'>" . date("m/d/Y", strtotime($row['BirthDate'])) . "</td>";
+      echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       echo "<td>";
       if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {

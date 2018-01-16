@@ -12,7 +12,8 @@ if (!isset($_SESSION['new_visitor'])) {
 }
 // GET CURRENT DIRECTORY EXAMPLE: home, gallery, roomandrates, contactus
 $currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQUEST_URI']);
-$currentDirectory = substr(strtolower($currentDirectory), @strrpos(strtolower($currentDirectory), "/", -2) + 1, -1);
+$currentDirectory = substr(strtolower($currentDirectory), 0, strrpos($currentDirectory, "/"));
+$currentDirectory = substr(strtolower($currentDirectory), strrpos($currentDirectory, "/") + 1);
 if (!stripos($_SERVER['PHP_SELF'], "admin")) {
   $currentDirectory = str_replace("nwh", "", $currentDirectory) == "" ? 'home' : $currentDirectory;
 } else {

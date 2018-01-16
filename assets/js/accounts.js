@@ -97,14 +97,6 @@ $('#frmEditAccount').submit(function(e) {
   e.preventDefault();
   $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> &nbsp; Updating ...');
   $(this).find("#btnUpdate").attr('disabled', true);
-  if ($(this).find('#cmbAccountType').val() != "User" && $(this).find('#cmbAccountType').val() != "Admin") {
-    $(this).find(".lblDisplayError").show(function() {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; Invalid Account Type</div>');
-    });
-    $(this).find("#btnUpdate").html('Update');
-    $(this).find("#btnUpdate").attr('disabled', false);
-    return;
-  }
   $.ajax({
     context: this,
     type: 'POST',

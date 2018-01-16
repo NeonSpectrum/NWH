@@ -19,6 +19,8 @@ require_once '../../../files/sidebar.php';
               <th>Email Address</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Birth Date</th>
+              <th>Contact Number</th>
               <th>Account Type</th>
               <th>Action</th>
             </tr>
