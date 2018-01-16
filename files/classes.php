@@ -508,16 +508,16 @@ class View extends Room {
         echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $amountPaid)) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
-        echo "<a class='btnEditReservation' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>";
+        echo "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>";
         if ($this->checkUserLevel(2)) {
           if (!$cancelled) {
-            echo "&nbsp;&nbsp;<a class='btnCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
+            echo "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
           } else {
-            echo "&nbsp;&nbsp;<a class='btnRevertCancel' id='{$row['BookingID']}' style='cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh fa-2x'></i></a>";
+            echo "<a class='btnRevertCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh fa-2x'></i></a>";
           }
         }
-        echo "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>";
-        echo "&nbsp;&nbsp;<a href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
+        echo "<a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>";
+        echo "<a class='col-md-6' href='{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "' style='padding:0' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -550,10 +550,10 @@ class View extends Room {
         echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
         echo "<td id='txtDiscount'>" . (strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'])) . "</td>";
         echo "<td>";
-        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn' id='{$row['BookingID']}' style='cursor:pointer'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
-        echo "&nbsp;&nbsp;<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut' id='{$row['BookingID']}' style='cursor:pointer'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
-        echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddPayment' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>" : "";
-        echo !$checkOutStatus && $checkInStatus ? "&nbsp;&nbsp;<a class='btnAddDiscount' id='{$row['BookingID']}' style='cursor:pointer' data-toggle='modal' data-target='#modalAddDiscount' data-tooltip='tooltip' data-placement='bottom' title='Add Discount'><i class='fa fa-gift fa-2x' style='color:red'></i></a>" : "";
+        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
+        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
+        echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>" : "";
+        echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddDiscount col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddDiscount' data-tooltip='tooltip' data-placement='bottom' title='Add Discount'><i class='fa fa-gift fa-2x' style='color:red'></i></a>" : "";
         echo "</td>";
         echo "</tr>";
       }
