@@ -7,6 +7,7 @@ String.prototype.includes = function (str) {
 
   return returnValue;
 }
+
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
