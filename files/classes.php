@@ -305,6 +305,9 @@ class Room extends System {
     }
   }
 
+  public function getRoomInfo($roomID) {
+
+  }
   public function getRoomIDList($bookingID = null) {
     global $db;
     $rooms = [];

@@ -176,6 +176,12 @@ Pace.on('done', function() {
       $(this).data('daterangepicker').setEndDate(nextDay);
     }
   });
+  $("#frmEditReservation").find("#cmbBookingID").change(function() {
+    if ($(this).val() != "") {
+      $(this).find("#btnPrint").prop("disabled", false);
+      $(this).find("#btnUpdate").prop("disabled", false);
+    }
+  });
   // $('input.checkInDate, input.checkOutDate').datepicker({
   //   format: "yyyy-mm-dd",
   //   startDate: '+1d',

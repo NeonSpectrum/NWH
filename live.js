@@ -23,6 +23,9 @@ io.on('connection', function(client) {
     }
     client.broadcast.emit('notification', data);
   });
+  client.on("all", function(data) {
+    client.broadcast.emit('all', data);
+  });
   client.on("login", function(data) {
     log(data + " has logged in.")
   });

@@ -149,3 +149,17 @@ $('.btnMoreInfo').click(function() {
     });
   };
 })();
+socket.on('all', function(data) {
+  $.notify({
+    icon: 'glyphicon glyphicon-bell',
+    message: "<div style='text-align:center;margin-top:-20px'>" + data.user + "<br/>" + data.messages + "</div>"
+  }, {
+    type: "info",
+    placement: {
+      from: "bottom",
+      align: "right"
+    },
+    mouse_over: true,
+    delay: 10000
+  });
+});

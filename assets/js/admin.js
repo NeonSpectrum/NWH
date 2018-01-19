@@ -72,7 +72,7 @@ $("input.checkDate").each(function() {
     });
   }
 });
-$('input.datepicker,input.checkInDate, input.checkOutDate').keypress(function() {
+$('input.datepicker, input.checkInDate, input.checkOutDate').keypress(function() {
   return false;
 })
 $("input.checkDate").on('apply.daterangepicker', function(ev, picker) {
