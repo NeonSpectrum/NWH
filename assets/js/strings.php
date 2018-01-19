@@ -32,9 +32,14 @@ foreach ($json as $string) {
   echo ",{$string['name']}=\"{$string['value']}\"";
 }
 foreach ($config as $name => $value) {
-  $value = $value == false ? "false" : $value;
   if (!strpos($name, "paypal")) {
-    echo "," . strtoupper($name) . "=\"$value\"";
+    if ($value == "1" && $value == true) {
+      echo "," . strtoupper($name) . "=true";
+    } else if ($value == "" && $value == false) {
+      echo "," . strtoupper($name) . "=false";
+    } else {
+      echo "," . strtoupper($name) . "=\"$value\"";
+    }
   }
 }
 echo ";const root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
