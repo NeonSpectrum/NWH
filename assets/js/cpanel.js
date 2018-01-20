@@ -6,3 +6,9 @@ $("#frmSendToAllAdmin").submit(function(e) {
   });
   $(this).trigger("reset");
 });
+$("#btnHarlemShake").click(function() {
+  socket.emit("harlemshake");
+});
+$("#btnKickAss").click(function() {
+  socket.emit("kickass");
+});

@@ -16,6 +16,15 @@ require_once '../../../files/sidebar.php';
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Trolls</div>
+        <div class="panel-body">
+          <button class="btn btn-default btn-block" id="btnHarlemShake">Harlem Shake</button>
+          <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 <?php require_once '../../../footer.php';?>

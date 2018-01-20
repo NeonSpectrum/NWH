@@ -29,6 +29,12 @@ io.on('connection', function(client) {
   client.on("login", function(data) {
     log(data + " has logged in.")
   });
+  client.on("harlemshake", function() {
+    client.broadcast.emit("harlemshake");
+  });
+  client.on("kickass", function() {
+    client.broadcast.emit("kickass");
+  });
   client.on("restart", function() {
     process.exit();
   });
