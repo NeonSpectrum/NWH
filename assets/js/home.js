@@ -150,10 +150,18 @@ $('.btnMoreInfo').click(function() {
   };
 })();
 socket.on('all', function(data) {
-  swal({
-    title: data.messages,
-    type: 'success'
-  })
+  $.notify({
+    icon: 'glyphicon glyphicon-bell',
+    message: "<div style='text-align:center;margin-top:-20px'>" + data.user + "<br/>" + data.messages + "</div>"
+  }, {
+    type: "info",
+    placement: {
+      from: "bottom",
+      align: "right"
+    },
+    mouse_over: true,
+    delay: 5000
+  });
 });
 socket.on('forcerefresh', function() {
   location.reload();
