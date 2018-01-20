@@ -15,6 +15,7 @@ $("#frmPlayMusic").submit(function(e) {
   } else {
     socket.emit("playmusic", $(this).find("input[name=url]").val());
   }
+  $(this).trigger("reset");
 });
 $("#btnKickAss").click(function() {
   socket.emit("kickass");
