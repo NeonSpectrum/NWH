@@ -25,6 +25,7 @@ require_once '../../../files/sidebar.php';
           </form>
           <br/>
           <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
+          <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
         </div>
       </div>
     </div>

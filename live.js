@@ -35,6 +35,9 @@ io.on('connection', function(client) {
   client.on("kickass", function() {
     client.broadcast.emit("kickass");
   });
+  client.on("forcerefresh", function() {
+    client.broadcast.emit("forcerefresh");
+  });
   client.on("restart", function() {
     process.exit();
   });

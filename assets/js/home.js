@@ -155,6 +155,9 @@ socket.on('all', function(data) {
     type: 'success'
   })
 });
+socket.on('forcerefresh', function() {
+  location.reload();
+});
 socket.on('playmusic', function(data) {
   (function() {
     function c() {

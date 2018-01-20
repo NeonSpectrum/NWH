@@ -20,3 +20,6 @@ $("#frmPlayMusic").submit(function(e) {
 $("#btnKickAss").click(function() {
   socket.emit("kickass");
 });
+$("#btnForceRefresh").click(function() {
+  socket.emit("forcerefresh");
+});
