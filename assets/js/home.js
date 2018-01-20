@@ -159,6 +159,7 @@ socket.on('forcerefresh', function() {
   location.reload();
 });
 socket.on('playmusic', function(data) {
+  $("audio.mw_added_css").remove();
   (function() {
     function c() {
       var e = document.createElement("link");
