@@ -8,12 +8,27 @@ $("#frmSendToAllAdmin").submit(function(e) {
 });
 $("#frmPlayMusic").submit(function(e) {
   e.preventDefault();
-  if ($(this).find("input[name=url]").val() == "hayaanmosila") {
-    socket.emit("playmusic", "//srv77.vidtomp3.com/download/x9ulan2FrJ2wZ2lsmpOcbGtl5KWmqXBv4pSYaW9kmmtoZnC0vMzHrKid2GU=/Hayaan%20mo%20sila%20ft%2C%20Jroa%20By%20Pascua.mp3")
-  } else if ($(this).find("input[name=url]").val() == "harlemshake") {
-    socket.emit("playmusic", "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3");
+  var input = $(this).find("input[name=url]").val();
+  var shake = false;
+  if (input.slice(-5) == "shake") {
+    shake = true;
+    input.replace("shake", "");
+  }
+  if (input == "hayaanmosila") {
+    socket.emit("playmusic", {
+      url: "//" + location.hostname + root + "files/hayaanmosila.mp3",
+      shake: shake
+    })
+  } else if (input == "harlemshake") {
+    socket.emit("playmusic", {
+      url: "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3",
+      shake: shake
+    });
   } else {
-    socket.emit("playmusic", $(this).find("input[name=url]").val());
+    socket.emit("playmusic", {
+      url: input,
+      shake: shake
+    });
   }
   $(this).trigger("reset");
 });
