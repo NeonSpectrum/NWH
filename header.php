@@ -6,9 +6,6 @@ require_once 'files/autoload.php';
 $csrf_token             = $system->encrypt($_SESSION['csrf_token'] ?? md5(uniqid(rand(), TRUE)));
 $_SESSION['csrf_token'] = $system->decrypt($csrf_token);
 
-if (password_verify("asdasd", '$2y$10$qP77nawqA1w6BqtFnxgsGeI6WnXK6G/bnEdvdAweTNYiQ.uZiGXCK')) {
-  echo "hello";
-}
 if (!isset($_SESSION['new_visitor'])) {
   $_SESSION['new_visitor'] = true;
   $system->addVisitorCount();
