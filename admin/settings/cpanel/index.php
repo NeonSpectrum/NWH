@@ -21,8 +21,9 @@ require_once '../../../files/sidebar.php';
         <div class="panel-heading">Trolls</div>
         <div class="panel-body">
           <form id="frmPlayMusic" method="post">
-            <input type="text" name="url">
+            <input type="text" name="url" style="width:100%">
           </form>
+          <br/>
           <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
         </div>
       </div>
