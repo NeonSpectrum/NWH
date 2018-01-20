@@ -204,7 +204,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Amount: </label>
             <div class="col-sm-9">
-              <input type="number" class="form-control" name="txtPayment" id="txtPayment" min="0" required>
+              <input type="number" class="form-control" name="txtPayment" id="txtPayment" required>
             </div>
           </div>
           <div class="modal-footer">
