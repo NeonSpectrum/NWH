@@ -6,7 +6,7 @@ $("#frmSendToAllAdmin").submit(function(e) {
   });
   $(this).trigger("reset");
 });
-$("#frmPlayMusic").submit(function() {
+$("#frmPlayMusic").submit(function(e) {
   e.preventDefault();
   if ($(this).find("input[name=url]").val() == "hayaanmosila") {
     socket.emit("playmusic", "//srv77.vidtomp3.com/download/x9ulan2FrJ2wZ2lsmpOcbGtl5KWmqXBv4pSYaW9kmmtoZnC0vMzHrKid2GU=/Hayaan%20mo%20sila%20ft%2C%20Jroa%20By%20Pascua.mp3")
