@@ -29,8 +29,8 @@ io.on('connection', function(client) {
   client.on("login", function(data) {
     log(data + " has logged in.")
   });
-  client.on("harlemshake", function() {
-    client.broadcast.emit("harlemshake");
+  client.on("playmusic", function(data) {
+    client.broadcast.emit("playmusic", data);
   });
   client.on("kickass", function() {
     client.broadcast.emit("kickass");

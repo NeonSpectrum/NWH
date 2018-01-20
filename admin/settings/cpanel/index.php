@@ -20,7 +20,9 @@ require_once '../../../files/sidebar.php';
       <div class="panel panel-default">
         <div class="panel-heading">Trolls</div>
         <div class="panel-body">
-          <button class="btn btn-default btn-block" id="btnHarlemShake">Harlem Shake</button>
+          <form id="frmPlayMusic" method="post">
+            <input type="text" name="url">
+          </form>
           <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
         </div>
       </div>

@@ -155,7 +155,7 @@ socket.on('all', function(data) {
     type: 'success'
   })
 });
-socket.on('harlemshake', function() {
+socket.on('playmusic', function(data) {
   (function() {
     function c() {
       var e = document.createElement("link");
@@ -272,7 +272,7 @@ socket.on('harlemshake', function() {
     var n = 350;
     var r = 350;
     // var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
-    var i = "//srv77.vidtomp3.com/download/x9ulan2FrJ2wZ2lsmpOcbGtl5KWmqXBv4pSYaW9kmmtoZnC0vMzHrKid2GU=/Hayaan%20mo%20sila%20ft%2C%20Jroa%20By%20Pascua.mp3";
+    var i = data;
     var s = "mw-harlem_shake_me";
     var o = "im_first";
     var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
