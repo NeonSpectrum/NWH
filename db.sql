@@ -84,6 +84,7 @@ CREATE TABLE `booking_paypal` (
   `BookingID` int(11) NOT NULL,
   `PayerID` varchar(50) NOT NULL,
   `PaymentID` varchar(50) NOT NULL,
+  `InvoiceNumber` varchar(50) NOT NULL,
   `Token` varchar(50) NOT NULL,
   `PaymentAmount` int(11) NOT NULL,
   `TimeStamp` datetime NOT NULL
