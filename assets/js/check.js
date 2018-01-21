@@ -202,7 +202,11 @@ $("#frmAddBooking").submit(function(e) {
 $('#tblBook').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();
 });
-$('#tblBook').DataTable();
+var oTable = $('#tblBook').DataTable();
 $('#tblBook_length').find("select").addClass("form-control");
 $('#tblBook_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
+if (getQueryVariable("search")) {
+  $('input[type="search"]').val(getQueryVariable("search"));
+  oTable.search(getQueryVariable("search")).draw();
+}

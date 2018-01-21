@@ -1,7 +1,7 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $bookingID = $system->filter_input($_POST['cmbBookingID']);
   $result    = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
   $row       = $result->fetch_assoc();

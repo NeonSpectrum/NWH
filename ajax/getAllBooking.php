@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $rooms[] = $roomRow['RoomID'];
     }
     sort($rooms);
+    $arr[$i]['bookingID']    = $system->formatBookingID($row['BookingID']);
     $arr[$i]['room']         = join(", ", $rooms) . " (" . count($rooms) . ")";
     $arr[$i]['checkInDate']  = date("m/d/Y", strtotime($row['CheckInDate']));
     $arr[$i]['checkOutDate'] = date("m/d/Y", strtotime($row['CheckOutDate']));

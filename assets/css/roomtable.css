@@ -12,6 +12,7 @@ td.available {
 td.using {
   background-color: red;
   color: white;
+  cursor: pointer;
 }
 
 td.cleaning {

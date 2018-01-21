@@ -11,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       echo "<script>alert('Token was invalid');location.href='../';</script>";
       exit();
     }
-    $paymentId = $_GET['paymentId'];
-    $payment   = Payment::get($paymentId, $apiContext);
-    $execution = new PaymentExecution();
+    $paymentId    = $_GET['paymentId'];
+    $payment      = Payment::get($paymentId, $apiContext);
+    $transactions = $payment->getTransactions();
+    $execution    = new PaymentExecution();
     $execution->setPayerId($_GET['PayerID']);
     $payment->execute($execution, $apiContext);
 
@@ -22,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $paymentID = $system->filter_input($_GET['paymentId']);
     $token     = $system->filter_input($_GET['token']);
     $amount    = $system->filter_input($data['txtAmount']);
-    $db->query("INSERT INTO booking_paypal VALUES($bookingID,'$payerID','$paymentID','$token',$amount,'$dateandtime')");
+    $db->query("INSERT INTO booking_paypal VALUES($bookingID,'$payerID','$paymentID','{$transactions[0]->invoice_number}','$token',$amount,'$dateandtime')");
     if ($db->affected_rows > 0) {
       $system->log("insert|payment.paypal.success|$bookingID|₱&nbsp;" . number_format($amount));
       echo "<script>alert('Payment Successfully Added!');location.href='../';</script>";
     } else {
-      echo "<script>alert('Something went wrong!');location.href='../';</script>";
+      echo "<script>alert('Already Paid!');location.href='../';</script>";
     }
   } else {
     $system->log("notify|payment.paypal.cancelled|$bookingID");

@@ -31,7 +31,7 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
 if ($system->checkUserLevel(3)) {
   ?>
     <a id="btnGitUpdate" data-tooltip="tooltip" data-placement="bottom" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
-    <?php
+<?php
 }
 ?>
     <a id="btnLogout" data-tooltip="tooltip" data-placement="bottom" title="Logout" style="text-decoration:none;cursor:pointer" class="c-header-icon"><i class="fa fa-power-off"></i></a>

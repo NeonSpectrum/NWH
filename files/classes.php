@@ -306,8 +306,25 @@ class Room extends System {
   }
 
   public function getRoomInfo($roomID) {
-
+    global $db;
+    $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE RoomID=$roomID AND CheckIn IS NOT NULL AND CheckOut IS NULL ORDER BY CheckIn DESC LIMIT 1");
+    $row    = $result->fetch_assoc();
+    $infos  = [
+      "bookingID"    => $this->formatBookingID($row['BookingID']),
+      "name"         => $row['FirstName'] . " " . $row['LastName'],
+      "email"        => $row['EmailAddress'],
+      "checkInDate"  => $row['CheckInDate'],
+      "checkOutDate" => $row['CheckOutDate'],
+    ];
+    $rooms  = [];
+    $result = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID={$row['BookingID']}");
+    while ($row = $result->fetch_assoc()) {
+      $rooms[] = $row['RoomID'];
+    }
+    $infos["rooms"] = join($rooms, ", ");
+    return $infos;
   }
+
   public function getRoomIDList($bookingID = null) {
     global $db;
     $rooms = [];
@@ -538,8 +555,8 @@ class View extends Room {
       }
       $checkInStatus  = $row['CheckIn'] == '' ? false : true;
       $checkOutStatus = $row['CheckOut'] == '' ? false : true;
-      $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckIn'])) : "";
-      $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:sa", strtotime($row['CheckOut'])) : "";
+      $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckIn'])) : "";
+      $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckOut'])) : "";
       $dates          = $this->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
       if (in_array($date, $dates)) {
         echo "<tr>";
@@ -573,12 +590,16 @@ class View extends Room {
         while ($roomRow = $roomResult->fetch_assoc()) {
           $rooms[] = $roomRow['RoomID'];
         }
+        $checkIn  = $row['CheckIn'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckIn'])) : "";
+        $checkOut = $row['CheckOut'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckOut'])) : "";
         echo "<tr>";
-        echo "<td id='txtBookingID'>{$row['BookingID']}</td>";
+        echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
-        echo "<td id='txtCheckIn'>{$row['CheckIn']}</td>";
-        echo "<td id='txtCheckOut'>{$row['CheckOut']}</td>";
+        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+        echo "<td id='txtCheckIn'>$checkIn</td>";
+        echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
         echo "</tr>";

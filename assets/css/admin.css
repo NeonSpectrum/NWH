@@ -139,9 +139,9 @@ a[disabled], a[disabled]:hover {
   bottom: -9px;
 }
 
-.tooltip {
+/*.tooltip {
   width: 120px;
-}
+}*/
 
 .tooltip-inner {
   padding: 8px 10px;
@@ -230,7 +230,7 @@ a[disabled], a[disabled]:hover {
   font-size: 2vmax;
 }
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:767px) {
   .header-title {
     display: none;
   }
@@ -361,7 +361,6 @@ a[disabled], a[disabled]:hover {
   left: 0;
   top: 0;
   bottom: 0;
-  height: 100%;
   overflow: auto;
   background: #102c58;
   -webkit-transition: width 0.5s ease-in-out;

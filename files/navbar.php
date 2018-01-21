@@ -459,6 +459,7 @@ $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.
                     <option value="Bank"<?php echo $paymentMethod == "Bank" ? " selected" : ""; ?>>Bank</option>
                     <option value="PayPal"<?php echo $paymentMethod == "PayPal" ? " selected" : ""; ?>>PayPal</option>
                   </select>
+                  <button id='btnPaypal' type='button' class='btn btn-primary' style='margin-top:10px'>Pay now with Paypal</button>
                 </div>
               </div>
             </div>
@@ -544,8 +545,8 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" disabled>Print</button>
-            <button id="btnUpdate" type="submit" class="btn btn-info" disabled>Update</button>
+            <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
+            <button id="btnUpdate" type="submit" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </form>

@@ -11,9 +11,8 @@ use PayPal\Api\Transaction;
 
 parse_str($system->decrypt($_SERVER['QUERY_STRING']), $query);
 
-$price          = $query['txtAmount'];
+$price          = 0;
 $bookingID      = $query['txtBookingID'];
-$data           = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
 $roomIDs        = $room->getRoomIDList($bookingID);
 $roomTypes      = $room->getRoomTypeList();
 $roomQuantities = array_fill(0, count($roomTypes), 0);
@@ -35,6 +34,7 @@ for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
     ->setCurrency('PHP')
     ->setQuantity($roomQuantities[$i])
     ->setPrice($room->getRoomPrice($roomTypes[$i]));
+  $price += $room->getRoomPrice($roomTypes[$i]) * $roomQuantities[$i];
   $j++;
 }
 
@@ -51,6 +51,8 @@ $transaction->setAmount($amount)
   ->setDescription("Test")
   ->setInvoiceNumber(uniqid());
 
+$data = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
+
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl("http://{$_SERVER['SERVER_NAME']}{$root}payment?type=success&data=$data")
   ->setCancelUrl("http://{$_SERVER['SERVER_NAME']}{$root}payment?type=cancelled&data=$data");
@@ -65,7 +67,8 @@ try {
   $payment->create($apiContext);
   header("Location: " . $payment->getApprovalLink());
 } catch (Exception $ex) {
-  echo "Error: " . $ex->getMessage();
+  // echo "Error: " . $ex->getMessage();
+  echo print_r($ex->getData());
 }
 
 ?>
