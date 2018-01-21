@@ -1,11 +1,14 @@
 <?php
 require_once '../../../header.php';
-$system->checkUserLevel(3, true);
+$system->checkUserLevel(2, true);
 require_once '../../../files/sidebar.php';
 ?>
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Control Panel</h1>
+<?php
+if ($system->checkUserLevel(3)) {
+  ?>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Send to All</div>
@@ -29,6 +32,9 @@ require_once '../../../files/sidebar.php';
         </div>
       </div>
     </div>
+<?php
+}
+?>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Generate Report</div>

@@ -117,6 +117,10 @@ if ($system->checkUserLevel(3)) {
                 <div class="c-menu-item__title"><span>Event Logs</span></div>
               </a>
             </li>
+<?php
+}
+if ($system->checkUserLevel(2)) {
+  ?>
             <li>
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/cpanel" data-tooltip="tooltip" data-placement="right" title="Control Panel"><i class="fa fa-sliders"></i>
                 <div class="c-menu-item__title"><span>Control Panel</span></div>
