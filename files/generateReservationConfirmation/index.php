@@ -81,6 +81,8 @@ if (isset($_GET['BookingID'])) {
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf", "I");
     }
   }
+} else {
+  header("location: ../../");
 }
 
 ?>
