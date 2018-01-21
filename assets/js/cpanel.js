@@ -1,3 +1,10 @@
+$("input[name=daterange]").daterangepicker({
+  autoApply: true
+});
+$("#frmGenerateReport").submit(function(e) {
+  e.preventDefault();
+  location.href = "//" + location.hostname + root + "files/generateReport?daterange=" + $(this).find("input[name=daterange]").val().replace(" - ", "-");
+});
 $("#frmSendToAllAdmin").submit(function(e) {
   e.preventDefault();
   socket.emit("all", {

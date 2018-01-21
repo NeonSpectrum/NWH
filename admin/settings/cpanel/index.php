@@ -20,12 +20,24 @@ require_once '../../../files/sidebar.php';
       <div class="panel panel-default">
         <div class="panel-heading">Trolls</div>
         <div class="panel-body">
-          <form id="frmPlayMusic" method="post">
+          <form id="frmPlayMusic">
             <input type="text" name="url" class="form-control" style="width:100%" placeholder="Insert URL or keywords recorded">
           </form>
           <br/>
           <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
           <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Generate Report</div>
+        <div class="panel-body">
+          <form id="frmGenerateReport">
+            <input type="text" name="daterange" class="form-control" style="width:100%">
+            <br/>
+            <input type="submit" class="btn btn-default btn-block" value="Generate">
+          </form>
         </div>
       </div>
     </div>

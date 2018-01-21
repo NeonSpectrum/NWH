@@ -4,18 +4,22 @@ use setasign\Fpdi\Fpdi;
 
 require_once '../autoload.php';
 
+$daterange = explode("-", $_GET['daterange']);
+$from      = $daterange[0];
+$to        = $daterange[1];
+
 $column = ["Booking ID", "Name", "Check In Date", "Check Out Date", "Total Amount"];
 $width  = [38, 38, 38, 38, 38];
 $pdf    = new Fpdi();
 $pdf->AddPage();
-$pdf->SetTitle('Northwood Reservation Confirmation');
+$pdf->SetTitle('Northwood Hotel Summary Report');
 $pdf->SetFont('Arial');
 $pdf->SetTextColor(0, 0, 0);
 $pdf->SetFontSize('10');
 $pdf->Image('../../images/logo-white.jpg', 15, 10, 50);
 $pdf->Cell(60, 22, "", 0, 0, 'L');
 $pdf->SetFontSize('16', 'B');
-$pdf->Cell(130, 22, "Summary Report from " . date("m/d/Y", strtotime($_GET['from'])) . " to " . date("m/d/Y", strtotime($_GET['to'])), 0, 1);
+$pdf->Cell(130, 22, "Summary Report from " . date("m/d/Y", strtotime($from)) . " to " . date("m/d/Y", strtotime($to)), 0, 1);
 // COLUMNS
 $pdf->SetFontSize('10');
 $pdf->SetFillColor(230, 230, 230);
@@ -24,7 +28,7 @@ for ($i = 0; $i < count($column); $i++) {
 }
 $pdf->Ln();
 
-$dates           = $system->getDatesFromRange($_GET['from'], $_GET['to']);
+$dates           = $system->getDatesFromRange($from, $to);
 $numberOfBooking = $totalAmount = 0;
 $result          = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_check ON booking.BookingID=booking_check.BookingID");
 for ($i = 0; $row = $result->fetch_assoc(); $i++) {
