@@ -28,10 +28,11 @@ $json     = json_decode($jsonFile, true);
 $first    = true;
 foreach ($json as $string) {
   if (isset($first)) {
-    echo "var {$string['name']}=\"{$string['value']}\"";
+    echo "const {$string['name']}=\"{$string['value']}\"";
     unset($first);
+  } else {
+    echo ",{$string['name']}=\"{$string['value']}\"";
   }
-  echo ",{$string['name']}=\"{$string['value']}\"";
 }
 foreach ($config as $name => $value) {
   if (!strpos($name, "paypal")) {
@@ -44,7 +45,7 @@ foreach ($config as $name => $value) {
     }
   }
 }
-echo ";const root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
+echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
 echo ", email_address=\"" . ($_SESSION['account']['email'] ?? "") . "\";";
 ?>
 var socket;

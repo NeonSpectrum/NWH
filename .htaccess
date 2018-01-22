@@ -105,6 +105,24 @@ order allow,deny
 deny from all
 </Files>
 
+#Prevent viewing of strings.json file
+<Files strings.json>
+order allow,deny
+deny from all
+</Files>
+
+#Prevent viewing of header.php file
+<Files header.php>
+order allow,deny
+deny from all
+</Files>
+
+#Prevent viewing of footer.php file
+<Files footer.php>
+order allow,deny
+deny from all
+</Files>
+
 #Prevent directory listings
 Options All -Indexes
 

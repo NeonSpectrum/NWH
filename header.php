@@ -15,7 +15,7 @@ $currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQ
 $currentDirectory = substr(strtolower($currentDirectory), 0, strrpos($currentDirectory, "/"));
 $currentDirectory = substr(strtolower($currentDirectory), strrpos($currentDirectory, "/") + 1);
 if (!stripos($_SERVER['PHP_SELF'], "admin")) {
-  $currentDirectory = str_replace("nwh", "", $currentDirectory) == "" ? 'home' : $currentDirectory;
+  $currentDirectory = strpos($currentDirectory, "nwh") !== false ? 'home' : $currentDirectory;
 } else {
   $currentDirectory = $currentDirectory == "admin" ? 'dashboard' : $currentDirectory;
   $system->checkUserLevel(1, true);
