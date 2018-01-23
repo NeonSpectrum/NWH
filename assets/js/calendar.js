@@ -24,6 +24,9 @@ $(document).ready(function() {
           if (event.checked == true) {
             element.css("background-color", "red");
             element.css("border-color", "red");
+          } else if (event.paid == true) {
+            element.css("background-color", "darkblue");
+            element.css("border-color", "darkblue");
           }
           element.attr("data-html", true);
           element.attr("data-tooltip", "tooltip");
