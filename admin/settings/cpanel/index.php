@@ -6,6 +6,7 @@ require_once '../../../files/sidebar.php';
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Control Panel</h1>
+    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
 <?php
 if ($system->checkUserLevel(3)) {
   ?>
@@ -28,7 +29,6 @@ if ($system->checkUserLevel(3)) {
           </form>
           <br/>
           <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
-          <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
         </div>
       </div>
     </div>
@@ -44,6 +44,34 @@ if ($system->checkUserLevel(3)) {
             <br/>
             <input type="submit" class="btn btn-default btn-block" value="Generate">
           </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Check</div>
+        <div class="panel-body">
+            <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
+<?php
+$result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL");
+while ($row = $result->fetch_assoc()) {
+  $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
+  if (in_array($date, $dates)) {
+    echo "<option value='{$row['BookingID']}'>{$system->formatBookingID($row['BookingID'])}</option>";
+  }
+}
+?>
+            </select>
+            <button class="btn btn-default btn-block" id="btnRevertCheckIn">Revert Check In</button>
+            <button class="btn btn-default btn-block" id="btnRevertCheckOut">Revert Check Out</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Website Control</div>
+        <div class="panel-body">
+          <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
         </div>
       </div>
     </div>

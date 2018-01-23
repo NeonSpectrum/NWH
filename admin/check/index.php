@@ -24,6 +24,7 @@ require_once '../../files/sidebar.php';
             <th>Check Out</th>
             <th>Extra Charges</th>
             <th>Discount</th>
+            <th>Total Amount</th>
             <th>Action</th>
           </thead>
           <tbody>
@@ -256,6 +257,8 @@ for ($i = 0; $i <= $count; $i++) {
 
       </div>
       <div class="modal-footer">
+        <input type="hidden" name="txtBookingID"/>
+        <button id="btnPay" type="button" class="btn btn-primary">Pay</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

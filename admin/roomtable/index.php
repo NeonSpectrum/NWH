@@ -7,7 +7,10 @@ $roomList  = $room->getRoomIDList();
 $roomUsing = $room->getUsingRoomList();
 foreach ($roomList as $value) {
   if (in_array($value, $roomUsing)) {
-    $descriptions            = $room->getRoomInfo($value);
+    $descriptions = $room->getRoomInfo($value);
+    if (count($descriptions) == 0) {
+      continue;
+    }
     $roomDescription[$value] = "Booking ID: {$descriptions['bookingID']}<br/>Name: {$descriptions['name']}<br/>Email: {$descriptions['email']}<br/>Rooms: {$descriptions['rooms']} (" . (substr_count($descriptions['rooms'], ",") + 1) . ")<br/>Check In Date: {$descriptions['checkInDate']}<br/>Check Out Date: {$descriptions['checkOutDate']}";
     $roomID[$value]          = "using";
   } else {

@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $arr[$i]['checkOutDate'] = date("m/d/Y", strtotime($row['CheckOutDate']));
     $arr[$i]['start']        = "{$row['CheckInDate']}T14:00";
     $arr[$i]['end']          = "{$row['CheckOutDate']}T12:00";
+    $checkResult             = $db->query("SELECT * FROM booking_check WHERE BookingID={$row['BookingID']} AND CheckIn IS NOT NULL AND CheckOut IS NULL");
+    $arr[$i]['checked']      = $checkResult->num_rows > 0;
   }
   echo json_encode($arr);
 }

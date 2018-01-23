@@ -106,6 +106,7 @@ $('.btnCheckOut').click(function() {
                   success: function(response) {
                     $("#modalReceipt").find(".modal-title").html("Booking ID: " + $(this).closest("tr").find("#txtBookingID").html());
                     $("#modalReceipt").find(".modal-body").html("<h1 style='text-align:center'>Total Amount: ₱&nbsp;" + parseInt(response).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</h1>");
+                    $("#modalReceipt").find("input[name=txtBookingID]").val($(this).attr("id"));
                     $("#modalReceipt").modal("show");
                     $("#modalReceipt").on("hidden.bs.modal", function() {
                       location.reload();
@@ -196,6 +197,39 @@ $("#frmAddBooking").submit(function(e) {
           $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
         })
       }
+    }
+  });
+});
+$("#btnPay").click(function() {
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Pay'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + 'ajax/payBill.php',
+        data: "txtBookingID=" + $(this).parent().find("input[name=txtBookingID]").val() + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response == true) {
+            swal({
+              title: $(this).closest(".modal").find(".modal-title").html(),
+              text: 'Successfully Paid!',
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
+          }
+        }
+      });
     }
   });
 });

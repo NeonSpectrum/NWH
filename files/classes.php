@@ -59,7 +59,7 @@ class Account extends System {
     $email         = $this->filter_input($credentials['txtEmail']);
     $password      = $this->filter_input($credentials['txtPassword'], true);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
-    $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['txtBirthDate'])));
+    $birthDate     = $this->filter_input($credentials['txtBirthDate']);
 
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
@@ -86,7 +86,7 @@ class Account extends System {
     $email         = $this->filter_input($credentials['txtEmail']);
     $password      = password_hash($this->filter_input($credentials['txtPassword'], true), PASSWORD_DEFAULT);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
-    $birthDate     = $this->filter_input($credentials['txtBirthDate']);
+    $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['txtBirthDate'])));
 
     if (isset($credentials['expirydate']) && $this->isExpired($credentials['TimeStamp'], EMAIL_EXPIRATION)) {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
@@ -413,6 +413,26 @@ class Room extends System {
 }
 
 /*----------------------------------------*/
+/*--------------Booking Class-------------*/
+/*----------------------------------------*/
+class Booking {
+  public function revertCheck($bookingID, $type) {
+    global $db;
+    if ($type == "checkIn") {
+      $db->query("DELETE FROM booking_check WHERE BookingID=$bookingID");
+    } else if ($type == "checkOut") {
+      $result = $db->query("SELECT * FROM booking_check WHERE BookingID=$bookingID");
+      if ($result->num_rows > 0) {
+        $db->query("UPDATE booking_check SET CheckOut=NULL WHERE BookingID=$bookingID");
+      } else {
+        return false;
+      }
+    }
+    return $db->affected_rows > 0;
+  }
+}
+
+/*----------------------------------------*/
 /*---------------View Class---------------*/
 /*----------------------------------------*/
 class View extends Room {
@@ -546,7 +566,7 @@ class View extends Room {
 
   public function check() {
     global $db, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -569,6 +589,7 @@ class View extends Room {
         echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
         echo "<td id='txtDiscount'>" . (strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'])) . "</td>";
+        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
@@ -580,30 +601,44 @@ class View extends Room {
     }
   }
 
-  public function listOfReservation($category) {
+  public function listOfReservation() {
     global $db;
-    if ($category == "booking") {
-      $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
-      while ($row = $result->fetch_assoc()) {
-        $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
-        $rooms      = [];
-        while ($roomRow = $roomResult->fetch_assoc()) {
-          $rooms[] = $roomRow['RoomID'];
-        }
-        $checkIn  = $row['CheckIn'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckIn'])) : "";
-        $checkOut = $row['CheckOut'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckOut'])) : "";
-        echo "<tr>";
-        echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
-        echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
-        echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
-        echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
-        echo "<td id='txtCheckIn'>$checkIn</td>";
-        echo "<td id='txtCheckOut'>$checkOut</td>";
-        echo "<td id='txtAdults'>{$row['Adults']}</td>";
-        echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "</tr>";
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    while ($row = $result->fetch_assoc()) {
+      $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
+      $rooms      = [];
+      while ($roomRow = $roomResult->fetch_assoc()) {
+        $rooms[] = $roomRow['RoomID'];
       }
+      $checkIn  = $row['CheckIn'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckIn'])) : "";
+      $checkOut = $row['CheckOut'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckOut'])) : "";
+      echo "<tr>";
+      echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
+      echo "<td>{$row['EmailAddress']}</td>";
+      echo "<td>" . join(", ", $rooms) . "</td>";
+      echo "<td>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+      echo "<td>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+      echo "<td>$checkIn</td>";
+      echo "<td>$checkOut</td>";
+      echo "<td>{$row['Adults']}</td>";
+      echo "<td>{$row['Children']}</td>";
+      echo "</tr>";
+    }
+  }
+
+  public function listOfPaypalPayment() {
+    global $db;
+    $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID");
+    while ($row = $result->fetch_assoc()) {
+      echo "<tr>";
+      echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
+      echo "<td>{$row['EmailAddress']}</td>";
+      echo "<td>{$row['PayerID']}</td>";
+      echo "<td>{$row['PaymentID']}</td>";
+      echo "<td>{$row['InvoiceNumber']}</td>";
+      echo "<td>{$row['PaymentAmount']}</td>";
+      echo "<td>{$row['TimeStamp']}</td>";
+      echo "</tr>";
     }
   }
 
@@ -750,6 +785,15 @@ class System {
     }
   }
 
+  public function payBill($bookingID) {
+    global $db;
+    $result      = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
+    $row         = $result->fetch_assoc();
+    $totalAmount = $row['TotalAmount'] + $row['ExtraCharges'];
+    $db->query("UPDATE booking SET AmountPaid=$totalAmount WHERE BookingID=$bookingID");
+    return $db->affected_rows > 0;
+  }
+
   public function isLogged() {
     return isset($_SESSION['account']) ? true : false;
   }
@@ -865,16 +909,18 @@ class System {
 
   public function getDatesFromRange($start, $end) {
     $dates = [];
+    if ($start != $end) {
+      $end = new DateTime($end);
+      $end->add(new DateInterval('P1D'));
 
-    $end = new DateTime($end);
-    $end->add(new DateInterval('P1D'));
+      $period = new DatePeriod(new DateTime($start), new DateInterval('P1D'), $end);
 
-    $period = new DatePeriod(new DateTime($start), new DateInterval('P1D'), $end);
-
-    foreach ($period as $date) {
-      $dates[] = $date->format("Y-m-d");
+      foreach ($period as $date) {
+        $dates[] = $date->format("Y-m-d");
+      }
+    } else {
+      $dates[] = date("Y-m-d", strtotime($start));
     }
-
     return $dates;
   }
 
@@ -923,6 +969,7 @@ class System {
 
 $account = new Account();
 $room    = new Room();
+$booking = new Booking();
 $view    = new View();
 $system  = new System();
 ?>

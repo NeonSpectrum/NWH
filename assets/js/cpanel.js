@@ -1,6 +1,47 @@
 $("input[name=daterange]").daterangepicker({
   autoApply: true
 });
+$("#btnRevertCheckIn,#btnRevertCheckOut").click(function() {
+  var type = $(this).attr("id") == "btnRevertCheckIn" ? "checkIn" : "checkOut";
+  var bookingID = $(this).parent().find("#cmbBookingID").val();
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Revert'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + 'ajax/revertCheck.php',
+        data: "txtBookingID=" + bookingID + "&type=" + type + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response == true) {
+            swal({
+              title: 'Reverted Successfully!',
+              text: "Booking ID: " + $(this).parent().find("#cmbBookingID option:selected").html(),
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
+          } else {
+            swal({
+              title: 'You cannot revert it!',
+              text: "Booking ID: " + $(this).parent().find("#cmbBookingID option:selected").html(),
+              type: 'warning'
+            });
+          }
+        }
+      });
+    }
+  });
+});
 $("#frmGenerateReport").submit(function(e) {
   e.preventDefault();
   location.href = "//" + location.hostname + root + "files/generateReport?daterange=" + $(this).find("input[name=daterange]").val().replace(" - ", "-");
@@ -43,5 +84,17 @@ $("#btnKickAss").click(function() {
   socket.emit("kickass");
 });
 $("#btnForceRefresh").click(function() {
-  socket.emit("forcerefresh");
+  swal({
+    title: 'Are you sure?',
+    text: "You will refresh the page of all users!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Refresh'
+  }).then((result) => {
+    if (result.value) {
+      socket.emit("forcerefresh");
+    }
+  });
 });

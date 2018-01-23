@@ -92,6 +92,13 @@ if (CHAT) {
               </a>
             </li>
           </ul>
+          <ul class="c-menu__submenu u-list">
+            <li>
+              <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/reports/listofpaypalpayment" data-tooltip="tooltip" data-placement="right" title="List Of Paypal Payments"><i class="fa fa-money"></i>
+                <div class="c-menu-item__title"><span>List of Paypal Payments</span></div>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="c-menu__item has-submenu <?php echo $settings; ?>">
           <a class="c-menu__item__inner" data-tooltip="tooltip" data-placement="right" title="Settings"><i class="fa fa-cogs"></i>

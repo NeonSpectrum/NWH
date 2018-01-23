@@ -21,6 +21,10 @@ $(document).ready(function() {
           if (new Date(event.checkInDate).getTime() < new Date(today).getTime()) {
             element.addClass("disabled");
           }
+          if (event.checked == true) {
+            element.css("background-color", "red");
+            element.css("border-color", "red");
+          }
           element.attr("data-html", true);
           element.attr("data-tooltip", "tooltip");
           element.attr("data-placement", "bottom");

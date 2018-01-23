@@ -32,7 +32,7 @@ if (isset($_GET['daterange']) && $system->checkUserLevel(2)) {
   $dates           = $system->getDatesFromRange($from, $to);
   $numberOfBooking = $totalAmount = 0;
   $result          = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_check ON booking.BookingID=booking_check.BookingID ORDER BY booking.BookingID ASC");
-  for ($i = 0; $row = $result->fetch_assoc(); $i++) {
+  while ($row = $result->fetch_assoc()) {
     if (in_array($row['CheckInDate'], $dates) && in_array($row['CheckOutDate'], $dates)) {
       $pdf->Cell($width[0], 10, $system->formatBookingID($row['BookingID']), 1, 0, 'C');
       $pdf->Cell($width[1], 10, $row['FirstName'] . " " . $row['LastName'], 1, 0, 'C');
@@ -48,7 +48,7 @@ if (isset($_GET['daterange']) && $system->checkUserLevel(2)) {
   $pdf->SetFontSize('16');
   $pdf->Cell(0, 15, "Number of Booking: $numberOfBooking", 0, 1, "R");
   $pdf->Cell(0, 5, "Total: P" . number_format($totalAmount), 0, 1, "R");
-  $pdf->Output("ReservationConfirmation . pdf", "I");
+  $pdf->Output("ReservationConfirmation.pdf", "I");
 } else {
   header("location: ../../");
 }
