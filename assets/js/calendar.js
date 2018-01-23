@@ -22,6 +22,9 @@ $(document).ready(function() {
             element.addClass("disabled");
           }
           if (event.checked == true) {
+            element.css("background-color", "black");
+            element.css("border-color", "black");
+          } else if (event.check == true) {
             element.css("background-color", "red");
             element.css("border-color", "red");
           } else if (event.paid == true) {
