@@ -8,5 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   if ($db->affected_rows > 0) {
     $system->log("insert|booking.discount|$bookingID|$discount");
   }
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

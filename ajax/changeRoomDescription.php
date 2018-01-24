@@ -8,5 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $icon            = $system->filter_input($_POST['txtIcon']);
 
   echo $room->editRoomDescription($roomType, $roomDescription, $roomSimpDesc, $icon);
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

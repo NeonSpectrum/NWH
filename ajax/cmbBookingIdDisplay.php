@@ -40,5 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   }
   $arr[4] = array($roomTypes, $html);
   echo json_encode($arr);
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

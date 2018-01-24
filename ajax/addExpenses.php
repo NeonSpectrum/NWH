@@ -15,5 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $system->log("insert|booking.payment|$bookingID|$payment");
     }
   }
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

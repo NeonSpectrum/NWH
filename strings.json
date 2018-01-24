@@ -82,4 +82,7 @@
 }, {
   "name": "CHECK_TERMS_AND_CONDITIONS",
   "value": "Please check the terms and conditions to proceed."
+}, {
+  "name": "INVALID_TOKEN",
+  "value": "Invalid Token!"
 }]

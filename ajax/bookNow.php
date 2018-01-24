@@ -64,5 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
     $arr[0] = false;
   }
   echo json_encode($arr);
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

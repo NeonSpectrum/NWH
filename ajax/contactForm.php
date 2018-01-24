@@ -7,5 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $message       = $_POST['txtMessage'];
 
   echo $system->sendContactForm($name, $email, $contactNumber, $message);
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

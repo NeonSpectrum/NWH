@@ -9,5 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $credentials['lastName']    = $system->filter_input($_POST['txtLastName']);
 
   echo $account->editProfile($credentials, true);
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>
