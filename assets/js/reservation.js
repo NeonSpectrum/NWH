@@ -431,16 +431,15 @@ $(document).ready(function() {
               $('span#txtBookingID').html(response[0]);
               $('span#txtRoomID').html(response[1]);
               if ($("input[name=txtPaymentMethod]:checked").val().toLowerCase() == "paypal") {
-                $("#step-4").find("#btnPrint").before("<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='location.href=\"" + response[2] + "\";$(\"#loadingMode\").fadeIn();'>Pay now with Paypal</button>");
+                $("#step-4").find("#btnPrint").before("<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='window.open(\"" + response[2] + "\");'>Pay now with Paypal</button>");
               }
-              $('#frmBookNow').find('#btnPrint').attr("href", root + "files/generateReservationConfirmation/?BookingID=" + response[0]);
+              $('#frmBookNow').find('#btnPrint').attr("onclick", "window.open('//" + location.hostname + root + "files/generateReservationConfirmation/?BookingID=" + response[0] + "')");
               editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
               $("#loadingMode").fadeOut();
               socket.emit('notification', {
                 user: email_address,
                 messages: "Booked from " + $('#frmBookNow').find("#txtCheckDate").val() + "<br/>Booking ID: " + response[0]
               });
-              // $('#smartwizard ul').find("a").css("pointer-events", "none");
             } else {
               $("#loadingMode").fadeOut();
               $("#step-4").html("<div style='width:100%;text-align:center;font-size:30px;padding:100px'>Something went wrong!</div>");
