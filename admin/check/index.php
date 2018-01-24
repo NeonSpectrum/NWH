@@ -188,7 +188,7 @@ for ($i = 0; $i <= $count; $i++) {
     </div>
   </div>
 </div>
-<div id="modalAddPayment" class="modal" role="dialog" tabindex="-1">
+<div id="modalAddExpenses" class="modal" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -196,7 +196,7 @@ for ($i = 0; $i <= $count; $i++) {
         <h4 class="modal-title text-center"></h4>
       </div>
       <div class="modal-body">
-        <form id="frmAddPayment" method="post" class="form-horizontal">
+        <form id="frmAddExpenses" method="post" class="form-horizontal">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -249,6 +249,7 @@ for ($i = 0; $i <= $count; $i++) {
 <div id="modalReceipt" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
+      <div id="loadingMode" style="background-size: 20%;background-position: 50% 40%;"></div>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>

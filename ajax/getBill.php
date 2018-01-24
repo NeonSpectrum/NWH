@@ -28,24 +28,40 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     }
   }
   $html .= "</table>";
-  $result = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
-  $row    = $result->fetch_assoc();
+  $result        = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
+  $row           = $result->fetch_assoc();
+  $total         = $row['TotalAmount'] + $row['ExtraCharges'] - (strpos($row['Discount'], "%") !== false ? ($row['TotalAmount'] + $row['ExtraCharges']) * $system->percentToDecimal($row['Discount']) : $row['Discount']);
+  $paypal        = 0;
+  $paymentResult = $db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID");
+  while ($paymentRow = $paymentResult->fetch_assoc()) {
+    $paypal += $paymentRow['PaymentAmount'];
+  }
+  $amountPaid = $row['AmountPaid'] + $paypal;
   $html .= "<table style='float:right;margin:20px 0'>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Number of Days:</td>";
   $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>" . count($room->getDatesFromRange($row['CheckIn'], $row['CheckOut'])) . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";
+  $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Extra Charges:</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($row['ExtraCharges'], 2, '.', ',') . "</td>";
+  $html .= "</tr>";
+  $html .= "<tr>";
+  $html .= "<tr>";
+  $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Discount:</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>" . (strpos($row['Discount'], "%") !== false ? $row['Discount'] : "₱&nbsp;" . number_format($total - $total / 1.12 * .12)) . "</td>";
+  $html .= "</tr>";
+  $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Subtotal:</td>";
-  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($row['TotalAmount'] - $row['TotalAmount'] / 1.12 * .12) . "</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / 1.12 * .12, 2, '.', ',') . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>VAT:</td>";
-  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($row['TotalAmount'] / 1.12 * .12) . "</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Total:</td>";
-  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total, 2, '.', ',') . "</td>";
   $html .= "</tr>";
   $html .= "</table>";
 

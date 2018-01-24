@@ -11,13 +11,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       echo "<script>alert('Token was invalid');location.href='../';</script>";
       exit();
     }
-    $paymentId    = $_GET['paymentId'];
-    $payment      = Payment::get($paymentId, $apiContext);
-    $transactions = $payment->getTransactions();
-    $execution    = new PaymentExecution();
-    $execution->setPayerId($_GET['PayerID']);
-    $payment->execute($execution, $apiContext);
-
+    $paymentId = $_GET['paymentId'];
+    try {
+      $payment      = Payment::get($paymentId, $apiContext);
+      $transactions = $payment->getTransactions();
+      $execution    = new PaymentExecution();
+      $execution->setPayerId($_GET['PayerID']);
+      $payment->execute($execution, $apiContext);
+    } catch (\Exception $e) {
+      print_r($e);
+      return;
+    }
     $bookingID = (int) substr($data['txtBookingID'], -4);
     $payerID   = $system->filter_input($_GET['PayerID']);
     $paymentID = $system->filter_input($_GET['paymentId']);

@@ -44,7 +44,7 @@ $("#btnRevertCheckIn,#btnRevertCheckOut").click(function() {
 });
 $("#frmGenerateReport").submit(function(e) {
   e.preventDefault();
-  window.open("//" + location.hostname + root + "files/generateReport?daterange=" + $(this).find("input[name=daterange]").val().replace(" - ", "-"));
+  window.open("//" + location.hostname + root + "files/generateReport?daterange=" + $(this).find("input[name=daterange]").val().replace(" - ", "-"), '_blank', 'height=650,width=1000');
 });
 $("#frmSendToAllAdmin").submit(function(e) {
   e.preventDefault();

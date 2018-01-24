@@ -4,7 +4,7 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
   $calendar = ' is-active';
 } elseif (strpos($_SERVER['PHP_SELF'], 'roomtable')) {
   $roomtable = ' is-active';
-} elseif (strpos($_SERVER['PHP_SELF'], 'booking')) {
+} elseif (strpos($_SERVER['PHP_SELF'], 'booking') && !strpos($_SERVER['PHP_SELF'], 'listofcancelledbooking')) {
   $booking = ' is-active';
 } elseif (strpos($_SERVER['PHP_SELF'], 'check')) {
   $check = ' is-active';
@@ -89,6 +89,13 @@ if (CHAT) {
             <li>
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/reports/listofreservation" data-tooltip="tooltip" data-placement="right" title="List Of Reservation"><i class="fa fa-book"></i>
                 <div class="c-menu-item__title"><span>List of Reservation</span></div>
+              </a>
+            </li>
+          </ul>
+          <ul class="c-menu__submenu u-list">
+            <li>
+              <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/reports/listofcancelledbooking" data-tooltip="tooltip" data-placement="right" title="List Of Cancelled Booking"><i class="fa fa-ban"></i>
+                <div class="c-menu-item__title"><span>List of Cancelled Booking</span></div>
               </a>
             </li>
           </ul>

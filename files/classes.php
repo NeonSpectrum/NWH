@@ -534,8 +534,7 @@ class View extends Room {
       } else {
         $amountPaid = $row['AmountPaid'];
       }
-      if (strtotime($row['CheckInDate']) >= strtotime($date)) {
-        echo $cancelled ? "<tr style='color:red'>" : "<tr>";
+      if (strtotime($row['CheckInDate']) >= strtotime($date) && !$cancelled) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
@@ -549,15 +548,9 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>";
-        if ($this->checkUserLevel(2)) {
-          if (!$cancelled) {
-            echo "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
-          } else {
-            echo "<a class='btnRevertCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Revert'><i class='fa fa-refresh fa-2x'></i></a>";
-          }
-        }
+        echo "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
         echo "<a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>";
-        echo "<a class='col-md-6' onclick='window.open(\"{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
+        echo "<a class='col-md-6' onclick='window.open(\"{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
         echo "</td>";
         echo "</tr>";
       }
@@ -589,12 +582,13 @@ class View extends Room {
         echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
         echo "<td id='txtDiscount'>" . (strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'])) . "</td>";
-        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
+        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount'] + $row['ExtraCharges']) . "</td>";
         echo "<td>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
-        echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>" : "";
+        echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddExpenses col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddExpenses' data-tooltip='tooltip' data-placement='bottom' title='Add Expenses'><i class='fa fa-money fa-2x' style='color:green'></i></a>" : "";
         echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddDiscount col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddDiscount' data-tooltip='tooltip' data-placement='bottom' title='Add Discount'><i class='fa fa-gift fa-2x' style='color:red'></i></a>" : "";
+        echo $checkOutStatus && $checkInStatus ? "<a class='btnShowBill col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Show Bill'><i class='fa fa-money fa-2x' style='color:red'></i></a>" : "";
         echo "</td>";
         echo "</tr>";
       }
@@ -626,6 +620,27 @@ class View extends Room {
     }
   }
 
+  public function listOfCancelledBooking() {
+    global $db;
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children FROM booking JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
+    while ($row = $result->fetch_assoc()) {
+      $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
+      $rooms      = [];
+      while ($roomRow = $roomResult->fetch_assoc()) {
+        $rooms[] = $roomRow['RoomID'];
+      }
+      echo "<tr>";
+      echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
+      echo "<td>{$row['EmailAddress']}</td>";
+      echo "<td>" . join(", ", $rooms) . "</td>";
+      echo "<td>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
+      echo "<td>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
+      echo "<td>{$row['Adults']}</td>";
+      echo "<td>{$row['Children']}</td>";
+      echo "</tr>";
+    }
+  }
+
   public function listOfPaypalPayment() {
     global $db;
     $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID");
@@ -637,7 +652,7 @@ class View extends Room {
       echo "<td>{$row['PaymentID']}</td>";
       echo "<td>{$row['InvoiceNumber']}</td>";
       echo "<td>{$row['PaymentAmount']}</td>";
-      echo "<td>{$row['TimeStamp']}</td>";
+      echo "<td>" . date("m/d/Y h:i:s A", strtotime($row['TimeStamp'])) . "</td>";
       echo "</tr>";
     }
   }
@@ -676,7 +691,7 @@ class View extends Room {
       echo "<td>{$row['ID']}</td>";
       echo "<td>{$row['EmailAddress']}</td>";
       echo "<td>" . str_replace("|", " | ", $row['Action']) . "</td>";
-      echo "<td>{$row['TimeStamp']}</td>";
+      echo "<td>" . date("m/d/Y h:i:s A", strtotime($row['TimeStamp'])) . "</td>";
       echo "</tr>";
     }
   }

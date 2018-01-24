@@ -1,12 +1,12 @@
-$('#modalAddPayment').on('shown.bs.modal', function() {
+$('#modalAddExpenses').on('shown.bs.modal', function() {
   $(this).find('#txtPayment').focus();
 });
 $('#modalAddDiscount').on('shown.bs.modal', function() {
   $(this).find('#txtDiscount').focus();
 });
-$(".btnAddPayment").click(function() {
-  $("#modalAddPayment").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
-  $("#modalAddPayment").find("#txtBookingID").val($(this).attr("id"));
+$(".btnAddExpenses").click(function() {
+  $("#modalAddExpenses").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
+  $("#modalAddExpenses").find("#txtBookingID").val($(this).attr("id"));
 });
 $(".btnAddDiscount").click(function() {
   $("#modalAddDiscount").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
@@ -88,7 +88,7 @@ $('.btnCheckOut').click(function() {
         context: this,
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&table=" + table + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             var date = new Date();
@@ -121,7 +121,7 @@ $('.btnCheckOut').click(function() {
     }
   });
 });
-$("#frmAddPayment").submit(function(e) {
+$("#frmAddExpenses").submit(function(e) {
   e.preventDefault();
   $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
   $(this).find('#btnAdd').attr('disabled', true);
@@ -129,7 +129,7 @@ $("#frmAddPayment").submit(function(e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + "ajax/addPayment.php",
+    url: root + "ajax/addExpenses.php",
     data: $(this).serialize() + "&type=check",
     success: function(response) {
       location.reload();
@@ -236,6 +236,22 @@ $("#btnPay").click(function() {
 $("#btnPrint").click(function() {
   var bookingID = $(this).closest(".modal").find(".modal-title").html().substr(-15);
   location.href = "//" + location.hostname + root + "files/generateReceipt/?BookingID=" + bookingID;
+});
+$(".btnShowBill").click(function() {
+  $("#modalReceipt").find("#loadingMode").fadeIn();
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/getBill.php",
+    data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
+    success: function(response) {
+      $("#modalReceipt").find(".modal-title").html("Booking ID: " + $(this).closest("tr").find("#txtBookingID").html());
+      $("#modalReceipt").find(".modal-body").html(response);
+      $("#modalReceipt").find("input[name=txtBookingID]").val($(this).attr("id"));
+      $("#modalReceipt").find("#loadingMode").fadeOut();
+      $("#modalReceipt").modal("show");
+    }
+  });
 });
 $('#tblBook').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();

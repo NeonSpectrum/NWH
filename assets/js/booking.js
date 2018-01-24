@@ -63,7 +63,7 @@ $(".btnCancel").click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/bookCancel.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val() + "&mode=cancel",
+        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             swal({
@@ -79,44 +79,6 @@ $(".btnCancel").click(function() {
             swal({
               title: 'Error',
               text: 'There was an error cancelling the booking!',
-              type: 'error'
-            });
-          }
-        }
-      });
-    }
-  })
-});
-$(".btnRevertCancel").click(function() {
-  swal({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, revert the cancellation!'
-  }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        type: 'POST',
-        url: root + 'ajax/bookCancel.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val() + "&mode=revert",
-        success: function(response) {
-          if (response == true) {
-            swal({
-              title: 'Reverted!',
-              text: 'The cancellation of the booking has been reverted.',
-              type: 'success'
-            }).then((result) => {
-              if (result.value) {
-                location.reload();
-              }
-            });
-          } else {
-            swal({
-              title: 'Error',
-              text: response,
               type: 'error'
             });
           }

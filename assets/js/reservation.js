@@ -406,13 +406,13 @@ $(document).ready(function() {
             var date1 = new Date(dates[0]);
             var date2 = new Date(dates[1]);
             diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
-            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html();
+            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱&nbsp;" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html();
             total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
             $("#loadingMode").fadeOut();
           }
         });
         $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-        editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Subtotal: <span class='pull-right'>₱" + (total - (total / 1.12 * .12)).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>VAT: <span class='pull-right'>₱" + (total / 1.12 * .12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>Total: <span class='pull-right'>₱" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
+        editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Subtotal: <span class='pull-right'>₱&nbsp;" + (total - (total / 1.12 * .12)).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>VAT: <span class='pull-right'>₱&nbsp;" + (total / 1.12 * .12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>Total: <span class='pull-right'>₱&nbsp;" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
       } else if (stepNumber == 2) {
         $('#reset-btn').css("display", "none");
         $("#loadingMode").fadeIn();
@@ -433,7 +433,7 @@ $(document).ready(function() {
               if ($("input[name=txtPaymentMethod]:checked").val().toLowerCase() == "paypal") {
                 $("#step-4").find("#btnPrint").before("<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='window.open(\"" + response[2] + "\");'>Pay now with Paypal</button>");
               }
-              $('#frmBookNow').find('#btnPrint').attr("onclick", "window.open('//" + location.hostname + root + "files/generateReservationConfirmation/?BookingID=" + response[0] + "')");
+              $('#frmBookNow').find('#btnPrint').attr("onclick", "window.open('//" + location.hostname + root + "files/generateReservationConfirmation/?BookingID=" + response[0] + "','_blank','height=650,width=1000')");
               editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
               $("#loadingMode").fadeOut();
               socket.emit('notification', {
