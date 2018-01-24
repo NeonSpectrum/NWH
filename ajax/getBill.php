@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   }
   $html = "<table border=1 cellspacing=0 style='width:100%;border:0px solid black'>";
   $html .= "<thead>";
-  $html .= "<th style='text-align:center'>Room Type</th>";
-  $html .= "<th style='text-align:center'>Quantity</th>";
-  $html .= "<th style='text-align:center'>Price</th>";
+  $html .= "<th style='text-align:center;padding:10px'>Room Type</th>";
+  $html .= "<th style='text-align:center;padding:10px'>Quantity</th>";
+  $html .= "<th style='text-align:center;padding:10px'>Price</th>";
   $html .= "</thead>";
   for ($i = 0; $i < count($roomList); $i++) {
     if ($quantity[$i] > 0) {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $html .= "<tr>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Discount:</td>";
-  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>" . (strpos($row['Discount'], "%") !== false ? $row['Discount'] : "₱&nbsp;" . number_format($total - $total / 1.12 * .12)) . "</td>";
+  $html .= "<td style='text-align:right;font-size:18px;width:20%;padding-left:20px'>" . (strpos($row['Discount'], "%") !== false ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'], 2, '.', ',')) . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:18px;font-weight:bold'>Subtotal:</td>";

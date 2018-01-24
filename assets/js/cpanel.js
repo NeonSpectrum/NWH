@@ -60,16 +60,16 @@ $("#frmPlayMusic").submit(function(e) {
   var shake = false;
   if (input.slice(-5) == "shake") {
     shake = true;
-    input.replace("shake", "");
+    input = input.replace("shake", "");
   }
   if (input == "hayaanmosila") {
     socket.emit("playmusic", {
-      url: "//" + location.hostname + root + "files/hayaanmosila.mp3",
+      url: "//" + location.hostname + root + "files/music/hayaanmosila.mp3",
       shake: shake
     })
-  } else if (input == "harlemshake") {
+  } else if (input == "harlem") {
     socket.emit("playmusic", {
-      url: "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3",
+      url: "//" + location.hostname + root + "files/music/harlemshake.mp3",
       shake: shake
     });
   } else {
@@ -82,6 +82,45 @@ $("#frmPlayMusic").submit(function(e) {
 });
 $("#btnKickAss").click(function() {
   socket.emit("kickass");
+});
+$("#btnRemoveBooking").click(function() {
+  swal({
+    title: 'Are you sure?',
+    text: "You will remove all booking!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Refresh'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + 'ajax/removeAllBooking.php',
+        data: "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response > 0) {
+            swal({
+              title: 'Removed Successfully!',
+              text: "Number of removed booking: " + response,
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
+          } else {
+            swal({
+              title: 'There was an error removing the booking!',
+              text: "Number of removed booking: " + response,
+              type: 'warning'
+            });
+          }
+        }
+      });
+    }
+  });
 });
 $("#btnForceRefresh").click(function() {
   swal({

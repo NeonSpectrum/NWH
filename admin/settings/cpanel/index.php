@@ -71,6 +71,7 @@ while ($row = $result->fetch_assoc()) {
       <div class="panel panel-default">
         <div class="panel-heading">Website Control</div>
         <div class="panel-body">
+          <button class="btn btn-default btn-block" id="btnRemoveBooking">Remove All Booking</button>
           <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
         </div>
       </div>

@@ -219,7 +219,7 @@ socket.on('playmusic', function(data) {
     var o = "im_first";
     var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
     var a = "mw-strobe_light";
-    var f = data.shake == true ? "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css" : "";
+    var f = data.shake == true ? "//" + location.hostname + root + "files/harlem-shake-style.css" : "";
     var l = "mw_added_css";
     var b = g();
     var w = y();

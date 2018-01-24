@@ -23,11 +23,13 @@ if (isset($_GET['daterange']) && $system->checkUserLevel(2)) {
   $pdf->Cell(130, 22, "Summary Report from " . date("m/d/Y", strtotime($from)) . " to " . date("m/d/Y", strtotime($to)), 0, 1);
 // COLUMNS
   $pdf->SetFontSize('10');
-  $pdf->SetFillColor(230, 230, 230);
+  $pdf->SetFillColor(16, 44, 88);
+  $pdf->SetTextColor(255, 255, 255);
   for ($i = 0; $i < count($column); $i++) {
     $pdf->Cell($width[$i], 10, $column[$i], 1, 0, 'C', true);
   }
   $pdf->Ln();
+  $pdf->SetTextColor(0, 0, 0);
 
   $dates           = $system->getDatesFromRange($from, $to);
   $numberOfBooking = $totalAmount = 0;

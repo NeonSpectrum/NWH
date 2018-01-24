@@ -559,7 +559,7 @@ class View extends Room {
 
   public function check() {
     global $db, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];

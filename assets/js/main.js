@@ -273,7 +273,6 @@ Pace.on('done', function() {
   //     }
   //   });
   // });
-  console.log($('#modalEditReservation').find(".checkDate").val());
   $('#modalEditReservation').find("#txtPaymentMethod").change(function() {
     if ($(this).val() == "PayPal") {
       $("#modalEditReservation").find("#btnPaypal").css("display", "block");
