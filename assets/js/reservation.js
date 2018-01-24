@@ -477,6 +477,10 @@ $(document).ready(function() {
   });
   $("#next-btn").on("click", function() {
     if (location.hash == "#step-3") {
+      if ($("input[name=cbxTermsAndConditions]").prop("checked") == false) {
+        alertNotif("error", CHECK_TERMS_AND_CONDITIONS);
+        return false;
+      }
       swal({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

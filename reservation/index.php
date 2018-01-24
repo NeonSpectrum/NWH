@@ -69,6 +69,9 @@ $children  = $_POST['txtChildren'] ?? '0';
                   <input type="radio" name="txtPaymentMethod" value="PayPal">
                 </label>
               </div>
+              <br/>
+              <input type="checkbox" name="cbxTermsAndConditions" style="width:15px;height:15px">
+              <label style="font-size:20px">I've read the <a style="text-decoration:underline;text-decoration-style:dotted;cursor:pointer" data-toggle="modal" data-target="#modalRules">Terms and Conditions</a></label>
             </div>
           </div>
           <div id="step-4">

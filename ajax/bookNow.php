@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
 
     $arr[0] = $system->formatBookingID($bookingID);
     $arr[1] = "<br/><ul style='list-style-type:none'>";
-    $table  = "<table border='1'><thead><th style='padding:10px'>Room Type</th><th style='padding:10px'>Quantity</th><th style='padding:10px'>Room Number(s)</th></thead><tbody>";
+    $table  = "<table border='1' cellspacing='0'><thead><th style='padding:10px'>Room Type</th><th style='padding:10px'>Quantity</th><th style='padding:10px'>Room Number(s)</th></thead><tbody>";
     foreach ($_POST['rooms'] as $key => $rooms) {
       $roomType     = str_replace(" ", "_", $rooms['roomType']);
       $roomQuantity = $system->filter_input($rooms['roomQuantity']);

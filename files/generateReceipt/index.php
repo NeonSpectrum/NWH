@@ -15,7 +15,7 @@ if (isset($_GET['BookingID'])) {
   } else if ($system->isLogged() && $_SESSION['account']['email'] != $row['EmailAddress'] && !$system->checkUserLevel(1)) {
     echo "You are not allowed to view this file.";
     return;
-  } else {
+  } else if ($result->num_rows > 0) {
     $result = $db->query("SELECT * FROM booking_room WHERE BookingID=$bookingID");
     while ($roomRow = $result->fetch_assoc()) {
       $rooms[] = $roomRow['RoomID'];

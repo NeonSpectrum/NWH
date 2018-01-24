@@ -578,7 +578,7 @@ class View extends Room {
       $checkIn        = $row['CheckIn'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckIn'])) : "";
       $checkOut       = $row['CheckOut'] != null ? date("m/d/Y h:i:s A", strtotime($row['CheckOut'])) : "";
       $dates          = $this->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
-      if (in_array($date, $dates)) {
+      if (in_array($date, $dates) || ($checkIn != "" && $checkOut == "")) {
         echo "<tr>";
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";

@@ -105,7 +105,7 @@ $('.btnCheckOut').click(function() {
                   data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
                   success: function(response) {
                     $("#modalReceipt").find(".modal-title").html("Booking ID: " + $(this).closest("tr").find("#txtBookingID").html());
-                    $("#modalReceipt").find(".modal-body").html("<h1 style='text-align:center'>Total Amount: ₱&nbsp;" + parseInt(response).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</h1>");
+                    $("#modalReceipt").find(".modal-body").html(response);
                     $("#modalReceipt").find("input[name=txtBookingID]").val($(this).attr("id"));
                     $("#modalReceipt").modal("show");
                     $("#modalReceipt").on("hidden.bs.modal", function() {
@@ -232,6 +232,10 @@ $("#btnPay").click(function() {
       });
     }
   });
+});
+$("#btnPrint").click(function() {
+  var bookingID = $(this).closest(".modal").find(".modal-title").html().substr(-15);
+  location.href = "//" + location.hostname + root + "files/generateReceipt/?BookingID=" + bookingID;
 });
 $('#tblBook').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();

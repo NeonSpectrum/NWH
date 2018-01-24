@@ -79,4 +79,7 @@
 }, {
   "name": "REVERT_TAKEN_ERROR",
   "value": "You cannot revert it because the room was already taken."
+}, {
+  "name": "CHECK_TERMS_AND_CONDITIONS",
+  "value": "Please check the terms and conditions to proceed."
 }]

@@ -256,9 +256,10 @@ for ($i = 0; $i <= $count; $i++) {
       <div class="modal-body">
 
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="clear:both">
         <input type="hidden" name="txtBookingID"/>
         <button id="btnPay" type="button" class="btn btn-primary">Pay</button>
+        <button id="btnPrint" type="button" class="btn btn-primary">Print</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
