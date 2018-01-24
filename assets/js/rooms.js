@@ -3,7 +3,7 @@ $('.cbxRoom').change(function() {
   $.ajax({
     type: 'POST',
     url: root + 'ajax/changeStatus.php',
-    data: 'roomID=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val();
+    data: 'roomID=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val()
   });
 });
 $('.btnEditRoom').click(function() {
