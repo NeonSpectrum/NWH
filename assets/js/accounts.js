@@ -56,6 +56,9 @@ $('.btnDeleteAccount').click(function() {
 });
 $("#frmAddAccount").validator().submit(function(e) {
   if (e.isDefaultPrevented()) {
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; ' + PLEASE_FILL_UP + '</div>');
+    });
     return;
   }
   e.preventDefault();

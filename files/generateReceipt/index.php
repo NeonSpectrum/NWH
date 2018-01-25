@@ -26,7 +26,7 @@ if (isset($_GET['BookingID'])) {
     $pdf->AddPage();
     $pdf->setSourceFile('../../assets/receipt.pdf');
     $pdf->useTemplate($pdf->importPage(1), 5, 10, 200);
-    $pdf->SetTitle('Northwood Reservation Confirmation');
+    $pdf->SetTitle('Northwood Hotel Receipt');
     $pdf->SetFont('Arial');
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFontSize('10');
@@ -109,7 +109,7 @@ if (isset($_GET['BookingID'])) {
 
     $pdf->SetXY(51, 251.7);
     $pdf->Write(0, $_SESSION['account']['fname'] . " " . $_SESSION['account']['lname']);
-    $pdf->Output("Receipt.pdf", "I");
+    $pdf->Output("{$bookingID}-Receipt.pdf", "I");
   }
 } else {
   header("location: ../../");

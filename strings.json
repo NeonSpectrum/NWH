@@ -85,4 +85,10 @@
 }, {
   "name": "INVALID_TOKEN",
   "value": "Invalid Token!"
+}, {
+  "name": "PLEASE_FILL_UP",
+  "value": "Please fill up all fields!"
+}, {
+  "name": "NOTHING_TO_BACKUP",
+  "value": "Nothing to backup!"
 }]

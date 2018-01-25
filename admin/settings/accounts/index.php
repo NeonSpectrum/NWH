@@ -54,7 +54,7 @@ $view->accounts();
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -63,7 +63,7 @@ $view->accounts();
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z ]*$" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -72,7 +72,7 @@ $view->accounts();
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker birthDate" placeholder="yyyy-mm-dd" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control datepicker birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" required readonly autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -81,7 +81,7 @@ $view->accounts();
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" maxlength="50" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -158,10 +158,10 @@ $view->accounts();
             <div class="col-sm-5">
               <select id="cmbAccountType" name="cmbAccountType" class="form-control" required>
                 <option value="User">User</option>
-                <option value="Admin">Admin</option>
+                <option value="Receptionist">Receptionist</option>
 <?php
 if ($system->checkUserLevel(2)) {
-  echo "<option value='Manager'>Manager</option>";
+  echo "<option value='Admin'>Admin</option>";
 }
 ?>
               </select>

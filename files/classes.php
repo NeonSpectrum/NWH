@@ -2,9 +2,11 @@
 @session_start();
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /*--------------- VARIABLES --------------*/
-$levels = ["User", "Admin", "Manager", "Creator"];
+$levels = ["User", "Receptionist", "Admin", "Creator"];
 /*----------------------------------------*/
 
 /*----------------------------------------*/
@@ -938,6 +940,89 @@ class System {
     }
     return $dates;
   }
+  public function importdb($file) {
+    $contents = file_get_contents($file);
+
+    $comment_patterns = array('/\/\*.*(\n)*.*(\*\/)?/',
+      '/\s*--.*\n/',
+      '/\s*#.*\n/',
+    );
+    $contents = preg_replace($comment_patterns, "\n", $contents);
+
+    $statements = explode(";", $contents);
+    $statements = preg_replace("/\s/", ' ', $statements);
+    foreach ($statements as $query) {
+      if (trim($query) != '') {
+        $res = $db->query($query);
+      }
+    }
+  }
+
+  public function backupdb($tables, $type) {
+    global $db;
+    $hasData = false;
+    @mkdir("../files/backup/sql");
+    @mkdir("../files/backup/excel");
+    $filename = date('Y-m-d h-i-s A') . " [" . join($tables, "][") . ']';
+    if ($type == "sql" || $type == "all") {
+      $filedir  = "../files/backup/sql/$filename.sql";
+      $filedata = "";
+      foreach ($tables as $table) {
+        $columns = [];
+        $result  = $db->query("SHOW COLUMNS FROM $table");
+        while ($row = $result->fetch_assoc()) {
+          $columns[] = $row['Field'];
+        }
+        $result = $db->query("SELECT * FROM $table");
+        while ($row = $result->fetch_assoc()) {
+          $hasData = true;
+          $data    = [];
+          foreach ($columns as $column) {
+            $data[] = $row["$column"];
+          }
+          $query = "INSERT INTO $table (" . join($columns, ",") . ") VALUES('" . join($data, "','") . "')";
+          $filedata .= $query . PHP_EOL;
+        }
+      }
+      if (trim($filedata) != "") {
+        $file = fopen($filedir, 'w');
+        fwrite($file, $filedata);
+        fclose($file);
+      }
+    }
+    if ($type == "excel" || $type == "all") {
+      $spreadsheet = new Spreadsheet();
+      for ($x = 0; $x < count($tables); $x++) {
+        if ($x > 0) {
+          $spreadsheet->createSheet();
+        }
+        $spreadsheet->setActiveSheetIndex($x);
+        $sheet = $spreadsheet->getActiveSheet();
+        $spreadsheet->getActiveSheet()->setTitle($tables[$x]);
+        $result  = $db->query("SHOW COLUMNS FROM {$tables[$x]}");
+        $columns = [];
+        for ($i = 'A'; $row = $result->fetch_assoc(); $i++) {
+          $columns[] = $row['Field'];
+          $sheet->setCellValue("{$i}1", $row['Field']);
+          $sheet->getStyle("{$i}1")->getFont()->setBold(true);
+          $sheet->getColumnDimension($i)->setAutoSize(true);
+        }
+        $result = $db->query("SELECT * FROM {$tables[$x]}");
+        for ($i = 2; $row = $result->fetch_assoc(); $i++) {
+          $hasData = true;
+          for ($j = 'A', $k = 0; $k < count($columns); $j++, $k++) {
+            $sheet->setCellValue("{$j}{$i}", $row["{$columns[$k]}"]);
+          }
+        }
+      }
+      $spreadsheet->setActiveSheetIndex(0);
+      if ($hasData) {
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("../files/backup/excel/$filename.xlsx");
+      }
+    }
+    return $hasData ? $filename : false;
+  }
 
   public function percentToDecimal($percent) {
     $percent = str_replace('%', '', $percent);
@@ -980,7 +1065,7 @@ class System {
     return openssl_decrypt(str_replace(" ", "+", $string), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR);
   }
 
-}
+};
 
 $account = new Account();
 $room    = new Room();

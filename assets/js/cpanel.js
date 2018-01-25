@@ -137,3 +137,38 @@ $("#btnForceRefresh").click(function() {
     }
   });
 });
+$("#btnBackupSql,#btnBackupExcel,#btnBackupAll").click(function() {
+  var type = $(this).attr("id").replace("btnBackup", "").toLowerCase();
+  var tables = [];
+  $("select[name=cmbTablesToBackup] option:selected").each(function() {
+    tables.push($(this).val());
+  });
+  if (tables.length > 0) {
+    $.ajax({
+      type: 'POST',
+      url: root + "ajax/backupdb.php",
+      data: {
+        tables: tables,
+        type: type,
+        csrf_token: $("input[name=csrf_token]").val()
+      },
+      success: function(response) {
+        if (response.includes("[" + tables.join("][") + "]")) {
+          swal({
+            title: 'Backup Successfully!',
+            text: "Filename: " + response,
+            type: 'success'
+          })
+        } else {
+          swal({
+            title: 'Backup Failed!',
+            text: NOTHING_TO_BACKUP,
+            type: 'warning'
+          })
+        }
+      }
+    });
+  } else {
+    alertNotif("error", "Select a table");
+  }
+});

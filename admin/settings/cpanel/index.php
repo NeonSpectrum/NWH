@@ -76,6 +76,31 @@ while ($row = $result->fetch_assoc()) {
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Database Backup (Ctrl or Shift to select)</div>
+        <div class="panel-body">
+          <select multiple class="form-control" name="cmbTablesToBackup">
+<?php
+$result = $db->query("SHOW TABLES FROM cp018101_nwh");
+while ($row = $result->fetch_assoc()) {
+  echo "<option value='{$row['Tables_in_cp018101_nwh']}'>{$row['Tables_in_cp018101_nwh']}</option>";
+}
+?>
+          </select>
+          <br/>
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button class="btn btn-default" id="btnBackupSql">Backup As SQL</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default" id="btnBackupExcel">Backup As Excel</button>
+            </div>
+          </div>
+          <button class="btn btn-default btn-block" id="btnBackupAll">Backup All</button>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 <?php require_once '../../../footer.php';?>

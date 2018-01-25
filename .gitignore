@@ -1,5 +1,6 @@
 /images/profilepics/
 /node_modules/
+/files/backup/
 
 # ini
 /config.ini
