@@ -961,6 +961,7 @@ class System {
   public function backupdb($tables, $type) {
     global $db;
     $hasData = false;
+    @mkdir("../files/backup");
     @mkdir("../files/backup/sql");
     @mkdir("../files/backup/excel");
     $filename = date('Y-m-d h-i-s A') . " [" . join($tables, "][") . ']';
