@@ -67,6 +67,9 @@ while ($row = $result->fetch_assoc()) {
         </div>
       </div>
     </div>
+<?php
+if ($system->checkUserLevel(3)) {
+  ?>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Website Control</div>
@@ -76,6 +79,9 @@ while ($row = $result->fetch_assoc()) {
         </div>
       </div>
     </div>
+<?php
+}
+?>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Database Backup (Ctrl or Shift to select)</div>
