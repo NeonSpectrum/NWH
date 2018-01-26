@@ -21,7 +21,6 @@ function getQueryVariable(variable) {
 }
 <?php
 @session_start();
-require_once "../../files/autoload.php";
 
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");
@@ -48,7 +47,7 @@ foreach ($config as $name => $value) {
   }
 }
 echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
-echo ", email_address=\"" . (isset($_SESSION['account']) ? $account->email : "") . "\";";
+echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(" ", "+", $_SESSION['account']), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : "") . "\";";
 ?>
 var socket;
 if(location.hostname != "localhost"){
