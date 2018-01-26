@@ -21,6 +21,7 @@ function getQueryVariable(variable) {
 }
 <?php
 @session_start();
+require_once "../../files/strings.php";
 
 $root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");

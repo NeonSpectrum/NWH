@@ -174,6 +174,8 @@ $("#btnBackupSql,#btnBackupExcel,#btnBackupAll").click(function() {
 });
 $("#frmEditConfig").submit(function(e) {
   e.preventDefault();
+  $(this).find("#btnSave").html('<i class="fa fa-spinner fa-pulse"></i> Saving...');
+  $(this).find('#btnSave').attr('disabled', true);
   $(this).find(".lblDisplayError").html('');
   $(this).find('input[type="checkbox"]').each(function() {
     if ($(this).prop("checked") != true) {
@@ -192,6 +194,8 @@ $("#frmEditConfig").submit(function(e) {
         $("#modalEditConfig").modal("hide");
         alertNotif("success", UPDATE_SUCCESS, true);
       } else {
+        $(this).find("#btnSave").html('Save');
+        $(this).find('#btnSave').attr('disabled', true);
         $(this).find(".lblDisplayError").show(function() {
           $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
         });
