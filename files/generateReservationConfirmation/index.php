@@ -9,9 +9,9 @@ if (isset($_GET['BookingID'])) {
   $bookingID = (int) substr(strrchr($_GET['BookingID'], "-"), 1);
   $result    = $db->query("SELECT DISTINCT(RoomType),COUNT(RoomType) AS NumberOfRoomType,FirstName,LastName,AccountType,booking.BookingID,DateCreated,account.EmailAddress,CheckInDate,CheckOutDate,TotalAmount FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON booking_room.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE booking.BookingID=$bookingID GROUP BY RoomType");
   $row       = $result->fetch_assoc();
-  if (!$system->isLogged()) {
+  if (!$account->isLogged()) {
     echo "Login first to view this file.";
-  } else if ($system->isLogged() && $_SESSION['account']['email'] != $row['EmailAddress'] && !$system->checkUserLevel(1)) {
+  } else if ($account->isLogged() && $system->decrypt($_SESSION['account']) != $row['EmailAddress'] && !$account->checkUserLevel(1)) {
     echo "You are not allowed to view this file.";
   } else {
     if ($result->num_rows > 0) {

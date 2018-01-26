@@ -160,7 +160,7 @@ $view->accounts();
                 <option value="User">User</option>
                 <option value="Receptionist">Receptionist</option>
 <?php
-if ($system->checkUserLevel(2)) {
+if ($account->checkUserLevel(2)) {
   echo "<option value='Admin'>Admin</option>";
 }
 ?>

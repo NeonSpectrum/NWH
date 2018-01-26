@@ -79,7 +79,7 @@ if (!$db->connect_error) {
 <div class="homeContent fixed-img">
   <div style="background: rgba(255, 255, 255, 0.3);height:100%;width:100%;">
     <div class="center-block" style="width:80%;margin-bottom:20px;padding-top:5px">
-      <h1 class="wow slideInUp" style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
+      <h1 class="wow slideInUp" style="color:#2389c9;padding:10px;text-align:center;text-shadow: 1px 1px #FFFFFF;background-color:rgba(255,255,255,0.7)">LUXURY MEETS AFFORDABILITY IN THE<br/>HEART OF ALAMINOS CITY</h1>
       <hr style="border-color:white;border-width:3px;width:10%"/>
       <div class="row center-block" style="background:rgba(255,255,255,0.7);padding-top:20px;overflow:hidden">
         <div class="col-md-6 wow slideInLeft">

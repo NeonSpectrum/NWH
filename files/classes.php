@@ -14,6 +14,23 @@ $levels = ["User", "Receptionist", "Admin", "Creator"];
 /*----------------------------------------*/
 class Account extends System {
 
+  public $email, $firstName, $lastName, $profilePicture, $accountType, $birthDate, $contactNumber;
+
+  public function __construct() {
+    global $db;
+    if (isset($_SESSION['account'])) {
+      $this->email          = $this->decrypt($_SESSION['account']);
+      $result               = $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'");
+      $row                  = $result->fetch_assoc();
+      $this->firstName      = $row['FirstName'];
+      $this->lastName       = $row['LastName'];
+      $this->profilePicture = $row['ProfilePicture'];
+      $this->accountType    = $row['AccountType'];
+      $this->birthDate      = $row['BirthDate'];
+      $this->contactNumber  = $row['ContactNumber'];
+    }
+  }
+
   public function login($credentials) {
     global $db;
     $email    = $this->filter_input($credentials['email']);
@@ -23,13 +40,7 @@ class Account extends System {
     $row    = $result->fetch_assoc();
 
     if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
-      $_SESSION['account']['email']         = $row['EmailAddress'];
-      $_SESSION['account']['fname']         = $row['FirstName'];
-      $_SESSION['account']['lname']         = $row['LastName'];
-      $_SESSION['account']['picture']       = $row['ProfilePicture'];
-      $_SESSION['account']['type']          = $row['AccountType'];
-      $_SESSION['account']['birthDate']     = $row['BirthDate'];
-      $_SESSION['account']['contactNumber'] = $row['ContactNumber'];
+      $_SESSION['account'] = $this->encrypt($row['EmailAddress']);
 
       $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email'");
       $this->log("login|account", $email);
@@ -98,7 +109,7 @@ class Account extends System {
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
-        $this->log("insert|account.register|$email']}", (VERIFY_REGISTER ? $_SESSION['account']['email'] : ""));
+        $this->log("insert|account.register|$email']}", (VERIFY_REGISTER ? $this->email : ""));
         return true;
       } else {
         return ALREADY_REGISTERED;
@@ -106,13 +117,7 @@ class Account extends System {
     } else {
       if ($db->affected_rows > 0) {
         if (AUTO_LOGIN_AT_REGISTER) {
-          $_SESSION['account']['email']         = $email;
-          $_SESSION['account']['fname']         = $fname;
-          $_SESSION['account']['lname']         = $lname;
-          $_SESSION['account']['picture']       = "default.png";
-          $_SESSION['account']['type']          = "User";
-          $_SESSION['account']['birthDate']     = $birthDate;
-          $_SESSION['account']['contactNumber'] = $contactNumber;
+          $_SESSION['account'] = $this->encrypt($email);
         }
         $this->log("registered|account|$email");
         return "<script>alert('Registered Successfully!');location.href='$root';</script>";
@@ -230,18 +235,17 @@ class Account extends System {
     } else {
       if (isset($credentials['image'])) {
         $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
-        $filename  = basename($_SESSION['account']['fname'] . $_SESSION['account']['lname']) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
+        $filename  = basename($this->firstName . $this->lastName) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
         $output    = $this->saveImage($credentials['image'], $directory, $filename);
         if ($output == true) {
-          $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$_SESSION['account']['email']}'");
+          $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$this->email}'");
           $this->log("update|account.profilepicture");
-          $_SESSION['account']["picture"] = $filename;
         } else {
           return $output;
         }
       }
 
-      $email         = $this->filter_input($_SESSION['account']['email']);
+      $email         = $this->filter_input($this->email);
       $fname         = $this->filter_input($credentials['fname']);
       $lname         = $this->filter_input($credentials['lname']);
       $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['birthDate'])));
@@ -250,10 +254,6 @@ class Account extends System {
       $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
-        $_SESSION['account']['fname']         = $fname;
-        $_SESSION['account']['lname']         = $lname;
-        $_SESSION['account']['birthDate']     = $birthDate;
-        $_SESSION['account']['contactNumber'] = $contactNumber;
         $this->log("update|account.profile");
         $output = true;
       }
@@ -276,6 +276,27 @@ class Account extends System {
     return ERROR_OCCURED;
   }
 
+  public function isLogged() {
+    return isset($_SESSION['account']) ? true : false;
+  }
+
+  public function checkUserLevel($reqLevel, $kick = false) {
+    global $root, $levels;
+    if ($this->isLogged()) {
+      $currentLevel = array_search($this->accountType, $levels);
+      if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
+        if ($kick) {
+          header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else if ($kick) {
+      $this->redirectLogin();
+    }
+  }
 }
 
 /*----------------------------------------*/
@@ -676,7 +697,7 @@ class View extends Room {
 
         echo "&nbsp;&nbsp;";
       }
-      if ($_SESSION['account']['email'] != $row['EmailAddress'] && $this->checkUserLevel(3)) {
+      if ($this->email != $row['EmailAddress'] && $this->checkUserLevel(3)) {
         echo "<a class='btnDeleteAccount' data-tooltip='tooltip' data-placement='bottom' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
 
       }
@@ -700,7 +721,7 @@ class View extends Room {
 
   public function listBookingID($type = "get") {
     global $db;
-    $email      = $this->filter_input($_SESSION['account']['email']);
+    $email      = $this->filter_input($this->email);
     $result     = $db->query("SELECT * FROM booking WHERE EmailAddress = '$email'");
     $first      = true;
     $bookingIDs = [];
@@ -761,6 +782,22 @@ class View extends Room {
 /*--------------System Class--------------*/
 /*----------------------------------------*/
 class System {
+  public $email, $firstName, $lastName, $profilePicture, $accountType, $birthDate, $contactNumber;
+
+  public function __construct() {
+    global $db;
+    if (isset($_SESSION['account'])) {
+      $this->email          = $this->decrypt($_SESSION['account']);
+      $result               = $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'");
+      $row                  = $result->fetch_assoc();
+      $this->firstName      = $row['FirstName'];
+      $this->lastName       = $row['LastName'];
+      $this->profilePicture = $row['ProfilePicture'];
+      $this->accountType    = $row['AccountType'];
+      $this->birthDate      = $row['BirthDate'];
+      $this->contactNumber  = $row['ContactNumber'];
+    }
+  }
 
   public function addVisitorCount() {
     global $db, $date;
@@ -811,28 +848,6 @@ class System {
     return $db->affected_rows > 0;
   }
 
-  public function isLogged() {
-    return isset($_SESSION['account']) ? true : false;
-  }
-
-  public function checkUserLevel($reqLevel, $kick = false) {
-    global $root, $levels;
-    if ($this->isLogged()) {
-      $currentLevel = array_search($_SESSION['account']['type'], $levels);
-      if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
-        if ($kick) {
-          header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
-    } else if ($kick) {
-      $this->redirectLogin();
-    }
-  }
-
   public function redirectLogin() {
     global $root;
     if (!strpos($_SERVER['QUERY_STRING'], $_SERVER['SERVER_NAME']) && !$this->isLogged()) {
@@ -881,7 +896,7 @@ class System {
 
   public function log($action, $email = "") {
     global $db;
-    $email = $email == "" && isset($_SESSION['account']['email']) ? $_SESSION['account']['email'] : $email;
+    $email = $email == "" && isset($this->email) ? $this->email : $email;
     $date  = date("Y-m-d H:i:s");
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }
@@ -1023,6 +1038,28 @@ class System {
       }
     }
     return $hasData ? $filename : false;
+  }
+
+  public function isLogged() {
+    return isset($_SESSION['account']) ? true : false;
+  }
+
+  public function checkUserLevel($reqLevel, $kick = false) {
+    global $root, $levels;
+    if ($this->isLogged()) {
+      $currentLevel = array_search($this->accountType, $levels);
+      if ($currentLevel < $reqLevel && !($currentLevel >= 1 && ALLOW_CREATOR_PRIVILEGES)) {
+        if ($kick) {
+          header("location: http://{$_SERVER['SERVER_NAME']}{$root}");
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else if ($kick) {
+      $this->redirectLogin();
+    }
   }
 
   public function percentToDecimal($percent) {

@@ -2,8 +2,8 @@
 @session_start();
 require_once '../files/autoload.php';
 
-$name  = $_SESSION['account']['fname'] . $_SESSION['account']['lname'];
-$email = $_SESSION['account']['email'];
+$name  = $account->firstName . $account->lastName;
+$email = $system->decrypt($_SESSION['account']);
 
 $target_dir    = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
 $target_file   = basename($_FILES["file"]["name"]);

@@ -4,7 +4,7 @@ require_once '../files/autoload.php';
 
 parse_str($_POST['data'], $data);
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_token'])) {
-  $email         = $system->filter_input($data['txtEmail'] ?? $_SESSION['account']['email']);
+  $email         = $system->filter_input($data['txtEmail'] ?? $system->decrypt($_SESSION['account']));
   $checkDate     = explode(" - ", $data['txtCheckDate']);
   $checkInDate   = date("Y-m-d", strtotime($checkDate[0]));
   $checkOutDate  = date("Y-m-d", strtotime($checkDate[1]));
@@ -50,9 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $arr[2]    = "http://{$_SERVER['SERVER_NAME']}{$root}payment/process.php/?" . $system->encrypt("txtBookingID=$bookingID&csrf_token={$data['csrf_token']}");
       $subject   = "Northwood Hotel Reservation Confirmation";
 
-      $body = "Dear {$_SESSION['account']['fname']} {$_SESSION['account']['lname']},<br/><br/>";
+      $body = "Dear {$account->firstName} {$account->lastName},<br/><br/>";
       $body .= "Booking ID: " . $system->formatBookingID($bookingID) . "<br/>";
-      $body .= "Guest Type: {$_SESSION['account']['type']}<br/><br/>";
+      $body .= "Guest Type: {$account->accountType}<br/><br/>";
       $body .= "$table<br/><br/>";
       $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID);
 

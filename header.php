@@ -17,7 +17,7 @@ if (!stripos($_SERVER['PHP_SELF'], "admin")) {
   $currentDirectory = strpos($currentDirectory, "nwh") !== false || $currentDirectory == "" ? 'home' : $currentDirectory;
 } else {
   $currentDirectory = $currentDirectory == "admin" ? 'dashboard' : $currentDirectory;
-  $system->checkUserLevel(1, true);
+  $account->checkUserLevel(1, true);
 }
 ?>
 <!DOCTYPE html>

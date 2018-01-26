@@ -1,6 +1,6 @@
 <?php
 require_once '../../../header.php';
-$system->checkUserLevel(2, true);
+$account->checkUserLevel(2, true);
 require_once '../../../files/sidebar.php';
 ?>
 <main class="l-main">
@@ -8,7 +8,7 @@ require_once '../../../files/sidebar.php';
     <h1 class="page-title">Control Panel</h1>
     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
 <?php
-if ($system->checkUserLevel(3)) {
+if ($account->checkUserLevel(3)) {
   ?>
     <div class="col-md-4">
       <div class="panel panel-default">
@@ -68,13 +68,14 @@ while ($row = $result->fetch_assoc()) {
       </div>
     </div>
 <?php
-if ($system->checkUserLevel(3)) {
+if ($account->checkUserLevel(3)) {
   ?>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Website Control</div>
         <div class="panel-body">
           <button class="btn btn-default btn-block" id="btnRemoveBooking">Remove All Booking</button>
+          <button class="btn btn-default btn-block" id="btnEditConfig" data-toggle="modal" data-target="#modalEditConfig">Edit Config File</button>
           <button class="btn btn-default btn-block" id="btnForceRefresh">Force Refresh</button>
         </div>
       </div>
@@ -109,4 +110,53 @@ while ($row = $result->fetch_assoc()) {
     </div>
   </div>
 </main>
+<?php
+if ($account->checkUserLevel(3)) {
+  ?>
+<div id="modalEditConfig" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Edit Config File</h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmEditConfig" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+<?php
+$config = parse_ini_file(__DIR__ . "/../../../config.ini");
+  foreach ($config as $name => $value) {
+    echo "<div class='form-group'>
+            <label class='col-sm-4 control-label'>" . ucwords(str_replace("_", " ", $name)) . "</label>
+            <div class='col-sm-6'>";
+    if ($value == "1" && $value == true && $name != "edit_reservation_days") {
+      echo "<input type='checkbox' class='form-control' style='width:30px;height:30px' name='$name' checked/>";
+      echo "<input type='hidden' name='$name' value='off'/>";
+    } else if ($value == "" && $value == false) {
+      echo "<input type='checkbox' class='form-control' style='width:30px;height:30px' name='$name'/>";
+      echo "<input type='hidden' name='$name' value='off'/>";
+    } else if ($value > 0) {
+      echo "<input type='number' class='form-control' name='$name' value='$value'/>";
+    } else {
+      echo "<input type='text' class='form-control' name='$name' value='$value'/>";
+    }
+
+    echo "</div></div>";
+  }
+  ?>
+          <div class="modal-footer">
+            <button id="btnSave" type="submit" class="btn btn-info">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+}
+?>
 <?php require_once '../../../footer.php';?>

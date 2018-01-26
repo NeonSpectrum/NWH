@@ -4,7 +4,7 @@ use setasign\Fpdi\Fpdi;
 
 require_once '../autoload.php';
 
-if (isset($_GET['daterange']) && $system->checkUserLevel(2)) {
+if (isset($_GET['daterange']) && $account->checkUserLevel(2)) {
   $daterange = explode("-", $_GET['daterange']);
   $from      = $daterange[0];
   $to        = $daterange[1];

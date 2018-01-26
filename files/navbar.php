@@ -62,7 +62,7 @@ if ($currentDirectory == "home") {
           </ul>
         </li>
 <?php
-if (!$system->isLogged()) {
+if (!$account->isLogged()) {
   ?>
         <li class="dropdown">
           <!-- <a data-toggle="dropdown" style="cursor:pointer;user-select:none;position:fixed;left:2%;top:25%;z-index:10;background-color:white;padding:200px;font-size:300px">LOGIN</a> -->
@@ -114,15 +114,15 @@ if (!$system->isLogged()) {
   ?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']["picture"]}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']["picture"]}"); ?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo "{$_SESSION['account']["fname"]} {$_SESSION['account']["lname"]}"; ?>
+              <?php echo "{$account->firstName} {$account->lastName}"; ?>
             </div>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" style="color:white;width:200px;margin-top:-1px;margin-right:-1px;">
 <?php
-if ($system->checkUserLevel(1)) {
+if ($account->checkUserLevel(1)) {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
   }
   ?>
@@ -140,7 +140,7 @@ if ($system->checkUserLevel(1)) {
   </div>
 </nav>
 <?php
-if (!$system->isLogged()) {
+if (!$account->isLogged()) {
   ?>
 <div id="modalRegistration" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
@@ -333,7 +333,7 @@ if (VERIFY_REGISTER) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']["picture"]}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']["picture"]}") ?>" style="object-fit: cover"/>
+                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}") ?>" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">
@@ -341,7 +341,7 @@ if (VERIFY_REGISTER) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" value="<?php echo $_SESSION['account']['fname']; ?>" required>
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" value="<?php echo $account->firstName; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -350,7 +350,7 @@ if (VERIFY_REGISTER) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" value="<?php echo $_SESSION['account']['lname']; ?>" required>
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" value="<?php echo $account->lastName; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -361,7 +361,7 @@ if (VERIFY_REGISTER) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date("m/d/Y", strtotime($_SESSION['account']['birthDate'])); ?>" required readonly>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date("m/d/Y", strtotime($account->birthDate)); ?>" required readonly>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -370,7 +370,7 @@ if (VERIFY_REGISTER) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" value="<?php echo $_SESSION['account']['contactNumber']; ?>" required>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" value="<?php echo $account->contactNumber; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

@@ -1,6 +1,6 @@
 <?php
 require_once "../header.php";
-if ($system->isLogged()) {
+if ($account->isLogged()) {
   header("Location: $root");
 }
 ?>

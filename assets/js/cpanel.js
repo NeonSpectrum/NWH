@@ -172,3 +172,30 @@ $("#btnBackupSql,#btnBackupExcel,#btnBackupAll").click(function() {
     alertNotif("error", "Select a table");
   }
 });
+$("#frmEditConfig").submit(function(e) {
+  e.preventDefault();
+  $(this).find(".lblDisplayError").html('');
+  $(this).find('input[type="checkbox"]').each(function() {
+    if ($(this).prop("checked") != true) {
+      $(this).prop("disabled", true);
+    } else {
+      $(this).parent().find("input[type=hidden]").prop("disabled", true);
+    }
+  })
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/editConfig.php',
+    data: $(this).serialize(),
+    success: function(response) {
+      if (response == true) {
+        $("#modalEditConfig").modal("hide");
+        alertNotif("success", UPDATE_SUCCESS, true);
+      } else {
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
+        });
+      }
+    }
+  });
+});

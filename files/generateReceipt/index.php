@@ -9,10 +9,10 @@ if (isset($_GET['BookingID'])) {
   $bookingID = (int) substr(strrchr($_GET['BookingID'], "-"), 1);
   $result    = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
   $row       = $result->fetch_assoc();
-  if (!$system->isLogged()) {
+  if (!$account->isLogged()) {
     echo "Login first to view this file.";
     return;
-  } else if ($system->isLogged() && $_SESSION['account']['email'] != $row['EmailAddress'] && !$system->checkUserLevel(1)) {
+  } else if ($account->isLogged() && $system->decrypt($_SESSION['account']) != $row['EmailAddress'] && !$account->checkUserLevel(1)) {
     echo "You are not allowed to view this file.";
     return;
   } else if ($result->num_rows > 0) {
@@ -108,7 +108,7 @@ if (isset($_GET['BookingID'])) {
     $pdf->Write(0, "P " . number_format($totalAmount, 2, ".", ","));
 
     $pdf->SetXY(51, 251.7);
-    $pdf->Write(0, $_SESSION['account']['fname'] . " " . $_SESSION['account']['lname']);
+    $pdf->Write(0, $account->firstName . " " . $account->lastName);
     $pdf->Output("{$bookingID}-Receipt.pdf", "I");
   }
 } else {

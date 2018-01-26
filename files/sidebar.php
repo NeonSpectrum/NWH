@@ -26,9 +26,9 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
     <div class="header-title">
       Admin Page
     </div>
-    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$_SESSION['account']['picture']}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$_SESSION['account']['picture']}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$_SESSION['account']['fname']} {$_SESSION['account']['lname']}"; ?></span>
+    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
 <?php
-if ($system->checkUserLevel(3)) {
+if ($account->checkUserLevel(3)) {
   ?>
     <a id="btnGitUpdate" data-tooltip="tooltip" data-placement="bottom" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
 <?php
@@ -124,7 +124,7 @@ if (CHAT) {
               </a>
             </li>
 <?php
-if ($system->checkUserLevel(3)) {
+if ($account->checkUserLevel(3)) {
   ?>
             <li>
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/eventlogs" data-tooltip="tooltip" data-placement="right" title="Event Logs"><i class="fa fa-database"></i>
@@ -133,7 +133,7 @@ if ($system->checkUserLevel(3)) {
             </li>
 <?php
 }
-if ($system->checkUserLevel(2)) {
+if ($account->checkUserLevel(2)) {
   ?>
             <li>
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/settings/cpanel" data-tooltip="tooltip" data-placement="right" title="Control Panel"><i class="fa fa-sliders"></i>
