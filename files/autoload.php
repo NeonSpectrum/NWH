@@ -23,4 +23,5 @@ $apiContext = new \PayPal\Rest\ApiContext(
     SECRET_PAYPAL
   )
 );
+echo CLIENT_ID_PAYPAL;
 ?>
