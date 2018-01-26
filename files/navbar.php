@@ -79,7 +79,7 @@ if (!$system->isLogged()) {
                     <label class="sr-only">Email address</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                      <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" required autofocus>
+                      <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" maxlength="100" required autofocus>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div class="help-block with-errors"></div>
@@ -88,7 +88,7 @@ if (!$system->isLogged()) {
                     <label class="sr-only">Password</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" required>
+                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="255" required>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div class="help-block with-errors"></div>
@@ -166,7 +166,7 @@ if (!$system->isLogged()) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -175,7 +175,7 @@ if (!$system->isLogged()) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -184,7 +184,7 @@ if (!$system->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -193,7 +193,7 @@ if (!$system->isLogged()) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -204,7 +204,7 @@ if (!$system->isLogged()) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="example@domain.com" data-error="<?php echo REGISTER_EMAIL_ERROR; ?>" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="example@domain.com" maxlength="100" data-error="<?php echo REGISTER_EMAIL_ERROR; ?>" data-remote="<?php echo $root; ?>account?mode=checkEmail" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -213,7 +213,7 @@ if (!$system->isLogged()) {
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -222,7 +222,7 @@ if (!$system->isLogged()) {
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" data-match="#txtPassword" data-match-error="Whoops, these don't match" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -261,7 +261,7 @@ if (VERIFY_REGISTER) {
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" required/>
+              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" maxlength="100" required/>
             </div>
           </div>
         </div>
@@ -341,7 +341,7 @@ if (VERIFY_REGISTER) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" value="<?php echo $_SESSION['account']['fname']; ?>" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" value="<?php echo $_SESSION['account']['fname']; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -350,7 +350,7 @@ if (VERIFY_REGISTER) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" value="<?php echo $_SESSION['account']['lname']; ?>" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" value="<?php echo $_SESSION['account']['lname']; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -361,7 +361,7 @@ if (VERIFY_REGISTER) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date("m/d/Y", strtotime($_SESSION['account']['birthDate'])); ?>" required readonly autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date("m/d/Y", strtotime($_SESSION['account']['birthDate'])); ?>" required readonly>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -370,7 +370,7 @@ if (VERIFY_REGISTER) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" value="<?php echo $_SESSION['account']['contactNumber']; ?>" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" value="<?php echo $_SESSION['account']['contactNumber']; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

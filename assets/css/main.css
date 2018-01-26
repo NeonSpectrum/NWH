@@ -178,7 +178,7 @@ img.white-border {
   background: rgb(0, 75, 122);
   width: 100%;
   color: white;
-  padding: 5px 0px 5px 80px;
+  padding: 5px 0px 5px 7vmax;
 }
 
 @media only screen and (max-width:767px) {

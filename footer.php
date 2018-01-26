@@ -28,7 +28,7 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !strpos(strtolower($_S
   </div>
 </div>
 <div class="footer-copyright">
-  &copy; 2018 Northwood Hotel. All Rights Reserved
+  &copy; 2017-<?php echo date('Y'); ?> Northwood Hotel. All Rights Reserved
 </div>
 
 <!-- REQUIRED JS -->

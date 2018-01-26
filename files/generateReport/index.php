@@ -50,7 +50,7 @@ if (isset($_GET['daterange']) && $system->checkUserLevel(2)) {
   $pdf->SetFontSize('16');
   $pdf->Cell(0, 15, "Number of Booking: $numberOfBooking", 0, 1, "R");
   $pdf->Cell(0, 5, "Total: P" . number_format($totalAmount), 0, 1, "R");
-  $pdf->Output("{$_POST['daterange']}-Report.pdf", "I");
+  $pdf->Output("{$_GET['daterange']}-Report.pdf", "I");
 } else {
   header("location: ../../");
 }
