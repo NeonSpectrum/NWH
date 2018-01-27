@@ -4,7 +4,7 @@ require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
   <div class="well center-block" style="width:75%;background:rgba(255,255,255,0.7)">
-    <h1 style="margin-top:0px;text-align:center">CONTACT US</h1>
+    <h1 style="margin-top:0px;text-align:center;font-weight:bold">CONTACT US</h1>
     <hr style="border-color:black"/>
     <div class="box-content">
       <h2>Northwood Hotel</h2><br/>
