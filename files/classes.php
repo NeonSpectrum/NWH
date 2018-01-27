@@ -692,14 +692,12 @@ class View extends Room {
       echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       echo "<td>";
-      if ($row['AccountType'] != "Owner" || $this->checkUserLevel(2)) {
+      if ($this->checkUserLevel(2) || $this->checkUserLevel(2)) {
         echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
-
         echo "&nbsp;&nbsp;";
       }
       if ($this->email != $row['EmailAddress'] && $this->checkUserLevel(3)) {
         echo "<a class='btnDeleteAccount' data-tooltip='tooltip' data-placement='bottom' title='Delete' id='{$row['EmailAddress']}' style='cursor:pointer'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
-
       }
       echo "</td>";
       echo "</tr>";

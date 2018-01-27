@@ -286,6 +286,7 @@ $(document).ready(function() {
     if (stepPosition === 'first') {
       $('#prev-btn').css("display", "none");
       $("#next-btn").prop("disabled", false);
+      $("#btnShowMore").html("Show Other Rooms");
     } else if (stepPosition === 'final') {
       $(".navbar-btn").remove();
     }
