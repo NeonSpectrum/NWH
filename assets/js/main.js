@@ -317,26 +317,28 @@ Pace.on('done', function() {
     }
   });
   $('#modalEditReservation').find("#btnPaypal").click(function() {
-    $(this).find(".lblDisplayError").html('');
-    $(this).html('<i class="fa fa-spinner fa-pulse"></i> Please wait ...');
-    $(this).prop("disabled", true);
-    $.ajax({
-      context: this,
-      type: 'POST',
-      url: root + "ajax/getPaypalLink.php",
-      data: "txtBookingID=" + $(this).closest("form").find("#cmbBookingID").val() + "&csrf_token=" + $(this).closest("form").find("input[name=csrf_token]").val(),
-      success: function(response) {
-        if (response != false) {
-          location.href = response;
-        } else {
-          $(this).closest("form").find(".lblDisplayError").show(function() {
-            $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Already Paid!</div>');
-          });
-          $(this).html('Pay now with Paypal');
-          $(this).prop("disabled", false);
+    if ($(this).find("#cmbBookingID").val() != null) {
+      $(this).find(".lblDisplayError").html('');
+      $(this).html('<i class="fa fa-spinner fa-pulse"></i> Please wait ...');
+      $(this).prop("disabled", true);
+      $.ajax({
+        context: this,
+        type: 'POST',
+        url: root + "ajax/getPaypalLink.php",
+        data: "txtBookingID=" + $(this).closest("form").find("#cmbBookingID").val() + "&csrf_token=" + $(this).closest("form").find("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response != false) {
+            location.href = response;
+          } else {
+            $(this).closest("form").find(".lblDisplayError").show(function() {
+              $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Already Paid!</div>');
+            });
+            $(this).html('Pay now with Paypal');
+            $(this).prop("disabled", false);
+          }
         }
-      }
-    });
+      });
+    }
   });
   // LOGIN
   $("#frmLogin").submit(function(e) {
