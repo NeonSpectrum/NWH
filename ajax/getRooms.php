@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $htmls[$i] .= "<a href='$image' style='" . ($first == true ? "" : "display:none") . "'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' style='width:100%'></a>";
         $first = false;
       }
-      $htmls[$i] .= "</div><div class='col-md-6' id='txtRooms'><h3 id='roomName' style='margin-bottom:20px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "</h3>{$row['RoomDescription']}<br/><div style='padding: 10px 10px' id='txtIcons'>";
+      $htmls[$i] .= "</div><div class='col-md-6' id='txtRooms'><h3 id='roomName' style='margin-bottom:20px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "</h3>" . str_replace("\n", "<br/>", $row['RoomDescription']) . "<br/><div style='padding: 10px 10px' id='txtIcons'>";
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
         $iconArr = explode("=", $value);

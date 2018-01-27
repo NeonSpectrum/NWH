@@ -529,7 +529,7 @@ class View extends Room {
       echo "</td>";
       echo "<td style='vertical-align:top'>
           <h3><b>" . str_replace("_", " ", $row['RoomType']) . "</b></h3><br/>
-          {$row['RoomDescription']}";
+          " . str_replace("\n", "<br/>", $row['RoomDescription']);
       echo "<div style='padding: 10px 10px'>";
       $icons = explode("\n", $row['Icons']);
       foreach ($icons as $key => $value) {
@@ -766,7 +766,7 @@ class View extends Room {
       while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td style='width:10%'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td style='width:40%' id='txtRoomDescription'>{$row['RoomDescription']}</td>";
+        echo "<td style='width:40%' id='txtRoomDescription'>" . str_replace("\n", "<br/>", $row['RoomDescription']) . "</td>";
         echo "<td style='width:20%' id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
         echo "<td style='width:20%' id='txtIcon'>" . nl2br($row['Icons']) . "</td>";
         echo "<td style='width:10%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a></td>";

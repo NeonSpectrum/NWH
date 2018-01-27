@@ -156,7 +156,7 @@ $view->accounts();
           <div class="form-group">
             <label class="col-sm-2 control-label">Account Type: </label>
             <div class="col-sm-5">
-              <select id="cmbAccountType" name="cmbAccountType" class="form-control" required>
+              <select id="cmbAccountType" name="cmbAccountType" class="form-control" required/>
                 <option value="User">User</option>
                 <option value="Receptionist">Receptionist</option>
 <?php

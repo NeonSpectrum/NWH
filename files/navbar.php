@@ -82,16 +82,14 @@ if (!$account->isLogged()) {
                       <input id="txtEmail" type="email" class="form-control" name="txtEmail" placeholder="Email address" maxlength="100" required autofocus>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label class="sr-only">Password</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="255" required>
+                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="100" required>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    <div class="help-block with-errors"></div>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div>
                     <!-- <div class="checkbox">
                       <label>

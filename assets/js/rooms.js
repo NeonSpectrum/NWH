@@ -8,7 +8,7 @@ $('.cbxRoom').change(function() {
 });
 $('.btnEditRoom').click(function() {
   var roomType = $(this).attr("id").replace("_", " ");
-  var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html();
+  var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html().replace("<br>", "");
   var roomSimpDesc = $(this).parent().parent().find("#txtRoomSimpDesc").html().split("<br>").join("");
   var icons = $(this).parent().parent().find("#txtIcon").html().split("<br>").join("");
   $('.modal-title').html(roomType);

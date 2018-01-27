@@ -8,6 +8,11 @@ $('.btnEditAccount').click(function() {
   $('#modalEditAccount').find("#txtFirstName").val(firstName);
   $('#modalEditAccount').find("#txtLastName").val(lastName);
   $('#modalEditAccount').find("#cmbAccountType").val(accountType);
+  if (accountType != "User") {
+    $("#modalEditAccount").find("option[value=User]").css("display", "none");
+  } else {
+    $("#modalEditAccount").find("option[value=User]").removeAttr("style");
+  }
   if ($('#modalEditAccount').find("#cmbAccountType option[value='" + accountType + "']").val() === undefined) {
     $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "none");
   } else {
