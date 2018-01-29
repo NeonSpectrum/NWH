@@ -235,7 +235,7 @@ $("#btnPay").click(function() {
 });
 $("#btnPrint").click(function() {
   var bookingID = $(this).closest(".modal").find(".modal-title").html().substr(-15);
-  location.href = "//" + location.hostname + root + "files/generateReceipt/?BookingID=" + bookingID;
+  window.open("//" + location.hostname + root + "files/generateReceipt/?BookingID=" + bookingID, '_blank', 'height=650,width=1000');
 });
 $(".btnShowBill").click(function() {
   $("#modalReceipt").find("#loadingMode").fadeIn();

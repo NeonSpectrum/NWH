@@ -31,10 +31,10 @@ if (isset($_GET['BookingID'])) {
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFontSize('10');
 
-    $pdf->SetXY(160, 50);
+    $pdf->SetXY(160, 44);
     $pdf->Write(0, date("M d, Y", strtotime($row['CheckOut'])));
 
-    $pdf->SetXY(159, 55.5);
+    $pdf->SetXY(159, 50);
     $pdf->Write(0, $_GET['BookingID']);
 
     $pdf->SetXY(38, 95.2);
@@ -79,10 +79,10 @@ if (isset($_GET['BookingID'])) {
       }
     }
     $totalAmount = 0;
-    for ($i = 0, $y = 153; $i < count($roomList); $i++) {
+    for ($i = 0, $j = 1, $y = 153; $i < count($roomList); $i++) {
       if ($quantity[$i] > 0) {
         $pdf->SetXY(20, $y);
-        $pdf->Write(0, $i + 1);
+        $pdf->Write(0, $j);
         $pdf->SetXY(28, $y);
         $pdf->Write(0, str_replace("_", " ", $roomList[$i]));
         $pdf->SetXY(105.5, $y);
@@ -92,8 +92,9 @@ if (isset($_GET['BookingID'])) {
         $pdf->SetXY(150, $y);
         $pdf->Write(0, "P " . number_format($room->getRoomPrice($roomList[$i]) * $quantity[$i], 2, ".", ","));
         $totalAmount += $room->getRoomPrice($roomList[$i]) * $quantity[$i];
+        $j += 1;
+        $y += 5;
       }
-      $y += 5;
     }
     $pdf->SetXY(150, 206);
     $pdf->Write(0, "P " . number_format($totalAmount - $totalAmount / 1.12 * .12, 2, ".", ","));
