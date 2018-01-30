@@ -680,7 +680,7 @@ class View extends Room {
 
   public function listOfReservation() {
     global $db;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount, ExtraCharges FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -699,6 +699,7 @@ class View extends Room {
       echo "<td>$checkOut</td>";
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
+      echo "<td>₱&nbsp;" . number_format($row['TotalAmount'] + $row['ExtraCharges']) . "</td>";
       echo "</tr>";
     }
   }

@@ -19,6 +19,7 @@ require_once '../../../files/sidebar.php';
             <th>Check Out</th>
             <th>Adults</th>
             <th>Children</th>
+            <th>Total Amount</th>
           </thead>
           <tbody>
 <?php
