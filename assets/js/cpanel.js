@@ -91,7 +91,7 @@ $("#btnRemoveBooking").click(function() {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Refresh'
+    confirmButtonText: 'Remove'
   }).then((result) => {
     if (result.value) {
       $.ajax({
@@ -204,8 +204,7 @@ $("#frmEditConfig").submit(function(e) {
   });
 });
 $("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
-  var type = $(this).attr("id").replace("btnMark", "");
-  type = type == "btnRevertPromo" ? "" : type;
+  var type = $(this).attr("id") == "btnRevertPromo" ? "" : $(this).attr("id").replace("btnMark", "");
   swal({
     title: 'Are you sure?',
     text: type == "" ? "You will revert the mark today!" : "You will mark today as " + type + "!",
@@ -213,7 +212,7 @@ $("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Refresh'
+    confirmButtonText: type == "" ? "Revert" : "Refresh"
   }).then((result) => {
     if (result.value) {
       $.ajax({
