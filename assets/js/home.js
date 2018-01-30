@@ -11,6 +11,7 @@ $(window).on('load', function() {
       $AutoPlay: 3000,
       $PauseOnHover: 1,
       $FillMode: 1,
+      $ArrowKeyNavigation: false,
       $SlideWidth: 400,
       $Cols: 2,
       $Align: 100,
@@ -56,6 +57,7 @@ var home_options = {
   $AutoPlay: true,
   $PauseOnHover: 1,
   $Idle: 3000,
+  $ArrowKeyNavigation: false,
   $DragOrientation: 1,
   $PauseOnHover: 0,
   $ArrowNavigatorOptions: {
@@ -119,6 +121,7 @@ $('.btnMoreInfo').click(function() {
       $("#modalRoom").find("#description").html(response[1]);
       var options = {
         $FillMode: 2,
+        $ArrowKeyNavigation: false,
         $DragOrientation: 1, //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $Cols is greater than 1, or parking position is not 0)
         $ArrowNavigatorOptions: { //[Optional] Options to specify and enable arrow navigator or not
           $Class: $JssorArrowNavigator$, //[Requried] Class to create arrow navigator instance
