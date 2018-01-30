@@ -212,7 +212,7 @@ $("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: type == "" ? "Revert" : "Refresh"
+    confirmButtonText: type == "" ? "Revert" : "Mark"
   }).then((result) => {
     if (result.value) {
       $.ajax({
