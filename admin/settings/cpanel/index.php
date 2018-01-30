@@ -85,6 +85,16 @@ if ($account->checkUserLevel(3) || $_SERVER['SERVER_NAME'] == "localhost") {
 ?>
     <div class="col-md-4">
       <div class="panel panel-default">
+        <div class="panel-heading">Price Promo</div>
+        <div class="panel-body">
+          <button class="btn btn-default btn-block" id="btnMarkSeason">Mark Today As Season</button>
+          <button class="btn btn-default btn-block" id="btnMarkHoliday">Mark Today As Holiday</button>
+          <button class="btn btn-default btn-block" id="btnRevertPromo">Revert Today's Promo</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
         <div class="panel-heading">Database Backup (Ctrl or Shift to select)</div>
         <div class="panel-body">
           <select multiple class="form-control" name="cmbTablesToBackup">

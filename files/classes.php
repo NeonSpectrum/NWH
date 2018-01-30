@@ -445,11 +445,13 @@ class Room extends System {
 
   public function getRoomPrice($room, $regular = false) {
     global $db, $date;
-    $room   = str_replace(" ", "_", $room);
-    $result = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
-    $row    = $result->fetch_assoc();
-    if ($regular) {
-      return $row['RegularRate'];
+    $room             = str_replace(" ", "_", $room);
+    $result           = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
+    $row              = $result->fetch_assoc();
+    $checkPromoResult = $db->query("SELECT * FROM promo_dates WHERE Date='$date'");
+    $checkPromoRow    = $checkPromoResult->fetch_assoc();
+    if ($checkPromoResult->num_rows > 0 && !$regular) {
+      return $row["{$checkPromoRow['PromoType']}Rate"];
     } else {
       return $row['RegularRate'];
     }
@@ -547,11 +549,11 @@ class View extends Room {
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
               <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
             </div>
           </figcaption>
-          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
         </figure>
         <div style='position:relative;height:20px;margin-top:-6px'>
           <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
@@ -863,6 +865,28 @@ class System {
       $this->accountType    = $row['AccountType'];
       $this->birthDate      = $row['BirthDate'];
       $this->contactNumber  = $row['ContactNumber'];
+    }
+  }
+
+  public function markToday($type = "") {
+    global $db, $date;
+    if ($type != "") {
+      $db->query("DELETE FROM promo_dates WHERE Date='$date'");
+      $db->query("INSERT INTO promo_dates VALUES('" . ucfirst($type) . "','$date')");
+      if ($db->affected_rows > 0) {
+        $this->log("add|promo_dates|$type");
+        return true;
+      } else {
+        return NOTHING_CHANGED;
+      }
+    } else {
+      $db->query("DELETE FROM promo_dates WHERE Date='$date'");
+      if ($db->affected_rows > 0) {
+        $this->log("delete|promo_dates|$type");
+        return true;
+      } else {
+        return NOTHING_CHANGED;
+      }
     }
   }
 

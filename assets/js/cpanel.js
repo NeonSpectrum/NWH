@@ -203,3 +203,42 @@ $("#frmEditConfig").submit(function(e) {
     }
   });
 });
+$("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
+  var type = $(this).attr("id").replace("btnMark", "");
+  type = type == "btnRevertPromo" ? "" : type;
+  swal({
+    title: 'Are you sure?',
+    text: type == "" ? "You will revert the mark today!" : "You will mark today as " + type + "!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Refresh'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: root + "ajax/markToday.php",
+        data: "type=" + type + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response == true) {
+            swal({
+              title: type == "" ? "Reverted" : "Marked!",
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
+          } else {
+            swal({
+              title: 'Something went wrong!',
+              text: 'Error: ' + response,
+              type: 'warning'
+            });
+          }
+        }
+      });
+    }
+  });
+});
