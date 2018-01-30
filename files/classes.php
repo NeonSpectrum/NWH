@@ -837,7 +837,7 @@ class View extends Room {
         echo "<td id='txtSeasonRate'>₱&nbsp;" . number_format($row['SeasonRate']) . "</td>";
         echo "<td id='txtHolidayRate'>₱&nbsp;" . number_format($row['HolidayRate']) . "</td>";
         echo "<td style='width:7%'>";
-        echo "<a class='btnEditRoomType col-md-6' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
+        echo "<a class='btnEditRoomType col-md-6' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditRoomType' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
         echo "<a class='btnDeleteRoomType col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
         echo "</td>";
         echo "</tr>";
