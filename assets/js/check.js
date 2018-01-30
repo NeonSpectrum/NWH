@@ -29,7 +29,6 @@ $(".checkDate").change(function() {
   });
 });
 $('.btnCheckIn').click(function() {
-  var table = $(this).closest("table").attr("id") == "tblWalkIn" ? "walk_in" : "booking";
   swal({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -43,7 +42,7 @@ $('.btnCheckIn').click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&type=checkIn&table=" + table + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             var date = new Date();

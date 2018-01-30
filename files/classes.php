@@ -304,12 +304,75 @@ class Account extends System {
 /*----------------------------------------*/
 class Room extends System {
 
-  public function editRoomDescription($roomType, $description, $simpDesc, $icon) {
+  public function addRoomID($roomID, $roomType) {
     global $db;
-    $db->query("UPDATE room_type SET RoomDescription='$description', RoomSimplifiedDescription='$simpDesc', Icons='$icon' WHERE RoomType='$roomType'");
+    $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
+    $row    = $result->fetch_assoc();
+    $db->query("INSERT INTO room VALUES($roomID,{$row['RoomTypeID']},'Enabled')");
 
     if ($db->affected_rows > 0) {
-      $this->log("update|room_type|$roomType");
+      $this->log("add|room|$roomType|$roomID");
+      return true;
+    } else {
+      return NOTHING_CHANGED;
+    }
+  }
+
+  public function addRoomType($roomDetails) {
+    global $db;
+    $db->query("INSERT INTO room_type VALUES(NULL,'{$roomDetails[0]}','{$roomDetails[1]}','{$roomDetails[2]}','{$roomDetails[3]}',{$roomDetails[4]},{$roomDetails[5]},{$roomDetails[6]},{$roomDetails[7]})");
+
+    if ($db->affected_rows > 0) {
+      $this->log("add|room_type|{$roomDetails[0]}");
+      return true;
+    } else {
+      return NOTHING_CHANGED;
+    }
+  }
+
+  public function deleteRoomID($roomID) {
+    global $db;
+    $db->query("DELETE FROM room WHERE RoomID=$roomID");
+
+    if ($db->affected_rows > 0) {
+      $this->log("delete|room|$roomID");
+      return true;
+    } else {
+      return NOTHING_CHANGED;
+    }
+  }
+
+  public function deleteRoomType($roomType) {
+    global $db;
+    $db->query("DELETE FROM room_type WHERE RoomType='$roomType'");
+
+    if ($db->affected_rows > 0) {
+      $this->log("delete|room|$roomType");
+      return true;
+    } else {
+      return NOTHING_CHANGED;
+    }
+  }
+
+  public function editRoomID($roomID, $roomType) {
+    global $db;
+    $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
+    $row    = $result->fetch_assoc();
+    $db->query("UPDATE room SET RoomTypeID={$row['RoomTypeID']} WHERE RoomID=$roomID");
+    if ($db->affected_rows > 0) {
+      $this->log("update|room|$roomID|$roomType");
+      return true;
+    } else {
+      return NOTHING_CHANGED;
+    }
+  }
+
+  public function editRoomType($roomDetails) {
+    global $db;
+    $db->query("UPDATE room_type SET RoomDescription='{$roomDetails[1]}', RoomSimplifiedDescription='{$roomDetails[2]}', Icons='{$roomDetails[3]}', Capacity={$roomDetails[4]}, RegularRate={$roomDetails[5]}, SeasonRate={$roomDetails[6]}, HolidayRate={$roomDetails[7]} WHERE RoomType='{$roomDetails[0]}'");
+
+    if ($db->affected_rows > 0) {
+      $this->log("update|room_type|{$roomDetails[0]}");
       return true;
     } else {
       return NOTHING_CHANGED;
@@ -318,7 +381,7 @@ class Room extends System {
 
   public function updateRoomStatus($roomID, $status) {
     global $db;
-    $result = $db->query("UPDATE room SET Status = '$status' WHERE RoomID = $roomID");
+    $db->query("UPDATE room SET Status = '$status' WHERE RoomID = $roomID");
 
     if ($db->affected_rows > 0) {
       $this->log("update|room.status|$roomID|$status");
@@ -380,21 +443,16 @@ class Room extends System {
     return $row['RoomType'];
   }
 
-  public function getRoomPrice($room) {
+  public function getRoomPrice($room, $regular = false) {
     global $db, $date;
     $room   = str_replace(" ", "_", $room);
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row    = $result->fetch_assoc();
-    if ((strtotime(date("Y") . "-10-01") <= strtotime($date) && strtotime(date("Y") . "-12-31") >= strtotime($date)) || (strtotime(date("Y") . "-01-01") <= strtotime($date) && strtotime(date("Y") . "-05-31") >= strtotime($date))) {
-      // September 1 - May 31
-      $price = $row['PeakRate'];
-    } else if (strtotime(date("Y") . "-07-01") <= strtotime($date) && strtotime(date("Y") . "-08-31") >= strtotime($date)) {
-      // July 1 - August 31
-      $price = $row['LeanRate'];
+    if ($regular) {
+      return $row['RegularRate'];
     } else {
-      $price = $row['DiscountedRate'];
+      return $row['RegularRate'];
     }
-    return $price;
   }
 
   public function getUsingRoomList() {
@@ -751,23 +809,34 @@ class View extends Room {
       $result = mysqli_query($db, $query);
       while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
-        echo "<td>{$row['RoomID']}</td>";
-        echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
+        echo "<td id='txtRoomType'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
         $checked  = $row['Status'] == 'Enabled' || $row['Status'] == 'Occupied' ? 'checked' : '';
         $disabled = $row['Status'] == "Occupied" ? "data-onstyle='danger' disabled" : "";
         $status   = $row['Status'] == "Occupied" ? "Occupied" : "Enabled";
         echo "<td><input type='checkbox' data-toggle='toggle' data-on='$status' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked $disabled/></td>";
+        echo "<td style='width:7%'>";
+        echo "<a class='btnEditRoomID col-md-6' style='cursor:pointer;padding:0;' id='{$row['RoomID']}' data-toggle='modal' data-target='#modalEditRoomID' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
+        echo "<a class='btnDeleteRoomID col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomID']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
+        echo "</td>";
         echo "</tr>";
       }
     } else if ($category == "descriptions") {
-      $result = $db->query("SELECT RoomType, RoomDescription, RoomSimplifiedDescription, Icons FROM room_type");
+      $result = $db->query("SELECT * FROM room_type");
       while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td style='width:10%'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        echo "<td style='width:40%' id='txtRoomDescription'>" . str_replace("\n", "<br/>", $row['RoomDescription']) . "</td>";
-        echo "<td style='width:20%' id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
-        echo "<td style='width:20%' id='txtIcon'>" . nl2br($row['Icons']) . "</td>";
-        echo "<td style='width:10%'><a class='btnEditRoom' style='cursor:pointer' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a></td>";
+        echo "<td>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td style='width:20%' id='txtRoomDescription'>" . str_replace("\n", "<br/>", $row['RoomDescription']) . "</td>";
+        echo "<td id='txtRoomSimpDesc'>" . nl2br($row['RoomSimplifiedDescription']) . "</td>";
+        echo "<td id='txtIcon'>" . nl2br($row['Icons']) . "</td>";
+        echo "<td id='txtCapacity'>{$row['Capacity']}</td>";
+        echo "<td id='txtRegularRate'>₱&nbsp;" . number_format($row['RegularRate']) . "</td>";
+        echo "<td id='txtSeasonRate'>₱&nbsp;" . number_format($row['SeasonRate']) . "</td>";
+        echo "<td id='txtHolidayRate'>₱&nbsp;" . number_format($row['HolidayRate']) . "</td>";
+        echo "<td style='width:7%'>";
+        echo "<a class='btnEditRoomType col-md-6' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditRoom' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
+        echo "<a class='btnDeleteRoomType col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomType']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
+        echo "</td>";
         echo "</tr>";
       }
     }

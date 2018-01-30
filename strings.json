@@ -17,6 +17,9 @@
   "name": "ERROR_OCCURED",
   "value": "Something went wrong!"
 }, {
+  "name": "ADD_SUCCESS",
+  "value": "Added Successfully!"
+}, {
   "name": "UPDATE_SUCCESS",
   "value": "Updated Successfully!"
 }, {
