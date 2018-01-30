@@ -455,9 +455,21 @@ $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.
                   <select name="txtPaymentMethod" class="form-control" id="txtPaymentMethod">
                     <option value="Cash"<?php echo $paymentMethod == "Cash" ? " selected" : ""; ?>>Cash</option>
                     <option value="Bank"<?php echo $paymentMethod == "Bank" ? " selected" : ""; ?>>Bank</option>
+<?php
+if (ALLOW_PAYPAL == true) {
+    ?>
                     <option value="PayPal"<?php echo $paymentMethod == "PayPal" ? " selected" : ""; ?>>PayPal</option>
+<?php
+}
+  ?>
                   </select>
+<?php
+if (ALLOW_PAYPAL == true) {
+    ?>
                   <button id='btnPaypal' type='button' class='btn btn-primary' style='margin-top:10px;display:<?php echo $paymentMethod == "PayPal" ? "block" : "none"; ?>'>Pay now with Paypal</button>
+<?php
+}
+  ?>
                 </div>
               </div>
             </div>

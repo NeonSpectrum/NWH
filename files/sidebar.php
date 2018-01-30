@@ -99,6 +99,9 @@ if (CHAT) {
               </a>
             </li>
           </ul>
+<?php
+if (ALLOW_PAYPAL == true) {
+  ?>
           <ul class="c-menu__submenu u-list">
             <li>
               <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/reports/listofpaypalpayment" data-tooltip="tooltip" data-placement="right" title="List Of Paypal Payments"><i class="fa fa-money"></i>
@@ -106,6 +109,9 @@ if (CHAT) {
               </a>
             </li>
           </ul>
+<?php
+}
+?>
         </li>
         <li class="c-menu__item has-submenu <?php echo $settings; ?>">
           <a class="c-menu__item__inner" data-tooltip="tooltip" data-placement="right" title="Settings"><i class="fa fa-cogs"></i>

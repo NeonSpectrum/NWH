@@ -52,7 +52,7 @@ $children  = $_POST['txtChildren'] ?? '0';
           </div>
           <div id="step-3">
             <h3> Step 3 - Payment</h3>
-            TOTAL AMOUNT OF: ₱&nbsp;<span id="txtRoomPrice"></span>
+            TOTAL AMOUNT OF: <span style="font-size:20px;font-weight:bold">₱</span>&nbsp;<span id="txtRoomPrice" style="font-size:20px;font-weight:bold"></span>
             <br/><br/>
             <div class="paymentWrap">
               <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
@@ -64,10 +64,16 @@ $children  = $_POST['txtChildren'] ?? '0';
                   <div class="method bank"></div>
                   <input type="radio" name="txtPaymentMethod" value="Bank">
                 </label>
+<?php
+if (ALLOW_PAYPAL == true) {
+  ?>
                 <label class="btn paymentMethod" title="Paypal">
                   <div class="method paypal"></div>
                   <input type="radio" name="txtPaymentMethod" value="PayPal">
                 </label>
+<?php
+}
+?>
               </div>
               <br/>
               <input type="checkbox" name="cbxTermsAndConditions" style="width:15px;height:15px">
