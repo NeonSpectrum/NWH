@@ -16,7 +16,7 @@ require_once 'files/navbar.php';
         <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="<?php echo $root; ?>images/spin.svg" />
       </div>
       <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:960px;height:640px;overflow:hidden;">
-    <?php
+<?php
 $view->homeJssor();
 ?>
       <!-- <div id="progress-element" style="position: absolute; left: 0; bottom: 100px; width: 0%; height: 5px; background-color: rgba(255,255,255,0.9); z-index: 100;" data-u="progress"></div> -->
@@ -164,7 +164,7 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->

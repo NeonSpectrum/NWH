@@ -5,7 +5,8 @@
   src: url("fonts/Nunito-Regular.ttf");
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
 }
@@ -35,6 +36,10 @@ body {
   width: 0!important;
 }
 
+.col-xs-11.col-sm-4.alert.alert-danger.animated.fadeInDown {
+  box-shadow: 1px 1px #ccc;
+}
+
 #loadingMode {
   display: none;
   background: #fff url('../../images/loading.gif') no-repeat;
@@ -44,6 +49,12 @@ body {
   z-index: 99;
   height: 100%;
   width: 100%;
+}
+
+@media only screen and (max-width:767px) {
+  #loadingMode {
+    background-size: 25%;
+  }
 }
 
 /* CUSTOM BOOTSTRAP */
@@ -86,7 +97,8 @@ h3 {
   font-size: 18px;
 }
 
-a[disabled], a[disabled]:hover {
+a[disabled],
+a[disabled]:hover {
   pointer-events: none;
   color: #868686;
 }

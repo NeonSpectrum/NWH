@@ -40,6 +40,7 @@ $('[data-tooltip="tooltip"]').tooltip({
 });
 $(".content-wrapper").click(function() {
   if ($("body").hasClass("sidebar-is-expanded")) {
+    $(".hamburger-toggle").toggleClass("is-opened");
     $("body").removeClass("sidebar-is-expanded").addClass("sidebar-is-reduced");
     $('.logo__txt').hide();
     $('.logo__txt').html("NWH");

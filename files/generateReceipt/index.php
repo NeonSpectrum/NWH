@@ -6,7 +6,7 @@ require_once '../autoload.php';
 
 if (isset($_GET['BookingID'])) {
   $rooms     = [];
-  $bookingID = (int) substr(strrchr($_GET['BookingID'], "-"), 1);
+  $bookingID = $system->formatBookingID($_GET['BookingID'], true);
   $result    = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
   $row       = $result->fetch_assoc();
   if (!$account->isLogged()) {

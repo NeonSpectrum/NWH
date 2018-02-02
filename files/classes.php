@@ -549,7 +549,7 @@ class View extends Room {
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at: " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
+              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
               <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
             </div>
           </figcaption>
@@ -607,8 +607,14 @@ class View extends Room {
 
   public function booking() {
     global $db, $root, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, RoomType, booking_room.RoomID, DateCancelled FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, DateCancelled FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
+      $rooms      = [];
+      $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
+      while ($roomRow = $roomResult->fetch_assoc()) {
+        $rooms[] = $roomRow['RoomID'];
+      }
+      sort($rooms);
       $cancelled = $row['DateCancelled'] == null ? false : true;
       if ($row['PaymentMethod'] == "PayPal") {
         $paypalResult = $db->query("SELECT BookingID, SUM(PaymentAmount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
@@ -620,8 +626,12 @@ class View extends Room {
       if (strtotime($row['CheckInDate']) >= strtotime($date) && !$cancelled) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
-        echo "<td id='txtRoomType' style='display:none'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
+        echo "<td>";
+        foreach ($rooms as $roomID) {
+          echo "$roomID&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
+        }
+        echo "<a id='$roomID' class='btnAddRoom' style='cursor:pointer'><i class='fa fa-plus'></i></a>";
+        echo "</td>";
         echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
@@ -893,11 +903,11 @@ class System {
 
   public function addVisitorCount() {
     global $db, $date;
-    $result = $db->query("SELECT * FROM `visitor-count` WHERE Date='$date'");
+    $result = $db->query("SELECT * FROM `visitor_count` WHERE Date='$date'");
     if ($result->num_rows == 0) {
-      $db->query("INSERT INTO `visitor-count` VALUES('$date','1')");
+      $db->query("INSERT INTO `visitor_count` VALUES('$date','1')");
     } else {
-      $db->query("UPDATE `visitor-count` SET Count=Count+1 WHERE Date='$date'");
+      $db->query("UPDATE `visitor_count` SET Count=Count+1 WHERE Date='$date'");
     }
   }
 
@@ -993,11 +1003,15 @@ class System {
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }
 
-  public function formatBookingID($id) {
+  public function formatBookingID($id, $revert = false) {
     global $db;
-    $result = $db->query("SELECT * FROM booking WHERE BookingID=$id");
-    $row    = $result->fetch_assoc();
-    return "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d", $id);
+    if ($revert == false) {
+      $result = $db->query("SELECT * FROM booking WHERE BookingID=$id");
+      $row    = $result->fetch_assoc();
+      return "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d", $id);
+    } else {
+      return (int) substr(strrchr($id, "-"), 1);
+    }
   }
 
   public function verifyCaptcha($captcha) {

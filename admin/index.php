@@ -53,7 +53,7 @@ $row = count($room->generateRoomID(null, null, $date, $date));
 <?php echo $row; ?><br/>
           </div>
           <div class="panel-footer">
-            <a href="<?php echo $root; ?>admin/settings/rooms">View more...</a>
+            <a href="<?php echo $root; ?>admin/roomtable">View more...</a>
           </div>
         </div>
       </div>

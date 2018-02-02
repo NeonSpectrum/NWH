@@ -18,7 +18,6 @@ require_once '../../files/sidebar.php';
             <th>Booking ID</th>
             <th>Email Address</th>
             <th>Room ID</th>
-            <th style="display:none">Room Type</th>
             <th>Check In Date</th>
             <th>Check Out Date</th>
             <th>Adults</th>
@@ -47,7 +46,7 @@ $view->booking();
       </div>
       <div class="modal-body">
         <form id="frmAddPayment" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -76,32 +75,11 @@ $view->booking();
       </div>
       <div class="modal-body">
         <form id="frmEditReservation" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
           <input type="hidden" id="cmbBookingID" name="cmbBookingID">
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Room Type</label>
-            <div class="col-sm-7">
-              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
-                <option selected>Standard Single</option>
-                <option>Standard Double</option>
-                <option>Family Room</option>
-                <option>Junior Suites</option>
-                <option>Studio Type</option>
-                <option>Barkada Room</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Room ID</label>
-            <div class="col-sm-4">
-              <select name="cmbNewRoomID" class="form-control" id="cmbNewRoomID" required/>
-
-              </select>
-            </div>
-          </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Check Date</label>
             <div class="col-sm-7">
@@ -121,6 +99,52 @@ $view->booking();
             <label class="col-sm-3 control-label">Children</label>
             <div class="col-sm-3">
               <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modalEditRoom" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmEditRoom" method="post" class="form-horizontal">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <input type="hidden" id="txtBookingID" name="txtBookingID">
+          <input type="hidden" id="txtRoomID" name="txtRoomID">
+          <input type="hidden" id="txtType" name="txtType">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Room Type</label>
+            <div class="col-sm-7">
+              <select id="cmbRoomType" name="cmbRoomType" class="form-control">
+                <option selected>Standard Single</option>
+                <option>Standard Double</option>
+                <option>Family Room</option>
+                <option>Junior Suites</option>
+                <option>Studio Type</option>
+                <option>Barkada Room</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Room ID</label>
+            <div class="col-sm-4">
+              <select name="cmbNewRoomID" class="form-control" id="cmbNewRoomID" required/>
+
+              </select>
             </div>
           </div>
           <div class="modal-footer">

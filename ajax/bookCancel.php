@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $bookingID = $system->filter_input($_POST['txtBookingID']);
   $db->query("INSERT INTO booking_cancelled VALUES($bookingID,'$date')");
   if ($db->affected_rows > 0) {
-    $system->log("insert|booking|cancelled|$bookingID");
+    $system->log("insert|booking|cancelled|{$system->formatBookingID($bookingID)}");
     echo true;
   } else {
     echo $db->error;

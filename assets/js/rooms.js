@@ -10,7 +10,6 @@ $('.btnEditRoomID').click(function() {
   var roomID = $(this).attr("id");
   var roomType = $(this).parent().parent().find("#txtRoomType").html().replace(" ", "_");
   $('.modal-title').html("Room ID: " + roomID);
-  console.log(roomType);
   $("#modalEditRoomID").find("#cmbRoomType").val(roomType);
 });
 $('.btnEditRoomType').click(function() {

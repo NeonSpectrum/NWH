@@ -73,7 +73,7 @@ function alertNotif(type, message, reload = false, timeout = 1300) {
     },
     newest_on_top: true,
     mouse_over: true,
-    delay: message.length > 100 ? 0 : 3000
+    delay: 100000
   });
   setTimeout(function () {
     if (reload)

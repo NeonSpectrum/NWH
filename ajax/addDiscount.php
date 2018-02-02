@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $discount  = $system->filter_input($_POST['txtDiscount']);
   $db->query("UPDATE booking_check SET Discount = '$discount' WHERE BookingID = $bookingID");
   if ($db->affected_rows > 0) {
-    $system->log("insert|booking.discount|$bookingID|$discount");
+    $system->log("insert|booking.discount|{$system->formatBookingID($bookingID)}|$discount");
   }
 } else if (!$system->validateToken($_POST['csrf_token'])) {
   echo INVALID_TOKEN;

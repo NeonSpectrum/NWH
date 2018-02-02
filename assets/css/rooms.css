@@ -1,0 +1,10 @@
+.grp-buttons-right {
+  float: right;
+}
+
+@media only screen and (max-width:767px) {
+  .grp-buttons-right {
+    margin-top: 5px;
+    float: none;
+  }
+}

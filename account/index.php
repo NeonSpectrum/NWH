@@ -99,5 +99,7 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
       break;
     }
   }
+} else if (!$system->validateToken($_POST['csrf_token'])) {
+  echo INVALID_TOKEN;
 }
 ?>

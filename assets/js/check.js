@@ -42,7 +42,7 @@ $('.btnCheckIn').click(function() {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val() + "&type=checkIn",
         success: function(response) {
           if (response == true) {
             var date = new Date();
@@ -87,7 +87,7 @@ $('.btnCheckOut').click(function() {
         context: this,
         type: 'POST',
         url: root + 'ajax/check.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).attr("id") + "&type=checkOut&csrf_token=" + $("input[name=csrf_token]").val() + "&type=checkOut",
         success: function(response) {
           if (response == true) {
             var date = new Date();
@@ -128,7 +128,7 @@ $("#frmAddExpenses").submit(function(e) {
   $.ajax({
     context: this,
     type: 'POST',
-    url: root + "ajax/addExpenses.php",
+    url: root + "ajax/addPayment.php",
     data: $(this).serialize() + "&type=check",
     success: function(response) {
       location.reload();

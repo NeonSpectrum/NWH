@@ -6,7 +6,7 @@ require_once '../../../files/sidebar.php';
   <div id="loadingMode" style="display:block"></div>
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Room Management
-      <div class="pull-right">
+      <div class="grp-buttons-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAddRoom"><i class="fa fa-plus"></i>&nbsp;Room</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAddRoomType"><i class="fa fa-plus"></i>&nbsp;Room Type</button>
       </div>
@@ -65,7 +65,7 @@ $view->rooms("descriptions");
       </div>
       <div class="modal-body">
         <form id="frmAddRoom" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -105,7 +105,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <div class="modal-body">
         <form id="frmAddRoomType" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -169,7 +169,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <div class="modal-body">
         <form id="frmEditRoomID" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -203,7 +203,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <div class="modal-body">
         <form id="frmEditRoomType" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

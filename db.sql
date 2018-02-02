@@ -167,7 +167,7 @@ INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `RoomSimpl
 (5, 'Studio_Type', 'STUDIO TYPE FEATURES AND AMENITIES (with 2 complimentary breakfast) Total Room Inventory: 7 Room Size: 15 sqm, with car park Bed Configuration: 1 queen bed Bathroom with hot and cold shower With smart TV', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Phone', 4, 1500, 1100, 1300),
 (6, 'Barkada_Room', 'BARKADA ROOM FEATURES AND AMENITIES(with 2 complementary breakfast) Total Room Inventory: 7 Room size: 20 sqm, with car park Bed Configuration: 1 Bunk Bed Bathroom with hot and cold shower With smart TV', 'Good for 5 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV w/ TV Plus \r\nwifi=Wifi\r\nphone=Telephone', 5, 3500, 2000, 2600);
 
-CREATE TABLE `visitor-count` (
+CREATE TABLE `visitor_count` (
   `Date` date NOT NULL,
   `Count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
