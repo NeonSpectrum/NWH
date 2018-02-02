@@ -55,6 +55,11 @@ label>sup {
   color: red;
 }
 
+.modal-header,
+.modal-footer {
+  background: rgb(240, 240, 240);
+}
+
 .modal-content {
   border-radius: 0;
 }
@@ -74,6 +79,12 @@ label>sup {
 
 .form-control:focus {
   box-shadow: none;
+}
+
+.well {
+  border-radius: 0;
+  box-shadow: none;
+  background-color: rgb(253, 253, 253);
 }
 
 .datepicker {
@@ -451,10 +462,6 @@ img.white-border {
 }
 
 /* H1 MOBILE AND WELL */
-
-.well {
-  background: rgba(255, 255, 255, 0.9);
-}
 
 @media only screen and (max-width:767px) {
   h1 {

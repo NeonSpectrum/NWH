@@ -549,11 +549,11 @@ class View extends Room {
           <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
-              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
+              <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
               <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
             </div>
           </figcaption>
-          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price starts at: " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
+          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
         </figure>
         <div style='position:relative;height:20px;margin-top:-6px'>
           <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
@@ -630,7 +630,7 @@ class View extends Room {
         foreach ($rooms as $roomID) {
           echo "$roomID&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
         }
-        echo "<a id='$roomID' class='btnAddRoom' style='cursor:pointer'><i class='fa fa-plus'></i></a>";
+        echo "<button id='$roomID' class='btnAddRoom btn btn-primary btn-sm' style='cursor:pointer;width:100%'><i class='fa fa-plus'></i></button>";
         echo "</td>";
         echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";

@@ -44,8 +44,8 @@ $view->booking();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddPayment" method="post" class="form-horizontal">
+      <form id="frmAddPayment" method="post" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -57,12 +57,12 @@ $view->booking();
               <input type="number" class="form-control" name="txtPayment" id="txtPayment">
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
@@ -73,8 +73,8 @@ $view->booking();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Reservation</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditReservation" method="post" class="form-horizontal">
+      <form id="frmEditReservation" method="post" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -101,12 +101,12 @@ $view->booking();
               <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" min="0" max="10" value="0" required/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -117,8 +117,8 @@ $view->booking();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditRoom" method="post" class="form-horizontal">
+      <form id="frmEditRoom" method="post" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -147,12 +147,12 @@ $view->booking();
               </select>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

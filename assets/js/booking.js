@@ -18,6 +18,7 @@ $('.btnAddRoom').click(function() {
   $('#modalEditRoom').find('#txtType').val("add");
   $('#modalEditRoom').find('#txtBookingID').val(bookingID);
   $('#modalEditRoom').find('#txtRoomID').val(roomID);
+  $('#modalEditRoom').find('#btnUpdate').html("Add");
   $.ajax({
     type: 'POST',
     url: root + "ajax/generateRoomID.php",
@@ -55,6 +56,7 @@ $('.btnEditRoom').click(function() {
   $('#modalEditRoom').find('#txtBookingID').val(bookingID);
   $('#modalEditRoom').find('#txtType').val("edit");
   $('#modalEditRoom').find('#txtRoomID').val(roomID);
+  $('#modalEditRoom').find('#btnUpdate').html("Update");
   $.ajax({
     type: 'POST',
     url: root + "ajax/generateRoomID.php",

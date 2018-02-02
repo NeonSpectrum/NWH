@@ -64,7 +64,7 @@ $view->homeJssor();
     </div>
   </div>
 </div>
-<div class="panel panel-default" style="border-top-width:0px;" id="roomTypesArea">
+<div class="panel panel-default" style="border-top-width:0px;background: radial-gradient(ellipse at center, rgb(255, 255, 255) 60%, rgb(229, 229, 229) 100%);" id="roomTypesArea">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center;font-weight:bold">ROOM TYPES</h1></div>
   <div class="panel-body center-block" style="width:90%">
     <div class="row">

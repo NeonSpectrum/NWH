@@ -8,14 +8,14 @@ require_once '../files/navbar.php';
     <hr style="border-color:black"/>
     <div class="box-content">
       <h2>Northwood Hotel</h2><br/>
-      <i><b><font size="2px">21 Quezon Ave. Poblacion, Alaminos City Pangasinan<br/>
+      <i><b><font size="3px">21 Quezon Ave. Poblacion, Alaminos City Pangasinan<br/>
       For inquiries call or text .<br/>
       TEL NOS. (075) 636-0910 / (075) 205-0647<br/>
       MOBILE NOS. 09297890088 / 09954086292</font></b></i>
     </div>
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="form-group">
           <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" maxlength="101" <?php echo isset($_SESSION['account']) ? "value='{$account->firstName} {$account->lastName}' readonly" : ""; ?> required />
         </div>

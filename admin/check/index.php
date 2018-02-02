@@ -44,8 +44,8 @@ $view->check();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Booking ID: <?php echo $system->formatBookingID($system->getNextBookingID()); ?></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddBooking" class="form-horizontal">
+      <form id="frmAddBooking" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -179,12 +179,12 @@ for ($i = 0; $i <= $count; $i++) {
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -195,9 +195,9 @@ for ($i = 0; $i <= $count; $i++) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddExpenses" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+      <form id="frmAddExpenses" method="post" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -208,12 +208,12 @@ for ($i = 0; $i <= $count; $i++) {
               <input type="number" class="form-control" name="txtPayment" id="txtPayment" required>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnReservation" type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
@@ -224,9 +224,9 @@ for ($i = 0; $i <= $count; $i++) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddDiscount" method="post" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+      <form id="frmAddDiscount" method="post" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -237,12 +237,12 @@ for ($i = 0; $i <= $count; $i++) {
               <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" pattern="[0-9]+%?" required>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnReservation" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnReservation" type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

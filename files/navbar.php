@@ -71,7 +71,7 @@ if (!$account->isLogged()) {
             <div class="row">
               <div class="col-md-12">
                 <form id="frmLogin">
-                  <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+                  <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
                   <div class="lblDisplayError">
                     <!-- error will be shown here ! -->
                   </div>
@@ -148,7 +148,7 @@ if (!$account->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -236,7 +236,7 @@ if (VERIFY_REGISTER) {
 <?php
 }
   ?>
-          <button id="btnRegister" type="submit" class="btn btn-info"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -251,7 +251,7 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Forgot Password</h4>
       </div>
       <form id="frmForgot" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -259,7 +259,7 @@ if (VERIFY_REGISTER) {
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="Email" maxlength="100" required/>
+              <input name="txtEmail" type="email" class="form-control" id="txtEmail" placeholder="example@domain.com" maxlength="100" required/>
             </div>
           </div>
         </div>
@@ -282,7 +282,7 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -317,7 +317,7 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
       <form id="frmEditProfile" enctype="multipart/form-data">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -331,7 +331,7 @@ if (VERIFY_REGISTER) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}") ?>" style="object-fit: cover"/>
+                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">
@@ -555,7 +555,7 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
             </div>
           </div>
           <div class="modal-footer">
-            <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
+            <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
             <button id="btnUpdate" type="submit" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>

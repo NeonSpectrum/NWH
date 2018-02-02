@@ -3,8 +3,8 @@ require_once '../header.php';
 require_once '../files/navbar.php';
 ?>
 <div class="container-fluid">
-  <div class="well center-block" style="width:90%;background:rgba(245,245,245,0.8)">
-    <h1 style="text-align:center;font-weight:bold">Gallery</h1>
+  <div class="well center-block" style="width:90%">
+    <h1 style="text-align:center;font-weight:bold">GALLERY</h1>
     <hr style="border-color:black"/>
     <ul class="nav nav-tabs nav-justified">
       <li class="active"><a data-toggle="tab" href="#rooms">Rooms</a></li>

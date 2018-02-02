@@ -64,6 +64,11 @@ label>sup {
   color: red;
 }
 
+.modal-header,
+.modal-footer {
+  background-color: rgb(240, 240, 240);
+}
+
 .modal-content {
   border-radius: 0;
 }
