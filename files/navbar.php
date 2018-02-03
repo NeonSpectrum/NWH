@@ -114,7 +114,7 @@ if (!$account->isLogged()) {
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo "{$account->firstName} {$account->lastName}"; ?>
+              <?php echo strlen("{$account->firstName} {$account->lastName}") > 15 ? substr("{$account->firstName} {$account->lastName}", 0, 15) . "..." : "{$account->firstName} {$account->lastName}"; ?>
             </div>
             <span class="caret"></span>
           </a>

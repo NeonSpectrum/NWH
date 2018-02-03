@@ -31,7 +31,7 @@ if (isset($_GET['BookingID'])) {
 
       // DEAR
       $pdf->SetFont('Arial', 'B', '9');
-      $pdf->SetXY(25, 60.7);
+      $pdf->SetXY(25, 59.5);
       $pdf->Write(0, "{$row['FirstName']} {$row['LastName']}");
 
       // TABLE
@@ -39,43 +39,43 @@ if (isset($_GET['BookingID'])) {
       $pdf->SetFont('Arial');
 
       // ARRIVAL
-      $pdf->SetXY(48, 87.3);
+      $pdf->SetXY(48, 86.1);
       $pdf->Write(0, date("F d, Y", strtotime($row['CheckInDate'])));
 
       // DEPARTURE
-      $pdf->SetXY(48, 92);
+      $pdf->SetXY(48, 90.7);
       $pdf->Write(0, date("F d, Y", strtotime($row['CheckOutDate'])));
 
       // GUEST
-      $pdf->SetXY(48, 96.9);
+      $pdf->SetXY(48, 95.6);
       $pdf->SetFont('Arial', 'B');
-      $pdf->Write(0, "{$row['FirstName']} {$row['LastName']}");
+      $pdf->Write(0, strlen("{$row['FirstName']} {$row['LastName']}") > 23 ? substr("{$row['FirstName']} {$row['LastName']}", 0, 23) . "..." : "{$row['FirstName']} {$row['LastName']}");
       $pdf->SetFont('Arial');
 
       // ROOM TYPE
-      $pdf->SetXY(48, 101.5);
+      $pdf->SetXY(48, 100.2);
       $pdf->Write(0, join(", ", array_slice($rooms, 0, 4)));
-      $pdf->SetXY(48, 105.5);
+      $pdf->SetXY(48, 104.2);
       $pdf->Write(0, join(", ", array_slice($rooms, 4)));
 
       // BOOKING REF
-      $pdf->SetXY(48, 109.9);
+      $pdf->SetXY(48, 108.7);
       $pdf->Write(0, "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d\n", $row['BookingID']));
 
       // ETA
-      $pdf->SetXY(135, 87.3);
+      $pdf->SetXY(135, 86);
       $pdf->Write(0, "2:00pm");
 
       // ETD
-      $pdf->SetXY(135, 92);
+      $pdf->SetXY(135, 90.7);
       $pdf->Write(0, "12:00nn");
 
       // GUEST TYPE
-      $pdf->SetXY(135, 96.9);
+      $pdf->SetXY(135, 95.6);
       $pdf->Write(0, $row['AccountType']);
 
       // TOTAL
-      $pdf->SetXY(135, 109.9);
+      $pdf->SetXY(135, 108.7);
       $pdf->Write(0, "P" . number_format($row['TotalAmount']));
 
       $pdf->Output("{$row['FirstName']}{$row['LastName']}ReservationConfirmation.pdf", "I");
