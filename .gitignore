@@ -1,10 +1,15 @@
-/images/profilepics/!*.php
-/images/bankreferences/!*.php
-/node_modules/
-/files/backup/
+/images/profilepics/*
+/images/bankreferences/*
+/node_modules/*
+/files/backup/*
+
+!images/profilepics/index.php
+!images/profilepics/default
+!images/bankreferences/index.php
+!images/bankreferences/default
 
 # ini
-/config.ini
+config.ini
 
 # Office Temp Files
 ~$*

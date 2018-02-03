@@ -958,7 +958,7 @@ class System {
         return false;
       }
     }
-    $this->log("DELETE|$type|$bookingID");
+    $this->log("delete|$type|$bookingID");
     return $db->affected_rows > 0;
   }
 

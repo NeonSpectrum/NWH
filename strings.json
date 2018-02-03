@@ -103,4 +103,7 @@
 }, {
   "name": "MAX_ROOM_ERROR",
   "value": "For booking more than {0} rooms, please contact the hotel."
+}, {
+  "name": "NO_PERMISSION",
+  "value": "You don't have a permission to access this page."
 }]

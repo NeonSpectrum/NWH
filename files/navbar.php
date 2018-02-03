@@ -331,7 +331,7 @@ if (VERIFY_REGISTER) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>" style="object-fit: cover"/>
+                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">
