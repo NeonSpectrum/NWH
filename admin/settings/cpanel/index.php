@@ -6,7 +6,7 @@ require_once '../../../files/sidebar.php';
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Control Panel</h1>
-    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
 <?php
 if ($account->checkUserLevel(3)) {
   ?>
@@ -53,7 +53,7 @@ if ($account->checkUserLevel(3)) {
         <div class="panel-body">
             <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
 <?php
-$result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL");
+$result = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL");
 while ($row = $result->fetch_assoc()) {
   $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
   if (in_array($date, $dates)) {
@@ -132,7 +132,7 @@ if ($account->checkUserLevel(3)) {
       </div>
       <div class="modal-body">
         <form id="frmEditConfig" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

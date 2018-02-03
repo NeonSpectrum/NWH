@@ -56,18 +56,18 @@ $children  = $_POST['txtChildren'] ?? '0';
             <br/><br/>
             <div class="paymentWrap">
               <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
-                <label class="btn paymentMethod active" title="Cash">
+                <label class="btn paymentMethod active" data-tooltip="tooltip" data-placement="bottom" title="Cash">
                   <div class="method cash"></div>
                   <input type="radio" name="txtPaymentMethod" value="Cash" checked>
                 </label>
-                <label class="btn paymentMethod" title="Bank">
+                <label class="btn paymentMethod" data-tooltip="tooltip" data-placement="bottom" title="Bank">
                   <div class="method bank"></div>
                   <input type="radio" name="txtPaymentMethod" value="Bank">
                 </label>
 <?php
 if (ALLOW_PAYPAL == true) {
   ?>
-                <label class="btn paymentMethod" title="Paypal">
+                <label class="btn paymentMethod" data-tooltip="tooltip" data-placement="bottom" title="Paypal">
                   <div class="method paypal"></div>
                   <input type="radio" name="txtPaymentMethod" value="PayPal">
                 </label>

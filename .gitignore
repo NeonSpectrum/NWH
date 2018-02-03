@@ -1,4 +1,5 @@
-/images/profilepics/
+/images/profilepics/!*.php
+/images/bankreferences/!*.php
 /node_modules/
 /files/backup/
 

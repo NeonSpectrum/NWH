@@ -246,38 +246,61 @@ Pace.on('done', function() {
     animation: 'fadeIn',
     fullscreen: true
   });
+  $("#modalEditReservation").on("hidden.bs.modal", function() {
+    if ($(this).find("#txtPaymentMethod").val() == "PayPal") {
+      $(this).find("#btnPaypal").css("display", "block");
+    } else {
+      $(this).find("#btnPaypal").css("display", "none");
+    }
+    if ($(this).find("#txtPaymentMethod").val() == "Bank") {
+      $(this).find("#bank-content").css("display", "block");
+    } else {
+      $(this).find("#bank-content").css("display", "none");
+    }
+  });
   // DISPLAY BOOKING ID
-  // $('#modalEditReservation').find("#cmbBookingID").change(function() {
-  //   if ($(this).val() != "") {
-  //     $(this).closest("form").find("#btnPrint").prop("disabled", false);
-  //     $(this).closest("form").find("#btnUpdate").prop("disabled", false);
-  //   }
-  //   $.ajax({
-  //     url: root + 'ajax/cmbBookingIdDisplay.php',
-  //     type: "POST",
-  //     dataType: "json",
-  //     data: "cmbBookingID=" + $(this).val() + "&csrf_token=" + $(this).closest("form").find("input[name=csrf_token]").val(),
-  //     success: function(response) {
-  //       $("#modalEditReservation").find("#txtCheckDate").val(response[0]);
-  //       $("#modalEditReservation").find("#txtAdults").val(parseInt(response[1]));
-  //       $("#modalEditReservation").find("#txtChildren").val(parseInt(response[2]));
-  //       $("#modalEditReservation").find("#txtPaymentMethod").val(response[3]);
-  //       if (response[3] == "PayPal") {
-  //         $("#modalEditReservation").find("#btnPaypal").css("display", "block");
-  //       } else {
-  //         $("#modalEditReservation").find("#btnPaypal").css("display", "none");
-  //       }
-  //       for (var i = 0; i < response[4][0].length; i++) {
-  //         $('#modalEditReservation').find("label#" + response[4][0][i]).parent().find(".cmbQuantity").html(response[4][1][i]);
-  //       }
-  //     }
-  //   });
-  // });
+  $('#modalEditReservation').find("#cmbBookingID").change(function() {
+    if ($(this).val() != "") {
+      $(this).closest("form").find("#btnPrint").prop("disabled", false);
+      $(this).closest("form").find("#btnUpdate").prop("disabled", false);
+    }
+    $.ajax({
+      url: root + 'ajax/cmbBookingIdDisplay.php',
+      type: "POST",
+      dataType: "json",
+      data: "cmbBookingID=" + $(this).val() + "&csrf_token=" + $(this).closest("form").find("input[name=csrf_token]").val() + "&root=" + root,
+      success: function(response) {
+        $("#modalEditReservation").find("#txtCheckDate").val(response[0]);
+        $("#modalEditReservation").find("#txtAdults").val(parseInt(response[1]));
+        $("#modalEditReservation").find("#txtChildren").val(parseInt(response[2]));
+        $("#modalEditReservation").find("#txtPaymentMethod").val(response[3]);
+        if (response[3] == "PayPal") {
+          $("#modalEditReservation").find("#btnPaypal").css("display", "block");
+        } else {
+          $("#modalEditReservation").find("#btnPaypal").css("display", "none");
+        }
+        if (response[3] == "Bank") {
+          $("#modalEditReservation").find("#bank-content").css("display", "block");
+        } else {
+          $("#modalEditReservation").find("#bank-content").css("display", "none");
+        }
+        for (var i = 0; i < response[4][0].length; i++) {
+          $('#modalEditReservation').find("label#" + response[4][0][i]).parent().find(".cmbQuantity").html(response[4][1][i]);
+        }
+        $('#modalEditReservation').find("#displayImage").attr("src", response[5]);
+      }
+    });
+  });
   $('#modalEditReservation').find("#txtPaymentMethod").change(function() {
     if ($(this).val() == "PayPal") {
       $("#modalEditReservation").find("#btnPaypal").css("display", "block");
     } else {
       $("#modalEditReservation").find("#btnPaypal").css("display", "none");
+    }
+    if ($(this).val() == "Bank") {
+      $("#modalEditReservation").find("#bank-content").css("display", "block");
+    } else {
+      $("#modalEditReservation").find("#bank-content").css("display", "none");
     }
   });
   var currentDate = $('#modalEditReservation').find("#txtCheckDate").val();
@@ -577,6 +600,23 @@ Pace.on('done', function() {
     $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
     $(this).find('#btnUpdate').attr('disabled', true);
     $(this).find(".lblDisplayError").html('');
+    if ($('#imgBankRef').prop('files')[0]) {
+      if ($('#imgBankRef').prop('files')[0].size > 2097152) {
+        $(this).find("#btnUpdate").html('Update');
+        $(this).find('#btnUpdate').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + FILE_SIZE_ERROR + '</div>');
+        });
+        return;
+      }
+    } else if (!$('#imgBankRef').prop('files')[0] && $("#txtPaymentMethod").val() == "Bank") {
+      $(this).find("#btnUpdate").html('Update');
+      $(this).find('#btnUpdate').attr('disabled', false);
+      $(this).find(".lblDisplayError").show(function() {
+        $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + MUST_ADD_PICTURE + '</div>');
+      });
+      return;
+    }
     var rooms = [],
       roomSelected = false;
     $(this).find(".cmbQuantity").each(function() {
@@ -598,17 +638,21 @@ Pace.on('done', function() {
       })
       return;
     }
+    var form_data = new FormData();
+    if ($("#txtPaymentMethod").val() == "Bank" && $('#imgBankRef').prop('files')[0]) {
+      form_data.append("file", $('#imgBankRef').prop('files')[0]);
+    }
+    form_data.append("rooms", JSON.stringify(rooms));
+    form_data.append("data", $(this).serialize() + "&type=booking");
     $.ajax({
       context: this,
       type: 'POST',
       url: root + 'ajax/editReservation.php',
-      data: {
-        data: $(this).serialize() + "&type=booking",
-        rooms: rooms
-      },
-      dataType: 'json',
+      data: form_data,
+      processData: false,
+      contentType: false,
       success: function(response) {
-        if (response[0] === true) {
+        if (response == true) {
           $('#modalEditReservation').modal('hide');
           alertNotif('success', 'Updated Successfully!', true);
         } else {
@@ -705,11 +749,11 @@ function readPicture(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function(e) {
-      $('#displayImage').attr('src', e.target.result).width(100).height(100);
+      $(input).parent().parent().parent().find('#displayImage').attr('src', e.target.result);
     };
     reader.readAsDataURL(input.files[0]);
   } else {
-    $('#displayImage').attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+    $(input).parent().parent().parent().find('#displayImage').attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
   }
 }
 // UPDATE ALL DATES
@@ -752,40 +796,4 @@ function scrolling(enable) {
   } else {
     $('body').unbind('DOMMouseScroll.prev mousewheel.prev');
   }
-}
-
-function ValidateSingleInput(oInput) {
-  var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
-  var file_data = $('#imgProfilePic').prop('files')[0];
-  if (file_data.size > 2097152) {
-    $(this).find('#btnEditProfile').attr('disabled', true);
-    $(this).find(".lblDisplayError").show(function() {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must be under 2MB.</div>');
-    });
-    return false;
-  }
-  if (oInput.type == "file") {
-    var sFileName = oInput.value;
-    if (sFileName.length > 0) {
-      var blnValid = false;
-      for (var j = 0; j < _validFileExtensions.length; j++) {
-        var sCurExtension = _validFileExtensions[j];
-        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-          $(this).find(".lblDisplayError").html('');
-          $(this).find('#btnEditProfile').attr('disabled', false);
-          blnValid = true;
-          break;
-        }
-      }
-      if (!blnValid) {
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sorry, your file is invalid, allowed extensions are:' + _validFileExtensions.join(", ") + '</div>');
-        });
-        $(this).find('#btnEditProfile').attr('disabled', true);
-        oInput.value = "";
-        return false;
-      }
-    }
-  }
-  return true;
 }

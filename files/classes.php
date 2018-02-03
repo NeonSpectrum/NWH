@@ -235,8 +235,14 @@ class Account extends System {
     } else {
       if (isset($credentials['image'])) {
         $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
-        $filename  = basename($this->firstName . $this->lastName) . "." . pathinfo($directory . basename($credentials['image']["name"]), PATHINFO_EXTENSION);
-        $output    = $this->saveImage($credentials['image'], $directory, $filename);
+        @mkdir($directory);
+        do {
+          $randomName    = $this->getRandomString(20);
+          $accountResult = $db->query("SELECT * FROM account");
+          $accountRow    = $accountResult->fetch_assoc();
+        } while ($randomName == $accountRow['ProfilePicture']);
+        $filename = basename($randomName);
+        $output   = $this->saveImage($credentials['image'], $directory, $filename);
         if ($output == true) {
           $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$this->email}'");
           $this->log("update|account.profilepicture");
@@ -467,16 +473,16 @@ class Room extends System {
     return $rooms;
   }
 
-  public function generateRoomID($room = 1, $quantity, $checkInDate, $checkOutDate) {
+  public function generateRoomID($room = null, $quantity, $checkInDate, $checkOutDate) {
     global $db, $date;
-    $room   = $room != 1 ? "RoomType = '$room'" : $room;
+    $room   = $room != null ? "RoomType = '$room'" : 1;
     $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
-      $roomResult = $db->query("SELECT * FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date' AND DateCancelled IS NULL");
+      $roomResult = $db->query("SELECT booking.BookingID, CheckInDate, CheckOutDate FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date' AND DateCancelled IS NULL");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
-          if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate'])) {
+          if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate']) || $this->checkExpiredBooking($roomRow['BookingID'])) {
             $roomAvailable = false;
             break;
           }
@@ -493,26 +499,6 @@ class Room extends System {
     return count($rooms) > 0 ? array_slice($rooms, 0, $quantity) : $rooms;
   }
 
-}
-
-/*----------------------------------------*/
-/*--------------Booking Class-------------*/
-/*----------------------------------------*/
-class Booking {
-  public function revertCheck($bookingID, $type) {
-    global $db;
-    if ($type == "checkIn") {
-      $db->query("DELETE FROM booking_check WHERE BookingID=$bookingID");
-    } else if ($type == "checkOut") {
-      $result = $db->query("SELECT * FROM booking_check WHERE BookingID=$bookingID");
-      if ($result->num_rows > 0) {
-        $db->query("UPDATE booking_check SET CheckOut=NULL WHERE BookingID=$bookingID");
-      } else {
-        return false;
-      }
-    }
-    return $db->affected_rows > 0;
-  }
 }
 
 /*----------------------------------------*/
@@ -607,7 +593,7 @@ class View extends Room {
 
   public function booking() {
     global $db, $root, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, DateCancelled FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, DateCancelled, Filename FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
       $rooms      = [];
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
@@ -615,7 +601,9 @@ class View extends Room {
         $rooms[] = $roomRow['RoomID'];
       }
       sort($rooms);
-      $cancelled = $row['DateCancelled'] == null ? false : true;
+      $cancelled  = $row['DateCancelled'] == null ? false : true;
+      $checkedIn  = !($row['CheckIn'] != null && $row['CheckOut'] == null);
+      $checkedOut = $row['CheckIn'] != null && $row['CheckOut'] != null;
       if ($row['PaymentMethod'] == "PayPal") {
         $paypalResult = $db->query("SELECT BookingID, SUM(PaymentAmount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
         $paypalRow    = $paypalResult->fetch_assoc();
@@ -623,27 +611,36 @@ class View extends Room {
       } else {
         $amountPaid = $row['AmountPaid'];
       }
-      if (strtotime($row['CheckInDate']) >= strtotime($date) && !$cancelled) {
+      if (strtotime($row['CheckInDate']) >= strtotime($date) && !$cancelled && !$checkedOut) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td>";
-        foreach ($rooms as $roomID) {
-          echo "$roomID&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
+        if ($checkedIn) {
+          foreach ($rooms as $roomID) {
+            echo $roomID;
+            if (!($row['CheckIn'] != null && $row['CheckOut'] == null)) {
+              echo "&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
+            }
+          }
+          echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7'><i class='fa fa-plus'></i></button>";
+        } else {
+          echo join($rooms, ", ");
         }
-        echo "<button id='$roomID' class='btnAddRoom btn btn-primary btn-sm' style='cursor:pointer;width:100%'><i class='fa fa-plus'></i></button>";
         echo "</td>";
         echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($amountPaid) . "</td>";
+        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($amountPaid);
+        echo "<div class='pull-right'><a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-plus' style='color:red'></i></a></div>";
+        echo "</td>";
         echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $amountPaid)) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
-        echo "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>";
-        echo "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>";
-        echo "<a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-money fa-2x' style='color:green'></i></a>";
+        echo $checkedIn ? "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>" : "";
+        echo $checkedIn ? "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>" : "";
         echo "<a class='col-md-6' onclick='window.open(\"{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
+        echo $row['PaymentMethod'] == "Bank" ? "<a class='col-md-6' onclick='window.open(\"{$root}images/bankreferences/?id={$this->formatBookingID($row['BookingID'])}\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='View Bank Reference'><i class='fa fa-image fa-2x' style='color:green'></i></a>" : "";
         echo "</td>";
         echo "</tr>";
       }
@@ -652,7 +649,7 @@ class View extends Room {
 
   public function check() {
     global $db, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, ExtraCharges, Discount, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -673,9 +670,30 @@ class View extends Room {
         echo "<td id='txtChildren'>{$row['Children']}</td>";
         echo "<td id='txtCheckIn'>$checkIn</td>";
         echo "<td id='txtCheckOut'>$checkOut</td>";
-        echo "<td id='txtExtraCharges'>₱&nbsp;" . number_format($row['ExtraCharges']) . "</td>";
-        echo "<td id='txtDiscount'>" . (strpos($row['Discount'], "%") ? $row['Discount'] : "₱&nbsp;" . number_format($row['Discount'])) . "</td>";
-        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount'] + $row['ExtraCharges']) . "</td>";
+        echo "<td id='txtExtraCharges'>";
+        $expenses       = 0;
+        $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID={$row['BookingID']}");
+        while ($expensesRow = $expensesResult->fetch_assoc()) {
+          if ($expensesRow['Name'] == "Others") {
+            echo "{$expensesRow['Name']}({$expensesRow['Quantity']}): ₱&nbsp;" . number_format($expensesRow['oAmount'] * $expensesRow['Quantity'], 2, ".", ",") . "<br/>";
+            $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
+          } else {
+            echo "{$expensesRow['Name']}({$expensesRow['Quantity']}): ₱&nbsp;" . number_format($expensesRow['Amount'] * $expensesRow['Quantity'], 2, ".", ",") . "<br/>";
+            $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
+          }
+        }
+        echo "</td>";
+        echo "<td id='txtDiscount'>";
+        $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount LEFT JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID={$row['BookingID']}");
+        while ($discountRow = $discountResult->fetch_assoc()) {
+          if ($discountRow['Name'] == "Others") {
+            echo "{$discountRow['Name']}: " . (strpos($discountRow['oAmount'], "%") ? $discountRow['oAmount'] : "₱&nbsp;" . number_format($discountRow['Amount'], 2, ".", ",")) . "<br/>";
+          } else {
+            echo "{$discountRow['Name']}: " . (strpos($discountRow['Amount'], "%") ? $discountRow['Amount'] : "₱&nbsp;" . number_format($discountRow['Amount'], 2, ".", ",")) . "<br/>";
+          }
+        }
+        echo "</td>";
+        echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount'], 2, ".", ",") . "</td>";
         echo "<td>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
         echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
@@ -690,7 +708,7 @@ class View extends Room {
 
   public function listOfReservation() {
     global $db;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount, ExtraCharges FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NOT NULL");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -709,7 +727,7 @@ class View extends Room {
       echo "<td>$checkOut</td>";
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
-      echo "<td>₱&nbsp;" . number_format($row['TotalAmount'] + $row['ExtraCharges']) . "</td>";
+      echo "<td>₱&nbsp;" . number_format($this->computeTotalAmount($row['BookingID']), 2, ".", ",") . "</td>";
       echo "</tr>";
     }
   }
@@ -928,25 +946,72 @@ class System {
     return $row['Auto_increment'];
   }
 
+  public function revertCheck($bookingID, $type) {
+    global $db;
+    if ($type == "checkIn") {
+      $db->query("DELETE FROM booking_check WHERE BookingID=$bookingID");
+    } else if ($type == "checkOut") {
+      $result = $db->query("SELECT * FROM booking_check WHERE BookingID=$bookingID");
+      if ($result->num_rows > 0) {
+        $db->query("UPDATE booking_check SET CheckOut=NULL WHERE BookingID=$bookingID");
+      } else {
+        return false;
+      }
+    }
+    $this->log("DELETE|$type|$bookingID");
+    return $db->affected_rows > 0;
+  }
+
+  public function computeTotalAmount($bookingID) {
+    global $db;
+    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
+    $row            = $result->fetch_assoc();
+    $expenses       = 0;
+    $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID");
+    while ($expensesRow = $expensesResult->fetch_assoc()) {
+      if ($expensesRow['Name'] == "Others") {
+        $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
+      } else {
+        $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
+      }
+    }
+    $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount LEFT JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
+    $discountRow    = $discountResult->fetch_assoc();
+    if ($discountRow['Name'] == "Others") {
+      $discount = strpos($discountRow['oAmount'], "%") !== false ? $this->percentToDecimal($discountRow['oAmount']) : $discountRow['oAmount'];
+    } else {
+      $discount = strpos($discountRow['Amount'], "%") !== false ? $this->percentToDecimal($discountRow['Amount']) : $discountRow['Amount'];
+    }
+    return ($row['TotalAmount'] + $expenses) - (($row['TotalAmount'] + $expenses) * $discount);
+  }
+
   public function computeBill($bookingID) {
     global $db;
-    $result      = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
-    $row         = $result->fetch_assoc();
-    $totalAmount = $row['TotalAmount'] + $row['ExtraCharges'];
-    $amountPaid  = $row['AmountPaid'] + $row['PaymentAmount'];
-    if (strpos($row['Discount'], "%")) {
-      return $totalAmount - ($totalAmount * $this->percentToDecimal($row['Discount'])) - $amountPaid;
-    } else {
-      return $totalAmount - $row['Discount'] - $amountPaid;
+    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
+    $row            = $result->fetch_assoc();
+    $expenses       = 0;
+    $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID");
+    while ($expensesRow = $expensesResult->fetch_assoc()) {
+      if ($expensesRow['Name'] == "Others") {
+        $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
+      } else {
+        $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
+      }
     }
+    $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount LEFT JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
+    $discountRow    = $discountResult->fetch_assoc();
+    if ($discountRow['Name'] == "Others") {
+      $discount = strpos($discountRow['oAmount'], "%") !== false ? $this->percentToDecimal($discountRow['oAmount']) : $discountRow['oAmount'];
+    } else {
+      $discount = strpos($discountRow['Amount'], "%") !== false ? $this->percentToDecimal($discountRow['Amount']) : $discountRow['Amount'];
+    }
+    return ($row['TotalAmount'] + $expenses) - (($row['TotalAmount'] + $expenses) * $discount) - $row['AmountPaid'];
   }
 
   public function payBill($bookingID) {
     global $db;
-    $result      = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
-    $row         = $result->fetch_assoc();
-    $totalAmount = $row['TotalAmount'] + $row['ExtraCharges'];
-    $db->query("UPDATE booking SET AmountPaid=$totalAmount WHERE BookingID=$bookingID");
+    $amountPaid = $this->computeBill($bookingID);
+    $db->query("UPDATE booking SET AmountPaid=AmountPaid+$amountPaid WHERE BookingID=$bookingID");
     return $db->affected_rows > 0;
   }
 
@@ -1011,6 +1076,18 @@ class System {
       return "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d", $id);
     } else {
       return (int) substr(strrchr($id, "-"), 1);
+    }
+  }
+
+  public function checkExpiredBooking($bookingID) {
+    global $db, $date, $dateandtime;
+    $result = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
+    $row    = $result->fetch_assoc();
+    if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime)) {
+      $db->query("INSERT INTO booking_cancelled VALUES($bookingID,'$date')");
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -1168,6 +1245,10 @@ class System {
     }
   }
 
+  public function formatDate($date, $format) {
+    return date($format, strtotime($date));
+  }
+
   public function percentToDecimal($percent) {
     $percent = str_replace('%', '', $percent);
     return $percent / 100;
@@ -1185,7 +1266,7 @@ class System {
   }
 
   public function getRandomString($length) {
-    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_.!*(),";
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $string     = '';
 
     for ($i = 0; $i < $length; $i++) {
@@ -1213,7 +1294,6 @@ class System {
 
 $account = new Account();
 $room    = new Room();
-$booking = new Booking();
 $view    = new View();
 $system  = new System();
 ?>

@@ -23,6 +23,7 @@ forgot_expiration = 10  ;minutes
 edit_reservation_days = 1
 max_adults = 10
 max_children = 10
+max_room_allowed = 5
 
 [paypal]
 client_id_paypal = Aemf_RWl8szBshCXucOarBPFyP2hx12OxsTrt-7R9MUoTXhmEcq91breJ8M8hL-ho8dc5FwHMnlYeB9I

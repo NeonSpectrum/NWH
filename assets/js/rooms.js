@@ -9,7 +9,7 @@ $('.cbxRoom').change(function() {
 $('.btnEditRoomID').click(function() {
   var roomID = $(this).attr("id");
   var roomType = $(this).parent().parent().find("#txtRoomType").html().replace(" ", "_");
-  $('.modal-title').html("Room ID: " + roomID);
+  $("#modalEditRoomID").find('.modal-title').html("Room ID: " + roomID);
   $("#modalEditRoomID").find("#cmbRoomType").val(roomType);
 });
 $('.btnEditRoomType').click(function() {

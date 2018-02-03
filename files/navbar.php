@@ -112,7 +112,7 @@ if (!$account->isLogged()) {
   ?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo "{$account->profilePicture}?v=" . filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo "{$account->firstName} {$account->lastName}"; ?>
             </div>
@@ -326,7 +326,7 @@ if (VERIFY_REGISTER) {
             <div class="col-md-9">
               <div class="form-group">
                 <label>Profile Picture</label>
-                <input type="file" class="form-control" name="imgProfilePic" id="imgProfilePic" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateSingleInput(this);">
+                <input type="file" class="form-control" name="imgProfilePic" id="imgProfilePic" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg">
               </div>
             </div>
             <div class="col-md-3">
@@ -391,8 +391,8 @@ if (VERIFY_REGISTER) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Reservation</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditReservation" class="form-horizontal">
+      <form id="frmEditReservation" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -410,7 +410,7 @@ $view->listBookingID("combobox");
                 </div>
               </div>
 <?php
-$result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
+$result        = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
   $row           = $result->fetch_assoc();
   $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
   $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
@@ -419,13 +419,16 @@ $result        = $db->query("SELECT * FROM booking JOIN booking_room ON booking.
   $adults        = $row['Adults'];
   $children      = $row['Children'];
   $paymentMethod = $row['PaymentMethod'];
+  $bankRef       = $row['Filename'] != null ? $row['Filename'] : "";
   $roomTypes     = $room->getRoomTypeList();
   $roomQuantity  = array_fill(0, count($roomTypes), 0);
 
   $result->data_seek(0);
   while ($row = $result->fetch_assoc()) {
-    $roomType = $room->getRoomType($row['RoomID']);
-    $roomQuantity[array_search($roomType, $roomTypes)]++;
+    if ($row['RoomID'] != null) {
+      $roomType = $room->getRoomType($row['RoomID']);
+      $roomQuantity[array_search($roomType, $roomTypes)]++;
+    }
   }
   ?>
               <div class="form-group">
@@ -470,6 +473,12 @@ if (ALLOW_PAYPAL == true) {
 <?php
 }
   ?>
+                </div>
+              </div>
+              <div id="bank-content" style="margin-top:5px;<?php echo $paymentMethod != "Bank" ? "display:none" : ""; ?>">
+                <input type="file" class="form-control" name="imgBankRef" id="imgBankRef" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg">
+                <div class="center-block" style="border:1px solid #ccc;height:200px;width:100%;">
+                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" src="<?php echo $root; ?>images/bankreferences/?id=<?php echo $view->listBookingID()[0] != null ? $system->formatBookingID($view->listBookingID()[0]) : ""; ?>" style="object-fit: cover"/>
                 </div>
               </div>
             </div>
@@ -554,13 +563,13 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
-            <button id="btnUpdate" type="submit" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
+          <button id="btnUpdate" type="submit" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

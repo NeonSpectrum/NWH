@@ -94,4 +94,13 @@
 }, {
   "name": "NOTHING_TO_BACKUP",
   "value": "Nothing to backup!"
+}, {
+  "name": "MUST_ADD_PICTURE",
+  "value": "You must add first a bank reference picture!"
+}, {
+  "name": "FILE_SIZE_ERROR",
+  "value": "The file size must under 2MB!"
+}, {
+  "name": "MAX_ROOM_ERROR",
+  "value": "For booking more than {0} rooms, please contact the hotel."
 }]

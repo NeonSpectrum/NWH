@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   while ($row = $result->fetch_assoc()) {
     $roomIDs[] = $row['RoomID'];
   }
-  $result    = $db->query("SELECT RoomID, Count(*) As CountUsed FROM booking_room GROUP BY RoomID");
+  $result    = $db->query("SELECT RoomID, Count(*) As CountUsed FROM booking_room JOIN booking_check ON booking_room.BookingID=booking_check.BookingID WHERE CheckOut IS NOT NULL GROUP BY RoomID");
   $countUsed = array_fill(0, count($roomIDs), 0);
   while ($row = $result->fetch_assoc()) {
     for ($i = 0; $i < count($roomIDs); $i++) {

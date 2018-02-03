@@ -50,7 +50,7 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 ('r.guno5@yahoo.com', '$2y$10$XRraga//dTbGxqzAT8tWhuDwh/vhWtqpzRU2RU9elnQX126Zxk2Pu', 'Receptionist', 'default.png', 'Ri', 'Ri', '1', '2007-09-24', '2018-01-07', NULL),
 ('rjohnsantos19@gmail.com', '$2y$10$hGvaXnIOoMVvYrsVUy/Bse/qT/Lv7BNc7FtqQqbnpK4B.d37YmoO2', 'Receptionist', 'default.png', 'Russell', 'Santos', '09293431059', '1998-11-19', '2018-01-14', 'c72338f210d1da4987b4fe77c3de51ae'),
 ('rochellehinautan@gmail.com', '$2y$10$QXzyvj4lmo1lONkhqOY0We3uYsWU5yj9hjuDIR/TssGt0NUrgZkze', 'User', 'default.png', 'Cheche', 'Hinautan', '09367916', '1999-11-06', '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
-('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'MannyYoung.png', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'd8ce43f6828431e98b57b218a98e150d');
+('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'J4m5MlKoDC3KonYncsMQ', 'Manny', 'Young', '123', '2017-12-13', '2017-11-25', 'econu3k85cqc1vvrdnnvvgd09v');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -63,8 +63,13 @@ CREATE TABLE `booking` (
   `AmountPaid` int(11) NOT NULL,
   `TotalAmount` int(11) DEFAULT NULL,
   `PaymentMethod` varchar(10) NOT NULL,
-  `DateCreated` date NOT NULL,
-  `DateUpdated` date NOT NULL
+  `DateCreated` datetime NOT NULL,
+  `DateUpdated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `booking_bank` (
+  `BookingID` int(11) NOT NULL,
+  `Filename` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `booking_cancelled` (
@@ -75,9 +80,20 @@ CREATE TABLE `booking_cancelled` (
 CREATE TABLE `booking_check` (
   `BookingID` int(11) NOT NULL,
   `CheckIn` datetime DEFAULT NULL,
-  `CheckOut` datetime DEFAULT NULL,
-  `ExtraCharges` int(11) NOT NULL,
-  `Discount` int(11) NOT NULL
+  `CheckOut` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `booking_discount` (
+  `BookingID` int(11) NOT NULL,
+  `DiscountID` int(11) NOT NULL,
+  `Amount` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `booking_expenses` (
+  `BookingID` int(11) NOT NULL,
+  `ExpensesID` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `Amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `booking_paypal` (
@@ -93,6 +109,18 @@ CREATE TABLE `booking_paypal` (
 CREATE TABLE `booking_room` (
   `BookingID` int(11) NOT NULL,
   `RoomID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `discount` (
+  `DiscountID` int(11) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Amount` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `expenses` (
+  `ExpensesID` int(11) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
@@ -160,12 +188,12 @@ CREATE TABLE `room_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room_type` (`RoomTypeID`, `RoomType`, `RoomDescription`, `RoomSimplifiedDescription`, `Icons`, `Capacity`, `RegularRate`, `SeasonRate`, `HolidayRate`) VALUES
-(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast)\r\nTotal Room Inventory: 7\r\nRoom Size: 18 sqm.\r\nWith front-view glass window\r\nBed Configuration: 1 Queen bed Bathroom\r\nHot &amp; Cold shower\r\nHD Signal Cable TV.', 'Good for 2 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 2, 2250, 1350, 1650),
-(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single &amp; double beds Bathroom with hot &amp; cold shower...', 'Good for 3 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 3, 2900, 1850, 2300),
-(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot &amp; cold shower With Smart TV...', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 4, 3850, 3000, 3500),
-(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot & cold shower With...', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Phone', 4, 4900, 3800, 4500),
-(5, 'Studio_Type', 'STUDIO TYPE FEATURES AND AMENITIES (with 2 complimentary breakfast) Total Room Inventory: 7 Room Size: 15 sqm, with car park Bed Configuration: 1 queen bed Bathroom with hot and cold shower With smart TV', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Phone', 4, 1500, 1100, 1300),
-(6, 'Barkada_Room', 'BARKADA ROOM FEATURES AND AMENITIES(with 2 complementary breakfast) Total Room Inventory: 7 Room size: 20 sqm, with car park Bed Configuration: 1 Bunk Bed Bathroom with hot and cold shower With smart TV', 'Good for 5 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV w/ TV Plus \r\nwifi=Wifi\r\nphone=Telephone', 5, 3500, 2000, 2600);
+(1, 'Standard_Single', 'STANDARD SINGLE FEATURES AND AMENITIES (w/ 1 complimentary breakfast)\r\nTotal Room Inventory: 7\r\nRoom Size: 18 sqm.\r\nWith front-view glass window\r\nBed Configuration: 1 Queen bed Bathroom\r\nHot &amp; Cold shower\r\nHD Signal Cable TV.', 'Good for 2 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 2, 1650, 1800, 2000),
+(2, 'Standard_Double', 'STANDARD DOUBLE FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 4 rooms Size: 22 sqm, with front/back-view balcony Bed Configuration: 2 separate single &amp; double beds Bathroom with hot &amp; cold shower...', 'Good for 3 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 3, 2650, 2850, 3000),
+(3, 'Family_Room', 'FAMILY ROOM FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 25 sqm, with front-view glass window Bed Configuration: 2 separate Queen beds Bathroom with hot &amp; cold shower With Smart TV...', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Telephone', 4, 3600, 3750, 4000),
+(4, 'Junior_Suites', 'JUNIOR SUITES FEATURES AND AMENITIES (w/ 2 complimentary breakfast) Total Room Inventory: 2 rooms Size: 27 sqm, with one (1) step-out veranda Bed Configuration: 2 separate Queen beds Bathroom with hot &amp; cold shower With...', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Phone', 4, 4395, 4500, 4900),
+(5, 'Studio_Type', 'STUDIO TYPE FEATURES AND AMENITIES (with 2 complimentary breakfast) Total Room Inventory: 7 Room Size: 15 sqm, with car park Bed Configuration: 1 queen bed Bathroom with hot and cold shower With smart TV', 'Good for 4 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV\r\nwifi=Wifi\r\nphone=Phone', 4, 1350, 1500, 1800),
+(6, 'Barkada_Room', 'BARKADA ROOM FEATURES AND AMENITIES(with 2 complementary breakfast) Total Room Inventory: 7 Room size: 20 sqm, with car park Bed Configuration: 1 Bunk Bed Bathroom with hot and cold shower With smart TV', 'Good for 5 persons', 'snowflake-o=Aircon\r\nbed=Bed\r\nshower=Shower\r\ntelevision=Smart TV w/ TV Plus \r\nwifi=Wifi\r\nphone=Telephone', 5, 2500, 2750, 3000);
 
 CREATE TABLE `visitor_count` (
   `Date` date NOT NULL,
@@ -180,11 +208,22 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`BookingID`,`EmailAddress`),
   ADD KEY `EmailAddress` (`EmailAddress`);
 
-ALTER TABLE `booking_cancelled`
+ALTER TABLE `booking_bank`
   ADD KEY `BookingID` (`BookingID`);
+
+ALTER TABLE `booking_cancelled`
+  ADD UNIQUE KEY `BookingID` (`BookingID`) USING BTREE;
 
 ALTER TABLE `booking_check`
   ADD PRIMARY KEY (`BookingID`);
+
+ALTER TABLE `booking_discount`
+  ADD KEY `BookingID` (`BookingID`),
+  ADD KEY `DiscountID` (`DiscountID`);
+
+ALTER TABLE `booking_expenses`
+  ADD KEY `BookingID` (`BookingID`),
+  ADD KEY `ExpensesID` (`ExpensesID`);
 
 ALTER TABLE `booking_paypal`
   ADD UNIQUE KEY `PaymentID` (`PaymentID`),
@@ -193,6 +232,12 @@ ALTER TABLE `booking_paypal`
 ALTER TABLE `booking_room`
   ADD KEY `BookingID` (`BookingID`),
   ADD KEY `RoomID` (`RoomID`);
+
+ALTER TABLE `discount`
+  ADD PRIMARY KEY (`DiscountID`);
+
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`ExpensesID`);
 
 ALTER TABLE `forgot_password`
   ADD PRIMARY KEY (`ID`),
@@ -210,13 +255,19 @@ ALTER TABLE `room_type`
 
 
 ALTER TABLE `booking`
-  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+ALTER TABLE `discount`
+  MODIFY `DiscountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `expenses`
+  MODIFY `ExpensesID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `forgot_password`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 ALTER TABLE `log`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=859;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=936;
 
 ALTER TABLE `room_type`
   MODIFY `RoomTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
@@ -225,11 +276,22 @@ ALTER TABLE `room_type`
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`EmailAddress`) REFERENCES `account` (`EmailAddress`);
 
+ALTER TABLE `booking_bank`
+  ADD CONSTRAINT `booking_bank_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
+
 ALTER TABLE `booking_cancelled`
   ADD CONSTRAINT `booking_cancelled_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
 
 ALTER TABLE `booking_check`
   ADD CONSTRAINT `booking_check_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);
+
+ALTER TABLE `booking_discount`
+  ADD CONSTRAINT `booking_discount_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`),
+  ADD CONSTRAINT `booking_discount_ibfk_2` FOREIGN KEY (`DiscountID`) REFERENCES `discount` (`DiscountID`);
+
+ALTER TABLE `booking_expenses`
+  ADD CONSTRAINT `booking_expenses_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`),
+  ADD CONSTRAINT `booking_expenses_ibfk_2` FOREIGN KEY (`ExpensesID`) REFERENCES `expenses` (`ExpensesID`);
 
 ALTER TABLE `booking_paypal`
   ADD CONSTRAINT `booking_paypal_ibfk_1` FOREIGN KEY (`BookingID`) REFERENCES `booking` (`BookingID`);

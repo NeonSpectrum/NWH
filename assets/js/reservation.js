@@ -392,9 +392,9 @@ $(document).ready(function() {
           return false;
         }
         var roomHtml = "",
-          diffDays, total = 0;
+          diffDays, total = 0,
+          quantity = 0;
         rooms = [];
-        $("#loadingMode").fadeIn();
         $('.numberOfRooms').each(function() {
           if ($(this).find("select").val() != 0) {
             var roomName = $(this).parent().find("#roomName").html();
@@ -403,15 +403,23 @@ $(document).ready(function() {
               roomType: roomName,
               roomQuantity: roomQuantity
             });
+            quantity += parseInt($(this).find("select").val());
             var dates = $(this).closest("form").find("#txtCheckDate").val().split(" - ");
             var date1 = new Date(dates[0]);
             var date2 = new Date(dates[1]);
             diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
-            roomHtml += roomName + " (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱&nbsp;" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html();
+            roomHtml += roomName + " (" + parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) + ") (" + $(this).find("select").val() + "): " + "<span class='pull-right'>₱&nbsp;" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html();
             total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
-            $("#loadingMode").fadeOut();
           }
         });
+        if (quantity > MAX_ROOM_ALLOWED) {
+          swal({
+            title: 'Error!<br/>Only ' + MAX_ROOM_ALLOWED + ' rooms and below are allowed',
+            text: MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED),
+            type: 'warning'
+          });
+          return false;
+        }
         $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
         editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>Subtotal: <span class='pull-right'>₱&nbsp;" + (total - (total / 1.12 * .12)).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>VAT: <span class='pull-right'>₱&nbsp;" + (total / 1.12 * .12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>Total: <span class='pull-right'>₱&nbsp;" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>", "roomList");
       } else if (stepNumber == 2) {

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     if ($result->num_rows > 0) {
       $db->query("UPDATE booking_check SET CheckIn='$dateandtime' WHERE BookingID=$bookingID");
     } else {
-      $db->query("INSERT INTO booking_check VALUES($bookingID, '$dateandtime', NULL, 0, '0')");
+      $db->query("INSERT INTO booking_check VALUES($bookingID, '$dateandtime', NULL)");
     }
     if ($db->affected_rows > 0) {
       $system->log("insert|walk-in|{$system->formatBookingID($bookingID)}|checkin");

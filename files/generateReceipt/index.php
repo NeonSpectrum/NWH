@@ -96,16 +96,33 @@ if (isset($_GET['BookingID'])) {
         $y += 5;
       }
     }
+    $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID");
+    for ($i = $j; $expensesRow = $expensesResult->fetch_assoc(); $i++) {
+      $amount = $expensesRow['Name'] == "Others" ? "oAmount" : "Amount";
+      $pdf->SetXY(20, $y);
+      $pdf->Write(0, $i);
+      $pdf->SetXY(28, $y);
+      $pdf->Write(0, $expensesRow['Name']);
+      $pdf->SetXY(105.5, $y);
+      $pdf->Write(0, "P " . number_format($expensesRow[$amount], 2, ".", ","));
+      $pdf->SetXY(137, $y);
+      $pdf->Write(0, $expensesRow['Quantity']);
+      $pdf->SetXY(150, $y);
+      $pdf->Write(0, "P " . number_format($expensesRow[$amount] * $expensesRow['Quantity'], 2, ".", ","));
+      $totalAmount += $expensesRow[$amount] * $expensesRow['Quantity'];
+      $y += 5;
+    }
     $pdf->SetXY(150, 206);
     $pdf->Write(0, "P " . number_format($totalAmount - $totalAmount / 1.12 * .12, 2, ".", ","));
     $pdf->SetXY(150, 211.7);
     $pdf->Write(0, "P " . number_format($totalAmount / 1.12 * .12, 2, ".", ","));
     $pdf->SetXY(150, 217.4);
-    $discountResult = $db->query("SELECT * FROM booking_check WHERE BookingID=$bookingID");
+    $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
     $discountRow    = $discountResult->fetch_assoc();
-    $pdf->Write(0, strpos($discountRow['Discount'], "%") !== false ? $discountRow['Discount'] : "P " . number_format($discountRow['Discount'], 2, ".", ","));
+    $amount         = $discountRow['Name'] == "Others" ? "oAmount" : "Amount";
+    $pdf->Write(0, strpos($discountRow[$amount], "%") !== false ? $discountRow[$amount] : "P " . number_format($discountRow[$amount], 2, ".", ","));
     $pdf->SetXY(150, 223.1);
-    $totalAmount -= strpos($discountRow['Discount'], "%") !== false ? $totalAmount * $system->percentToDecimal($discountRow['Discount']) : $discountRow['Discount'];
+    $totalAmount -= strpos($discountRow[$amount], "%") !== false ? $totalAmount * $system->percentToDecimal($discountRow[$amount]) : $discountRow[$amount];
     $pdf->Write(0, "P " . number_format($totalAmount, 2, ".", ","));
 
     $pdf->SetXY(51, 251.7);

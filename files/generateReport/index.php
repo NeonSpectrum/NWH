@@ -40,9 +40,9 @@ if (isset($_GET['daterange']) && $account->checkUserLevel(2)) {
       $pdf->Cell($width[1], 10, $row['FirstName'] . " " . $row['LastName'], 1, 0, 'C');
       $pdf->Cell($width[2], 10, $row['CheckInDate'], 1, 0, 'C');
       $pdf->Cell($width[3], 10, $row['CheckOutDate'], 1, 0, 'C');
-      $pdf->Cell($width[4], 10, "P " . number_format($row['TotalAmount'] + $row['ExtraCharges']), 1, 0, 'C');
+      $pdf->Cell($width[4], 10, "P " . number_format($system->computeTotalAmount($row['BookingID'])), 1, 0, 'C');
       $pdf->Ln();
-      $totalAmount += $row['TotalAmount'] + $row['ExtraCharges'];
+      $totalAmount += $system->computeTotalAmount($row['BookingID']);
       $numberOfBooking++;
     }
   }

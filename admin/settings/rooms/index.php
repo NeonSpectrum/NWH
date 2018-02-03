@@ -63,8 +63,8 @@ $view->rooms("descriptions");
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Add Room</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddRoom" class="form-horizontal">
+      <form id="frmAddRoom" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -87,12 +87,12 @@ foreach ($room->getRoomTypeList() as $roomType) {
               </select>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -103,8 +103,8 @@ foreach ($room->getRoomTypeList() as $roomType) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Add Room Type</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmAddRoomType" class="form-horizontal">
+      <form id="frmAddRoomType" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -151,12 +151,12 @@ foreach ($room->getRoomTypeList() as $roomType) {
              <input type="number" id="txtHolidayRate" name="txtHolidayRate" class="form-control"/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -167,8 +167,8 @@ foreach ($room->getRoomTypeList() as $roomType) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditRoomID" class="form-horizontal">
+      <form id="frmEditRoomID" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -185,12 +185,12 @@ foreach ($room->getRoomTypeList() as $roomType) {
               </select>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -201,8 +201,8 @@ foreach ($room->getRoomTypeList() as $roomType) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditRoomType" class="form-horizontal">
+      <form id="frmEditRoomType" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -249,12 +249,12 @@ foreach ($room->getRoomTypeList() as $roomType) {
              <input type="number" id="txtHolidayRate" name="txtHolidayRate" class="form-control"/>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

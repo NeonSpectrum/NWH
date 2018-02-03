@@ -8,25 +8,32 @@ $(".btnAddExpenses").click(function() {
   $("#modalAddExpenses").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
   $("#modalAddExpenses").find("#txtBookingID").val($(this).attr("id"));
 });
+$("#modalAddExpenses").find("#cmbExpensesType").change(function() {
+  $(this).closest("form").find("#txtQuantity").val("1");
+  if ($(this).val() == "Others") {
+    $(this).closest("form").find("#txtPayment").prop("readonly", false);
+    $(this).closest("form").find("#txtPayment").val('0');
+  } else {
+    $(this).closest("form").find("#txtPayment").val($(this).val());
+    $(this).closest("form").find("#txtPayment").prop("readonly", true);
+  }
+});
+$("#modalAddExpenses").find("#txtQuantity").change(function() {
+  var payment = $(this).closest("form").find("#cmbExpensesType").val() * $(this).val();
+  $(this).closest("form").find("#txtPayment").val(payment);
+});
 $(".btnAddDiscount").click(function() {
   $("#modalAddDiscount").find(".modal-title").html("Booking ID: " + $(this).attr("id"));
   $("#modalAddDiscount").find("#txtBookingID").val($(this).attr("id"));
 });
-$(".checkDate").change(function() {
-  $.ajax({
-    type: 'POST',
-    url: root + "ajax/getQuantityRooms.php",
-    data: "checkDate=" + $(this).val(),
-    dataType: 'json',
-    success: function(response) {
-      $('#modalAddBooking').find("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
-      $('#modalAddBooking').find("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
-      $('#modalAddBooking').find("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
-      $('#modalAddBooking').find("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
-      $('#modalAddBooking').find("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
-      $('#modalAddBooking').find("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
-    }
-  });
+$("#modalAddDiscount").find("#cmbDiscountType").change(function() {
+  if ($(this).val() == "Others") {
+    $(this).closest("form").find("#txtDiscount").prop("readonly", false);
+    $(this).closest("form").find("#txtDiscount").val('0');
+  } else {
+    $(this).closest("form").find("#txtDiscount").val($(this).val());
+    $(this).closest("form").find("#txtDiscount").prop("readonly", true);
+  }
 });
 $('.btnCheckIn').click(function() {
   swal({
@@ -129,7 +136,7 @@ $("#frmAddExpenses").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + "ajax/addPayment.php",
-    data: $(this).serialize() + "&type=check",
+    data: $(this).serialize() + "&type=check&expensesType=" + $(this).find("#cmbExpensesType option:selected").html(),
     success: function(response) {
       location.reload();
     }
@@ -144,58 +151,9 @@ $("#frmAddDiscount").submit(function(e) {
     context: this,
     type: 'POST',
     url: root + "ajax/addDiscount.php",
-    data: $(this).serialize(),
+    data: $(this).serialize() + "&discountType=" + $(this).find("#cmbDiscountType option:selected").html(),
     success: function(response) {
-      location.reload();
-    }
-  });
-});
-$("#frmAddBooking").submit(function(e) {
-  e.preventDefault();
-  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
-  $(this).find('#btnAdd').attr('disabled', true);
-  $(this).find(".lblDisplayError").html('');
-  var rooms = [],
-    roomSelected = false;
-  $(this).find(".cmbQuantity").each(function() {
-    if ($(this).val() != 0) {
-      var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
-      var quantity = $(this).val();
-      rooms.push({
-        roomType: roomType,
-        roomQuantity: quantity
-      });
-      roomSelected = true;
-    }
-  });
-  if (!roomSelected) {
-    $(this).find("#btnAdd").html('Add');
-    $(this).find('#btnAdd').attr('disabled', false);
-    $(this).find(".lblDisplayError").show(function() {
-      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + CHOOSE_ROOM_TO_PROCEED + '</div>');
-    })
-    return;
-  }
-  $.ajax({
-    context: this,
-    type: 'POST',
-    url: root + 'ajax/bookNow.php',
-    data: {
-      data: $(this).serialize() + "&type=walkin",
-      rooms: rooms
-    },
-    dataType: 'json',
-    success: function(response) {
-      if (response[0] != false) {
-        $('#modalAddBooking').modal('hide');
-        alertNotif('success', 'Added Successfully!', true);
-      } else {
-        $(this).find("#btnAdd").html('Add');
-        $(this).find('#btnAdd').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
-        })
-      }
+      // location.reload();
     }
   });
 });

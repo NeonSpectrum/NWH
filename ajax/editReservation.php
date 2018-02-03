@@ -8,29 +8,26 @@ if (isset($_POST['data'])) {
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
   if (isset($_POST['type']) && $_POST['type'] == "admin") {
-    $currentRoomID = $system->filter_input($_POST['currentRoomID']);
-    $roomID        = isset($_POST['cmbNewRoomID']) ? $system->filter_input($_POST['cmbNewRoomID']) : $currentRoomID;
-    $checkDate     = explode(" - ", $system->filter_input($_POST['txtCheckDate']));
-    $checkInDate   = date("Y-m-d", strtotime($checkDate[0]));
-    $checkOutDate  = date("Y-m-d", strtotime($checkDate[1]));
-    $adults        = $system->filter_input($_POST['txtAdults']);
-    $children      = $system->filter_input($_POST['txtChildren']);
+    $checkDate    = explode(" - ", $system->filter_input($_POST['txtCheckDate']));
+    $checkInDate  = $system->formatDate($checkDate[0], "Y-m-d");
+    $checkOutDate = $system->formatDate($checkDate[1], "Y-m-d");
+    $adults       = $system->filter_input($_POST['txtAdults']);
+    $children     = $system->filter_input($_POST['txtChildren']);
+    $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
-    $bookingID = $system->filter_input($_POST['cmbBookingID']);
-    $result    = $db->query("UPDATE booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON room.RoomID=booking_room.RoomID JOIN room_type ON room_type.RoomTypeID=room.RoomTypeID SET booking_room.RoomID=$roomID, CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children WHERE booking.BookingID=$bookingID AND booking_room.RoomID=$currentRoomID");
+    $result = $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children WHERE BookingID=$bookingID");
 
-    if (!$db->error) {
+    if ($db->affected_rows > 0) {
       $system->log("update|booking|$bookingID");
       echo true;
     } else {
       echo $db->error;
     }
   } else if ($data['type'] == "booking") {
-    $arr           = [];
     $bookingID     = $system->filter_input($data['cmbBookingID']);
     $checkDate     = explode(" - ", $system->filter_input($data['txtCheckDate']));
-    $checkInDate   = date("Y-m-d", strtotime($checkDate[0]));
-    $checkOutDate  = date("Y-m-d", strtotime($checkDate[1]));
+    $checkInDate   = $system->formatDate($checkDate[0], "Y-m-d");
+    $checkOutDate  = $system->formatDate($checkDate[1], "Y-m-d");
     $adults        = $system->filter_input($data['txtAdults']);
     $children      = $system->filter_input($data['txtChildren']);
     $paymentMethod = $system->filter_input($data['txtPaymentMethod']);
@@ -38,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate', Adults=$adults, Children=$children, PaymentMethod='$paymentMethod' WHERE BookingID=$bookingID");
     $db->query("DELETE FROM booking_room WHERE BookingID=$bookingID");
 
-    $arr[0]         = true;
+    $output         = true;
     $totalRoomPrice = 0;
-    foreach ($_POST['rooms'] as $key => $rooms) {
+    foreach (json_decode($_POST['rooms'], true) as $key => $rooms) {
       $roomType     = str_replace(" ", "_", $rooms['roomType']);
       $roomQuantity = $system->filter_input($rooms['roomQuantity']);
       $roomIDs      = $room->generateRoomID($roomType, $roomQuantity, $checkInDate, $checkOutDate);
@@ -51,15 +48,34 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
           $db->query("INSERT INTO booking_room VALUES($bookingID, $roomID)");
         }
       } else {
-        $arr[0] = false;
+        $output = false;
         break;
       }
     }
-    if ($arr[0] != false) {
+    if ($output != false) {
       $totalRoomPrice *= count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
       $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice, DateUpdated='$date' WHERE BookingID=$bookingID");
     }
-    echo json_encode($arr);
+    if (isset($_FILES['file'])) {
+      $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/bankreferences/";
+      @mkdir($directory);
+      do {
+        $randomName = $system->getRandomString(20);
+        $bankResult = $db->query("SELECT * FROM booking_bank");
+        $bankRow    = $bankResult->fetch_assoc();
+      } while ($randomName == $bankRow['Filename']);
+      $filename = basename($randomName);
+      if ($system->saveImage($_FILES['file'], $directory, $filename) === true) {
+        $bankResult = $db->query("SELECT * FROM booking_bank WHERE BookingID=$bookingID");
+        if ($bankResult->num_rows > 0) {
+          $db->query("UPDATE booking_bank SET Filename='$filename' WHERE BookingID=$bookingID");
+          $system->log("INSERT|bankreference|$bookingID");
+        } else {
+          $db->query("INSERT INTO booking_bank VALUES($bookingID,'$randomName')");
+        }
+      }
+    }
+    echo $output;
   }
 } else if (!$system->validateToken($_POST['csrf_token'])) {
   echo INVALID_TOKEN;

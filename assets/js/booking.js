@@ -1,4 +1,69 @@
 var bookingID, email, roomID, roomType, checkInDate, checkOutDate, adults, childrens, currentRoomIDs;
+$(".checkDate").change(function() {
+  $.ajax({
+    type: 'POST',
+    url: root + "ajax/getQuantityRooms.php",
+    data: "checkDate=" + $(this).val(),
+    dataType: 'json',
+    success: function(response) {
+      $('#modalAddBooking').find("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);
+      $('#modalAddBooking').find("label#Standard_Double").parent().find(".cmbQuantity").html(response[1]);
+      $('#modalAddBooking').find("label#Family_Room").parent().find(".cmbQuantity").html(response[2]);
+      $('#modalAddBooking').find("label#Junior_Suites").parent().find(".cmbQuantity").html(response[3]);
+      $('#modalAddBooking').find("label#Studio_Type").parent().find(".cmbQuantity").html(response[4]);
+      $('#modalAddBooking').find("label#Barkada_Room").parent().find(".cmbQuantity").html(response[5]);
+    }
+  });
+});
+$("#frmAddBooking").submit(function(e) {
+  e.preventDefault();
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Adding...');
+  $(this).find('#btnAdd').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  var rooms = [],
+    roomSelected = false;
+  $(this).find(".cmbQuantity").each(function() {
+    if ($(this).val() != 0) {
+      var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
+      var quantity = $(this).val();
+      rooms.push({
+        roomType: roomType,
+        roomQuantity: quantity
+      });
+      roomSelected = true;
+    }
+  });
+  if (!roomSelected) {
+    $(this).find("#btnAdd").html('Add');
+    $(this).find('#btnAdd').attr('disabled', false);
+    $(this).find(".lblDisplayError").show(function() {
+      $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + CHOOSE_ROOM_TO_PROCEED + '</div>');
+    })
+    return;
+  }
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + 'ajax/bookNow.php',
+    data: {
+      data: $(this).serialize() + "&type=walkin",
+      rooms: rooms
+    },
+    dataType: 'json',
+    success: function(response) {
+      if (response[0] != false) {
+        $('#modalAddBooking').modal('hide');
+        alertNotif('success', 'Added Successfully!', true);
+      } else {
+        $(this).find("#btnAdd").html('Add');
+        $(this).find('#btnAdd').attr('disabled', false);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + response + '</div>');
+        })
+      }
+    }
+  });
+});
 $('#modalAddPayment').on('shown.bs.modal', function() {
   $('#txtPayment').focus();
 });

@@ -10,7 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $system->log("insert|booking.payment|$bookingID|$payment");
     }
   } else if ($_POST['type'] == "check") {
-    $db->query("UPDATE booking_check SET ExtraCharges = ExtraCharges + $payment WHERE BookingID = $bookingID");
+    $expensesType = $system->filter_input($_POST['expensesType']);
+    $quantity     = $system->filter_input($_POST['txtQuantity']);
+    $result       = $db->query("SELECT * FROM expenses WHERE Name='$expensesType'");
+    $expensesID   = $result->fetch_assoc()['ExpensesID'];
+    if ($expensesType == "Others") {
+      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, $payment)");
+    } else {
+      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, NULL)");
+    }
     if ($db->affected_rows > 0) {
       $system->log("insert|booking.payment|{$system->formatBookingID($bookingID)}|$payment");
     }

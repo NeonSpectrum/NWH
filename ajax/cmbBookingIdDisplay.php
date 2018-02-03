@@ -3,7 +3,7 @@ require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $bookingID = $system->filter_input($_POST['cmbBookingID']);
-  $result    = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID = $bookingID");
+  $result    = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID WHERE booking.BookingID = $bookingID");
   $row       = $result->fetch_assoc();
 
   $arr            = [];
@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $arr[1]         = $row['Adults'];
   $arr[2]         = $row['Children'];
   $arr[3]         = $row['PaymentMethod'];
+  $arr[5]         = $row['Filename'] != null ? "{$_POST['root']}images/bankreferences/{$row['Filename']}?v=" . filemtime(__DIR__ . "/../images/bankreferences/{$row['Filename']}") : "";
   $checkInDate    = $row['CheckInDate'];
   $checkOutDate   = $row['CheckOutDate'];
   $roomIDs        = $count        = [];
