@@ -70,11 +70,6 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
       echo $account->editProfile($credentials);
       break;
     }
-  case "deleteAccount":{
-      $email = $system->filter_input($_POST['txtEmail']);
-      echo $account->deleteAccount($email);
-      break;
-    }
   }
 } else if (isset($_GET['mode'])) {
   switch ($_GET['mode']) {

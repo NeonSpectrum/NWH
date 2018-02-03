@@ -19,46 +19,6 @@ $('.btnEditAccount').click(function() {
     $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "block");
   }
 });
-$('.btnDeleteAccount').click(function() {
-  var email = $(this).attr("id");
-  swal({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        type: 'POST',
-        url: root + 'account/',
-        data: "txtEmail=" + email + "&csrf_token=" + $("input[name='csrf_token']").val() + "&mode=deleteAccount",
-        success: function(response) {
-          if (response == true) {
-            console.log(response);
-            swal({
-              title: 'Deleted!',
-              text: 'The account has been deleted.',
-              type: 'success'
-            }).then((result) => {
-              if (result.value) {
-                location.reload();
-              }
-            });
-          } else {
-            swal({
-              title: 'Error',
-              text: 'Can\'t delete this account because it has an existing reservation!',
-              type: 'error'
-            });
-          }
-        }
-      });
-    }
-  })
-});
 $("#frmAddAccount").validator().submit(function(e) {
   if (e.isDefaultPrevented()) {
     $(this).find(".lblDisplayError").show(function() {
