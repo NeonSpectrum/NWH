@@ -1,5 +1,5 @@
 <?php
-require_once "files/autoload.php";
+require_once "files/strings.php";
 if (isset($_POST['command']) && $_POST['password'] === PASSWORD) {
   $command = filter_var($_POST['command'], FILTER_SANITIZE_STRING);
   $path    = strtolower($_SERVER['SERVER_NAME']) != "localhost" ? 'export PATH=$PATH:~/git-2.9.5 && ' : '';
