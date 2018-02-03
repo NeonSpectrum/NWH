@@ -1289,7 +1289,7 @@ class System {
 
 };
 
-$account = new Asccount();
+$account = new Account();
 $room    = new Room();
 $view    = new View();
 $system  = new System();
