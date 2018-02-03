@@ -43,7 +43,7 @@ $view->accounts();
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmAddAccount" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -133,9 +133,9 @@ $view->accounts();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center"></h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditAccount" class="form-horizontal">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+      <form id="frmEditAccount" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -167,12 +167,12 @@ if ($account->checkUserLevel(2)) {
               </select>
             </div>
           </div>
-          <div class="modal-footer">
-            <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
    </div>
 </div>
