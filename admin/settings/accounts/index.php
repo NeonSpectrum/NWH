@@ -92,7 +92,7 @@ $view->accounts();
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" maxlength="100" data-error="Email is invalid or missing" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -101,7 +101,7 @@ $view->accounts();
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" pattern="[^ ]+" minlength="8" maxlength="50" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -110,7 +110,7 @@ $view->accounts();
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" data-match="#txtPassword" data-match-error="Whoops, these don't match" minlength="8" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" pattern="[^ ]+" data-match="#txtPassword" data-match-error="Whoops, these don't match" minlength="8" maxlength="50" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -119,7 +119,7 @@ $view->accounts();
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnRegister" type="submit" class="btn btn-info">Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-primary">Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -169,7 +169,7 @@ if ($account->checkUserLevel(2)) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>

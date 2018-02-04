@@ -89,7 +89,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -153,7 +153,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnAdd" type="submit" class="btn btn-info">Add</button>
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -187,7 +187,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -251,7 +251,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>

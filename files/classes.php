@@ -41,7 +41,9 @@ class Account extends System {
 
     if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
       $_SESSION['account'] = $this->encrypt($row['EmailAddress']);
-
+      if ($credentials['remember'] == "on") {
+        setcookie("nwhAuth", $this->encrypt($row['EmailAddress']), time() + (86400 * LOGIN_EXPIRED_DAYS), "/");
+      }
       $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email'");
       $this->log("login|account", $email);
       return true;
@@ -105,7 +107,7 @@ class Account extends System {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
     }
 
-    $db->query("INSERT INTO `account`(EmailAddress,Password,FirstName,LastName,ContactNumber,BirthDate,DateRegistered) VALUES ('$email', '$password', '$fname', '$lname','$contactNumber','$birthDate','$date')");
+    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '$date', NULL)");
 
     if (!$verify) {
       if ($db->affected_rows > 0) {

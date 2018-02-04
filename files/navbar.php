@@ -87,15 +87,15 @@ if (!$account->isLogged()) {
                     <label class="sr-only">Password</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="100" required>
+                      <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="50" required>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div>
-                    <!-- <div class="checkbox">
+                    <div class="checkbox">
                       <label>
                         <input type="checkbox" name="cbxRemember" checked> Keep me logged-in
                       </label>
-                    </div> -->
+                    </div>
                   </div>
                   <div class="form-group">
                     <button id="btnLogin" type="submit" class="btn btn-primary btn-block">Sign in</button>
@@ -264,7 +264,7 @@ if (VERIFY_REGISTER) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnReset" type="submit" class="btn btn-info">Submit</button>
+          <button id="btnReset" type="submit" class="btn btn-primary">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -302,7 +302,7 @@ if (VERIFY_REGISTER) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnUpdate" type="submit" class="btn btn-info">Update</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -377,7 +377,7 @@ if (VERIFY_REGISTER) {
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnEditProfile" type="submit" class="btn btn-info">Edit</button>
+          <button id="btnEditProfile" type="submit" class="btn btn-primary">Edit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -565,8 +565,8 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
-          <button id="btnUpdate" type="submit" class="btn btn-info" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
+          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>

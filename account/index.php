@@ -6,7 +6,7 @@ if (isset($_POST['mode']) && $system->validateToken($_POST['csrf_token'])) {
   $credentials = [];
   switch ($_POST['mode']) {
   case "login":{
-      if ($account->login(array('email' => $_POST['txtEmail'], 'password' => $_POST['txtPassword']))) {
+      if ($account->login(['email' => $_POST['txtEmail'], 'password' => $_POST['txtPassword'], 'remember' => isset($_POST['cbxRemember']) ? $_POST['cbxRemember'] : "off"])) {
         echo true;
       } else {
         echo INVALID_EMAIL_PASSWORD;

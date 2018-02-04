@@ -9,6 +9,7 @@ admin_reload_interval = 9999
 node_js_url = http://localhost:8755
 verify_register = true
 allow_paypal = false
+login_expired_days = 3
 
 [date]
 min_birth_year = 1930
