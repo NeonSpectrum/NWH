@@ -154,8 +154,8 @@ CREATE TABLE `promo_dates` (
 CREATE TABLE `room` (
   `RoomID` int(3) NOT NULL,
   `RoomTypeID` int(11) NOT NULL,
-  `Status` varchar(10) NOT NULL DEFAULT 'Enabled',
-  `Cleaning` boolean NOT NULL
+  `Status` tinyint(1) NOT NULL,
+  `Cleaning` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`) VALUES

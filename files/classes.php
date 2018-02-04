@@ -305,7 +305,7 @@ class Room extends System {
     global $db;
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
     $row    = $result->fetch_assoc();
-    $db->query("INSERT INTO room VALUES($roomID,{$row['RoomTypeID']},'Enabled')");
+    $db->query("INSERT INTO room VALUES($roomID,{$row['RoomTypeID']},1,0)");
 
     if ($db->affected_rows > 0) {
       $this->log("add|room|$roomType|$roomID");
@@ -378,7 +378,7 @@ class Room extends System {
 
   public function updateRoomStatus($roomID, $status) {
     global $db;
-    $db->query("UPDATE room SET Status = '$status' WHERE RoomID = $roomID");
+    $db->query("UPDATE room SET Status = $status WHERE RoomID = $roomID");
 
     if ($db->affected_rows > 0) {
       $this->log("update|room.status|$roomID|$status");
@@ -842,10 +842,8 @@ class View extends Room {
         echo "<tr>";
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
         echo "<td id='txtRoomType'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        $checked  = $row['Status'] == 'Enabled' || $row['Status'] == 'Occupied' ? 'checked' : '';
-        $disabled = $row['Status'] == "Occupied" ? "data-onstyle='danger' disabled" : "";
-        $status   = $row['Status'] == "Occupied" ? "Occupied" : "Enabled";
-        echo "<td><input type='checkbox' data-toggle='toggle' data-on='$status' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked $disabled/></td>";
+        $checked = $row['Status'] == '1' ? 'checked' : '';
+        echo "<td><input type='checkbox' data-toggle='toggle' data-on='Enabled' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked/></td>";
         echo "<td style='width:7%'>";
         echo "<a class='btnEditRoomID col-md-6' style='cursor:pointer;padding:0;' id='{$row['RoomID']}' data-toggle='modal' data-target='#modalEditRoomID' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
         echo "<a class='btnDeleteRoomID col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomID']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";

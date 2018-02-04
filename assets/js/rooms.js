@@ -1,5 +1,5 @@
 $('.cbxRoom').change(function() {
-  var status = $(this).prop('checked') ? "Enabled" : "Disabled";
+  var status = $(this).prop('checked') ? "1" : "0";
   $.ajax({
     type: 'POST',
     url: root + 'ajax/changeStatus.php',
