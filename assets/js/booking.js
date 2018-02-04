@@ -3,7 +3,7 @@ $(".checkDate").change(function() {
   $.ajax({
     type: 'POST',
     url: root + "ajax/getQuantityRooms.php",
-    data: "checkDate=" + $(this).val(),
+    data: "checkDate=" + $(this).val() + "&admin=true",
     dataType: 'json',
     success: function(response) {
       $('#modalAddBooking').find("label#Standard_Single").parent().find(".cmbQuantity").html(response[0]);

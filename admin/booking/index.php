@@ -104,7 +104,7 @@ foreach ($emails as $key => $value) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Single", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Standard_Single", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -117,7 +117,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Double", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Standard_Double", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -130,7 +130,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Family_Room", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Family_Room", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -143,7 +143,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Junior_Suites", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Junior_Suites", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -156,7 +156,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Studio_Type", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Studio_Type", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -169,7 +169,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Barkada_Room", null, $date, date("m/d/Y", strtotime($date) + 86500)));
+$count = count($room->generateRoomID("Barkada_Room", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }

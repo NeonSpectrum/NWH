@@ -47,7 +47,7 @@ while ($row = $result->fetch_assoc()) {
         <div class="panel panel-default">
           <div class="panel-heading">Total Available Rooms</div>
           <div class="panel-body">
-<?php echo count($room->generateRoomID(null, null, $date, date("Y-m-d", strtotime($date) + 86400))); ?><br/>
+<?php echo count($room->generateRoomID(null, null, $date, date("Y-m-d", strtotime($date) + 86400), true)); ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/roomtable">View more...</a>

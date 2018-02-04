@@ -476,7 +476,7 @@ class Room extends System {
     return $rooms;
   }
 
-  public function generateRoomID($room = null, $quantity = null, $checkInDate, $checkOutDate) {
+  public function generateRoomID($room = null, $quantity = null, $checkInDate, $checkOutDate, $includeDisabled = false) {
     global $db, $date;
     $room   = $room != null ? "RoomType = '$room'" : 1;
     $rooms  = [];
@@ -494,7 +494,7 @@ class Room extends System {
       } else {
         $roomAvailable = true;
       }
-      if ($row['Status'] != 'Disabled' && $roomAvailable && !in_array($row['RoomID'], $rooms)) {
+      if (($row['Status'] != 0 || $includeDisabled) && $roomAvailable && !in_array($row['RoomID'], $rooms)) {
         $rooms[] = $row['RoomID'];
       }
     }
