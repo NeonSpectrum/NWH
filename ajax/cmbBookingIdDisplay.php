@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $arr[1]         = $row['Adults'];
   $arr[2]         = $row['Children'];
   $arr[3]         = $row['PaymentMethod'];
-  $arr[5]         = "{$_POST['root']}images/bankreferences/" . ($row['Filename'] != null ? "{$row['Filename']}?v=" . filemtime(__DIR__ . "/../images/bankreferences/{$row['Filename']}") : "default");
+  $arr[5]         = $row['Filename'] != null ? "{$_POST['root']}images/bankreferences/{$row['Filename']}?v=" . filemtime(__DIR__ . "/../images/bankreferences/{$row['Filename']}") : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   $checkInDate    = $row['CheckInDate'];
   $checkOutDate   = $row['CheckOutDate'];
   $roomIDs        = $count        = [];

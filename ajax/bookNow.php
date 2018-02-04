@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
     $totalRoomPrice = 0;
 
     $arr[0] = $system->formatBookingID($bookingID);
-    $arr[1] = "<br/><ul style='list-style-type:none'>";
-    $table  = "<table border='1' cellspacing='0'><thead><th style='padding:10px'>Room Type</th><th style='padding:10px'>Quantity</th><th style='padding:10px'>Room Number(s)</th></thead><tbody>";
+    $arr[1] = "<table border='1' cellspacing='0' style='width:100%'><caption style='text-align:center;color:#333'><h3>Booking ID: {$arr[0]}</h3></caption><thead><th style='padding:10px;text-align:center'>Room Type</th><th style='padding:10px;text-align:center'>Quantity</th><th style='padding:10px;text-align:center'>Room ID(s)</th></thead><tbody>";
+    $table  = "<table border='1' cellspacing='0'><thead><th style='padding:10px;text-align:center'>Room Type</th><th style='padding:10px;text-align:center'>Quantity</th><th style='padding:10px;text-align:center'>Room Number(s)</th></thead><tbody>";
     foreach ($_POST['rooms'] as $key => $rooms) {
       $roomType     = str_replace(" ", "_", $rooms['roomType']);
       $roomQuantity = $system->filter_input($rooms['roomQuantity']);
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
         break;
       }
       $table .= "<tr><td style='padding:5px'>{$rooms['roomType']}</td><td style='padding:5px'>$roomQuantity</td><td style='padding:5px'>" . join(', ', $roomIDs) . "</td>";
-      $arr[1] .= "<li>" . str_replace("_", " ", $roomType) . ": " . join(', ', $roomIDs) . "</li>";
+      $arr[1] .= "<tr><td style='padding:10px;text-align:center'>" . str_replace("_", " ", $roomType) . "</td><td style='padding:10px;text-align:center'>$roomQuantity</td><td style='padding:10px;text-align:center'>" . join(', ', $roomIDs) . "</td>";
     }
     if ($arr[0] != false) {
       $totalRoomPrice *= count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;

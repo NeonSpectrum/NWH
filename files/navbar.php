@@ -478,7 +478,7 @@ if (ALLOW_PAYPAL == true) {
               <div id="bank-content" style="margin-top:5px;<?php echo $paymentMethod != "Bank" ? "display:none" : ""; ?>">
                 <input type="file" class="form-control" name="imgBankRef" id="imgBankRef" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg">
                 <div class="center-block" style="border:1px solid #ccc;height:200px;width:100%;">
-                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" src="<?php echo $root; ?>images/bankreferences/?id=<?php echo $view->listBookingID()[0] != null ? $system->formatBookingID($view->listBookingID()[0]) : ""; ?>" style="object-fit: cover"/>
+                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" <?php echo $view->listBookingID()[0] != null ? "src='{$root}images/bankreferences/?id={$system->formatBookingID($view->listBookingID()[0])}'" : ""; ?> style="object-fit: cover"/>
                 </div>
               </div>
             </div>

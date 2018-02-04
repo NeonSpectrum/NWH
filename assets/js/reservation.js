@@ -438,8 +438,7 @@ $(document).ready(function() {
           success: function(response) {
             if (response[0] != false) {
               $('#modalRules').modal("show");
-              $('span#txtBookingID').html(response[0]);
-              $('span#txtRoomID').html(response[1]);
+              $('#tblResult').html(response[1]);
               if ($("input[name=txtPaymentMethod]:checked").val().toLowerCase() == "paypal") {
                 $("#step-4").find("#btnPrint").before("<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='window.open(\"" + response[2] + "\");'>Pay now with Paypal</button>");
               }

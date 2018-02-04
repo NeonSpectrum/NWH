@@ -85,10 +85,9 @@ if (ALLOW_PAYPAL == true) {
             </div>
           </div>
           <div id="step-4">
-            <h3>Booking ID: <span id="txtBookingID"></span>
-            <h3>Room ID(s):<br/> <span id="txtRoomID"></span>
+            <div class="table-response" id="tblResult"></div>
             <br/>
-            <div class="text-right">
+            <div class="text-right" style="margin-bottom:10px">
               <a id="btnPrint" class="btn btn-primary" style="margin-left:20px" type="button">Print</a>
               <a class="btn btn-default" href="<?php echo $root; ?>" type="button">Go back to home</a>
             </div>
