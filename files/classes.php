@@ -388,6 +388,18 @@ class Room extends System {
     }
   }
 
+  public function cleanRoom($roomID) {
+    global $db;
+    $db->query("UPDATE room SET Cleaning=0 WHERE RoomID=$roomID");
+
+    if ($db->affected_rows > 0) {
+      $this->log("update|room.cleaning|$roomID|cleaned");
+      echo true;
+    } else {
+      echo ERROR_OCCURED;
+    }
+  }
+
   public function getRoomInfo($roomID) {
     global $db;
     $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE RoomID=$roomID AND CheckIn IS NOT NULL AND CheckOut IS NULL ORDER BY CheckIn DESC LIMIT 1");

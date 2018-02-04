@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       echo $db->error;
     }
   } else if ($_POST['type'] == "checkOut") {
+    $db->query("UPDATE room JOIN booking_room ON room.RoomID=booking_room.RoomID SET Cleaning=1 WHERE BookingID=$bookingID");
     $db->query("UPDATE booking JOIN booking_check ON booking.BookingID=booking_check.BookingID SET CheckOut='$dateandtime' WHERE booking.BookingID=$bookingID");
     if ($db->affected_rows > 0) {
       $system->log("update|walk-in|{$system->formatBookingID($bookingID)}|checkout");

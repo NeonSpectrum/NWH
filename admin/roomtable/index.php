@@ -6,6 +6,7 @@ $roomID    = $roomDescription    = [];
 $roomList  = $room->getRoomIDList();
 $roomUsing = $room->getUsingRoomList();
 foreach ($roomList as $value) {
+  $cleaning = $db->query("SELECT * FROM room WHERE RoomID=$value")->fetch_assoc()['Cleaning'];
   if (in_array($value, $roomUsing)) {
     $descriptions = $room->getRoomInfo($value);
     if (count($descriptions) == 0) {
@@ -13,6 +14,9 @@ foreach ($roomList as $value) {
     }
     $roomDescription[$value] = "Booking ID: {$descriptions['bookingID']}<br/>Name: {$descriptions['name']}<br/>Email: {$descriptions['email']}<br/>Rooms: {$descriptions['rooms']} (" . (substr_count($descriptions['rooms'], ",") + 1) . ")<br/>Check In Date: {$descriptions['checkInDate']}<br/>Check Out Date: {$descriptions['checkOutDate']}";
     $roomID[$value]          = "using";
+  } else if ($cleaning) {
+    $roomDescription[$value] = "";
+    $roomID[$value]          = "cleaning";
   } else {
     $roomDescription[$value] = "";
     $roomID[$value]          = "available";
@@ -23,6 +27,7 @@ foreach ($roomList as $value) {
   <!-- <div id="loadingMode" style="display:block"></div> -->
   <div class="content-wrapper content-wrapper--with-bg">
     <div class="col-md-6">
+      <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <h1>First Floor</h1>
       <div class="table-responsive">
         <table class="text-center" cellspacing="0">

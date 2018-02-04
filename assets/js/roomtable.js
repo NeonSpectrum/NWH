@@ -14,3 +14,32 @@ $("td.using").click(function() {
     }
   });
 });
+$("td.cleaning").click(function() {
+  var roomID = $(this).attr("id");
+  swal({
+    title: 'Are you sure the room is clean?',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: root + "ajax/cleanRoom.php",
+        data: "roomID=" + roomID + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          swal({
+            title: 'The room is now clean. Congratulations!',
+            type: 'success',
+          }).then((result) => {
+            if (result.value) {
+              location.reload();
+            }
+          });
+        }
+      });
+    }
+  });
+});
