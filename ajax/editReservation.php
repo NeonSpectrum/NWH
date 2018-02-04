@@ -59,19 +59,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     if (isset($_FILES['file'])) {
       $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/bankreferences/";
       @mkdir($directory);
-      do {
-        $randomName = $system->getRandomString(20);
-        $bankResult = $db->query("SELECT * FROM booking_bank");
-        $bankRow    = $bankResult->fetch_assoc();
-      } while ($randomName == $bankRow['Filename']);
+      $bankResult = $db->query("SELECT * FROM booking_bank WHERE BookingID=$bookingID");
+      $bankRow    = $bankResult->fetch_assoc();
+      if ($bankResult->num_rows == 0) {
+        do {
+          $randomName = $system->getRandomString(20);
+        } while (file_exists($directory . $randomName));
+      } else {
+        $randomName = $bankRow['Filename'];
+      }
       $filename = basename($randomName);
       if ($system->saveImage($_FILES['file'], $directory, $filename) === true) {
         $bankResult = $db->query("SELECT * FROM booking_bank WHERE BookingID=$bookingID");
         if ($bankResult->num_rows > 0) {
-          $db->query("UPDATE booking_bank SET Filename='$filename' WHERE BookingID=$bookingID");
-          $system->log("INSERT|bankreference|$bookingID");
+          $system->log("update|bankreference|$bookingID");
         } else {
           $db->query("INSERT INTO booking_bank VALUES($bookingID,'$randomName')");
+          $system->log("insert|bankreference|$bookingID");
         }
       }
     }

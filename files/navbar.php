@@ -112,7 +112,7 @@ if (!$account->isLogged()) {
   ?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>');background-position:center;"></div>
+            <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
               <?php echo strlen("{$account->firstName} {$account->lastName}") > 15 ? substr("{$account->firstName} {$account->lastName}", 0, 15) . "..." : "{$account->firstName} {$account->lastName}"; ?>
             </div>
@@ -331,7 +331,7 @@ if (VERIFY_REGISTER) {
             </div>
             <div class="col-md-3">
               <div class="center-block" style="border:1px solid #ccc;height:102px;width:102px;">
-                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>" style="object-fit: cover"/>
+                <img id="displayImage" height="102" width="102" src="<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>" style="object-fit: cover"/>
               </div>
             </div>
             <div class="col-md-6">

@@ -26,7 +26,7 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
     <div class="header-title">
       Admin Page
     </div>
-    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/?email=<?php echo $account->email; ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
+    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
 <?php
 if ($account->checkUserLevel(3)) {
   ?>

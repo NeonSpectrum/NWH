@@ -235,14 +235,24 @@ class Account extends System {
         echo $output;
       }
     } else {
+      $email         = $this->filter_input($this->email);
+      $fname         = $this->filter_input($credentials['fname']);
+      $lname         = $this->filter_input($credentials['lname']);
+      $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['birthDate'])));
+      $contactNumber = $this->filter_input($credentials['contactNumber']);
+
       if (isset($credentials['image'])) {
-        $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
+        $accountResult = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
+        $accountRow    = $accountResult->fetch_assoc();
+        $directory     = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/profilepics/";
         @mkdir($directory);
-        do {
-          $randomName    = $this->getRandomString(20);
-          $accountResult = $db->query("SELECT * FROM account");
-          $accountRow    = $accountResult->fetch_assoc();
-        } while ($randomName == $accountRow['ProfilePicture']);
+        if ($accountRow['ProfilePicture'] == "default") {
+          do {
+            $randomName = $this->getRandomString(20);
+          } while (file_exists($directory . $randomName));
+        } else {
+          $randomName = $accountRow['ProfilePicture'];
+        }
         $filename = basename($randomName);
         $output   = $this->saveImage($credentials['image'], $directory, $filename);
         if ($output == true) {
@@ -252,12 +262,6 @@ class Account extends System {
           return $output;
         }
       }
-
-      $email         = $this->filter_input($this->email);
-      $fname         = $this->filter_input($credentials['fname']);
-      $lname         = $this->filter_input($credentials['lname']);
-      $birthDate     = date("Y-m-d", strtotime($this->filter_input($credentials['birthDate'])));
-      $contactNumber = $this->filter_input($credentials['contactNumber']);
 
       $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
 
