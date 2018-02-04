@@ -27,32 +27,34 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $html .= "</tr>";
     }
   }
-  $html .= "</table><br/><br/>";
-  $result = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
-  $row    = $result->fetch_assoc();
-  $html .= "<table border=1 cellspacing=0 style='width:100%;border:0px solid black'>";
-  $html .= "<thead>";
-  $html .= "<th style='text-align:center;padding:10px'>Expenses Type</th>";
-  $html .= "<th style='text-align:center;padding:10px'>Quantity</th>";
-  $html .= "<th style='text-align:center;padding:10px'>Price</th>";
-  $html .= "</thead>";
-  $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID ORDER BY Name ASC");
+  $html .= "</table><br/>";
+  $result         = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
+  $row            = $result->fetch_assoc();
   $expenses       = 0;
-  while ($expensesRow = $expensesResult->fetch_assoc()) {
-    if ($expensesRow['Name'] == "Others") {
-      $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
-      $html .= "<tr>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Name']}</td>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Quantity']}</td>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>₱&nbsp;" . number_format($expensesRow['oAmount'] * $expensesRow['Quantity'], 2, ".", ",") . "</td>";
-      $html .= "</tr>";
-    } else {
-      $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
-      $html .= "<tr>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Name']}</td>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Quantity']}</td>";
-      $html .= "<td style='width:33%;text-align:center;padding:10px'>₱&nbsp;" . number_format($expensesRow['Amount'] * $expensesRow['Quantity'], 2, ".", ",") . "</td>";
-      $html .= "</tr>";
+  $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID ORDER BY Name ASC");
+  if ($expensesResult->num_rows > 0) {
+    $html .= "<table border=1 cellspacing=0 style='width:100%;border:0px solid black'>";
+    $html .= "<thead>";
+    $html .= "<th style='text-align:center;padding:10px'>Expenses Type</th>";
+    $html .= "<th style='text-align:center;padding:10px'>Quantity</th>";
+    $html .= "<th style='text-align:center;padding:10px'>Price</th>";
+    $html .= "</thead>";
+    while ($expensesRow = $expensesResult->fetch_assoc()) {
+      if ($expensesRow['Name'] == "Others") {
+        $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
+        $html .= "<tr>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Name']}</td>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Quantity']}</td>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>₱&nbsp;" . number_format($expensesRow['oAmount'] * $expensesRow['Quantity'], 2, ".", ",") . "</td>";
+        $html .= "</tr>";
+      } else {
+        $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
+        $html .= "<tr>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Name']}</td>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>{$expensesRow['Quantity']}</td>";
+        $html .= "<td style='width:33%;text-align:center;padding:10px'>₱&nbsp;" . number_format($expensesRow['Amount'] * $expensesRow['Quantity'], 2, ".", ",") . "</td>";
+        $html .= "</tr>";
+      }
     }
   }
   $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
@@ -81,10 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Extra Charges:</td>";
   $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($expenses, 2, '.', ',') . "</td>";
   $html .= "</tr>";
-  $html .= "<tr>";
-  $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Discount ({$discountRow['Name']}):</td>";
-  $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>$discount</td>";
-  $html .= "</tr>";
+  if ($discount != null) {
+    $html .= "<tr>";
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Discount ({$discountRow['Name']}):</td>";
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>$discount</td>";
+    $html .= "</tr>";
+  }
   $total = $row['TotalAmount'] + $expenses;
   $total = $total - (strpos($discount, "%") !== false ? $total * $system->percentToDecimal($discount) : $discount);
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:</td>";

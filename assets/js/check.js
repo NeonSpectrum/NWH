@@ -159,7 +159,7 @@ $("#frmAddDiscount").submit(function(e) {
     url: root + "ajax/addDiscount.php",
     data: $(this).serialize() + "&discountType=" + $(this).find("#cmbDiscountType option:selected").html(),
     success: function(response) {
-      // location.reload();
+      location.reload();
     }
   });
 });
