@@ -1,6 +1,17 @@
 /* ANIMATION IMAGEHOVER */
 
-[class*=" imghvr-"], [class*=" imghvr-"] *, [class*=" imghvr-"]:after, [class*=" imghvr-"] :after, [class*=" imghvr-"]:before, [class*=" imghvr-"] :before, [class^=imghvr-], [class^=imghvr-] *, [class^=imghvr-]:after, [class^=imghvr-] :after, [class^=imghvr-]:before, [class^=imghvr-] :before {
+[class*=" imghvr-"],
+[class*=" imghvr-"] *,
+[class*=" imghvr-"]:after,
+[class*=" imghvr-"] :after,
+[class*=" imghvr-"]:before,
+[class*=" imghvr-"] :before,
+[class^=imghvr-],
+[class^=imghvr-] *,
+[class^=imghvr-]:after,
+[class^=imghvr-] :after,
+[class^=imghvr-]:before,
+[class^=imghvr-] :before {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   transition: all 0.5s ease
@@ -185,8 +196,7 @@
   bottom: 10px;
   height: auto;
   width: 100%;
-  margin-top: 20px;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px;
 }
 
 .booknow-content {
@@ -210,6 +220,7 @@
 
 @media only screen and (max-width: 768px) {
   .booknow {
+    background: radial-gradient(ellipse at center, rgb(255, 255, 255) 60%, rgb(229, 229, 229) 100%);
     position: static;
     border: 1px solid #ddd;
     border-width: 1px 0px;
@@ -217,6 +228,7 @@
     border-radius: 0px;
   }
   .booknow-content {
+    background-color: transparent;
     padding: 10px 20px;
   }
   .booknow-content input {
@@ -293,15 +305,20 @@ input[type="date"]::-webkit-inner-spin-button {
   border-color: transparent transparent transparent #fff;
 }
 
-.youtube img, .youtube .play-button {
+.youtube img,
+.youtube .play-button {
   cursor: pointer;
 }
 
-.youtube img, .youtube iframe, .youtube .play-button, .youtube .play-button:before {
+.youtube img,
+.youtube iframe,
+.youtube .play-button,
+.youtube .play-button:before {
   position: absolute;
 }
 
-.youtube .play-button, .youtube .play-button:before {
+.youtube .play-button,
+.youtube .play-button:before {
   top: 50%;
   left: 50%;
   transform: translate3d( -50%, -50%, 0);
