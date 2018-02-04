@@ -378,10 +378,6 @@ Pace.on('done', function() {
         if (response == true) {
           $(this).closest(".modal").modal("hide");
           alertNotif("success", LOGIN_SUCCESS, false);
-          socket.emit('notification', {
-            user: $(this).find("#txtEmail").val(),
-            messages: "Logged in at " + date.toLocaleString()
-          });
           socket.emit('login', $(this).find("#txtEmail").val());
           setTimeout(function() {
             if (getQueryVariable("redirect")) {
@@ -639,8 +635,12 @@ Pace.on('done', function() {
       return;
     }
     var form_data = new FormData();
-    if ($("#txtPaymentMethod").val() == "Bank" && $('#imgBankRef').prop('files')[0]) {
+    if ($(this).find("#txtPaymentMethod").val() == "Bank" && $(this).find('#imgBankRef').prop('files')[0]) {
       form_data.append("file", $('#imgBankRef').prop('files')[0]);
+      socket.emit("notification", {
+        user: email_address,
+        messages: "Added Bank Reference to " + $(this).find("#cmbBookingID option:selected").html()
+      })
     }
     form_data.append("rooms", JSON.stringify(rooms));
     form_data.append("data", $(this).serialize() + "&type=booking");

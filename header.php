@@ -8,6 +8,7 @@ $_SESSION['csrf_token'] = $system->decrypt($csrf_token);
 if (isset($_COOKIE['nwhAuth']) && !$account->isLogged()) {
   $account->login(json_decode($system->decrypt(rawurldecode($_COOKIE['nwhAuth'])), true));
   header("Refresh:0");
+  exit();
 }
 if (!isset($_SESSION['new_visitor'])) {
   $_SESSION['new_visitor'] = true;

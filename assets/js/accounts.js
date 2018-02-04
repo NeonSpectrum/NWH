@@ -13,11 +13,6 @@ $('.btnEditAccount').click(function() {
   } else {
     $("#modalEditAccount").find("option[value=User]").removeAttr("style");
   }
-  if ($('#modalEditAccount').find("#cmbAccountType option[value='" + accountType + "']").val() === undefined || email_address == email) {
-    $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "none");
-  } else {
-    $('#modalEditAccount').find('#cmbAccountType').parent().parent().css("display", "block");
-  }
 });
 $("#frmAddAccount").validator().submit(function(e) {
   if (e.isDefaultPrevented()) {

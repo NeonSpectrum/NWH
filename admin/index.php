@@ -27,7 +27,7 @@ $row    = mysqli_fetch_assoc($result)['rows'];
           <div class="panel-heading">Books Ongoing Today</div>
 <?php
 $count  = 0;
-$result = $db->query("SELECT * FROM booking");
+$result = $db->query("SELECT * FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
 while ($row = $result->fetch_assoc()) {
   $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
   if (in_array($date, $dates)) {
@@ -46,11 +46,8 @@ while ($row = $result->fetch_assoc()) {
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">Total Available Rooms</div>
-<?php
-$row = count($room->generateRoomID(null, null, $date, $date));
-?>
           <div class="panel-body">
-<?php echo $row; ?><br/>
+<?php echo count($room->generateRoomID(null, null, $date, date("Y-m-d", strtotime($date) + 86400))); ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/roomtable">View more...</a>

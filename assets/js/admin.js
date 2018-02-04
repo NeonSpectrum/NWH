@@ -138,7 +138,7 @@ socket.on('notification', function(data) {
       align: "right"
     },
     mouse_over: true,
-    delay: 10000
+    delay: 0
   });
 });
 

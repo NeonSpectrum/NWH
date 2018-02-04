@@ -38,12 +38,18 @@ for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
   $j++;
 }
 
+$item[$j] = new Item();
+$item[$j]->setName("50% Down Payment")
+  ->setCurrency('PHP')
+  ->setQuantity(1)
+  ->setPrice(-($price / 2));
+
 $itemList = new ItemList();
 $itemList->setItems($item);
 
 $amount = new Amount();
 $amount->setCurrency('PHP')
-  ->setTotal($price);
+  ->setTotal($price / 2);
 
 $transaction = new Transaction();
 $transaction->setAmount($amount)
@@ -51,7 +57,7 @@ $transaction->setAmount($amount)
   ->setDescription("Test")
   ->setInvoiceNumber(uniqid());
 
-$data = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
+$data = $system->encrypt("txtAmount=" . ($price / 2) . "&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
 
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl("http://{$_SERVER['SERVER_NAME']}{$root}payment?type=success&data=$data")

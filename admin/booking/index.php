@@ -8,7 +8,7 @@ require_once '../../files/sidebar.php';
     <h1 class="page-title">
       Booking
       <span class="pull-right">
-        <a style="cursor:pointer" data-toggle="modal" data-target="#modalAddBooking" data-tooltip="tooltip" data-placement="bottom" title="Add Walk In"><span class="fa fa-plus"></span></a>
+        <a style="cursor:pointer" data-toggle="modal" data-target="#modalAddBooking" data-tooltip="tooltip" data-placement="bottom" title="Add Booking"><span class="fa fa-plus"></span></a>
       </span>
     </h1>
     <div class="well">

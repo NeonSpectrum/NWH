@@ -464,7 +464,7 @@ class Room extends System {
     return $rooms;
   }
 
-  public function generateRoomID($room = null, $quantity, $checkInDate, $checkOutDate) {
+  public function generateRoomID($room = null, $quantity = null, $checkInDate, $checkOutDate) {
     global $db, $date;
     $room   = $room != null ? "RoomType = '$room'" : 1;
     $rooms  = [];
@@ -613,7 +613,7 @@ class View extends Room {
               echo "&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
             }
           }
-          echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7'><i class='fa fa-plus'></i></button>";
+          echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7;border:1px dashed gray'><i class='fa fa-plus'></i></button>";
         } else {
           echo join($rooms, ", ");
         }
@@ -754,7 +754,7 @@ class View extends Room {
       echo "<td>{$row['PayerID']}</td>";
       echo "<td>{$row['PaymentID']}</td>";
       echo "<td>{$row['InvoiceNumber']}</td>";
-      echo "<td>{$row['PaymentAmount']}</td>";
+      echo "<td>₱&nbsp;" . number_format($row['PaymentAmount'], 2, ".", ",") . "</td>";
       echo "<td>" . date("m/d/Y h:i:s A", strtotime($row['TimeStamp'])) . "</td>";
       echo "</tr>";
     }
@@ -772,7 +772,7 @@ class View extends Room {
       echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       echo "<td>";
-      if ($this->checkUserLevel(2) || $this->checkUserLevel(2)) {
+      if ($this->checkUserLevel(1) && $this->email != $row['EmailAddress']) {
         echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
         echo "&nbsp;&nbsp;";
       }

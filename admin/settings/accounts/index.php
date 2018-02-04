@@ -140,7 +140,7 @@ $view->accounts();
             <!-- errors will be shown here ! -->
           </div>
           <input type="hidden" id="txtEmail" name="txtEmail">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Name: </label>
             <div class="col-sm-10">
               <div class="row">
@@ -152,7 +152,7 @@ $view->accounts();
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label class="col-sm-2 control-label">Account Type: </label>
             <div class="col-sm-5">

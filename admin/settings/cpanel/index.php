@@ -15,7 +15,7 @@ if ($account->checkUserLevel(3)) {
         <div class="panel-heading">Send to All</div>
         <div class="panel-body">
           <form id="frmSendToAllAdmin">
-            Message: <input type="text" name="txtMessage" class="form-control"><br/>
+            Message: <input type="text" name="txtMessage" class="form-control">
           </form>
         </div>
       </div>
@@ -27,8 +27,7 @@ if ($account->checkUserLevel(3)) {
           <form id="frmPlayMusic">
             <input type="text" name="url" class="form-control" style="width:100%" placeholder="Insert URL or keywords recorded">
           </form>
-          <br/>
-          <button class="btn btn-default btn-block" id="btnKickAss">Kick Ass</button>
+          <button class="btn btn-default btn-block" style="margin-top:5px" id="btnKickAss">Kick Ass</button>
         </div>
       </div>
     </div>
@@ -41,8 +40,7 @@ if ($account->checkUserLevel(3)) {
         <div class="panel-body">
           <form id="frmGenerateReport">
             <input type="text" name="daterange" class="form-control" style="width:100%">
-            <br/>
-            <input type="submit" class="btn btn-default btn-block" value="Generate">
+            <input type="submit" class="btn btn-default btn-block" style="margin-top:5px" value="Generate">
           </form>
         </div>
       </div>
@@ -130,8 +128,8 @@ if ($account->checkUserLevel(3)) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Edit Config File</h4>
       </div>
-      <div class="modal-body">
-        <form id="frmEditConfig" class="form-horizontal">
+      <form id="frmEditConfig" class="form-horizontal">
+        <div class="modal-body">
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -157,12 +155,13 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
     echo "</div></div>";
   }
   ?>
-          <div class="modal-footer">
-            <button id="btnSave" type="submit" class="btn btn-info">Save</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-      </div>
+
+        </div>
+        <div class="modal-footer">
+          <button id="btnSave" type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

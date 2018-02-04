@@ -1,8 +1,14 @@
 $('#modalAddExpenses').on('shown.bs.modal', function() {
   $(this).find('#txtPayment').focus();
+  if ($(this).find("#cmbExpensesType option:selected").html() != "Others") {
+    $(this).find("#txtPayment").prop("readonly", true);
+  }
 });
 $('#modalAddDiscount').on('shown.bs.modal', function() {
   $(this).find('#txtDiscount').focus();
+  if ($(this).find("#cmbExpensesType option:selected").html() != "Others") {
+    $(this).find("#txtDiscount").prop("readonly", true);
+  }
 });
 $(".btnAddExpenses").click(function() {
   $("#modalAddExpenses").find(".modal-title").html("Booking ID: " + $(this).attr("id"));

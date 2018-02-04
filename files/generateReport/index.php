@@ -1,7 +1,7 @@
 <?php
 @session_start();
 use setasign\Fpdi\Fpdi;
-
+setlocale(LC_CTYPE, 'en_US');
 require_once '../autoload.php';
 
 if (isset($_GET['daterange']) && $account->checkUserLevel(2)) {
@@ -49,7 +49,7 @@ if (isset($_GET['daterange']) && $account->checkUserLevel(2)) {
 
   $pdf->SetFontSize('16');
   $pdf->Cell(0, 15, "Number of Booking: $numberOfBooking", 0, 1, "R");
-  $pdf->Cell(0, 5, "Total: P" . number_format($totalAmount), 0, 1, "R");
+  $pdf->Cell(0, 5, "Total: P " . number_format($totalAmount), 0, 1, "R");
   $pdf->Output("{$_GET['daterange']}-Report.pdf", "I");
 } else {
   header("location: ../../");

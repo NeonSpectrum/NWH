@@ -280,6 +280,7 @@
 }(jQuery, window, document);
 // SCRIPT
 var rooms = [];
+var quantity = 0;
 $(document).ready(function() {
   // Step show event 
   $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
@@ -392,9 +393,9 @@ $(document).ready(function() {
           return false;
         }
         var roomHtml = "",
-          diffDays, total = 0,
-          quantity = 0;
+          diffDays, total = 0;
         rooms = [];
+        quantity = 0;
         $('.numberOfRooms').each(function() {
           if ($(this).find("select").val() != 0) {
             var roomName = $(this).parent().find("#roomName").html();
@@ -447,7 +448,7 @@ $(document).ready(function() {
               $("#loadingMode").fadeOut();
               socket.emit('notification', {
                 user: email_address,
-                messages: "Booked from " + $('#frmBookNow').find("#txtCheckDate").val() + "<br/>Booking ID: " + response[0]
+                messages: "Booking ID: " + response[0] + "<br/>Booked from " + $('#frmBookNow').find("#txtCheckDate").val() + "<br/>Number of Rooms: " + quantity
               });
             } else {
               $("#loadingMode").fadeOut();
