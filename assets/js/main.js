@@ -120,7 +120,8 @@ Pace.on('done', function() {
   }
   scrolling(true);
   new WOW({
-    offset: 40
+    offset: 40,
+    mobile: false,
   }).init();
   if (database) {
     $(".loadingIcon").fadeOut("slow");

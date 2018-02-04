@@ -3,10 +3,8 @@
 /node_modules/*
 /files/backup/*
 
-!images/profilepics/index.php
 !images/profilepics/default
 !images/bankreferences/index.php
-!images/bankreferences/default
 
 # ini
 config.ini

@@ -2,6 +2,7 @@
 require_once "../files/autoload.php";
 if (!$account->isLogged()) {
   header("Location: $root");
+  exit();
 }
 if ($_SERVER['SERVER_NAME'] == "localhost") {
   echo false;
