@@ -101,7 +101,7 @@ $view->accounts();
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" pattern="[^ ]+" minlength="8" maxlength="50" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" pattern="[\s\S]*\S[\s\S]*" minlength="8" maxlength="50" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -110,7 +110,7 @@ $view->accounts();
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" pattern="[^ ]+" data-match="#txtPassword" data-match-error="Whoops, these don't match" minlength="8" maxlength="50" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" pattern="[\s\S]*\S[\s\S]*" data-match="#txtPassword" data-match-error="Whoops, these don't match" minlength="8" maxlength="50" required autocomplete="off">
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>

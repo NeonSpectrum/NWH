@@ -211,7 +211,7 @@ if (!$account->isLogged()) {
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" pattern="[^ ]+" required>
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" pattern="[\s\S]*\S[\s\S]*" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -220,7 +220,7 @@ if (!$account->isLogged()) {
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" pattern="[^ ]+" data-match="#txtPassword" data-match-error="Whoops, these don't match" required>
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" pattern="[\s\S]*\S[\s\S]*" data-match="#txtPassword" data-match-error="Whoops, these don't match" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
