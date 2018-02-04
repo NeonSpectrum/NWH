@@ -32,7 +32,7 @@ class Account extends System {
   }
 
   public function login($credentials) {
-    global $db;
+    global $db, $levels;
     $email    = $this->filter_input($credentials['email']);
     $password = $this->filter_input($credentials['password'], true);
 
@@ -41,8 +41,8 @@ class Account extends System {
 
     if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
       $_SESSION['account'] = $this->encrypt($row['EmailAddress']);
-      if ($credentials['remember'] == "on") {
-        setcookie("nwhAuth", $this->encrypt($row['EmailAddress']), time() + (86400 * LOGIN_EXPIRED_DAYS), "/");
+      if (array_search($row['AccountType'], $levels) > 0) {
+        setcookie("nwhAuth", $this->encrypt(json_encode(["email" => $email, "password" => $password])), time() + (86400 * LOGIN_EXPIRED_DAYS), "/");
       }
       $db->query("UPDATE account SET SessionID='" . session_id() . "' WHERE EmailAddress='$email'");
       $this->log("login|account", $email);
@@ -267,21 +267,6 @@ class Account extends System {
       }
       return $output;
     }
-  }
-
-  public function deleteAccount($email) {
-    global $db;
-    if ($this->checkUserLevel(3)) {
-      $result = $db->query("DELETE FROM account WHERE EmailAddress='$email'");
-
-      if ($db->affected_rows > 0) {
-        $this->log("delete|account|$email");
-        return true;
-      } else {
-        return $db->error;
-      }
-    }
-    return ERROR_OCCURED;
   }
 
   public function isLogged() {

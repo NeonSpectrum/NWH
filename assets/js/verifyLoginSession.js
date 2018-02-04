@@ -7,10 +7,10 @@ setInterval(function() {
           $.ajax({
             url: root + 'account?mode=logout',
             success: function() {
+              alert("Your account has been logged in somewhere. Logging out...");
               location.reload(true);
             }
           });
-          alert("Your account has been logged in somewhere. Logging out...");
         }
       }
     });
