@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, NULL)");
     }
     if ($db->affected_rows > 0) {
-      $system->log("insert|booking.payment|{$system->formatBookingID($bookingID)}|$payment");
+      $system->log("insert|booking.expenses|{$system->formatBookingID($bookingID)}|{$_POST['expensesType']}|$quantity|₱" . number_format($payment, 2, ".", ","));
     }
   }
 } else if (!$system->validateToken($_POST['csrf_token'])) {

@@ -107,7 +107,7 @@ class Account extends System {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
     }
 
-    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '$date', NULL)");
+    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '1', '$date', NULL)");
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
@@ -400,6 +400,16 @@ class Room extends System {
     }
   }
 
+  public function isOccupied($roomID) {
+    global $db;
+    $rooms  = [];
+    $result = $db->query("SELECT booking_room.RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL AND CheckOut IS NULL");
+    while ($row = $result->fetch_assoc()) {
+      $rooms[] = $row['RoomID'];
+    }
+    return in_array($roomID, $rooms);
+  }
+
   public function getRoomInfo($roomID) {
     global $db;
     $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE RoomID=$roomID AND CheckIn IS NOT NULL AND CheckOut IS NULL ORDER BY CheckIn DESC LIMIT 1");
@@ -480,7 +490,7 @@ class Room extends System {
     global $db, $date;
     $room   = $room != null ? "RoomType = '$room'" : 1;
     $rooms  = [];
-    $result = $db->query("SELECT RoomID, RoomType, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
+    $result = $db->query("SELECT RoomID, RoomType, Status, Maintenance FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT booking.BookingID, CheckInDate, CheckOutDate FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date' AND DateCancelled IS NULL");
       if ($roomResult->num_rows > 0) {
@@ -494,7 +504,7 @@ class Room extends System {
       } else {
         $roomAvailable = true;
       }
-      if (($row['Status'] != 0 || $includeDisabled) && $roomAvailable && !in_array($row['RoomID'], $rooms)) {
+      if (($row['Status'] != 0 || $includeDisabled) && $roomAvailable && !in_array($row['RoomID'], $rooms) && $row['Maintenance'] == 0) {
         $rooms[] = $row['RoomID'];
       }
     }
@@ -618,17 +628,14 @@ class View extends Room {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td>";
-        if ($checkedIn) {
-          foreach ($rooms as $roomID) {
+        foreach ($rooms as $roomID) {
+          if ($checkedIn) {
             echo $roomID;
-            if (!($row['CheckIn'] != null && $row['CheckOut'] == null)) {
-              echo "&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
-            }
+            echo "&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
           }
-          echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7;border:1px dashed gray'><i class='fa fa-plus'></i></button>";
-        } else {
-          echo join($rooms, ", ");
         }
+        echo !$checkedIn ? join($rooms, ", ") : "";
+        echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7;border:1px dashed #337ab7'><i class='fa fa-plus'></i></button>";
         echo "</td>";
         echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
@@ -698,8 +705,8 @@ class View extends Room {
         echo "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount'], 2, ".", ",") . "</td>";
         echo "<td>";
-        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-plus-o fa-2x'></i></a>";
-        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-calendar-minus-o fa-2x'></i></a>";
+        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check In' class='btnCheckIn col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkInStatus ? ' disabled' : '') . "><i class='fa fa-sign-in fa-2x'></i></a>";
+        echo "<a data-tooltip='tooltip' data-placement='bottom' title='Check Out' class='btnCheckOut col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0'" . ($checkOutStatus || !$checkInStatus ? ' disabled' : '') . "><i class='fa fa-sign-out fa-2x'></i></a>";
         echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddExpenses col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddExpenses' data-tooltip='tooltip' data-placement='bottom' title='Add Expenses'><i class='fa fa-money fa-2x' style='color:green'></i></a>" : "";
         echo !$checkOutStatus && $checkInStatus ? "<a class='btnAddDiscount col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddDiscount' data-tooltip='tooltip' data-placement='bottom' title='Add Discount'><i class='fa fa-gift fa-2x' style='color:red'></i></a>" : "";
         echo $checkOutStatus && $checkInStatus ? "<a class='btnShowBill col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Show Bill'><i class='fa fa-money fa-2x' style='color:red'></i></a>" : "";
@@ -836,14 +843,17 @@ class View extends Room {
   public function rooms($category) {
     global $db;
     if ($category == "statuses") {
-      $query  = "SELECT RoomID, RoomType, RoomDescription, Status FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID ORDER BY RoomID";
+      $query  = "SELECT RoomID, RoomType, RoomDescription, Status, Maintenance FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID ORDER BY RoomID";
       $result = mysqli_query($db, $query);
       while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
         echo "<td id='txtRoomType'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
-        $checked = $row['Status'] == '1' ? 'checked' : '';
+        $checked = $row['Status'] == 1 ? 'checked' : '';
         echo "<td><input type='checkbox' data-toggle='toggle' data-on='Enabled' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked/></td>";
+        $checked  = $row['Maintenance'] == 1 ? 'checked' : '';
+        $disabled = $this->isOccupied($row['RoomID']) ? "data-onstyle='danger' disabled" : "";
+        echo "<td><input type='checkbox' data-toggle='toggle' data-on='" . ($disabled == "" ? "Enabled" : "Occupied") . "' data-off='" . ($disabled == "" ? "Disabled" : "Occupied") . "' class='cbxRoom' id='{$row['RoomID']}' $checked $disabled/></td>";
         echo "<td style='width:7%'>";
         echo "<a class='btnEditRoomID col-md-6' style='cursor:pointer;padding:0;' id='{$row['RoomID']}' data-toggle='modal' data-target='#modalEditRoomID' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
         echo "<a class='btnDeleteRoomID col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomID']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";

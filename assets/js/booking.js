@@ -333,7 +333,11 @@ $("#frmEditReservation").submit(function(e) {
 $('#tblBooking').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();
 });
-var oTable = $('#tblBooking').DataTable();
+var oTable = $('#tblBooking').DataTable({
+  "scrollY": "300px",
+  "scrollCollapse": true
+});
+oTable.order([0, 'desc']).draw();
 $('#tblBooking_length').find("select").addClass("form-control");
 $('#tblBooking_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();

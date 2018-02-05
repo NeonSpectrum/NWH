@@ -4,7 +4,7 @@ require_once '../../files/sidebar.php';
 ?>
 <main class="l-main">
   <div id="loadingMode" style="display:block"></div>
-  <div class="content-wrapper content-wrapper--with-bg">
+  <div class="content-wrapper content-wrapper--with-bg" style="overflow-y:hidden">
     <h1 class="page-title">
       Booking
       <span class="pull-right">
@@ -188,7 +188,7 @@ for ($i = 0; $i <= $count; $i++) {
     </div>
   </div>
 </div>
-<div id="modalAddPayment" class="modal" role="dialog" tabindex="-1">
+<div id="modalAddPayment" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">

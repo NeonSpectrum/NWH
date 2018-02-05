@@ -10,7 +10,7 @@ if ($account->isLogged()) {
     <div class="row">
       <div class="col-md-12">
         <form id="frmLogin">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- error will be shown here ! -->
           </div>
@@ -55,7 +55,7 @@ if ($account->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>"/>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -71,7 +71,7 @@ if ($account->isLogged()) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" placeholder="John" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -80,7 +80,7 @@ if ($account->isLogged()) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" pattern="[a-zA-Z ]*$" required autocomplete="off">
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" placeholder="Smith" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -89,7 +89,7 @@ if ($account->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" required autocomplete="off">
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -98,7 +98,7 @@ if ($account->isLogged()) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required autocomplete="off">
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -109,7 +109,7 @@ if ($account->isLogged()) {
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" data-error="<?php echo REGISTER_EMAIL_ERROR; ?>" data-remote="<?php echo $root; ?>account?mode=checkEmail" required autocomplete="off">
+                  <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="example@domain.com" maxlength="100" data-error="<?php echo REGISTER_EMAIL_ERROR; ?>" data-remote="<?php echo $root; ?>account?mode=checkEmail" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -118,7 +118,7 @@ if ($account->isLogged()) {
                 <label>Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" required autocomplete="off">
+                  <input type="password" name="txtPassword" id="txtPassword" class="form-control" minlength="8" pattern="[\s\S]*\S[\s\S]*" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -127,7 +127,7 @@ if ($account->isLogged()) {
                 <label>Verify Password<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" data-match="#txtPassword" data-match-error="Whoops, these don't match" required autocomplete="off">
+                  <input type="password" name="txtRetypePassword" id="txtRetypePassword" class="form-control" minlength="8" pattern="[\s\S]*\S[\s\S]*" data-match="#txtPassword" data-match-error="Whoops, these don't match" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -136,8 +136,14 @@ if ($account->isLogged()) {
           </div>
         </div>
         <div class="modal-footer">
+<?php
+if (VERIFY_REGISTER) {
+  ?>
           <div style="margin-bottom: 10px" class="g-recaptcha pull-left" data-callback="recaptchaCallback" data-expired-callback="expiredCallback" data-sitekey="6Ler0DUUAAAAAK0dRPfLXX4i3HXRKZCmvdLzyRDp"></div>
-          <button id="btnRegister" type="submit" class="btn btn-info" disabled>Register</button>
+<?php
+}
+?>
+          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>

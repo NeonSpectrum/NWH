@@ -22,7 +22,8 @@ require_once '../../../files/sidebar.php';
             <thead>
               <th>Room ID</th>
               <th>Room Type</th>
-              <th>Switch</th>
+              <th>Bookable</th>
+              <th>Maintenance</th>
               <th>Action</th>
             </thead>
             <tbody>

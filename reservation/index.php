@@ -104,7 +104,7 @@ if (ALLOW_PAYPAL == true) {
   <div class="col-md-3">
     <div style="border:1px solid #ccc">
       <div style="background-color:rgb(142, 196, 231);padding:20px;text-align:center;border-bottom:1px solid #ccc;font-size:16pt">Booking Summary</div>
-      <div style="padding:5px" id="bookingSummary">
+      <div style="padding:5px;overflow-y:auto;max-height:300px" id="bookingSummary">
         <div id="info"></div>
         <div id="roomList"></div>
         <div id="paymentMethod"></div>

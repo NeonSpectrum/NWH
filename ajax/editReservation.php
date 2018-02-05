@@ -15,9 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $children     = $system->filter_input($_POST['txtChildren']);
     $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
-    $result = $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children WHERE BookingID=$bookingID");
+    $row          = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc();
+    $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
+    $result       = $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children WHERE BookingID=$bookingID");
 
     if ($db->affected_rows > 0) {
+      $amount       = $row['TotalAmount'] / $numberOfDays;
+      $numberOfDays = count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
+      $amount *= $numberOfDays;
+      $db->query("UPDATE booking SET TotalAmount=$amount WHERE BookingID=$bookingID");
       $system->log("update|booking|$bookingID");
       echo true;
     } else {

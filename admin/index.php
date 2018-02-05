@@ -54,6 +54,21 @@ while ($row = $result->fetch_assoc()) {
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Top Users</div>
+          <div class="panel-body">
+            <table style="width:100%">
+<?php
+$result = $db->query("SELECT FirstName, LastName, COUNT(BookingID) as NumberOfBooking FROM booking JOIN account ON booking.EmailAddress=account.EmailAddress GROUP BY FirstName, ' ', LastName ORDER BY NumberOfBooking DESC");
+for ($i = 1; $row = $result->fetch_assoc(); $i++) {
+  echo "<tr><td>Top {$i}</td><td>{$row['FirstName']} {$row['LastName']}</td><td>{$row['NumberOfBooking']} " . ($row['NumberOfBooking'] > 1 ? "Books" : "Book") . "</td></tr>";
+}
+?>
+            </table>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">Rooms Chart</div>

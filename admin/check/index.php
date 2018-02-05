@@ -4,7 +4,7 @@ require_once '../../files/sidebar.php';
 ?>
 <main class="l-main">
   <div id="loadingMode" style="display:block"></div>
-  <div class="content-wrapper content-wrapper--with-bg">
+  <div class="content-wrapper content-wrapper--with-bg" style="overflow-y:hidden">
     <h1 class="page-title">Check</h1>
     <div class="well">
       <div class="table-responsive">
@@ -32,7 +32,7 @@ $view->check();
     </div>
   </div>
 </main>
-<div id="modalAddExpenses" class="modal" role="dialog" tabindex="-1">
+<div id="modalAddExpenses" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,7 +85,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
    </div>
 </div>
-<div id="modalAddDiscount" class="modal" role="dialog" tabindex="-1">
+<div id="modalAddDiscount" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">

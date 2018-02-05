@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $price        = $room->getRoomPrice($room->getRoomType($roomID)) * $numberOfDays;
       $newPrice     = $room->getRoomPrice($room->getRoomType($newRoomID)) * $numberOfDays;
       $db->query("UPDATE booking SET TotalAmount = TotalAmount - $price + $newPrice WHERE BookingID=$bookingID");
-
+      $system->log("edit|booking.room|{$system->formatBookingID($bookingID)}|$newRoomID|$roomID");
       echo true;
     } else {
       echo $db->error;
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], date("m/d/Y", strtotime($row['CheckOutDate']) - 86400)));
       $newPrice     = $room->getRoomPrice($room->getRoomType($newRoomID)) * $numberOfDays;
       $db->query("UPDATE booking SET TotalAmount = TotalAmount + $newPrice WHERE BookingID=$bookingID");
-
+      $system->log("insert|booking.room|{$system->formatBookingID($bookingID)}|$newRoomID");
       echo true;
     } else {
       echo $db->error;

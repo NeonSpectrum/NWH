@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], date("m/d/Y", strtotime($row['CheckOutDate']) - 86400)));
     $price        = $room->getRoomPrice($room->getRoomType($roomID)) * $numberOfDays;
     $db->query("UPDATE booking SET TotalAmount = TotalAmount - $price WHERE BookingID=$bookingID");
+    $system->log("delete|booking.room|{$system->formatBookingID($bookingID)}|$roomID");
     echo true;
   } else {
     echo $db->error;

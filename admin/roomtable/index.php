@@ -15,7 +15,7 @@ foreach ($roomList as $value) {
     $roomDescription[$value] = "Booking ID: {$descriptions['bookingID']}<br/>Name: {$descriptions['name']}<br/>Email: {$descriptions['email']}<br/>Rooms: {$descriptions['rooms']} (" . (substr_count($descriptions['rooms'], ",") + 1) . ")<br/>Check In Date: {$descriptions['checkInDate']}<br/>Check Out Date: {$descriptions['checkOutDate']}";
     $roomID[$value]          = "using";
   } else if ($cleaning) {
-    $roomDescription[$value] = "";
+    $roomDescription[$value] = "Click to clean";
     $roomID[$value]          = "cleaning";
   } else {
     $roomDescription[$value] = "";
@@ -25,9 +25,10 @@ foreach ($roomList as $value) {
 ?>
 <main class="l-main">
   <!-- <div id="loadingMode" style="display:block"></div> -->
-  <div class="content-wrapper content-wrapper--with-bg">
+  <div class="content-wrapper content-wrapper--with-bg" style="padding:0">
     <div class="col-md-6">
       <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+      <h1 style="text-align:center">1<sup>st</sup> Building</h1>
       <h1>First Floor</h1>
       <div class="table-responsive">
         <table class="text-center" cellspacing="0">
@@ -70,7 +71,8 @@ foreach ($roomList as $value) {
       </div>
     </div>
     <div class="col-md-6">
-      <h1>Another Side</h1>
+      <h1 style="text-align:center">2<sup>nd</sup> Building</h1>
+      <h1>&nbsp;</h1>
       <div class="table-responsive">
         <table class="text-center" cellspacing="0">
           <tr>

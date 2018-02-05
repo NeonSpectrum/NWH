@@ -219,7 +219,11 @@ $(".btnShowBill").click(function() {
 $('#tblBook').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();
 });
-var oTable = $('#tblBook').DataTable();
+var oTable = $('#tblBook').DataTable({
+  "scrollY": "300px",
+  "scrollCollapse": true
+});
+oTable.order([0, 'desc']).draw();
 $('#tblBook_length').find("select").addClass("form-control");
 $('#tblBook_filter').find("input[type=search]").addClass("form-control");
 $('input[type="search"]').focus();
