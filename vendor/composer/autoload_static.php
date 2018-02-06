@@ -18,6 +18,10 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
             'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'B' => 
+        array (
+            'Bt51\\NTP\\' => 9,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -40,6 +44,10 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Bt51\\NTP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bt51/ntp/src',
         ),
     );
 

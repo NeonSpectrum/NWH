@@ -1332,7 +1332,6 @@ class System {
   }
 
 };
-
 $account = new Account();
 $room    = new Room();
 $view    = new View();
