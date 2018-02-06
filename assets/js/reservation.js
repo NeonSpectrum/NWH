@@ -409,7 +409,7 @@ $(document).ready(function() {
             var date1 = new Date(dates[0]);
             var date2 = new Date(dates[1]);
             diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
-            roomHtml.push(roomName + ": " + "<span class='pull-right'>" + $(this).find("select").val() + " @ " + "₱" + parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html() + "Total: <span class='pull-right'>₱&nbsp;" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
+            roomHtml.push(roomName + ": " + "<span class='pull-right'>" + $(this).find("select").val() + " x " + "₱" + parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br>" + $(this).parent().find("span#roomSimpDesc").html() + "Total: <span class='pull-right'>₱&nbsp;" + (parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>");
             total += parseInt($(this).parent().find("#roomPrice").html().replace(/[^0-9\.-]+/g, "")) * parseInt($(this).find("select").val()) * diffDays;
           }
         });
