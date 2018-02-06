@@ -26,7 +26,7 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
     <div class="header-title">
       Admin Page
     </div>
-    Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
+    <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
 <?php
 if ($account->checkUserLevel(3)) {
   ;?>
@@ -53,7 +53,7 @@ $result = $db->query("SELECT * FROM notification ORDER BY TimeStamp DESC");
 while ($row = $result->fetch_assoc()) {
   echo "<li style='position:relative'" . ($row['MarkedAsRead'] == 0 ? " class='not-read'" : "") . ">
       <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-{$row['Type']}' style='font-size:4em'></i></div></div>
-      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>{$row['Message']}</div>" . ($row['MarkedAsRead'] == 0 ? "<a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>" : "") . "
+      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message' style='width:75%'>{$row['Message']}</div>" . ($row['MarkedAsRead'] == 0 ? "<a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>" : "") . "
       <small style='position:absolute;bottom:0;right:0'>" . date("M d h:i A", strtotime($row['TimeStamp'])) . "</small>
     </li>";
 }

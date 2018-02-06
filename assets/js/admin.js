@@ -132,7 +132,7 @@ socket.on('notification', function(data) {
   $(".drop-content").prepend("\
     <li style='position:relative' class='not-read'>\
       <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-" + type + "' style='font-size:4em'></i></div></div>\
-      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>" + data.messages + "</div><a id='" + data.id + "' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>\
+      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message' style='width:75%'>" + data.messages + "</div><a id='" + data.id + "' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>\
       <small style='position:absolute;bottom:0;right:0'>" + data.time + "</small>\
     </li>");
   $(".drop-content li:first").hide().fadeIn('slow');

@@ -607,7 +607,7 @@ main.l-main .page-title {
 @media only screen and (max-width:767px) {
   .dropdown-menu.notify-drop {
     min-width: 285px;
-    margin-left: -208px;
+    margin-left: -192px;
   }
 }
 
@@ -747,6 +747,12 @@ main.l-main .page-title {
 
 .notify-message {
   word-wrap: break-word;
-  width: 220px !important;
+  max-width: 220px;
   font-size: 14px;
+}
+
+@media only screen and (max-width:767px) {
+  .notify-message {
+    max-width: 195px;
+  }
 }
