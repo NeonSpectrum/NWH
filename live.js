@@ -80,9 +80,9 @@ io.on('connection', function(client) {
           var message = "Please be reminded that " + bookingID + " haven't check in yet."
           db.query("SELECT * FROM notification WHERE Message=? AND DATE(TimeStamp)=CURDATE()", [message], function(err, result) {
             if (result.length == 0) {
-              db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, now], function(err, result) {
+              db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, now], function(err, insert) {
                 io.emit("notification", {
-                  id: result.insertId,
+                  id: insert.insertId,
                   type: 'exclamation-triangle',
                   messages: message,
                   time: moment().format('MMM DD hh:mm A')
