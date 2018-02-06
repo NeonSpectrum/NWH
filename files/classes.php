@@ -624,7 +624,7 @@ class View extends Room {
       } else {
         $amountPaid = $row['AmountPaid'];
       }
-      if (strtotime($row['CheckInDate']) >= strtotime($date) && !$cancelled && !$checkedOut) {
+      if ( /*strtotime($row['CheckInDate']) >= strtotime($date) && */!$cancelled && !$checkedOut) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td>";
@@ -722,7 +722,6 @@ class View extends Room {
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$row['ID']}</td>";
-      echo "<td>{$row['Type']}</td>";
       echo "<td>{$row['Message']}</td>";
       echo "<td>{$row['TimeStamp']}</td>";
       echo "</tr>";

@@ -11,7 +11,6 @@ require_once '../../files/sidebar.php';
         <table id="tblNotification" class="table table-striped table-bordered table-hover">
           <thead>
             <th>ID</th>
-            <th>Type</th>
             <th>Message</th>
             <th>TimeStamp</th>
           </thead>
