@@ -447,7 +447,8 @@ $(document).ready(function() {
               $("#loadingMode").fadeOut();
               socket.emit('notification', {
                 user: email_address,
-                messages: "Booking ID: " + response[0] + "<br/>Booked from " + $('#frmBookNow').find("#txtCheckDate").val() + "<br/>Number of Rooms: " + quantity
+                type: "book",
+                messages: 'Booking ID: <a href="//' + location.hostname + root + 'admin/booking/?search=' + response[0] + '">' + response[0] + '</a><br/>Booked from ' + $('#frmBookNow').find('#txtCheckDate').val() + '<br/>Number of Rooms: ' + quantity
               });
             } else {
               $("#loadingMode").fadeOut();

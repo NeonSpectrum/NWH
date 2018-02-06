@@ -29,13 +29,48 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
     Logged in as: <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
 <?php
 if ($account->checkUserLevel(3)) {
-  ?>
+  ;?>
     <a id="btnGitUpdate" data-tooltip="tooltip" data-placement="bottom" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
 <?php
 }
+;?>
+    <li class="dropdown c-header-icon navbar-right" style="list-style:none;float:right;margin-right:0;">
+<?php
+$result = $db->query("SELECT * FROM notification WHERE MarkedAsRead=0 ORDER BY TimeStamp DESC");
+echo "<span class='c-badge c-badge--header-icon animated shake' style='display:" . ($result->num_rows > 0 ? "block" : "none") . "'>{$result->num_rows}</span>";
 ?>
+      <a style="cursor:pointer;width:100%;height:100%;align-items:center;justify-content:center;display:flex;text-decoration:none" class="dropdown-toggle" data-toggle="dropdown" data-tooltip="tooltip" data-placement="bottom" title="Notifications"><i class="fa fa-bell"></i></a>
+      <ul class="dropdown-menu notify-drop" style="cursor:default;">
+        <div class="notify-drop-title">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="font-size:18px;line-height:30px">Notifications</div>
+            <a class="rIcon allRead" style="cursor:pointer" data-tooltip="tooltip" data-placement="bottom" title="Mark All As Read"><i class="fa fa-dot-circle-o"></i></a>
+          </div>
+        </div>
+        <div class="drop-content">
+<?php
+while ($row = $result->fetch_assoc()) {
+  switch ($row['Type']) {
+  case 'booking':
+    $type = "book";
+    break;
+  default:
+    $type = "bell";
+    break;
+  }
+  echo "<li style='position:relative'>
+      <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-$type' style='font-size:4em'></i></div></div>
+      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>{$row['Message']}</div><a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>
+      <small style='position:absolute;bottom:0;right:0'>" . date("M d h:i A", strtotime($row['TimeStamp'])) . "</small>
+    </li>";
+}
+?>
+        </div>
+      </ul>
+    </li>
     <a id="btnLogout" data-tooltip="tooltip" data-placement="bottom" title="Logout" style="text-decoration:none;cursor:pointer" class="c-header-icon"><i class="fa fa-power-off"></i></a>
   </div>
+  <audio id="sndNotification" src="<?php echo $root; ?>files/notification.ogg"></audio>
 </header>
 <div class="l-sidebar">
   <a class="logo" data-tooltip="tooltip" data-placement="right" title="Go to home page" href="<?php echo $root; ?>" style="text-decoration:none">

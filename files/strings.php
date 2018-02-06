@@ -1,5 +1,5 @@
 <?php
-$root = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+$root = strtolower($_SERVER['SERVER_NAME']) == "localhost" || $_SERVER['SERVER_NAME'] == "192.168.137.1" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 
 define("ENCRYPT_KEYWORD", "1ff8cc6708848c57e84e67d67f599156");
 define("INITIALIZATION_VECTOR", "northwoodhotelph");

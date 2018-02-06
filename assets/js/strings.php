@@ -23,7 +23,7 @@ function getQueryVariable(variable) {
 @session_start();
 require_once "../../files/strings.php";
 
-$root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+$root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" || $_SERVER['SERVER_NAME'] == "192.168.137.1" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");
 $jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
 $json     = json_decode($jsonFile, true);
@@ -50,14 +50,10 @@ foreach ($config as $name => $value) {
 echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
 echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(" ", "+", $_SESSION['account']), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : "") . "\";";
 ?>
-var socket;
-if(location.hostname != "localhost"){
-  socket = io(NODE_JS_URL);
-} else {
-  socket = io(NODE_JS_URL, {
-    reconnection: false
-  });
-}
+var socket = socket = io(NODE_JS_URL);
+//socket = io(NODE_JS_URL, {
+//  reconnection: false
+//});
 socket.on('connect', function(){
   socket.emit("access", (email_address == "" ? "Someone" : email_address));
 });

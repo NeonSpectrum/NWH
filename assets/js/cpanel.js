@@ -48,11 +48,14 @@ $("#frmGenerateReport").submit(function(e) {
 });
 $("#frmSendToAllAdmin").submit(function(e) {
   e.preventDefault();
-  socket.emit("all", {
-    user: email_address,
-    messages: $(this).find("input[name=txtMessage]").val()
-  });
-  $(this).trigger("reset");
+  if ($(this).find("input[name=txtMessage]").val() != "") {
+    socket.emit("notification", {
+      user: email_address,
+      type: "envelope",
+      messages: $(this).find("input[name=txtMessage]").val()
+    });
+    $(this).trigger("reset");
+  }
 });
 $("#frmPlayMusic").submit(function(e) {
   e.preventDefault();

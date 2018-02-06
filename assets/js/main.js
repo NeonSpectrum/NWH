@@ -640,7 +640,8 @@ Pace.on('done', function() {
       form_data.append("file", $('#imgBankRef').prop('files')[0]);
       socket.emit("notification", {
         user: email_address,
-        messages: "Added Bank Reference to " + $(this).find("#cmbBookingID option:selected").html()
+        type: "photo",
+        messages: 'Added Bank Reference to <a href="//' + location.hostname + root + 'admin/booking/?search=' + $(this).find("#cmbBookingID option:selected").html() + '">' + $(this).find("#cmbBookingID option:selected").html() + '</a>'
       })
     }
     form_data.append("rooms", JSON.stringify(rooms));

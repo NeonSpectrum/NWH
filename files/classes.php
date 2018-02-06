@@ -1081,21 +1081,31 @@ class System {
     if ($revert == false) {
       $result = $db->query("SELECT * FROM booking WHERE BookingID=$id");
       $row    = $result->fetch_assoc();
-      return "nwh" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d", $id);
+      return "NWH" . date("mdy", strtotime($row['DateCreated'])) . "-" . sprintf("% '04d", $id);
     } else {
       return (int) substr(strrchr($id, "-"), 1);
     }
   }
 
-  public function checkExpiredBooking($bookingID) {
+  public function checkExpiredBooking($bookingID = null) {
     global $db, $date, $dateandtime;
-    $result = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
-    $row    = $result->fetch_assoc();
-    if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime)) {
-      $db->query("INSERT INTO booking_cancelled VALUES($bookingID,'$date')");
-      return true;
+    if ($bookingID == null) {
+      $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
     } else {
-      return false;
+      $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
+    }
+    while ($row = $result->fetch_assoc()) {
+      if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0) {
+        $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date')");
+        $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
+        if ($bookingID != null) {
+          return true;
+        }
+      } else {
+        if ($bookingID != null) {
+          return false;
+        }
+      }
     }
   }
 
@@ -1146,6 +1156,7 @@ class System {
     }
     return $dates;
   }
+
   public function importdb($file) {
     $contents = file_get_contents($file);
 
@@ -1229,6 +1240,16 @@ class System {
       }
     }
     return $hasData ? $filename : false;
+  }
+
+  public function addNotif($type, $message) {
+    global $db, $dateandtime;
+    $db->query("INSERT INTO notification VALUES(NULL,'$type','$message',0,'$dateandtime')");
+  }
+
+  public function readNotif($id) {
+    global $db, $dateandtime;
+    $db->query("UPDATE notification SET MarkedAsRead=1 WHERE ID=$id");
   }
 
   public function isLogged() {
