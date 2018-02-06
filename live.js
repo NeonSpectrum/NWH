@@ -15,7 +15,6 @@ var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
   log("Server started at port " + port)
 }))
-console.log(config.system.database_url)
 var db = mysql.createConnection({
   host: config.system.database_url,
   user: "cp018101",
