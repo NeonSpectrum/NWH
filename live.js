@@ -10,11 +10,13 @@ var mysql = require('mysql')
 var app = express()
 var http = require('http')
 var fs = require('fs')
+var ini = require('ini')
+var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
   log("Server started at port " + port)
 }))
 var db = mysql.createConnection({
-  host: "localhost",
+  host: config.database_url,
   user: "cp018101",
   password: "Yangyuanhua12",
   database: "cp018101_nwh"
