@@ -1,5 +1,4 @@
 setInterval("location.reload()", ADMIN_RELOAD_INTERVAL * 1000);
-var date = new Date();
 var Dashboard = function() {
   var menuChangeActive = function menuChangeActive(el) {
     if ($(el).hasClass("has-submenu")) {
@@ -51,7 +50,7 @@ $('input.birthDate').datepicker({
   format: DATE_FORMAT,
   autoclose: true,
   startView: 2,
-  endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
+  endDate: "-" + (moment(date).format("YYYY") - parseInt(MAX_BIRTH_YEAR)) + "y"
 });
 $("input.checkDate").each(function() {
   if (!$(this).val()) {

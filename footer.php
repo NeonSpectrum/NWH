@@ -48,7 +48,7 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !OFFLINE_MODE) {
 
 <!-- CUSTOM JS -->
 <?php
-echo "<script src='${root}assets/js/strings.php?v=" . filemtime(__DIR__ . "/assets/js/strings.php") . "'></script>\n";
+echo "<script src='${root}assets/js/core.php?v=" . filemtime(__DIR__ . "/assets/js/core.php") . "'></script>\n";
 if (strpos(strtolower($_SERVER['PHP_SELF']), "admin")) {
   echo "<script src='{$root}assets/js/admin.js?v=" . filemtime(__DIR__ . "/assets/js/admin.js") . "'></script>\n";
 } else {

@@ -1,4 +1,3 @@
-var date = new Date();
 var database = false;
 $(document).ready(function() {
   scrolling(false);
@@ -139,8 +138,8 @@ Pace.on('done', function() {
     format: DATE_FORMAT,
     autoclose: true,
     startView: 2,
-    startDate: "-" + (date.getFullYear() - parseInt(MIN_BIRTH_YEAR)) + "y",
-    endDate: "-" + (date.getFullYear() - parseInt(MAX_BIRTH_YEAR)) + "y"
+    startDate: "-" + (moment(date).format("YYYY") - parseInt(MIN_BIRTH_YEAR)) + "y",
+    endDate: "-" + (moment(date).format("YYYY") - parseInt(MAX_BIRTH_YEAR)) + "y"
   });
   $('input.checkDate').keypress(function() {
     return false;
