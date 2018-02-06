@@ -22,7 +22,6 @@ var db = mysql.createConnection({
   database: "cp018101_nwh"
 })
 var notifytime = 5000
-var now = moment().format('YYYY-MM-DD HH:mm:ss')
 db.connect(function(err) {
   if (err) {
     console.log(err.sqlMessage)
@@ -36,7 +35,7 @@ io.on('connection', function(client) {
   })
   client.on("notification", function(data) {
     data.time = moment().format('MMM DD hh:mm A')
-    var query = "INSERT INTO notification VALUES(NULL,'" + data.type + "','" + data.messages + "',0,'" + now + "')"
+    var query = "INSERT INTO notification VALUES(NULL,'" + data.type + "','" + data.messages + "',0,'" + moment().format('YYYY-MM-DD HH:mm:ss') + "')"
     db.query(query, function(err, result) {
       data.id = result.insertId
       io.emit('notification', data)
@@ -80,7 +79,7 @@ io.on('connection', function(client) {
           var message = "Please be reminded that " + bookingID + " haven't check in yet."
           db.query("SELECT * FROM notification WHERE Message=? AND DATE(TimeStamp)=CURDATE()", [message], function(err, result) {
             if (result.length == 0) {
-              db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, now], function(err, insert) {
+              db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, insert) {
                 io.emit("notification", {
                   id: insert.insertId,
                   type: 'exclamation-triangle',

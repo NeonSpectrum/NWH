@@ -8,7 +8,7 @@ require_once '../../files/sidebar.php';
     <h1 class="page-title">Check</h1>
     <div class="well">
       <div class="table-responsive">
-        <table id="tblBook" class="table table-striped table-bordered table-hover">
+        <table id="tblCheck" class="table table-striped table-bordered table-hover">
           <thead>
             <th>Booking ID</th>
             <th>Email Address</th>

@@ -130,7 +130,7 @@ $('#btnLogout').click(function() {
 socket.on('notification', function(data) {
   var type = data.type == null ? "bell" : data.type;
   $(".drop-content").prepend("\
-    <li style='position:relative'>\
+    <li style='position:relative' class='not-read'>\
       <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-" + type + "' style='font-size:4em'></i></div></div>\
       <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>" + data.messages + "</div><a id='" + data.id + "' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>\
       <small style='position:absolute;bottom:0;right:0'>" + data.time + "</small>\
@@ -156,7 +156,7 @@ socket.on('clickRead', function(data) {
       $(".c-badge--header-icon").html('0').hide();
     });
   } else {
-    $(".rIcon#" + data).closest("li").fadeOut('fast');
+    $(".rIcon#" + data).closest("li").removeClass("not-read");
     $(".c-badge--header-icon").html(parseInt($(".c-badge--header-icon").html()) - 1);
     if ($(".c-badge--header-icon").html() == 0) {
       $(".c-badge--header-icon").fadeOut();
@@ -181,6 +181,7 @@ reinitializeButtonRIcon();
 function reinitializeButtonRIcon() {
   $(".rIcon").unbind("click");
   $(".rIcon").click(function() {
+    $(this).fadeOut();
     var id = $(this).hasClass("allRead") ? "all" : $(this).attr("id");
     var message = $(this).parent().find(".notify-message").html();
     socket.emit("readNotif", {
@@ -188,13 +189,12 @@ function reinitializeButtonRIcon() {
       id: id,
       messages: message
     });
-    if ($(this).closest("li").hasClass("dropdown")) {
-      $(".drop-content").fadeOut('fast', function() {
-        $(this).html('');
-        $(".c-badge--header-icon").html('0').hide();
-      });
+    if ($(this).hasClass("allRead")) {
+      $(".rIcon:not('.allRead')").fadeOut();
+      $(".drop-content").find("li").removeClass("not-read");
+      $(".c-badge--header-icon").html('0').hide();
     } else {
-      $(this).closest("li").fadeOut('fast');
+      $(this).closest("li").removeClass("not-read");
       $(".c-badge--header-icon").html(parseInt($(".c-badge--header-icon").html()) - 1);
     }
   });

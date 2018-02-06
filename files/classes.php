@@ -716,6 +716,19 @@ class View extends Room {
     }
   }
 
+  public function notification() {
+    global $db, $date;
+    $result = $db->query("SELECT * FROM notification");
+    while ($row = $result->fetch_assoc()) {
+      echo "<tr>";
+      echo "<td>{$row['ID']}</td>";
+      echo "<td>{$row['Type']}</td>";
+      echo "<td>{$row['Message']}</td>";
+      echo "<td>{$row['TimeStamp']}</td>";
+      echo "</tr>";
+    }
+  }
+
   public function listOfReservation() {
     global $db;
     $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NOT NULL");

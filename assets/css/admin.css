@@ -641,8 +641,8 @@ main.l-main .page-title {
   padding: 10px 0px 5px 0px;
 }
 
-.dropdown-menu.notify-drop .drop-content>li:nth-child(2n+0) {
-  background-color: #fafafa;
+.dropdown-menu.notify-drop .drop-content>li.not-read {
+  background-color: #f0f0f0 !important;
 }
 
 .dropdown-menu.notify-drop .drop-content>li:after {
@@ -733,7 +733,16 @@ main.l-main .page-title {
   border-top: 1px solid #e2e2e2;
   bottom: 0;
   position: relative;
-  padding: 8px 15px;
+  /*padding: 8px 15px;*/
+}
+
+.dropdown-menu.notify-drop .notify-drop-footer a {
+  color: #777;
+  text-decoration: none;
+}
+
+.dropdown-menu.notify-drop .notify-drop-footer a:hover {
+  color: #333;
 }
 
 .notify-message {

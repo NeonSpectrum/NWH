@@ -49,22 +49,18 @@ echo "<span class='c-badge c-badge--header-icon animated shake' style='display:"
         </div>
         <div class="drop-content">
 <?php
+$result = $db->query("SELECT * FROM notification ORDER BY TimeStamp DESC");
 while ($row = $result->fetch_assoc()) {
-  switch ($row['Type']) {
-  case 'booking':
-    $type = "book";
-    break;
-  default:
-    $type = "bell";
-    break;
-  }
-  echo "<li style='position:relative'>
-      <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-$type' style='font-size:4em'></i></div></div>
-      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>{$row['Message']}</div><a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>
+  echo "<li style='position:relative'" . ($row['MarkedAsRead'] == 0 ? " class='not-read'" : "") . ">
+      <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-{$row['Type']}' style='font-size:4em'></i></div></div>
+      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message'>{$row['Message']}</div>" . ($row['MarkedAsRead'] == 0 ? "<a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>" : "") . "
       <small style='position:absolute;bottom:0;right:0'>" . date("M d h:i A", strtotime($row['TimeStamp'])) . "</small>
     </li>";
 }
 ?>
+        </div>
+        <div class="notify-drop-footer text-center">
+          <a href="<?php echo $root; ?>admin/notification"><i class="fa fa-eye"></i> Show All</a>
         </div>
       </ul>
     </li>
