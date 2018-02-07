@@ -13,8 +13,8 @@ require_once '../../files/sidebar.php';
             <th>Booking ID</th>
             <th>Email Address</th>
             <th>Room ID(s)</th>
-            <th>Adults</th>
-            <th>Children</th>
+            <th>Guests</th>
+            <th>Check Date</th>
             <th>Check In</th>
             <th>Check Out</th>
             <th>Extra Charges</th>

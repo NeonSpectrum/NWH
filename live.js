@@ -35,8 +35,7 @@ io.on('connection', function(client) {
   })
   client.on("notification", function(data) {
     data.time = moment().format('MMM DD hh:mm A')
-    var query = "INSERT INTO notification VALUES(NULL,'" + data.type + "','" + data.messages + "',0,'" + moment().format('YYYY-MM-DD HH:mm:ss') + "')"
-    db.query(query, function(err, result) {
+    db.query("INSERT INTO notification VALUES(NULL,?,?,0,?)", [data.type, data.messages, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
       data.id = result.insertId
       io.emit('notification', data)
       log("New Notification from " + data.user + ": " + data.messages, "Notif ")

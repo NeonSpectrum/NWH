@@ -1,4 +1,5 @@
 setInterval("location.reload()", ADMIN_RELOAD_INTERVAL * 1000);
+var notificationTitle;
 var Dashboard = function() {
   var menuChangeActive = function menuChangeActive(el) {
     if ($(el).hasClass("has-submenu")) {
@@ -145,8 +146,10 @@ socket.on('notification', function(data) {
   reinitializeButtonRIcon();
   var player = document.getElementById('sndNotification');
   player.pause();
-  player.currentTime = 0;
+  player.currentTime = 2;
+  player.duration = 2;
   player.play();
+  startBlinkTitle("New Notification");
 });
 socket.on('clickRead', function(data) {
   if ($(".rIcon#" + data).closest("li").hasClass("dropdown")) {
@@ -165,6 +168,7 @@ socket.on('clickRead', function(data) {
 $('.dropdown').on('show.bs.dropdown', function() {
   $(this).find('.dropdown-menu').first().stop(true, true).slideDown("fast");
   $(".c-badge").hide();
+  stopBlinkTitle();
 });
 $('.dropdown').on('hide.bs.dropdown', function() {
   $(this).find('.dropdown-menu').first().stop(true, true).slideUp("fast");
@@ -210,4 +214,18 @@ function disableKey(evt, key) {
   } else {
     return true;
   }
+}
+
+function startBlinkTitle(title) {
+  if (!$(".dropdown.c-header-icon.navbar-right").hasClass("open")) {
+    clearInterval(notificationTitle);
+    notificationTitle = setInterval(function() {
+      document.title = document.title == "Northwood Hotel" ? title : "Northwood Hotel";
+    }, 1500)
+  }
+}
+
+function stopBlinkTitle() {
+  clearInterval(notificationTitle);
+  document.title = "Northwood Hotel";
 }
