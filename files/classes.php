@@ -1101,21 +1101,23 @@ class System {
 
   public function checkExpiredBooking($bookingID = null) {
     global $db, $date, $dateandtime;
-    if ($bookingID == null) {
-      $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
-    } else {
-      $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
-    }
-    while ($row = $result->fetch_assoc()) {
-      if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0) {
-        $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date')");
-        $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
-        if ($bookingID != null) {
-          return true;
-        }
+    if (!$db->connect_error()) {
+      if ($bookingID == null) {
+        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
       } else {
-        if ($bookingID != null) {
-          return false;
+        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
+      }
+      while ($row = $result->fetch_assoc()) {
+        if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0) {
+          $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date')");
+          $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
+          if ($bookingID != null) {
+            return true;
+          }
+        } else {
+          if ($bookingID != null) {
+            return false;
+          }
         }
       }
     }
