@@ -6,6 +6,6 @@ require_once "../files/classes.php";
 
 $system->importdb("../db.sql");
 // add user cp018101 to database
-$db->query("GRANT ALL PRIVILEGES ON *.* TO 'cp018101'@'localhost' IDENTIFIED BY PASSWORD '" . $system->decrypt("DQJSTEUSCam+A5qqd25yTKSdQuRccPusYnz+IWPzmgP2CJ2vZ0wdtRt5/OgB3zc2") . "' WITH GRANT OPTION");
+$db->query("GRANT ALL PRIVILEGES ON *.* TO 'cp018101'@'localhost' IDENTIFIED BY PASSWORD '" . $system->decrypt("IAJLWoKtszGy4youElvq6dGZ7gt7gmy6eIrk8RSLXCU4pV0nqn5BC1A=") . "' WITH GRANT OPTION");
 echo true;
 ?>

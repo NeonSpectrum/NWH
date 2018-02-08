@@ -51,10 +51,7 @@ echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "fa
 echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(" ", "+", $_SESSION['account']), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : "") . "\"";
 echo ", date=\"$date\", dateandtime=\"$dateandtime\";";
 ?>
-var socket = socket = io(NODE_JS_URL);
-//socket = io((NODE_JS_URL.includes("localhost") ? "<?php echo $_SERVER['SERVER_NAME']; ?>" : NODE_JS_URL, {
-//  reconnection: false
-//});
+var socket = io(NODE_JS_URL.includes("localhost") ? NODE_JS_URL.replace("localhost","<?php echo $_SERVER['SERVER_NAME']; ?>") : NODE_JS_URL);
 socket.on('connect', function(){
   socket.emit("access", (email_address == "" ? "Someone" : email_address));
 });
