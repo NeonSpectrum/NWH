@@ -2,7 +2,6 @@
 // EXECUTE AUTOLOAD SCRIPT
 require_once 'files/autoload.php';
 @session_start();
-
 $csrf_token             = $system->encrypt(!isset($_SESSION['csrf_token']) || trim($_SESSION['csrf_token']) == "" ? md5(uniqid(rand(), TRUE)) : $_SESSION['csrf_token']);
 $_SESSION['csrf_token'] = $system->decrypt($csrf_token);
 

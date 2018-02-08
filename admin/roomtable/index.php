@@ -76,15 +76,15 @@ foreach ($roomList as $value) {
       <div class="table-responsive">
         <table class="text-center" cellspacing="0">
           <tr>
-            <td class="<?php echo $roomID[105]; ?>" title="<?php echo $roomDescription[105]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">105</td>
-            <td class="<?php echo $roomID[106]; ?>" title="<?php echo $roomDescription[106]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">106</td>
-            <td class="<?php echo $roomID[107]; ?>" title="<?php echo $roomDescription[107]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">107</td>
-            <td class="<?php echo $roomID[108]; ?>" title="<?php echo $roomDescription[108]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">108</td>
+            <td id="105" class="<?php echo $roomID[105]; ?>" title="<?php echo $roomDescription[105]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">105</td>
+            <td id="106" class="<?php echo $roomID[106]; ?>" title="<?php echo $roomDescription[106]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">106</td>
+            <td id="107" class="<?php echo $roomID[107]; ?>" title="<?php echo $roomDescription[107]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">107</td>
+            <td id="108" class="<?php echo $roomID[108]; ?>" title="<?php echo $roomDescription[108]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">108</td>
             <td style="border:none"></td>
-            <td class="<?php echo $roomID[109]; ?>" title="<?php echo $roomDescription[109]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">109</td>
-            <td class="<?php echo $roomID[110]; ?>" title="<?php echo $roomDescription[110]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">110</td>
-            <td class="<?php echo $roomID[111]; ?>" title="<?php echo $roomDescription[111]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">111</td>
-            <td class="<?php echo $roomID[112]; ?>" title="<?php echo $roomDescription[112]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">112</td>
+            <td id="109" class="<?php echo $roomID[109]; ?>" title="<?php echo $roomDescription[109]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">109</td>
+            <td id="110" class="<?php echo $roomID[110]; ?>" title="<?php echo $roomDescription[110]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">110</td>
+            <td id="110" class="<?php echo $roomID[111]; ?>" title="<?php echo $roomDescription[111]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">111</td>
+            <td id="112" class="<?php echo $roomID[112]; ?>" title="<?php echo $roomDescription[112]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">112</td>
           </tr>
         </table>
       </div>

@@ -8,6 +8,4 @@ if (!$db->select_db("cp018101_nwh")) {
 } else {
   echo true;
 }
-
-$db->close();
 ?>

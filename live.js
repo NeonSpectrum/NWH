@@ -12,13 +12,16 @@ var http = require('http')
 var fs = require('fs')
 var ini = require('ini')
 var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
+var crypto = require('crypto'),
+  algorithm = 'aes-256-ctr',
+  password = '1ff8cc6708848c57e84e67d67f599156';
 var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
   log("Server started at port " + port)
 }))
 var db = mysql.createConnection({
   host: config.system.database_url,
   user: "cp018101",
-  password: "Yangyuanhua12",
+  password: decrypt("2da795d3d7fe2aaa21a9b66944"),
   database: "cp018101_nwh"
 })
 var notifytime = 5000
@@ -111,4 +114,11 @@ function leftPad(number, targetLength) {
 
 function log(message, type = "System") {
   console.log(moment().format('YYYY-MM-DD hh:mm:ss A') + " | " + type + " | " + message)
+}
+
+function decrypt(text) {
+  var decipher = crypto.createDecipher(algorithm, password)
+  var dec = decipher.update(text, 'hex', 'utf8')
+  dec += decipher.final('utf8');
+  return dec;
 }

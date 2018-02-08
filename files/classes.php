@@ -111,7 +111,7 @@ class Account extends System {
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
-        $this->log("insert|account.register|$email']}", (VERIFY_REGISTER ? $this->email : ""));
+        $this->log("insert|account.register|$email", (VERIFY_REGISTER ? $this->email : null));
         return true;
       } else {
         return ALREADY_REGISTERED;
@@ -1083,7 +1083,7 @@ class System {
 
   public function log($action, $email = "") {
     global $db;
-    $email = $email == "" && isset($this->email) ? $this->email : $email;
+    $email = $email == null && isset($this->email) ? $this->email : $email;
     $date  = date("Y-m-d H:i:s");
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }
