@@ -1,7 +1,7 @@
 <?php
 require_once 'strings.php';
 
-$db = new mysqli("localhost", "cp018101", PASSWORD, "cp018101_nwh");
+$db = @new mysqli("localhost", "cp018101", PASSWORD, "cp018101_nwh");
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
