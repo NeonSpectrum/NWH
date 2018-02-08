@@ -52,7 +52,7 @@ echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_r
 echo ", date=\"$date\", dateandtime=\"$dateandtime\";";
 ?>
 var socket = socket = io(NODE_JS_URL);
-//socket = io(NODE_JS_URL, {
+//socket = io((NODE_JS_URL.includes("localhost") ? "<?php echo $_SERVER['SERVER_NAME']; ?>" : NODE_JS_URL, {
 //  reconnection: false
 //});
 socket.on('connect', function(){
