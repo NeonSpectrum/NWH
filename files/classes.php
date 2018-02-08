@@ -1101,7 +1101,7 @@ class System {
 
   public function checkExpiredBooking($bookingID = null) {
     global $db, $date, $dateandtime;
-    if (!$db->connect_error()) {
+    if (!$db->connect_error) {
       if ($bookingID == null) {
         $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
       } else {
