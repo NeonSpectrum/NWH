@@ -104,6 +104,7 @@ $(window).bind("orientationchange", HomeScaleSlider);
 // MORE INFO BUTTON
 var jssor, temp;
 $('.btnMoreInfo').click(function() {
+  $("#modalRoom").find("#loadingMode").fadeIn();
   $.ajax({
     context: this,
     type: 'POST',
@@ -131,6 +132,7 @@ $('.btnMoreInfo').click(function() {
       };
       temp = $("#pictures").html();
       jssor = new $JssorSlider$('rooms_slider_container', options);
+      $("#modalRoom").find("#loadingMode").fadeOut();
     }
   });
 });
