@@ -4,7 +4,7 @@ use Bt51\NTP\Socket;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$root = strtolower($_SERVER['SERVER_NAME']) != "northwood-hotel.com" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+$root = stripos(strtolower($_SERVER['SERVER_NAME']), "www.northwood-hotel.com") !== false ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 
 define("ENCRYPT_KEYWORD", "1ff8cc6708848c57e84e67d67f599156");
 define("INITIALIZATION_VECTOR", "northwoodhotelph");
