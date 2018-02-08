@@ -18,7 +18,7 @@ class Account extends System {
 
   public function __construct() {
     global $db;
-    if (isset($_SESSION['account'])) {
+    if (isset($_SESSION['account']) && !$db->connect_error) {
       $this->email          = $this->decrypt($_SESSION['account']);
       $result               = $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'");
       $row                  = $result->fetch_assoc();
