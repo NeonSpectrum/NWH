@@ -18,7 +18,7 @@ class Account extends System {
 
   public function __construct() {
     global $db;
-    if (isset($_SESSION['account']) && !$db->connect_error) {
+    if (isset($_SESSION['account']) && !$db->connect_error && $db->select_db('cp018101_nwh')) {
       $this->email          = $this->decrypt($_SESSION['account']);
       $result               = $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'");
       $row                  = $result->fetch_assoc();
@@ -904,7 +904,7 @@ class System {
 
   public function __construct() {
     global $db;
-    if (isset($_SESSION['account']) && !$db->connect_error) {
+    if (isset($_SESSION['account']) && !$db->connect_error && $db->select_db('cp018101_nwh')) {
       $this->email          = $this->decrypt($_SESSION['account']);
       $result               = $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'");
       $row                  = $result->fetch_assoc();
@@ -1172,6 +1172,7 @@ class System {
   }
 
   public function importdb($file) {
+    global $db;
     $contents = file_get_contents($file);
 
     $comment_patterns = array('/\/\*.*(\n)*.*(\*\/)?/',

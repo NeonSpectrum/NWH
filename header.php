@@ -2,16 +2,19 @@
 // EXECUTE AUTOLOAD SCRIPT
 require_once 'files/autoload.php';
 @session_start();
-$system->checkExpiredBooking();
 
 $csrf_token             = $system->encrypt(!isset($_SESSION['csrf_token']) || trim($_SESSION['csrf_token']) == "" ? md5(uniqid(rand(), TRUE)) : $_SESSION['csrf_token']);
 $_SESSION['csrf_token'] = $system->decrypt($csrf_token);
 
-if (isset($_COOKIE['nwhAuth']) && !$account->isLogged()) {
-  $account->login(json_decode($system->decrypt(rawurldecode($_COOKIE['nwhAuth'])), true));
-  header("Refresh:0");
-  exit();
+if (!$db->connect_error) {
+  if (isset($_COOKIE['nwhAuth']) && !$account->isLogged()) {
+    $account->login(json_decode($system->decrypt(rawurldecode($_COOKIE['nwhAuth'])), true));
+    header("Refresh:0");
+    exit();
+  }
+  $system->checkExpiredBooking();
 }
+
 if (!isset($_SESSION['new_visitor'])) {
   $_SESSION['new_visitor'] = true;
   $system->addVisitorCount();

@@ -1,8 +1,8 @@
 <?php
+$db = new mysqli("localhost", "root", "");
+
 require_once "../files/strings.php";
 require_once "../files/classes.php";
-
-$db = new mysqli("localhost", "root", "");
 
 $system->importdb("../db.sql");
 // add user cp018101 to database
