@@ -60,7 +60,7 @@ while ($row = $result->fetch_assoc()) {
           <div class="panel-body">
             <table style="width:100%">
 <?php
-$result = $db->query("SELECT FirstName, LastName, COUNT(BookingID) as NumberOfBooking FROM booking JOIN account ON booking.EmailAddress=account.EmailAddress GROUP BY FirstName, ' ', LastName ORDER BY NumberOfBooking DESC");
+$result = $db->query("SELECT FirstName, LastName, COUNT(BookingID) as NumberOfBooking FROM booking JOIN account ON booking.EmailAddress=account.EmailAddress GROUP BY FirstName, ' ', LastName ORDER BY NumberOfBooking DESC LIMIT 5");
 for ($i = 1; $row = $result->fetch_assoc(); $i++) {
   echo "<tr><td align='center' width='20%'>Top {$i}</td><td width='60%'>{$row['FirstName']} {$row['LastName']}</td><td align='right' width='20%'>{$row['NumberOfBooking']} Book(s)</td></tr>";
 }
