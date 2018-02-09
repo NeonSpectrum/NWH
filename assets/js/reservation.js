@@ -416,7 +416,7 @@ $(document).ready(function() {
         if (quantity > MAX_ROOM_ALLOWED) {
           swal({
             title: 'Error!<br/>Only ' + MAX_ROOM_ALLOWED + ' rooms and below are allowed',
-            html: MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED) + "<br/><marquee>(075) 636-0910 / (075) 205-0647 0929-789-0088 / 0995-408-6292</marquee>",
+            html: MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED) + "<br/><div class='animated zoomIn infinite'>(075) 636-0910 / (075) 205-0647 0929-789-0088 / 0995-408-6292</div>",
             type: 'warning'
           });
           return false;
