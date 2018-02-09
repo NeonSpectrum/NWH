@@ -11,6 +11,11 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             'setasign\\Fpdi\\' => 14,
         ),
+        'S' => 
+        array (
+            'Symfony\\Component\\Process\\' => 26,
+            'Spatie\\ImageOptimizer\\' => 22,
+        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -28,6 +33,14 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         'setasign\\Fpdi\\' => 
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
+        ),
+        'Spatie\\ImageOptimizer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/image-optimizer/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
