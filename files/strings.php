@@ -8,8 +8,8 @@ $root = stripos($_SERVER['SERVER_NAME'], "northwood-hotel.com") === false ? subs
 
 define("ENCRYPT_KEYWORD", "1ff8cc6708848c57e84e67d67f599156");
 define("INITIALIZATION_VECTOR", "northwoodhotelph");
-define("SUPPORT_EMAIL", "support@northwoodhotel.xyz");
-define("NOREPLY_EMAIL", "no-reply@northwoodhotel.xyz");
+define("SUPPORT_EMAIL", "support@northwood-hotel.com");
+define("NOREPLY_EMAIL", "no-reply@northwood-hotel.com");
 define("PASSWORD", openssl_decrypt("U1BjeLnt4mvvpQ9ZZg==", "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR));
 
 $jsonFile = file_get_contents(__DIR__ . "/../strings.json");
