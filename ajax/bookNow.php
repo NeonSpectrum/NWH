@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
   $children      = $system->filter_input($data['txtChildren']);
   $paymentMethod = $system->filter_input($data['txtPaymentMethod']);
 
-  $arr = array();
+  $arr = [];
 
   $db->query("INSERT INTO booking VALUES(NULL, '{$data['type']}', '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod', '$dateandtime','$dateandtime')");
 
@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       if (!isset($data['txtEmail']) && $_SERVER['SERVER_NAME'] != "localhost") {
         $system->sendMail($email, $subject, $body);
       }
+    } else {
+      $db->query("DELETE FROM booking WHERE BookingID=$bookingID");
     }
   } else {
     $arr[0] = false;
