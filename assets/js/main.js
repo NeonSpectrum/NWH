@@ -264,6 +264,7 @@ Pace.on('done', function() {
       $(this).closest("form").find("#btnPrint").prop("disabled", false);
       $(this).closest("form").find("#btnUpdate").prop("disabled", false);
     }
+    $("#modalEditReservation").find("#loadingMode").fadeIn();
     $.ajax({
       url: root + 'ajax/cmbBookingIdDisplay.php',
       type: "POST",
@@ -288,6 +289,7 @@ Pace.on('done', function() {
           $('#modalEditReservation').find("label#" + response[4][0][i]).parent().find(".cmbQuantity").html(response[4][1][i]);
         }
         $('#modalEditReservation').find("#displayImage").attr("src", response[5]);
+        $("#modalEditReservation").find("#loadingMode").fadeOut();
       }
     });
   });

@@ -393,6 +393,7 @@ if (VERIFY_REGISTER) {
       </div>
       <form id="frmEditReservation" class="form-horizontal">
         <div class="modal-body">
+          <div id="loadingMode" style="width:95%;height:95%"></div>
           <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
