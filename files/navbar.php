@@ -368,7 +368,7 @@ if (VERIFY_REGISTER) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" value="<?php echo $account->contactNumber; ?>" required>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" value="<?php echo $account->contactNumber; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
