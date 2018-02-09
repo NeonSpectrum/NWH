@@ -143,6 +143,9 @@ socket.on('notification', function(data) {
   $('[data-tooltip="tooltip"]').tooltip({
     container: 'body'
   });
+  $('.drop-content').animate({
+    scrollTop: 0
+  }, 500);
   reinitializeButtonRIcon();
   var player = document.getElementById('sndNotification');
   player.pause();

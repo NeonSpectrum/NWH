@@ -76,26 +76,28 @@ io.on('connection', function(client) {
   })
 })
 setInterval(function() {
-  var query = "SELECT booking.BookingID FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckInDate < CURDATE() AND CheckIn IS NULL AND DateCancelled IS NULL"
+  var query = "SELECT booking.BookingID FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
   db.query(query, function(err, row) {
     for (var i = 0; i < row.length; i++) {
-      formatBookingID(row[i].BookingID, function(result) {
-        var bookingID = result
-        var message = "Please be reminded that <a href='/" + (config.system.hostname == 'localhost' ? "nwh/" : "") + "admin/booking/?search=" + bookingID + "'>" + bookingID + "</a> haven't check in yet."
-        db.query("SELECT * FROM notification WHERE Message=? AND DATE(TimeStamp)=CURDATE()", [message], function(err, result) {
-          if (result.length == 0) {
-            db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, insert) {
-              io.emit("notification", {
-                id: insert.insertId,
-                type: 'exclamation-triangle',
-                messages: message,
-                time: moment().format('MMM DD hh:mm A')
+      if (moment(row[i].DateCreated, "YYYY-MM-DD HH:mm:ss").add(1, "days") < moment()) {
+        formatBookingID(row[i].BookingID, function(result) {
+          var bookingID = result
+          var message = "Please be reminded that <a href='/" + (config.system.hostname == 'localhost' ? "nwh/" : "") + "admin/booking/?search=" + bookingID + "'>" + bookingID + "</a> haven't check in yet."
+          db.query("SELECT * FROM notification WHERE Message=? AND DATE(TimeStamp)=CURDATE()", [message], function(err, result) {
+            if (result.length == 0) {
+              db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, insert) {
+                io.emit("notification", {
+                  id: insert.insertId,
+                  type: 'exclamation-triangle',
+                  messages: message,
+                  time: moment().format('MMM DD hh:mm A')
+                })
+                log("Booking ID: " + bookingID + " not yet checked in.", "Remind")
               })
-              log("Booking ID: " + bookingID + " not yet checked in.", "Remind");
-            })
-          }
+            }
+          })
         })
-      })
+      }
     }
   })
 }, 5000)
