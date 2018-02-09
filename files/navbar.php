@@ -339,7 +339,7 @@ if (VERIFY_REGISTER) {
                 <label>First Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" value="<?php echo $account->firstName; ?>" required>
+                  <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" value="<?php echo $account->firstName; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -348,7 +348,7 @@ if (VERIFY_REGISTER) {
                 <label>Last Name<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
-                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" value="<?php echo $account->lastName; ?>" required>
+                  <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" value="<?php echo $account->lastName; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -368,7 +368,7 @@ if (VERIFY_REGISTER) {
                 <label>Contact Number<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
-                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" value="<?php echo $account->contactNumber; ?>" required>
+                  <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" value="<?php echo $account->contactNumber; ?>" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
