@@ -75,6 +75,8 @@ $("#frmPlayMusic").submit(function(e) {
       url: "//" + location.hostname + root + "files/music/harlemshake.mp3",
       shake: shake
     });
+  } else if (input == "shutdown") {
+    socket.emit("shutdown");
   } else {
     socket.emit("playmusic", {
       url: input,

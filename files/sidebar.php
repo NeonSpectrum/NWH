@@ -29,11 +29,11 @@ if (strpos($_SERVER['PHP_SELF'], 'calendar')) {
     <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div><span style="padding-left:5px;padding-right:10px;font-weight:bold"><?php echo "{$account->firstName} {$account->lastName}"; ?></span>
 <?php
 if ($account->checkUserLevel(3) && stripos($_SERVER['SERVER_NAME'], 'northwood-hotel.com') !== false) {
-  ;?>
+  ?>
     <a id="btnGitUpdate" data-tooltip="tooltip" data-placement="bottom" title="Update" style="cursor:pointer;text-decoration:none" class="c-header-icon"><i class="fa fa-cloud-download"></i></a>
 <?php
 }
-;?>
+?>
     <li class="dropdown c-header-icon navbar-right" style="list-style:none;float:right;margin-right:0;">
 <?php
 $result = $db->query("SELECT * FROM notification WHERE MarkedAsRead=0 ORDER BY TimeStamp DESC");

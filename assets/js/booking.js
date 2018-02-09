@@ -209,7 +209,7 @@ $(".btnCancel").click(function() {
       "Failed to go": "Failed to go"
     },
     inputClass: "form-control",
-    text: "You won't be able to revert this!",
+    text: "Please select a reason",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -232,7 +232,7 @@ $(".btnCancel").click(function() {
               type: 'success'
             }).then((result) => {
               if (result.value) {
-                // location.reload();
+                location.reload();
               }
             });
           } else {

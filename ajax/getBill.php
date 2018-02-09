@@ -111,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $row['AmountPaid'], 2, '.', ',') . "</td>";
   $html .= "</tr>";
   $html .= "</table>";
+  $html .= "<input type='hidden' name='payment' value='" . ($total - $row['AmountPaid']) . "'>";
 
   echo $html;
 } else if (!$system->validateToken($_POST['csrf_token'])) {

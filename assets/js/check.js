@@ -163,27 +163,35 @@ $("#frmAddDiscount").submit(function(e) {
     }
   });
 });
+$('#modalReceipt').on('shown.bs.modal', function() {
+  $(document).off('focusin.modal');
+});
 $("#btnPay").click(function() {
+  var remainingAmount = $("#modalReceipt").find("input[name=payment]").val();
   swal({
     title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    text: "Remaining Amount: ₱ " + remainingAmount,
     type: 'warning',
+    input: 'number',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Pay'
+    confirmButtonText: 'Pay',
+    inputValidator: function(number) {
+      return number >= remainingAmount ? null : "Please input a valid amount!"
+    }
   }).then((result) => {
     if (result.value) {
       $.ajax({
         context: this,
         type: 'POST',
         url: root + 'ajax/payBill.php',
-        data: "txtBookingID=" + $(this).parent().find("input[name=txtBookingID]").val() + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).parent().find("input[name=txtBookingID]").val() + "&payment=" + result.value + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
-          if (response == true) {
+          if (response >= 0) {
             swal({
               title: $(this).closest(".modal").find(".modal-title").html(),
-              text: 'Successfully Paid!',
+              html: 'Successfully Paid!<br/>Change: ₱ ' + response,
               type: 'success'
             }).then((result) => {
               if (result.value) {

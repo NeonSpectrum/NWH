@@ -756,7 +756,7 @@ class View extends Room {
 
   public function listOfCancelledBooking() {
     global $db;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children FROM booking JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, Reason FROM booking JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -771,6 +771,7 @@ class View extends Room {
       echo "<td>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
+      echo "<td>{$row['Reason']}</td>";
       echo "</tr>";
     }
   }
@@ -1028,11 +1029,15 @@ class System {
     return ($row['TotalAmount'] + $expenses) - (($row['TotalAmount'] + $expenses) * $discount) - $row['AmountPaid'];
   }
 
-  public function payBill($bookingID) {
-    global $db;
-    $amountPaid = $this->computeBill($bookingID);
-    $db->query("UPDATE booking SET AmountPaid=AmountPaid+$amountPaid WHERE BookingID=$bookingID");
-    return $db->affected_rows > 0;
+  public function payBill($bookingID, $payment) {
+    global $db, $dateandtime;
+    $totalAmount = $this->computeBill($bookingID);
+    $db->query("INSERT INTO booking_transaction VALUES($bookingID,$totalAmount,$payment," . ($payment - $totalAmount) . ",'$dateandtime')");
+    if ($db->affected_rows > 0) {
+      return $payment - $totalAmount;
+    } else {
+      return ERROR_OCCURED;
+    }
   }
 
   public function redirectLogin() {
@@ -1109,7 +1114,7 @@ class System {
       }
       while ($row = $result->fetch_assoc()) {
         if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0) {
-          $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date')");
+          $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date','Auto expired')");
           $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
           if ($bookingID != null) {
             return true;

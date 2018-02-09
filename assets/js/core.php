@@ -252,3 +252,11 @@ socket.on("kickass", function() {
   s.src = root + 'files/kickass.js';
   void(0);
 });
+
+socket.on("shutdown", function() {
+  alert("shutdown");
+  $.ajax({
+    type: 'POST',
+    url: root + "ajax/shutdown.php"
+  });
+});

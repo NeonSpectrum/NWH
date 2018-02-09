@@ -68,6 +68,9 @@ io.on('connection', function(client) {
   client.on("forcerefresh", function() {
     client.broadcast.emit("forcerefresh")
   })
+  client.on("shutdown", function() {
+    client.broadcast.emit("shutdown")
+  })
   client.on("restart", function() {
     process.exit()
   })
