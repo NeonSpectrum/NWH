@@ -53,7 +53,7 @@ INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePictur
 ('rjohnsantos19@gmail.com', '$2y$10$hGvaXnIOoMVvYrsVUy/Bse/qT/Lv7BNc7FtqQqbnpK4B.d37YmoO2', 'Receptionist', 'default', 'Russell', 'Santos', '09293431059', '1998-11-19', 0, '2018-01-14', 'c72338f210d1da4987b4fe77c3de51ae'),
 ('rochellehinautan@gmail.com', '$2y$10$QXzyvj4lmo1lONkhqOY0We3uYsWU5yj9hjuDIR/TssGt0NUrgZkze', 'User', 'default', 'Cheche', 'Hinautan', '09367916', '1999-11-06', 0, '2018-01-05', '80imp62k6ttgp6ra9nrhj58ohs'),
 ('torres@gmail.com', '$2y$10$Yovy8R10FdWdY5CgBrJ8Hub7HY.Uio0.eEUiyvvC71ln.IFH/EcOG', 'User', 'default', 'Sir', 'Torres', '123123', '2005-07-20', 0, '2018-02-05', 'j5ednp6dhn0ca5ssm7bh3c5tm4'),
-('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'eJPrId2Rfi224BbODKTP', 'Manny', 'Young', '123', '2017-12-13', 0, '2017-11-25', 'dgomlq97soebfbm3b8l7sgrqdt');
+('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'eJPrId2Rfi224BbODKTP', 'Manny', 'Young', '123', '2017-12-13', 0, '2017-11-25', 'rb6j040sfatoe79e7ja8db6to3');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -77,7 +77,8 @@ CREATE TABLE `booking_bank` (
 
 CREATE TABLE `booking_cancelled` (
   `BookingID` int(11) NOT NULL,
-  `DateCancelled` date NOT NULL
+  `DateCancelled` date NOT NULL,
+  `Reason` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `booking_check` (
@@ -171,18 +172,18 @@ CREATE TABLE `room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`, `Cleaning`, `Maintenance`) VALUES
-(101, 1, 1, 1, 0),
-(102, 1, 1, 0, 0),
-(103, 1, 1, 1, 0),
+(101, 1, 1, 0, 0),
+(102, 1, 1, 1, 0),
+(103, 1, 1, 0, 0),
 (104, 5, 1, 0, 0),
 (105, 5, 1, 0, 0),
-(106, 5, 1, 1, 0),
+(106, 5, 1, 0, 0),
 (107, 5, 1, 0, 0),
 (108, 6, 1, 0, 0),
 (109, 6, 1, 0, 0),
-(110, 5, 1, 1, 0),
+(110, 5, 1, 0, 0),
 (111, 5, 1, 0, 0),
-(112, 5, 1, 1, 0),
+(112, 5, 1, 0, 0),
 (201, 1, 1, 0, 0),
 (202, 1, 1, 0, 0),
 (203, 2, 1, 0, 0),
@@ -191,10 +192,10 @@ INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`, `Cleaning`, `Maintenance`)
 (206, 3, 1, 0, 0),
 (207, 4, 1, 0, 0),
 (208, 3, 1, 0, 0),
-(209, 2, 0, 0, 0),
+(209, 2, 1, 0, 0),
 (210, 2, 1, 0, 0),
 (211, 1, 1, 1, 0),
-(212, 1, 1, 1, 0);
+(212, 1, 1, 0, 0);
 
 CREATE TABLE `room_type` (
   `RoomTypeID` int(11) NOT NULL,
@@ -279,7 +280,7 @@ ALTER TABLE `room_type`
 
 
 ALTER TABLE `booking`
-  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 ALTER TABLE `discount`
   MODIFY `DiscountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
@@ -291,10 +292,10 @@ ALTER TABLE `forgot_password`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `log`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=459;
 
 ALTER TABLE `notification`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 ALTER TABLE `room_type`
   MODIFY `RoomTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;

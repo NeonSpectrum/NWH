@@ -676,7 +676,7 @@ class View extends Room {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>" . join(", ", $rooms) . "</td>";
-        echo "<td id='txtGuests'>A: {$row['Adults']}<br/>C: {$row['Children']}</td>";
+        echo "<td id='txtGuests'>Adults: {$row['Adults']}<br/>Children: {$row['Children']}</td>";
         echo "<td id='txtCheckDate'>{$row['CheckInDate']} - {$row['CheckOutDate']}</td>";
         echo "<td id='txtCheckIn'>$checkIn</td>";
         echo "<td id='txtCheckOut'>$checkOut</td>";

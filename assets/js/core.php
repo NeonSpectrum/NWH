@@ -23,7 +23,7 @@ function getQueryVariable(variable) {
 @session_start();
 require_once "../../files/strings.php";
 
-$root     = strtolower($_SERVER['SERVER_NAME']) == "localhost" || $_SERVER['SERVER_NAME'] == "192.168.137.1" ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
+$root     = stripos($_SERVER['SERVER_NAME'], "northwood-hotel.com") === false ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
 $config   = parse_ini_file(__DIR__ . "/../../config.ini");
 $jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
 $json     = json_decode($jsonFile, true);

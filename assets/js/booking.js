@@ -204,18 +204,26 @@ $('.btnEditReservation').click(function() {
 $(".btnCancel").click(function() {
   swal({
     title: 'Are you sure?',
+    input: 'select',
+    inputOptions: {
+      "Failed to go": "Failed to go"
+    },
+    inputClass: "form-control",
     text: "You won't be able to revert this!",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, cancel it!'
+    confirmButtonText: 'Yes, cancel it!',
+    inputValidator: function(text) {
+      return text == "" ? "Input something!" : null;
+    }
   }).then((result) => {
     if (result.value) {
       $.ajax({
         type: 'POST',
         url: root + 'ajax/bookCancel.php',
-        data: "txtBookingID=" + $(this).attr("id") + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        data: "txtBookingID=" + $(this).attr("id") + "&reason=" + result.value + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             swal({
@@ -224,7 +232,7 @@ $(".btnCancel").click(function() {
               type: 'success'
             }).then((result) => {
               if (result.value) {
-                location.reload();
+                // location.reload();
               }
             });
           } else {
@@ -237,7 +245,7 @@ $(".btnCancel").click(function() {
         }
       });
     }
-  })
+  }).catch(swal.noop);
 });
 $("#frmAddPayment").submit(function(e) {
   e.preventDefault();

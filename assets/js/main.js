@@ -377,7 +377,13 @@ Pace.on('done', function() {
       success: function(response) {
         if (response == true) {
           $(this).closest(".modal").modal("hide");
-          alertNotif("success", LOGIN_SUCCESS, false);
+          swal({
+            title: "Logging in...",
+            timer: 1300,
+            onOpen: () => {
+              swal.showLoading()
+            }
+          })
           socket.emit('login', $(this).find("#txtEmail").val());
           setTimeout(function() {
             if (getQueryVariable("redirect")) {
