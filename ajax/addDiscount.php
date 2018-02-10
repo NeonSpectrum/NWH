@@ -3,7 +3,7 @@ require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $bookingID    = $system->filter_input($_POST['txtBookingID']);
-  $discount     = $system->filter_input($_POST['txtDiscount']);
+  $discount     = $system->filter_input(str_replace($_POST['txtDiscount'], ",", ""));
   $discountType = $system->filter_input($_POST['discountType']);
   $result       = $db->query("SELECT * FROM discount WHERE Name='$discountType'");
   $discountID   = $result->fetch_assoc()['DiscountID'];

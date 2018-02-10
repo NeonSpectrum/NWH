@@ -774,19 +774,6 @@ function updateDate() {
     }
   });
 }
-// DISABLEKEY FUNCTION
-function disableKey(evt, key) {
-  var charCode = (evt.which) ? evt.which : event.keyCode
-  if (key == 'number') {
-    if (charCode > 31 && (charCode > 48 || charCode < 57)) return false;
-    return true;
-  } else if (key == 'letter') {
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
-    return true;
-  } else {
-    return true;
-  }
-}
 // CAPSLOCK FUNCTION
 function capsLock(e) {
   var kc = e.keyCode ? e.keyCode : e.which;

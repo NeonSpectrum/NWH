@@ -167,10 +167,10 @@ $('#modalReceipt').on('shown.bs.modal', function() {
   $(document).off('focusin.modal');
 });
 $("#btnPay").click(function() {
-  var remainingAmount = $("#modalReceipt").find("input[name=payment]").val();
+  var remainingAmount = parseInt($("#modalReceipt").find("input[name=payment]").val());
   swal({
     title: 'Are you sure?',
-    text: "Remaining Amount: ₱ " + remainingAmount,
+    text: "Remaining Amount: ₱ " + remainingAmount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'),
     type: 'warning',
     input: 'number',
     showCancelButton: true,

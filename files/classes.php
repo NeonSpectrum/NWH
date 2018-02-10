@@ -1030,7 +1030,8 @@ class System {
 
   public function payBill($bookingID, $payment) {
     global $db, $dateandtime;
-    $totalAmount = $this->computeBill($bookingID);
+    $totalAmount = $this->computeTotalAmount($bookingID);
+    $payment += $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc()['AmountPaid'];
     $db->query("INSERT INTO booking_transaction VALUES($bookingID,$totalAmount,$payment," . ($payment - $totalAmount) . ",'$dateandtime')");
     if ($db->affected_rows > 0) {
       return $payment - $totalAmount;

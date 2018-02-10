@@ -73,7 +73,7 @@ while ($row = $result->fetch_assoc()) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Amount: </label>
             <div class="col-sm-9">
-              <input type="number" class="form-control" name="txtPayment" id="txtPayment" min="1" value="<?php echo $payment; ?>" readonly required>
+              <input type="text" class="form-control" name="txtPayment" id="txtPayment" min="1" value="<?php echo number_format($payment); ?>" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)" readonly required>
             </div>
           </div>
         </div>

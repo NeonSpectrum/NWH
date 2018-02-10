@@ -351,7 +351,8 @@ $('#tblBooking').on('init.dt', function(e, settings, json) {
 });
 var oTable = $('#tblBooking').DataTable({
   "scrollY": "300px",
-  "scrollCollapse": true
+  "scrollCollapse": true,
+  "responsive": true
 });
 oTable.order([0, 'desc']).draw();
 $('#tblBooking_length').find("select").addClass("form-control");
