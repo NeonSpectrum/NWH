@@ -254,7 +254,7 @@ class Account extends System {
           $randomName = $accountRow['ProfilePicture'];
         }
         $filename = basename($randomName);
-        $output   = $this->saveImage($credentials['image'], $directory, $filename);
+        $output   = $this->saveImage($credentials['image'], $directory, $filename, 500);
         if ($output == true) {
           $db->query("UPDATE account SET ProfilePicture='$filename' WHERE EmailAddress='{$this->email}'");
           $this->log("update|account.profilepicture");
@@ -467,12 +467,13 @@ class Room extends System {
     $room             = str_replace(" ", "_", $room);
     $result           = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row              = $result->fetch_assoc();
-    $checkPromoResult = $db->query("SELECT * FROM promo_dates WHERE Date='$date'");
-    $checkPromoRow    = $checkPromoResult->fetch_assoc();
-    if ($checkPromoResult->num_rows > 0 && !$regular) {
-      return $row["{$checkPromoRow['PromoType']}Rate"];
-    } else {
-      return $row['RegularRate'];
+    $checkPromoResult = $db->query("SELECT * FROM promo_dates WHERE StartDate<='$date'");
+    while ($checkPromoRow = $checkPromoResult->fetch_assoc()) {
+      if (in_array($date, $this->getDatesFromRange($checkPromoRow['StartDate'], $checkPromoRow['EndDate'])) && !$regular) {
+        return $row["{$checkPromoRow['PromoType']}Rate"];
+      } else {
+        return $row['RegularRate'];
+      }
     }
   }
 
@@ -559,6 +560,34 @@ class View extends Room {
           <button onclick='location.href=\"reservation\"' class='btn btn-primary' style='width:50%;position:absolute;right:0'>Book Now</button>
         </div>
       </div>\n";
+    }
+  }
+
+  public function transactionHistory() {
+    global $db, $root;
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE EmailAddress='{$this->email}'");
+    while ($row = $result->fetch_assoc()) {
+      echo "<tr>";
+      echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
+      echo "<td>{$row['CheckIn']}</td>";
+      echo "<td>{$row['CheckOut']}</td>";
+      echo "<td>{$row['Adults']}</td>";
+      echo "<td>{$row['Children']}</td>";
+      echo "<td>₱&nbsp;" . number_format($row['AmountPaid'], 2, ".", ",") . "</td>";
+      echo "<td>₱&nbsp;" . number_format($row['TotalAmount'], 2, ".", ",") . "</td>";
+      $cancelledBook = $db->query("SELECT * FROM booking_cancelled WHERE BookingID={$row['BookingID']}")->num_rows;
+      if ($row['CheckIn'] == null && $row['CheckOut'] == null) {
+        $status = $cancelledBook > 0 ? "Cancelled" : "Not yet check";
+      } else if ($row['CheckIn'] != null && $row['CheckOut'] == null) {
+        $status = "Checked In";
+      } else {
+        $status = $row['AmountPaid'] == $row['TotalAmount'] ? "Paid" : "Checked Out";
+      }
+      echo "<td>$status</td>";
+      echo "<td><a href='{$root}files/generateReservationConfirmation /?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Reservation'><i class='fa fa-print fa-2x'></i></a>";
+      echo $cancelledBook > 0 ? "&nbsp;<a href='{$root}files/generateReceipt/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Receipt'><i class='fa fa-print fa-2x'></i></a>" : "";
+      echo "</td>";
+      echo "</tr>";
     }
   }
 
@@ -917,25 +946,14 @@ class System {
     }
   }
 
-  public function markToday($type = "") {
+  public function markEvent($type = "", $startDate, $endDate) {
     global $db, $date;
-    if ($type != "") {
-      $db->query("DELETE FROM promo_dates WHERE Date='$date'");
-      $db->query("INSERT INTO promo_dates VALUES('" . ucfirst($type) . "','$date')");
-      if ($db->affected_rows > 0) {
-        $this->log("add|promo_dates|$type");
-        return true;
-      } else {
-        return NOTHING_CHANGED;
-      }
+    $db->query("INSERT INTO promo_dates VALUES('" . ucfirst($type) . "','$startDate','$endDate')");
+    if ($db->affected_rows > 0) {
+      $this->log("add|promo_dates|$type");
+      return true;
     } else {
-      $db->query("DELETE FROM promo_dates WHERE Date='$date'");
-      if ($db->affected_rows > 0) {
-        $this->log("delete|promo_dates|$type");
-        return true;
-      } else {
-        return NOTHING_CHANGED;
-      }
+      return NOTHING_CHANGED;
     }
   }
 
@@ -1078,8 +1096,18 @@ class System {
     }
   }
 
-  public function saveImage($image, $directory, $filename) {
-    return move_uploaded_file($image["tmp_name"], $directory . $filename) ? true : UPLOAD_ERROR;
+  public function saveImage($image, $directory, $filename, $size) {
+    if (file_exists($directory . $filename)) {
+      unlink($directory . $filename);
+    }
+    if (move_uploaded_file($image["tmp_name"], $directory . $filename)) {
+      $image = new \Gumlet\ImageResize($directory . $filename);
+      $image->resizeToHeight($size);
+      $image->save($directory . $filename);
+      return true;
+    } else {
+      return UPLOAD_ERROR;
+    }
   }
 
   public function validateToken($token) {

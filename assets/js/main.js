@@ -527,16 +527,6 @@ Pace.on('done', function() {
     $(this).find("#btnEditProfile").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
     $(this).find('#btnEditProfile').attr('disabled', true);
     $(this).find(".lblDisplayError").html('');
-    if ($("#imgProfilePic")[0].files[0]) {
-      if ($('#imgProfilePic').prop('files')[0].size > 2097152) {
-        $(this).find("#btnEditProfile").html('Update');
-        $(this).find('#btnEditProfile').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;The file size must under 2MB.</div>');
-        });
-        return;
-      }
-    }
     var form_data = new FormData();
     form_data.append("file", $('#imgProfilePic').prop('files')[0]);
     form_data.append("mode", "editAccount");
@@ -604,16 +594,7 @@ Pace.on('done', function() {
     $(this).find("#btnUpdate").html('<i class="fa fa-spinner fa-pulse"></i> Updating...');
     $(this).find('#btnUpdate').attr('disabled', true);
     $(this).find(".lblDisplayError").html('');
-    if ($('#imgBankRef').prop('files')[0]) {
-      if ($('#imgBankRef').prop('files')[0].size > 2097152) {
-        $(this).find("#btnUpdate").html('Update');
-        $(this).find('#btnUpdate').attr('disabled', false);
-        $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + FILE_SIZE_ERROR + '</div>');
-        });
-        return;
-      }
-    } else if (!$('#imgBankRef').prop('files')[0] && $("#txtPaymentMethod").val() == "Bank") {
+    if (!$('#imgBankRef').prop('files')[0] && $("#txtPaymentMethod").val() == "Bank") {
       $(this).find("#btnUpdate").html('Update');
       $(this).find('#btnUpdate').attr('disabled', false);
       $(this).find(".lblDisplayError").show(function() {
@@ -644,7 +625,7 @@ Pace.on('done', function() {
     }
     var form_data = new FormData();
     if ($(this).find("#txtPaymentMethod").val() == "Bank" && $(this).find('#imgBankRef').prop('files')[0]) {
-      form_data.append("file", $('#imgBankRef').prop('files')[0]);
+      form_data.append("file", $(this).find('#imgBankRef').prop('files')[0]);
       socket.emit("notification", {
         user: email_address,
         type: "photo",

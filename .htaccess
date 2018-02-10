@@ -134,4 +134,7 @@ Options All -Indexes
 #    AuthUserFile /home/cp018101/public_html/.htpasswd
 #    Require valid-user
 #  </If>
-#</Files>
+#</Files
+
+php_value upload_max_filesize 10M
+php_value post_max_size 10M

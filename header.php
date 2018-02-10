@@ -86,7 +86,7 @@ if (!stripos($_SERVER['PHP_SELF'], "admin")) {
   echo "<div class='loadingIcon'><div id='loadingStatus'><noscript>Please enable Javascript to continue.</noscript></div></div>\n";
 
   // IF HOME DISABLE MARGIN TOP
-  if ($currentDirectory != "home") {
+  if ($currentDirectory != "home" && $currentDirectory != "account") {
     echo "<div class='height-navbar'></div>\n";
   }
   echo "<div id='alertBox'></div>\n";

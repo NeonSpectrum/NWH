@@ -4,6 +4,8 @@ if ($account->isLogged()) {
   header("Location: $root");
 }
 ?>
+<br/><br/><br/><br/>
+<center><img src="../images/logo-rendered.png" width="20%"></center>
 <div class="panel panel-default center-block col-md-4" style="float:none;border-radius:0">
   <div class="panel-heading" style="background-color:inherit"><h1 style="text-align:center">Login Page</h1></div>
   <div class="panel-body center-block" style="width:90%">

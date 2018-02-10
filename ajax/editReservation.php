@@ -75,7 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
         $randomName = $bankRow['Filename'];
       }
       $filename = basename($randomName);
-      if ($system->saveImage($_FILES['file'], $directory, $filename) === true) {
+      $moveFile = $system->saveImage($_FILES['file'], $directory, $filename);
+      if ($moveFile === true) {
         $bankResult = $db->query("SELECT * FROM booking_bank WHERE BookingID=$bookingID");
         if ($bankResult->num_rows > 0) {
           $system->log("update|bankreference|$bookingID");
@@ -83,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
           $db->query("INSERT INTO booking_bank VALUES($bookingID,'$randomName')");
           $system->log("insert|bankreference|$bookingID");
         }
+      } else {
+        $output = $moveFile;
       }
     }
     echo $output;

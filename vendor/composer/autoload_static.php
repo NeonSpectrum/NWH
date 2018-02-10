@@ -14,7 +14,7 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         'S' => 
         array (
             'Symfony\\Component\\Process\\' => 26,
-            'Spatie\\ImageOptimizer\\' => 22,
+            'Symfony\\Component\\OptionsResolver\\' => 34,
         ),
         'P' => 
         array (
@@ -22,6 +22,10 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
             'Psr\\Log\\' => 8,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'G' => 
+        array (
+            'Gumlet\\' => 7,
         ),
         'B' => 
         array (
@@ -38,9 +42,9 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
         ),
-        'Spatie\\ImageOptimizer\\' => 
+        'Symfony\\Component\\OptionsResolver\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/image-optimizer/src',
+            0 => __DIR__ . '/..' . '/symfony/options-resolver',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -58,6 +62,10 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Gumlet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gumlet/php-image-resize/lib',
+        ),
         'Bt51\\NTP\\' => 
         array (
             0 => __DIR__ . '/..' . '/bt51/ntp/src',
@@ -70,6 +78,13 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
             'PayPal' => 
             array (
                 0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
+            ),
+        ),
+        'I' => 
+        array (
+            'ImageOptimizer' => 
+            array (
+                0 => __DIR__ . '/..' . '/ps/image-optimizer/src',
             ),
         ),
     );

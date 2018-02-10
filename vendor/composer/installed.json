@@ -457,28 +457,84 @@
         ]
     },
     {
-        "name": "symfony/process",
-        "version": "v4.0.4",
-        "version_normalized": "4.0.4.0",
+        "name": "symfony/options-resolver",
+        "version": "v3.4.4",
+        "version_normalized": "3.4.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/symfony/process.git",
-            "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4"
+            "url": "https://github.com/symfony/options-resolver.git",
+            "reference": "f3109a6aedd20e35c3a33190e932c2b063b7b50e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/process/zipball/e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
-            "reference": "e1712002d81de6f39f854bc5bbd9e9f4bb6345b4",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/f3109a6aedd20e35c3a33190e932c2b063b7b50e",
+            "reference": "f3109a6aedd20e35c3a33190e932c2b063b7b50e",
             "shasum": ""
         },
         "require": {
-            "php": "^7.1.3"
+            "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2018-01-29T09:06:29+00:00",
+        "time": "2018-01-11T07:56:07+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "4.0-dev"
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\OptionsResolver\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony OptionsResolver Component",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "config",
+            "configuration",
+            "options"
+        ]
+    },
+    {
+        "name": "symfony/process",
+        "version": "v3.4.4",
+        "version_normalized": "3.4.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/process.git",
+            "reference": "09a5172057be8fc677840e591b17f385e58c7c0d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/process/zipball/09a5172057be8fc677840e591b17f385e58c7c0d",
+            "reference": "09a5172057be8fc677840e591b17f385e58c7c0d",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "time": "2018-01-29T09:03:43+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
             }
         },
         "installation-source": "dist",
@@ -508,35 +564,34 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "spatie/image-optimizer",
-        "version": "1.0.11",
-        "version_normalized": "1.0.11.0",
+        "name": "ps/image-optimizer",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/spatie/image-optimizer.git",
-            "reference": "12eacb85a70158f64d60f39d32a2a86d84ff6b89"
+            "url": "https://github.com/psliwa/image-optimizer.git",
+            "reference": "e8f68a7a8cffd551d788bdd334d697a97daecac8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/12eacb85a70158f64d60f39d32a2a86d84ff6b89",
-            "reference": "12eacb85a70158f64d60f39d32a2a86d84ff6b89",
+            "url": "https://api.github.com/repos/psliwa/image-optimizer/zipball/e8f68a7a8cffd551d788bdd334d697a97daecac8",
+            "reference": "e8f68a7a8cffd551d788bdd334d697a97daecac8",
             "shasum": ""
         },
         "require": {
-            "php": "^7.0",
-            "psr/log": "^1.0",
-            "symfony/process": "^2.8|^3.0|^4.0"
+            "psr/log": "1.0.*",
+            "symfony/options-resolver": "~2.1 | ~3.0",
+            "symfony/process": "~2.0 | ~3.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "^6.2|^7.0",
-            "symfony/var-dumper": "^3.0|^4.0"
+            "phpunit/phpunit": "^5.0"
         },
-        "time": "2018-02-08T14:45:11+00:00",
+        "time": "2017-07-24T18:40:03+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Spatie\\ImageOptimizer\\": "src"
+            "psr-0": {
+                "ImageOptimizer": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -545,17 +600,74 @@
         ],
         "authors": [
             {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://spatie.be",
-                "role": "Developer"
+                "name": "Piotr Sliwa",
+                "email": "peter.pl7@gmail.com"
             }
         ],
-        "description": "Easily optimize images using PHP",
-        "homepage": "https://github.com/spatie/image-optimizer",
+        "description": "Image optimization / compression library. This library is able to optimize png, jpg and gif files in very easy and handy way. It uses optipng, pngquant, pngcrush, pngout, gifsicle, jpegoptim and jpegtran tools.",
         "keywords": [
-            "image-optimizer",
-            "spatie"
+            "compression",
+            "image",
+            "image optimizer",
+            "jpegoptim",
+            "optimization",
+            "optipng"
+        ]
+    },
+    {
+        "name": "gumlet/php-image-resize",
+        "version": "1.8.0",
+        "version_normalized": "1.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gumlet/php-image-resize.git",
+            "reference": "203210e94849c809bdb97fff4f803a7932e2bc62"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gumlet/php-image-resize/zipball/203210e94849c809bdb97fff4f803a7932e2bc62",
+            "reference": "203210e94849c809bdb97fff4f803a7932e2bc62",
+            "shasum": ""
+        },
+        "require": {
+            "ext-fileinfo": "*",
+            "ext-gd": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "ext-exif": "*",
+            "ext-gd": "*",
+            "php-coveralls/php-coveralls": "dev-master || ^1.0",
+            "phpunit/phpunit": "^4.8"
+        },
+        "suggest": {
+            "ext-exif": "Auto-rotate jpeg files"
+        },
+        "time": "2018-02-10T05:20:52+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Gumlet\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Aditya Patadia",
+                "homepage": "http://aditya.patadia.org/"
+            }
+        ],
+        "description": "PHP class to re-size and scale images",
+        "homepage": "https://github.com/gumlet/php-image-resize",
+        "keywords": [
+            "image",
+            "php",
+            "resize",
+            "scale"
         ]
     }
 ]

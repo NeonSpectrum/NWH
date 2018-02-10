@@ -8,10 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
     'Symfony\\Component\\Process\\' => array($vendorDir . '/symfony/process'),
-    'Spatie\\ImageOptimizer\\' => array($vendorDir . '/spatie/image-optimizer/src'),
+    'Symfony\\Component\\OptionsResolver\\' => array($vendorDir . '/symfony/options-resolver'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PhpOffice\\PhpSpreadsheet\\' => array($vendorDir . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'Gumlet\\' => array($vendorDir . '/gumlet/php-image-resize/lib'),
     'Bt51\\NTP\\' => array($vendorDir . '/bt51/ntp/src'),
 );

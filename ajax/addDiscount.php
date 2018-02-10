@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $discountID   = $result->fetch_assoc()['DiscountID'];
   $result       = $db->query("SELECT * FROM booking_discount WHERE BookingID=$bookingID");
   if ($result->num_rows > 0) {
-    echo "hi";
     if ($discountType == "Others") {
       echo "others";
       $db->query("UPDATE booking_discount SET DiscountID=$discountID, Amount='$discount' WHERE BookingID=$bookingID");
@@ -17,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $db->query("UPDATE booking_discount SET DiscountID=$discountID WHERE BookingID=$bookingID");
     }
   } else {
-    echo "hello";
     if ($discountType == "Others") {
       echo "others";
       $db->query("INSERT INTO booking_discount VALUES($bookingID,$discountID,$discount)");
