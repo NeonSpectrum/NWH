@@ -559,7 +559,7 @@ class View extends Room {
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
               <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
-              <br/>" . str_replace("<li>", "<li style='text-align:left;margin-left:20%'>", nl2br($row['RoomDescription'])) . "
+              <br/>" . str_replace("<li>", "<li style='text-align:left;margin-left:15%'>", nl2br($row['RoomDescription'])) . "
             </div>
           </figcaption>
           <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
