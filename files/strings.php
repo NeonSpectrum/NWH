@@ -26,8 +26,8 @@ foreach ($config as $name => $value) {
 }
 
 try {
-  if (!OFFLINE_MODE) {
-    $socket      = new Client(new Socket('0.pool.ntp.org', 123));
+  if (!OFFLINE_MODE && !NTP_SERVER) {
+    $socket      = new Client(new Socket('pool.ntp.org', 123));
     $ntp         = $socket->getTime();
     $date        = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d");
     $dateandtime = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d H:i:s");

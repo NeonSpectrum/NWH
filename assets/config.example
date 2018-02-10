@@ -5,6 +5,7 @@ debug = false
 allow_creator_privileges = false
 chat = false
 offline_mode = false
+ntp_server = true
 auto_login_at_register = false
 admin_reload_interval = 9999
 verify_register = true
