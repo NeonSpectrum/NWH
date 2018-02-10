@@ -552,7 +552,7 @@ class View extends Room {
               <p style='padding:40px 20px'>{$row['RoomDescription']}</p>
             </div>
           </figcaption>
-          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: " . ($this->getRoomPrice($row['RoomType'], true) == $this->getRoomPrice($row['RoomType']) ? "<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>" : "<strike>" . "₱" . number_format($this->getRoomPrice($row['RoomType'], true)) . "</strike>&nbsp;<i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i>") . "</div></div>
+          <div style='text-align:center;color:black;font-size:22px;font-weight:bold'>" . str_replace("_", " ", $row['RoomType']) . "<br/><div style='font-size:15px'>Price: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . "</i></div></div>
         </figure>
         <div style='position:relative;height:20px;margin-top:-6px'>
           <button id='{$row['RoomType']}' class='btn btn-info btnMoreInfo' style='width:50%;position:absolute;left:0' data-toggle='modal' data-target='#modalRoom'>More Info</button>
@@ -947,6 +947,8 @@ class System {
 
   public function markEvent($type = "", $startDate, $endDate) {
     global $db, $date;
+    $startDate = $this->formatDate($startDate, "Y-m-d");
+    $endDate   = $this->formatDate($endDate, "Y-m-d");
     $db->query("INSERT INTO promo_dates VALUES('" . ucfirst($type) . "','$startDate','$endDate')");
     if ($db->affected_rows > 0) {
       $this->log("add|promo_dates|$type");
