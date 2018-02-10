@@ -222,8 +222,8 @@ $("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
     if (result.value) {
       $.ajax({
         type: 'POST',
-        url: root + "ajax/markToday.php",
-        data: "type=" + type + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        url: root + "ajax/markEvent.php",
+        data: "type=" + type + "&date=" + $("#dtEvent").val() + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
           if (response == true) {
             swal({

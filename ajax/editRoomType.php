@@ -3,7 +3,7 @@ require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $roomDetails[] = $system->filter_input($_POST['txtRoomType']);
-  $roomDetails[] = $system->filter_input($_POST['txtDescription']);
+  $roomDetails[] = $_POST['txtDescription'];
   $roomDetails[] = $system->filter_input($_POST['txtRoomSimpDesc']);
   $roomDetails[] = $system->filter_input($_POST['txtIcon']);
   $roomDetails[] = $system->filter_input($_POST['txtCapacity']);

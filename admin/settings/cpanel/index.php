@@ -39,7 +39,7 @@ if ($account->checkUserLevel(3)) {
         <div class="panel-heading">Generate Report</div>
         <div class="panel-body">
           <form id="frmGenerateReport">
-            <input type="text" name="daterange" class="form-control" style="width:100%">
+            <input type="text" name="daterange" class="form-control" style="width:100%" readonly>
             <input type="submit" class="btn btn-default btn-block" style="margin-top:5px" value="Generate">
           </form>
         </div>
@@ -49,7 +49,7 @@ if ($account->checkUserLevel(3)) {
       <div class="panel panel-default">
         <div class="panel-heading">Check</div>
         <div class="panel-body">
-            <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
+          <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
 <?php
 $result = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL");
 while ($row = $result->fetch_assoc()) {
@@ -59,9 +59,9 @@ while ($row = $result->fetch_assoc()) {
   }
 }
 ?>
-            </select>
-            <button class="btn btn-default btn-block" id="btnRevertCheckIn">Revert Check In</button>
-            <button class="btn btn-default btn-block" id="btnRevertCheckOut">Revert Check Out</button>
+          </select>
+          <button class="btn btn-default btn-block" id="btnRevertCheckIn">Revert Check In</button>
+          <button class="btn btn-default btn-block" id="btnRevertCheckOut">Revert Check Out</button>
         </div>
       </div>
     </div>
@@ -83,11 +83,18 @@ if ($account->checkUserLevel(3) || $_SERVER['SERVER_NAME'] == "localhost") {
 ?>
     <div class="col-md-4">
       <div class="panel panel-default">
-        <div class="panel-heading">Price Promo</div>
+        <div class="panel-heading">Price Event</div>
         <div class="panel-body">
-          <button class="btn btn-default btn-block" id="btnMarkSeason">Mark Today As Season</button>
-          <button class="btn btn-default btn-block" id="btnMarkHoliday">Mark Today As Holiday</button>
-          <button class="btn btn-default btn-block" id="btnRevertPromo">Revert Today's Promo</button>
+          <input type="text" id="dtEvent" name="daterange" class="form-control" style="width:100%" readonly>
+          <div class="btn-group btn-group-justified" style="margin-top:10px">
+            <div class="btn-group">
+              <button class="btn btn-default" id="btnMarkSeason">Mark Season</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default" id="btnMarkHoliday">Mark Holiday</button>
+            </div>
+          </div>
+          <button class="btn btn-default btn-block" id="btnRevertPromo">Revert</button>
         </div>
       </div>
     </div>
