@@ -468,15 +468,12 @@ class Room extends System {
     $result           = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row              = $result->fetch_assoc();
     $checkPromoResult = $db->query("SELECT * FROM promo_dates WHERE StartDate<='$date'");
-    if ($checkPromoResult->num_rows > 0) {
-      while ($checkPromoRow = $checkPromoResult->fetch_assoc()) {
-        if (in_array($date, $this->getDatesFromRange($checkPromoRow['StartDate'], $checkPromoRow['EndDate'])) && !$regular) {
-          return $row["{$checkPromoRow['PromoType']}Rate"];
-        }
+    while ($checkPromoRow = $checkPromoResult->fetch_assoc()) {
+      if (in_array($date, $this->getDatesFromRange($checkPromoRow['StartDate'], $checkPromoRow['EndDate'])) && !$regular) {
+        return $row["{$checkPromoRow['PromoType']}Rate"];
       }
-    } else {
-      return $row['RegularRate'];
     }
+    return $row['RegularRate'];
   }
 
   public function getUsingRoomList() {
