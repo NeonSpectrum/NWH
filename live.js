@@ -24,7 +24,7 @@ var db = mysql.createConnection({
   password: decrypt("2da795d3d7fe2aaa21a9b66944"),
   database: "cp018101_nwh"
 })
-var notifytime = 5000
+var notifytime = 60
 db.connect(function(err) {
   if (err) {
     console.log(err.sqlMessage)
@@ -100,7 +100,7 @@ setInterval(function() {
       }
     }
   })
-}, 5000)
+}, notifytime * 1000)
 
 function formatBookingID(bookingID, callback) {
   db.query("SELECT * FROM booking WHERE BookingID=?", [bookingID], function(err, row) {

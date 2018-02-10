@@ -14,7 +14,7 @@ $('.btnEditRoomID').click(function() {
 });
 $('.btnEditRoomType').click(function() {
   var roomType = $(this).attr("id").replace("_", " ");
-  var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html().replace("<br>", "");
+  var roomDescription = $(this).parent().parent().find("#txtRoomDescription").html().replace(/<br>/g, "");
   var roomSimpDesc = $(this).parent().parent().find("#txtRoomSimpDesc").html().split("<br>").join("");
   var icon = $(this).parent().parent().find("#txtIcon").html().split("<br>").join("");
   var capacity = $(this).parent().parent().find("#txtCapacity").html();
