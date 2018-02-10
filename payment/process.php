@@ -17,6 +17,10 @@ $roomIDs        = $room->getRoomIDList($bookingID);
 $roomTypes      = $room->getRoomTypeList();
 $roomQuantities = array_fill(0, count($roomTypes), 0);
 
+if ($db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID")->num_rows > 0) {
+  echo "<script>alert('Already Paid!');location.href='$root';</script>";
+  return;
+}
 for ($i = 0; $i < count($roomIDs); $i++) {
   $roomType = $room->getRoomType($roomIDs[$i]);
   $index    = array_search($roomType, $roomTypes);

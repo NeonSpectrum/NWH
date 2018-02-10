@@ -204,6 +204,9 @@ function reinitializeButtonRIcon() {
       $(".c-badge--header-icon").html(parseInt($(".c-badge--header-icon").html()) - 1);
     }
   });
+  $(".notify-message a").click(function() {
+    $(this).closest("li").find(".rIcon").click();
+  });
 }
 
 function startBlinkTitle(title) {

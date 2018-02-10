@@ -7,8 +7,10 @@ use PayPal\Api\PaymentExecution;
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   parse_str($system->decrypt($_GET['data']), $data);
   if ($_GET['type'] == "success" && isset($_GET['paymentId'])) {
+    echo "<script src='../assets/js/required/socket.io.js'></script>";
+    echo "<script src='../assets/js/core.php'></script>";
     if (!$system->validateToken($data['csrf_token'])) {
-      echo "<script>alert('Token was invalid');location.href='../';</script>";
+      echo "<script>alert('Token was invalid');location.href='$root';</script>";
       exit();
     }
     $paymentId = $_GET['paymentId'];
@@ -19,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $execution->setPayerId($_GET['PayerID']);
       $payment->execute($execution, $apiContext);
     } catch (\Exception $e) {
-      print_r($e);
+      echo "<script>alert('Something went wrong! Please try again.');location.href='$root';</script>";
       return;
     }
-    $bookingID = (int) substr($data['txtBookingID'], -4);
+    $bookingID = $data['txtBookingID'];
     $payerID   = $system->filter_input($_GET['PayerID']);
     $paymentID = $system->filter_input($_GET['paymentId']);
     $token     = $system->filter_input($_GET['token']);
@@ -30,13 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $db->query("INSERT INTO booking_paypal VALUES($bookingID,'$payerID','$paymentID','{$transactions[0]->invoice_number}','$token',$amount,'$dateandtime')");
     if ($db->affected_rows > 0) {
       $system->log("insert|payment.paypal.success|$bookingID|₱&nbsp;" . number_format($amount));
-      echo "<script>alert('Payment Successfully Added!');location.href='../';</script>";
-    } else {
-      echo "<script>alert('Already Paid!');location.href='../';</script>";
+      ?>
+    <script>
+      socket.emit('notification',{
+        user: email_address,
+        type: 'book',
+        messages: "Paid from PayPal<br/>Booking ID: <a href='<?php echo $root; ?>admin/reports/listofpaypalpayment/?search=<?php echo $system->formatBookingID($bookingID); ?>'><?php echo $system->formatBookingID($bookingID); ?></a>"
+      });
+      location.href='<?php echo $root; ?>';
+    </script>
+<?php
+} else {
+      echo "<script>alert('Already Paid!');location.href='$root';</script>";
     }
   } else {
     $system->log("notify|payment.paypal.cancelled|$bookingID");
-    echo "<script>alert('Payment has been cancelled');location.href='../';</script>";
+    echo "<script>alert('Payment has been cancelled');location.href='$root';</script>";
   }
 }
 ?>
