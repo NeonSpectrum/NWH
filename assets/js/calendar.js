@@ -37,36 +37,29 @@ $(document).ready(function() {
           element.attr("data-tooltip", "tooltip");
           element.attr("data-placement", "bottom");
           element.attr("title", 'BookingID: ' + event.bookingID + '<br/>Name: ' + event.name + "<br/>Room: " + event.room + "<br/>Check In Date: " + event.checkInDate + "<br/>Check Out Date: " + event.checkOutDate);
-        },
-        eventAfterAllRender: function() {
-          function initialize() {
-            $('[data-tooltip="tooltip"]').tooltip({
-              container: 'body'
-            });
-            $('.fc-day-grid-event[data-tooltip="tooltip"]').click(function() {
-              if (!$(this).hasClass("disabled")) {
-                var bookingID = $(this).attr("title").substring($(this).attr("data-original-title").lastIndexOf("Booking ID: ") + 12, $(this).attr("data-original-title").lastIndexOf("<br/>Name")).trim();
-                swal({
-                  title: 'Are you sure?',
-                  text: "You will redirect to booking information!",
-                  type: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Go'
-                }).then((result) => {
-                  if (result.value) {
-                    location.href = root + "admin/reports/listofreservation/?search=" + bookingID;
-                  }
-                });
-              }
-            });
-          }
-          initialize();
-          $(".fc-more").click(function() {
-            initialize()
+          element.click(function() {
+            if (!$(this).hasClass("disabled")) {
+              var bookingID = $(this).attr("title").substring($(this).attr("data-original-title").lastIndexOf("Booking ID: ") + 12, $(this).attr("data-original-title").lastIndexOf("<br/>Name")).trim();
+              swal({
+                title: 'Are you sure?',
+                text: "You will redirect to booking information!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Go'
+              }).then((result) => {
+                if (result.value) {
+                  location.href = root + "admin/reports/listofreservation/?search=" + bookingID;
+                }
+              });
+            }
           });
-        }
+          element.tooltip({
+            container: 'body'
+          });
+        },
+        eventAfterAllRender: function() {}
       });
       $(window).on('resize', function() {
         $('#calendar').fullCalendar('option', 'contentHeight', $("main.l-main").height() - 70);

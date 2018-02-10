@@ -223,7 +223,7 @@ class BaseDrawing implements IComparable
                 // Set new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet
                 $this->setWorksheet($pValue);
             } else {
-                throw new PhpSpreadsheetException("A Worksheet has already been assigned. Drawings can only exist on one \PhpOffice\PhpSpreadsheet\Worksheet.");
+                throw new PhpSpreadsheetException('A Worksheet has already been assigned. Drawings can only exist on one \\PhpOffice\\PhpSpreadsheet\\Worksheet.');
             }
         }
 
@@ -461,8 +461,6 @@ class BaseDrawing implements IComparable
      * Set Shadow.
      *
      * @param Drawing\Shadow $pValue
-     *
-     * @throws PhpSpreadsheetException
      *
      * @return BaseDrawing
      */

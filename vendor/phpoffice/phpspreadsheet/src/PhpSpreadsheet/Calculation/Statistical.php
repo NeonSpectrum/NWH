@@ -48,14 +48,11 @@ class Statistical
      *
      * The computation is based on formulas from Numerical Recipes, Chapter 6.4 (W.H. Press et al, 1992).
      *
-     * @param x require 0<=x<=1
-     * @param p require p>0
-     * @param q require q>0
-     * @param mixed $x
-     * @param mixed $p
-     * @param mixed $q
+     * @param mixed $x require 0<=x<=1
+     * @param mixed $p require p>0
+     * @param mixed $q require q>0
      *
-     * @return 0 if x<0, p<=0, q<=0 or p+q>2.55E305 and 1 if x>1 to avoid errors and over/underflow
+     * @return float 0 if x<0, p<=0, q<=0 or p+q>2.55E305 and 1 if x>1 to avoid errors and over/underflow
      */
     private static function incompleteBeta($x, $p, $q)
     {
@@ -76,18 +73,18 @@ class Statistical
 
     // Function cache for logBeta function
     private static $logBetaCacheP = 0.0;
+
     private static $logBetaCacheQ = 0.0;
+
     private static $logBetaCacheResult = 0.0;
 
     /**
      * The natural logarithm of the beta function.
      *
-     * @param p require p>0
-     * @param q require q>0
-     * @param mixed $p
-     * @param mixed $q
+     * @param mixed $p require p>0
+     * @param mixed $q require q>0
      *
-     * @return 0 if p<=0, q<=0 or p+q>2.55E305 to avoid errors and over/underflow
+     * @return float 0 if p<=0, q<=0 or p+q>2.55E305 to avoid errors and over/underflow
      *
      * @author Jaco van Kooten
      */
@@ -115,6 +112,8 @@ class Statistical
      * @param mixed $x
      * @param mixed $p
      * @param mixed $q
+     *
+     * @return float
      */
     private static function betaFraction($x, $p, $q)
     {
@@ -205,11 +204,12 @@ class Statistical
      * The computation is believed to be free of underflow and overflow.
      * </p>
      *
-     * @return MAX_VALUE for x < 0.0 or when overflow would occur, i.e. x > 2.55E305
+     * @return float MAX_VALUE for x < 0.0 or when overflow would occur, i.e. x > 2.55E305
      */
 
     // Function cache for logGamma
     private static $logGammaCacheResult = 0.0;
+
     private static $logGammaCacheX = 0.0;
 
     private static function logGamma($x)
@@ -434,14 +434,14 @@ class Statistical
         return exp(0 - $tmp + log(self::SQRT2PI * $summer / $x));
     }
 
-    /***************************************************************************
+    /*
      *                                inverse_ncdf.php
      *                            -------------------
      *    begin                : Friday, January 16, 2004
      *    copyright            : (C) 2004 Michael Nickerson
      *    email                : nickersonm@yahoo.com
      *
-     ***************************************************************************/
+     */
     private static function inverseNcdf($p)
     {
         //    Inverse ncdf approximation by Peter J. Acklam, implementation adapted to
@@ -977,10 +977,8 @@ class Statistical
      *
      * Returns covariance, the average of the products of deviations for each data point pair.
      *
-     * @param array of mixed Data Series Y
-     * @param array of mixed Data Series X
-     * @param mixed $yValues
-     * @param null|mixed $xValues
+     * @param mixed $yValues array of mixed Data Series Y
+     * @param null|mixed $xValues array of mixed Data Series X
      *
      * @return float
      */
@@ -1141,10 +1139,8 @@ class Statistical
      *
      * Returns covariance, the average of the products of deviations for each data point pair.
      *
-     * @param array of mixed Data Series Y
-     * @param array of mixed Data Series X
-     * @param mixed $yValues
-     * @param mixed $xValues
+     * @param mixed $yValues array of mixed Data Series Y
+     * @param mixed $xValues array of mixed Data Series X
      *
      * @return float
      */
@@ -1430,12 +1426,9 @@ class Statistical
      *
      * Calculates, or predicts, a future value by using existing values. The predicted value is a y-value for a given x-value.
      *
-     * @param float Value of X for which we want to find Y
-     * @param array of mixed Data Series Y
-     * @param array of mixed Data Series X
-     * @param mixed $xValue
-     * @param mixed $yValues
-     * @param mixed $xValues
+     * @param float $xValue Value of X for which we want to find Y
+     * @param mixed $yValues array of mixed Data Series Y
+     * @param mixed $xValues of mixed Data Series X
      *
      * @return float
      */

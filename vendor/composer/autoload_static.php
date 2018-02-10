@@ -11,11 +11,6 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         array (
             'setasign\\Fpdi\\' => 14,
         ),
-        'S' => 
-        array (
-            'Symfony\\Component\\Process\\' => 26,
-            'Symfony\\Component\\OptionsResolver\\' => 34,
-        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -37,14 +32,6 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
         'setasign\\Fpdi\\' => 
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
-        ),
-        'Symfony\\Component\\Process\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/process',
-        ),
-        'Symfony\\Component\\OptionsResolver\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/options-resolver',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -78,13 +65,6 @@ class ComposerStaticInit80456bb60c05835f5176e70a2b0a5c6e
             'PayPal' => 
             array (
                 0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
-            ),
-        ),
-        'I' => 
-        array (
-            'ImageOptimizer' => 
-            array (
-                0 => __DIR__ . '/..' . '/ps/image-optimizer/src',
             ),
         ),
     );

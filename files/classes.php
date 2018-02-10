@@ -574,7 +574,7 @@ class View extends Room {
 
   public function transactionHistory() {
     global $db, $root;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE EmailAddress='{$this->email}'");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount, PaymentMethod FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE EmailAddress='{$this->email}'");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
@@ -582,7 +582,14 @@ class View extends Room {
       echo "<td>{$row['CheckOut']}</td>";
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
-      echo "<td>₱&nbsp;" . number_format($row['AmountPaid'], 2, ".", ",") . "</td>";
+      if ($row['PaymentMethod'] == "PayPal") {
+        $paypalResult = $db->query("SELECT * FROM booking_paypal WHERE BookingID={$row['BookingID']}");
+        $paypalRow    = $paypalResult->fetch_assoc();
+        $amountPaid   = $row['AmountPaid'] + $paypalRow['PaymentAmount'];
+      } else {
+        $amountPaid = $row['AmountPaid'];
+      }
+      echo "<td>₱&nbsp;" . number_format($amountPaid, 2, ".", ",") . "</td>";
       echo "<td>₱&nbsp;" . number_format($row['TotalAmount'], 2, ".", ",") . "</td>";
       $cancelledBook = $db->query("SELECT * FROM booking_cancelled WHERE BookingID={$row['BookingID']}")->num_rows;
       if ($row['CheckIn'] == null && $row['CheckOut'] == null) {
@@ -656,9 +663,9 @@ class View extends Room {
       $checkedIn  = !($row['CheckIn'] != null && $row['CheckOut'] == null);
       $checkedOut = $row['CheckIn'] != null && $row['CheckOut'] != null;
       if ($row['PaymentMethod'] == "PayPal") {
-        $paypalResult = $db->query("SELECT BookingID, SUM(PaymentAmount) As TotalAmount FROM `booking_paypal` WHERE BookingID={$row['BookingID']} GROUP BY BookingID");
+        $paypalResult = $db->query("SELECT * FROM booking_paypal WHERE BookingID={$row['BookingID']}");
         $paypalRow    = $paypalResult->fetch_assoc();
-        $amountPaid   = $row['AmountPaid'] + $paypalRow['TotalAmount'];
+        $amountPaid   = $row['AmountPaid'] + $paypalRow['PaymentAmount'];
       } else {
         $amountPaid = $row['AmountPaid'];
       }

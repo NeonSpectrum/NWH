@@ -342,7 +342,8 @@ Pace.on('done', function() {
     }
   });
   $('#modalEditReservation').find("#btnPaypal").click(function() {
-    if ($(this).find("#cmbBookingID").val() != null) {
+    if ($(this).closest("form").find("#cmbBookingID").val() != null) {
+      console.log("clciked");
       $(this).find(".lblDisplayError").html('');
       $(this).html('<i class="fa fa-spinner fa-pulse"></i> Please wait ...');
       $(this).prop("disabled", true);

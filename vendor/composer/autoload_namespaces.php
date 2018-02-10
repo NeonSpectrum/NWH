@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PayPal' => array($vendorDir . '/paypal/rest-api-sdk-php/lib'),
-    'ImageOptimizer' => array($vendorDir . '/ps/image-optimizer/src'),
 );

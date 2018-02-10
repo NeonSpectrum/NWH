@@ -473,8 +473,7 @@ class Functions
      *
      * Returns a value converted to a number
      *
-     * @param value The value you want converted
-     * @param null|mixed $value
+     * @param null|mixed $value The value you want converted
      *
      * @return number N converts values listed in the following table
      *        If value is or refers to N returns
@@ -515,8 +514,7 @@ class Functions
      *
      * Returns a number that identifies the type of a value
      *
-     * @param value The value you want tested
-     * @param null|mixed $value
+     * @param null|mixed $value The value you want tested
      *
      * @return number N converts values listed in the following table
      *        If value is or refers to N returns
@@ -535,7 +533,7 @@ class Functions
             //    Range of cells is an error
             if (self::isCellValue($a)) {
                 return 16;
-                //    Test for Matrix
+            //    Test for Matrix
             } elseif (self::isMatrixValue($a)) {
                 return 64;
             }

@@ -184,8 +184,6 @@ class Style extends Supervisor
      * @param array $pStyles Array containing style information
      * @param bool $pAdvanced advanced mode for setting borders
      *
-     * @throws Exception
-     *
      * @return Style
      */
     public function applyFromArray(array $pStyles, $pAdvanced = true)
@@ -570,6 +568,8 @@ class Style extends Supervisor
      * Set quote prefix.
      *
      * @param bool $pValue
+     *
+     * @return Style
      */
     public function setQuotePrefix($pValue)
     {
