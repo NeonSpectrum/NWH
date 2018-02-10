@@ -148,6 +148,14 @@ $('.btnEditRoom').click(function() {
   });
 });
 $('.btnDeleteRoom').click(function() {
+  if ($(this).parent().find("span").length == 1) {
+    swal({
+      title: 'Error',
+      text: 'Considering cancelling the book than deleting this only one room!',
+      type: 'error'
+    });
+    return;
+  }
   roomID = $(this).attr("id");
   bookingID = $(this).closest("tr").find("#txtBookingID").html();
   swal({

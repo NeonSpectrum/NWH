@@ -627,15 +627,14 @@ class View extends Room {
       if ( /*strtotime($row['CheckInDate']) >= strtotime($date) && */!$cancelled && !$checkedOut) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
-        echo "<td>";
+        echo "<td id='txtRooms'>";
         foreach ($rooms as $roomID) {
           if ($checkedIn) {
-            echo $roomID;
-            echo "&nbsp;&nbsp;<a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
+            echo "<span style='margin-right:5px'>$roomID</span><a id='$roomID' class='btnEditRoom' style='cursor:pointer'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a id='$roomID' class='btnDeleteRoom' style='cursor:pointer'><i class='fa fa-trash'></i></a><br/>";
           }
         }
         echo !$checkedIn ? join($rooms, ", ") : "";
-        echo "<button id='$roomID' class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7;border:1px dashed #337ab7'><i class='fa fa-plus'></i></button>";
+        echo "<button class='btnAddRoom btn btn-xs btn-block' style='cursor:pointer;background:transparent;box-shadow:none;color:#337ab7;border:1px dashed #337ab7'><i class='fa fa-plus'></i></button>";
         echo "</td>";
         echo "<td id='txtCheckInDate'>" . date("m/d/Y", strtotime($row['CheckInDate'])) . "</td>";
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
