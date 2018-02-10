@@ -22,6 +22,7 @@ require_once '../../../files/sidebar.php';
               <th>Birth Date</th>
               <th>Contact Number</th>
               <th>Account Type</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -127,7 +128,7 @@ $view->accounts();
   </div>
 </div>
 <div id="modalEditAccount" class="modal fade" role="dialog" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -140,22 +141,9 @@ $view->accounts();
             <!-- errors will be shown here ! -->
           </div>
           <input type="hidden" id="txtEmail" name="txtEmail">
-          <!-- <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Name: </label>
-            <div class="col-sm-10">
-              <div class="row">
-                <div class="col-md-5">
-                  <input id="txtFirstName" name="txtFirstName" type="text" class="form-control" placeholder="First Name" required />
-                </div>
-                <div class="col-md-5">
-                  <input id="txtLastName" name="txtLastName" type="text" class="form-control" placeholder="Last Name" required/>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <div class="form-group">
-            <label class="col-sm-2 control-label">Account Type: </label>
-            <div class="col-sm-5">
+            <label class="col-sm-4 control-label">Account Type: </label>
+            <div class="col-sm-8">
               <select id="cmbAccountType" name="cmbAccountType" class="form-control" required/>
                 <option value="User">User</option>
                 <option value="Receptionist">Receptionist</option>

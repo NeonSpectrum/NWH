@@ -1,3 +1,11 @@
+$('.cbxStatus').change(function() {
+  var status = $(this).prop('checked') ? "1" : "0";
+  $.ajax({
+    type: 'POST',
+    url: root + 'ajax/changeAccountStatus.php',
+    data: 'email=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val()
+  });
+});
 $('.btnEditAccount').click(function() {
   var email = $(this).attr("id");
   var firstName = $(this).closest("tr").find("#txtFirstName").html();

@@ -36,7 +36,7 @@ class Account extends System {
     $email    = $this->filter_input($credentials['email']);
     $password = $this->filter_input($credentials['password'], true);
 
-    $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email'");
+    $result = $db->query("SELECT * FROM `account` WHERE EmailAddress='$email' AND Status=1");
     $row    = $result->fetch_assoc();
 
     if ($result->num_rows == 1 && password_verify($password, $row['Password'])) {
@@ -185,6 +185,18 @@ class Account extends System {
     }
   }
 
+  public function updateAccountStatus($email, $status) {
+    global $db;
+    $db->query("UPDATE account SET Status=$status WHERE EmailAddress='$email'");
+
+    if ($db->affected_rows > 0) {
+      $this->log("update|account.status|$email|$status");
+      echo true;
+    } else {
+      echo ERROR_OCCURED;
+    }
+  }
+
   private function generateForgotToken($email) {
     global $db, $dateandtime;
     $token = $this->getRandomString(50);
@@ -224,10 +236,8 @@ class Account extends System {
     if ($admin) {
       $email       = $credentials['email'];
       $accountType = $credentials['accountType'];
-      $firstName   = $credentials['firstName'];
-      $lastName    = $credentials['lastName'];
 
-      $result = $db->query("UPDATE `account` SET AccountType='$accountType',FirstName='$firstName',LastName='$lastName' WHERE EmailAddress='$email'");
+      $result = $db->query("UPDATE `account` SET AccountType='$accountType' WHERE EmailAddress='$email'");
       if ($db->affected_rows > 0) {
         $this->log("update|account|$email");
         echo true;
@@ -830,6 +840,8 @@ class View extends Room {
       echo "<td id='txtBirthDate'>" . date("m/d/Y", strtotime($row['BirthDate'])) . "</td>";
       echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
+      $checked = $row['Status'] == 1 ? 'checked' : '';
+      echo "<td><input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/></td>";
       echo "<td>";
       if ($this->checkUserLevel(1) && $this->email != $row['EmailAddress']) {
         echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";

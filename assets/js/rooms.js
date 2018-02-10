@@ -2,7 +2,7 @@ $('.cbxRoom').change(function() {
   var status = $(this).prop('checked') ? "1" : "0";
   $.ajax({
     type: 'POST',
-    url: root + 'ajax/changeStatus.php',
+    url: root + 'ajax/changeRoomStatus.php',
     data: 'roomID=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val()
   });
 });
