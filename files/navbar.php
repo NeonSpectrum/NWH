@@ -385,6 +385,195 @@ if (VERIFY_REGISTER) {
     </div>
   </div>
 </div>
+<div id="modalEditReservation" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Edit Reservation</h4>
+      </div>
+      <form id="frmEditReservation" class="form-horizontal">
+        <div class="modal-body">
+          <div id="loadingMode" style="width:95%;height:95%"></div>
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Booking ID: </label>
+                <div class="col-sm-8">
+                  <select name="cmbBookingID" class="form-control" id="cmbBookingID">
+<?php
+$view->listBookingID("combobox");
+  ?>
+                  </select>
+                </div>
+              </div>
+<?php
+$result        = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
+  $row           = $result->fetch_assoc();
+  $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
+  $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
+  $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
+  $checkDate     = $row['CheckInDate'] == "" && $row['CheckOutDate'] == "" ? date("m/d/Y", strtotime($date) + 86400) . " - " . date("m/d/Y", strtotime($date) + 86400 * 2) : $checkDate;
+  $adults        = $row['Adults'];
+  $children      = $row['Children'];
+  $paymentMethod = $row['PaymentMethod'];
+  $bankRef       = $row['Filename'] != null ? $row['Filename'] : "";
+  $roomTypes     = $room->getRoomTypeList();
+  $roomQuantity  = array_fill(0, count($roomTypes), 0);
+  $result->data_seek(0);
+  while ($row = $result->fetch_assoc()) {
+    if ($row['RoomID'] != null) {
+      $roomType = $room->getRoomType($row['RoomID']);
+      $roomQuantity[array_search($roomType, $roomTypes)]++;
+    }
+  }
+  ?>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Check Date: </label>
+                <div class="col-sm-8">
+                  <div class="input-group date">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <input name="txtCheckDate" type="text" class="form-control checkDate" id="txtCheckDate" value="<?php echo $checkDate; ?>" readonly required/>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Adults: </label>
+                <div class="col-sm-4">
+                  <input name="txtAdults" type="number" class="form-control" id="txtAdults" placeholder="Adults" onkeypress="return disableKey(event,'letter');" value="<?php echo $adults; ?>" min="1" max="<?php echo MAX_ADULTS; ?>" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Children: </label>
+                <div class="col-sm-4">
+                  <input name="txtChildren" type="number" class="form-control" id="txtChildren" placeholder="Children" onkeypress="return disableKey(event,'letter');" value="<?php echo $children; ?>" min="0" max="<?php echo MAX_CHILDREN; ?>" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Payment Method: </label>
+                <div class="col-sm-4">
+                  <select name="txtPaymentMethod" class="form-control" id="txtPaymentMethod">
+                    <option value="Cash"<?php echo $paymentMethod == "Cash" ? " selected" : ""; ?>>Cash</option>
+                    <option value="Bank"<?php echo $paymentMethod == "Bank" ? " selected" : ""; ?>>Bank</option>
+<?php
+if (ALLOW_PAYPAL == true) {
+    ?>
+                    <option value="PayPal"<?php echo $paymentMethod == "PayPal" ? " selected" : ""; ?>>PayPal</option>
+<?php
+}
+  ?>
+                  </select>
+<?php
+if (ALLOW_PAYPAL == true) {
+    ?>
+                  <button id='btnPaypal' type='button' class='btn btn-primary' style='margin-top:10px;display:<?php echo $paymentMethod == "PayPal" ? "block" : "none"; ?>'>Pay now with Paypal</button>
+<?php
+}
+  ?>
+                </div>
+              </div>
+              <div id="bank-content" style="margin-top:5px;<?php echo $paymentMethod != "Bank" ? "display:none" : ""; ?>">
+                <input type="file" class="form-control" name="imgBankRef" id="imgBankRef" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg">
+                <div class="center-block" style="border:1px solid #ccc;height:200px;width:100%;">
+                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" <?php echo $view->listBookingID()[0] != null ? "src='{$root}images/bankreferences/?id={$system->formatBookingID($view->listBookingID()[0])}'" : ""; ?> style="object-fit: cover"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Standard_Single'>Standard Single: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Standard_Double'>Standard Double: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Family_Room'>Family Room: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Junior_Suites'>Junior Suites: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Studio_Type'>Studio Type: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label lblRoomType" id='Barkada_Room'>Barkada Room: </label>
+                <div class="col-sm-4">
+                  <select class="form-control cmbQuantity">
+<?php
+$count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkOutDate));
+  for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
+    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : "") . ">$i</option>";
+  }
+  ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div id="modalTransHistory" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
