@@ -16,3 +16,5 @@ config.ini
 # Temp Files
 *.temp
 *.tmp
+
+.htaccess
