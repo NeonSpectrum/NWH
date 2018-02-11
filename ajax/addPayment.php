@@ -3,7 +3,7 @@ require_once '../files/autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
   $bookingID = $system->filter_input($_POST['txtBookingID']);
-  $payment   = $system->filter_input(str_replace($_POST['txtPayment'], ",", ""));
+  $payment   = $system->filter_input(str_replace(",", "", $_POST['txtPayment']));
   if ($_POST['type'] == "booking") {
     $db->query("UPDATE booking_transaction SET AmountPaid = AmountPaid + $payment WHERE BookingID = $bookingID");
     if ($db->affected_rows > 0) {
