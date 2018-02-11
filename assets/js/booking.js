@@ -92,7 +92,6 @@ $('.btnAddRoom').click(function() {
     success: function(response) {
       if (response[0] != false) {
         var roomList = [];
-        $("#modalEditRoom").find("#cmbRoomType").val(response[0]);
         for (var i = 1; i < response.length; i++) {
           if (roomList.indexOf(response[i]) == -1) {
             roomList.push(response[i]);
@@ -276,6 +275,7 @@ $("#cmbRoomType").change(function() {
     $("#cmbNewRoomID").html(currentRoomIDs);
   } else {
     $.ajax({
+      context: this,
       type: 'POST',
       url: root + "ajax/generateRoomID.php",
       data: "roomType=" + $("#cmbRoomType").val().replace(" ", "_") + "&checkDate=" + $("#txtCheckDate").val(),

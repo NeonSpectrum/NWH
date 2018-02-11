@@ -15,7 +15,6 @@ if (!strpos(strtolower($_SERVER['PHP_SELF']), "admin") && !strpos(strtolower($_S
       <hr style="border-color:#333;margin-top:3px;width:80%;" align="left"/>
       <div class="social-icon">
         <a href="https://www.facebook.com/Northwoodhotel/"><i class="fa fa-3x fa-facebook-square"></i></a>
-        <a href="https://www.twitter.com/Northwoodhotel/"><i class="fa fa-3x fa-twitter-square"></i></a>
       </div>
     </div>
     <div class="col-md-4 footer-content">

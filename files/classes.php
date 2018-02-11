@@ -581,8 +581,8 @@ class View extends Room {
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
-      echo "<td>{$row['CheckIn']}</td>";
-      echo "<td>{$row['CheckOut']}</td>";
+      echo "<td>" . $row['CheckIn'] == null ? "N/A" : $row['CheckIn'] . "</td>";
+      echo "<td>" . $row['CheckOut'] == null ? "N/A" : $row['CheckOut'] . "</td>";
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
       if ($row['PaymentMethod'] == "PayPal") {
