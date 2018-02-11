@@ -88,6 +88,7 @@ $('#frmEditAccount').submit(function(e) {
     }
   });
 });
+$("[data-toggle=toggle]").bootstrapToggle();
 $('#tblAccount').on('init.dt', function(e, settings, json) {
   $("#loadingMode").fadeOut();
 });
