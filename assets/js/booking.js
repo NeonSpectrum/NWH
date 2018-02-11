@@ -262,7 +262,7 @@ $("#frmAddPayment").submit(function(e) {
     url: root + "ajax/addPayment.php",
     data: $(this).serialize() + "&type=booking",
     success: function(response) {
-      // location.reload();
+      location.reload();
     }
   });
 });
