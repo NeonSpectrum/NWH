@@ -10,43 +10,6 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" style="margin-top:12px">
-<?php
-if (!strpos($_SERVER['PHP_SELF'], "/reservation")) {
-  ?>
-        <!-- <li class="dropdown">
-          <button class="btn btn-danger pulse" style="margin-top:7px;border-radius:0px" data-toggle="dropdown">BOOK NOW</button>
-          <ul class="dropdown-menu book-dropdown" style="margin-top:10px;margin-left:-1px;padding:10px 20px 0px 20px">
-            <form class="form frmBookCheck">
-              <div class="form-group">
-                <label>Check Date:</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  <input id="txtCheckDate" type="text" class="form-control checkDate" name="txtCheckDate" readonly required>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Adults:</label>
-                    <input id="txtAdults" type="number" class="form-control" name="txtAdults" onkeypress="return disableKey(event,'letter')" value="1" min="1" max="<?php echo MAX_ADULTS; ?>" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Children:</label>
-                    <input id="txtChildren" type="number" class="form-control" name="txtChildren" onkeypress="return disableKey(event,'letter')" value="0" min="0" max="<?php echo MAX_CHILDREN; ?>" required>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <button id="btnCheck" type="submit" class="btn btn-primary btn-block">Book Now</button>
-              </div>
-            </form>
-          </ul>
-        </li> -->
-<?php
-}
-?>
         <li class="dropdown">
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span><b> MENU </b><span class="caret"></span></a>
           <ul class="dropdown-menu" style="margin-top:-1px;margin-left:-1px">

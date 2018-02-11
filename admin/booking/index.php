@@ -205,7 +205,7 @@ for ($i = 0; $i <= $count; $i++) {
           <div class="form-group">
             <label class="col-sm-3 control-label">Amount: </label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="txtPayment" id="txtPayment" maxlength="11" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)">
+              <input type="text" class="form-control" name="txtPayment" id="txtPayment" maxlength="11" onkeypress="if(event.keyCode == 45 && this.value=='') return true; else return disableKey(event,'letter')" onkeyup="FormatCurrency(this)">
             </div>
           </div>
         </div>
