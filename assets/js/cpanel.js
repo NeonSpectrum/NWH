@@ -138,7 +138,7 @@ $("#btnForceRefresh").click(function() {
     confirmButtonText: 'Refresh'
   }).then((result) => {
     if (result.value) {
-      socket.emit("forcerefresh");
+      socket.emit("forcerefresh", "all");
     }
   });
 });

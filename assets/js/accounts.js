@@ -1,9 +1,15 @@
 $('.cbxStatus').change(function() {
   var status = $(this).prop('checked') ? "1" : "0";
   $.ajax({
+    context: this,
     type: 'POST',
     url: root + 'ajax/changeAccountStatus.php',
-    data: 'email=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val()
+    data: 'email=' + $(this).attr("id") + "&status=" + status + "&csrf_token=" + $("input[name=csrf_token]").val(),
+    success: function(response) {
+      if (status == 0) {
+        socket.emit("forcerefresh", $(this).attr("id"));
+      }
+    }
   });
 });
 $('.btnEditAccount').click(function() {
@@ -78,6 +84,7 @@ $('#frmEditAccount').submit(function(e) {
         $(this).closest("#modalEditAccount").modal('hide');
         alertNotif("success", "Records Updated Successfully!", true);
         $(this).find(".lblDisplayError").html('');
+        socket.emit("forcerefresh", $(this).find("#txtEmail").val());
       } else {
         $(this).find("#btnUpdate").html('Update');
         $(this).find("#btnUpdate").attr('disabled', false);

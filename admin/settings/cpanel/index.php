@@ -66,7 +66,7 @@ while ($row = $result->fetch_assoc()) {
       </div>
     </div>
 <?php
-if ($account->checkUserLevel(3) || $_SERVER['SERVER_NAME'] == "localhost") {
+if ($account->checkUserLevel(3)) {
   ?>
     <div class="col-md-4">
       <div class="panel panel-default">

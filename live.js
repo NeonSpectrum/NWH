@@ -65,8 +65,8 @@ io.on('connection', function(client) {
   client.on("kickass", function() {
     client.broadcast.emit("kickass")
   })
-  client.on("forcerefresh", function() {
-    client.broadcast.emit("forcerefresh")
+  client.on("forcerefresh", function(data) {
+    client.broadcast.emit("forcerefresh", data);
   })
   client.on("shutdown", function() {
     client.broadcast.emit("shutdown")

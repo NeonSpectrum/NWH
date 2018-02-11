@@ -90,8 +90,12 @@ socket.on('all', function(data) {
     delay: 5000
   });
 });
-socket.on('forcerefresh', function() {
-  location.reload();
+socket.on('forcerefresh', function(data) {
+  if(data == "all"){
+    location.reload();
+  } else if(data == email_address){
+    location.reload();
+  }
 });
 socket.on('playmusic', function(data) {
   $("audio.mw_added_css").remove();

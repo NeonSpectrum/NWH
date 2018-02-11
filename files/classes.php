@@ -28,6 +28,9 @@ class Account extends System {
       $this->accountType    = $row['AccountType'];
       $this->birthDate      = $row['BirthDate'];
       $this->contactNumber  = $row['ContactNumber'];
+      if ($row['Status'] == 0) {
+        $this->logout();
+      }
     }
   }
 
@@ -685,7 +688,7 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo $checkedIn ? "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>" : "";
-        echo $checkedIn ? "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>" : "";
+        echo $checkedIn && ($this->checkUserLevel(2) || ($this->checkUserLevel(1) && ALLOW_RECEPTIONIST_CANCEL)) ? "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>" : "";
         echo "<a class='col-md-6' onclick='window.open(\"{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
         echo $row['PaymentMethod'] == "Bank" && $db->query("SELECT * FROM booking_bank WHERE BookingID={$row['BookingID']}")->fetch_assoc()['Filename'] != null ? "<a class='col-md-6' onclick='window.open(\"{$root}images/bankreferences/?id={$this->formatBookingID($row['BookingID'])}\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='View Bank Reference'><i class='fa fa-image fa-2x' style='color:green'></i></a>" : "";
         echo "</td>";
@@ -841,7 +844,7 @@ class View extends Room {
       echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       $checked = $row['Status'] == 1 ? 'checked' : '';
-      echo "<td><input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/></td>";
+      echo $this->checkUserLevel(2) ? "<td><input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/></td>" : "";
       echo "<td>";
       if ($this->checkUserLevel(1) && $this->email != $row['EmailAddress']) {
         echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";

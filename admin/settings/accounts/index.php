@@ -22,7 +22,13 @@ require_once '../../../files/sidebar.php';
               <th>Birth Date</th>
               <th>Contact Number</th>
               <th>Account Type</th>
+<?php
+if ($account->checkUserLevel(2)) {
+  ?>
               <th>Status</th>
+<?php
+}
+?>
               <th>Action</th>
             </tr>
           </thead>

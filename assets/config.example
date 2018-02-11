@@ -2,17 +2,20 @@
 hostname = localhost
 timezone = Asia/Manila
 debug = false
-allow_creator_privileges = false
 chat = false
 offline_mode = false
 ntp_server = true
-auto_login_at_register = false
 admin_reload_interval = 9999
-verify_register = true
 allow_paypal = false
-login_expired_days = 3
 database_url = localhost
 node_js_url = http://localhost:8755
+
+[account]
+login_expired_days = 3
+auto_login_at_register = false
+verify_register = true
+allow_creator_privileges = false
+allow_receptionist_cancel = false
 
 [date]
 min_birth_year = 1930
