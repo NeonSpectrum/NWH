@@ -15,15 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $children     = $system->filter_input($_POST['txtChildren']);
     $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
-    $row          = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc();
+    $row          = $db->query("SELECT * FROM booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID")->fetch_assoc();
     $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
-    $result       = $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children WHERE BookingID=$bookingID");
+    $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children,DateUpdated='$dateandtime' WHERE BookingID=$bookingID");
 
     if ($db->affected_rows > 0) {
       $amount       = $row['TotalAmount'] / $numberOfDays;
       $numberOfDays = count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
       $amount *= $numberOfDays;
-      $db->query("UPDATE booking SET TotalAmount=$amount WHERE BookingID=$bookingID");
+      $db->query("UPDATE booking_transaction SET TotalAmount=$amount WHERE BookingID=$bookingID");
       $system->log("update|booking|$bookingID");
       echo true;
     } else {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $children      = $system->filter_input($data['txtChildren']);
     $paymentMethod = $system->filter_input($data['txtPaymentMethod']);
 
-    $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate', Adults=$adults, Children=$children, PaymentMethod='$paymentMethod' WHERE BookingID=$bookingID");
+    $db->query("UPDATE booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate', Adults=$adults, Children=$children, PaymentMethod='$paymentMethod' WHERE BookingID=$bookingID");
     $db->query("DELETE FROM booking_room WHERE BookingID=$bookingID");
 
     $output         = true;

@@ -702,31 +702,31 @@ Pace.on('done', function() {
       }
     });
   })
-
-  function generateRoomID() {
-    var roomType = $("#frmEditReservation").find("#cmbRoomType").val();
-    var checkDate = $("#frmEditReservation").find("#txtCheckDate").val();
-    var roomList = [];
-    $.ajax({
-      type: 'POST',
-      url: root + "ajax/generateRoomID.php",
-      dataType: 'json',
-      data: "roomType=" + roomType + "&checkDate=" + checkDate,
-      success: function(response) {
-        if (response) {
-          $("#modalEditRoom").find("#cmbNewRoomID").html('');
-          for (var i = 0; i < response.length; i++) {
-            roomList.push(response[i]);
-          }
-          roomList.sort();
-          roomList.forEach(function(room) {
-            $("#modalEditRoom").find("#cmbNewRoomID").append("<option value='" + room + "'>" + room + "</option>");
-          });
-        }
-      }
-    });
-  }
 });
+
+function generateRoomID() {
+  var roomType = $("#frmEditReservation").find("#cmbRoomType").val();
+  var checkDate = $("#frmEditReservation").find("#txtCheckDate").val();
+  var roomList = [];
+  $.ajax({
+    type: 'POST',
+    url: root + "ajax/generateRoomID.php",
+    dataType: 'json',
+    data: "roomType=" + roomType + "&checkDate=" + checkDate,
+    success: function(response) {
+      if (response) {
+        $("#modalEditRoom").find("#cmbNewRoomID").html('');
+        for (var i = 0; i < response.length; i++) {
+          roomList.push(response[i]);
+        }
+        roomList.sort();
+        roomList.forEach(function(room) {
+          $("#modalEditRoom").find("#cmbNewRoomID").append("<option value='" + room + "'>" + room + "</option>");
+        });
+      }
+    }
+  });
+}
 
 function recaptchaCallback() {
   $('#frmRegister').find("button[type=submit]").removeAttr('disabled');

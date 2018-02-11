@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
 
   $arr = [];
 
-  $db->query("INSERT INTO booking VALUES(NULL, '{$data['type']}', '$email', '$checkInDate', '$checkOutDate', $adults, $children, 0,  NULL, '$paymentMethod', '$dateandtime','$dateandtime')");
+  $db->query("INSERT INTO booking VALUES(NULL, '{$data['type']}', '$email', '$checkInDate', '$checkOutDate', $adults, $children, '$dateandtime','$dateandtime')");
 
   if ($db->affected_rows > 0) {
     $bookingID = $db->insert_id;
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
     }
     if ($arr[0] != false) {
       $totalRoomPrice *= count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
-      $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice WHERE BookingID=$bookingID");
+      $db->query("INSERT INTO booking_transaction VALUES($bookingID,'$paymentMethod',0,$totalRoomPrice,0,'$dateandtime')");
       $table .= "</tbody></table>";
       $arr[1] .= "</ul>";
       $roomsJson = json_encode($_POST['rooms']);

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     }
   }
   $html .= "</table><br/>";
-  $result         = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE booking.BookingID=$bookingID");
+  $result         = $db->query("SELECT * FROM booking JOIN booking_check ON booking.BookingID=booking_check.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID");
   $row            = $result->fetch_assoc();
   $expenses       = 0;
   $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID ORDER BY Name ASC");

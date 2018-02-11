@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $.ajax({
     type: 'POST',
-    url: root + "ajax/getAllBooking.php/",
+    url: root + "ajax/getAllBooking.php",
     dataType: 'json',
     success: function(response) {
       $('#calendar').fullCalendar({

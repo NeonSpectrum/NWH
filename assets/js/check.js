@@ -188,17 +188,15 @@ $("#btnPay").click(function() {
         url: root + 'ajax/payBill.php',
         data: "txtBookingID=" + $(this).parent().find("input[name=txtBookingID]").val() + "&payment=" + result.value + "&csrf_token=" + $("input[name=csrf_token]").val(),
         success: function(response) {
-          if (response >= 0) {
-            swal({
-              title: $(this).closest(".modal").find(".modal-title").html(),
-              html: 'Successfully Paid!<br/>Change: ₱ ' + response,
-              type: 'success'
-            }).then((result) => {
-              if (result.value) {
-                location.reload();
-              }
-            });
-          }
+          swal({
+            title: $(this).closest(".modal").find(".modal-title").html(),
+            html: 'Successfully Paid!<br/>Change: ₱ ' + response,
+            type: 'success'
+          }).then((result) => {
+            if (result.value) {
+              location.reload();
+            }
+          });
         }
       });
     }
@@ -221,6 +219,11 @@ $(".btnShowBill").click(function() {
       $("#modalReceipt").find("input[name=txtBookingID]").val($(this).attr("id"));
       $("#modalReceipt").find("#loadingMode").fadeOut();
       $("#modalReceipt").modal("show");
+      if ($("#modalReceipt").find("input[name=payment]").val() <= 0) {
+        $("#btnPay").css("display", "none");
+      } else {
+        $("#btnPay").css("display", "inline-block");
+      }
     }
   });
 });

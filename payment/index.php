@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $amount    = $system->filter_input($data['txtAmount']);
     $db->query("INSERT INTO booking_paypal VALUES($bookingID,'$payerID','$paymentID','{$transactions[0]->invoice_number}','$token',$amount,'$dateandtime')");
     if ($db->affected_rows > 0) {
+      $db->query("UPDATE booking_transaction SET AmountPaid=AmountPaid+$amount WHERE BookingID=$bookingID");
       $system->log("insert|payment.paypal.success|$bookingID|₱&nbsp;" . number_format($amount));
       ?>
     <script>
@@ -39,15 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         type: 'book',
         messages: "Paid from PayPal<br/>Booking ID: <a href='<?php echo $root; ?>admin/reports/listofpaypalpayment/?search=<?php echo $system->formatBookingID($bookingID); ?>'><?php echo $system->formatBookingID($bookingID); ?></a>"
       });
+      alert("<?php echo PAYMENT_SUCCESS; ?>");
       location.href='<?php echo $root; ?>';
     </script>
 <?php
 } else {
-      echo "<script>alert('Already Paid!');location.href='$root';</script>";
+      echo "<script>alert('" . ALREADY_PAID . "');location.href='$root';</script>";
     }
   } else {
     $system->log("notify|payment.paypal.cancelled|$bookingID");
-    echo "<script>alert('Payment has been cancelled');location.href='$root';</script>";
+    echo "<script>alert('" . PAYMENT_CANCELLED . "');location.href='$root';</script>";
   }
 }
 ?>

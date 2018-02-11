@@ -54,7 +54,7 @@
   "value": "Sorry, there was an error uploading your file."
 }, {
   "name": "TOKEN_EXPIRED",
-  "value": "Sorry, your token is not exists or already expired."
+  "value": "Sorry, your token does not exists or already expired."
 }, {
   "name": "CAPTCHA_ERROR",
   "value": "Please check the captcha."
@@ -106,4 +106,13 @@
 }, {
   "name": "NO_PERMISSION",
   "value": "You don't have a permission to access this page."
+}, {
+  "name": "PAYMENT_SUCCESS",
+  "value": "Payment has been processed successfully!"
+}, {
+  "name": "PAYMENT_CANCELLED",
+  "value": "Payment has been cancelled!"
+}, {
+  "name": "ALREADY_PAID",
+  "value": "Already Paid!"
 }]

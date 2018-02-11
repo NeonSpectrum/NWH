@@ -574,7 +574,7 @@ class View extends Room {
 
   public function transactionHistory() {
     global $db, $root;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount, PaymentMethod FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE EmailAddress='{$this->email}'");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount, PaymentMethod FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE EmailAddress='{$this->email}'");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
       echo "<td>{$this->formatBookingID($row['BookingID'])}</td>";
@@ -651,7 +651,7 @@ class View extends Room {
 
   public function booking() {
     global $db, $root, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, DateCancelled, Filename FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID WHERE DateCancelled IS NULL");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, AmountPaid, TotalAmount,PaymentMethod, DateCreated, DateCancelled, Filename FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
       $rooms      = [];
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
@@ -662,14 +662,7 @@ class View extends Room {
       $cancelled  = $row['DateCancelled'] == null ? false : true;
       $checkedIn  = !($row['CheckIn'] != null && $row['CheckOut'] == null);
       $checkedOut = $row['CheckIn'] != null && $row['CheckOut'] != null;
-      if ($row['PaymentMethod'] == "PayPal") {
-        $paypalResult = $db->query("SELECT * FROM booking_paypal WHERE BookingID={$row['BookingID']}");
-        $paypalRow    = $paypalResult->fetch_assoc();
-        $amountPaid   = $row['AmountPaid'] + $paypalRow['PaymentAmount'];
-      } else {
-        $amountPaid = $row['AmountPaid'];
-      }
-      if ( /*strtotime($row['CheckInDate']) >= strtotime($date) && */!$cancelled && !$checkedOut) {
+      if (!$cancelled && !$checkedOut) {
         echo "<td id='txtBookingID'>{$this->formatBookingID($row['BookingID'])}</td>";
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRooms'>";
@@ -685,10 +678,10 @@ class View extends Room {
         echo "<td id='txtCheckOutDate'>" . date("m/d/Y", strtotime($row['CheckOutDate'])) . "</td>";
         echo "<td id='txtAdults'>{$row['Adults']}</td>";
         echo "<td id='txtChildren'>{$row['Children']}</td>";
-        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($amountPaid);
+        echo "<td id='txtAmountPaid'>₱&nbsp;" . number_format($row['AmountPaid']);
         echo "<div class='pull-right'><a class='btnAddPayment col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalAddPayment' data-tooltip='tooltip' data-placement='bottom' title='Add Payment'><i class='fa fa-plus' style='color:red'></i></a></div>";
         echo "</td>";
-        echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $amountPaid)) . "</td>";
+        echo "<td id='txtBalance'>₱&nbsp;" . number_format(($row['TotalAmount'] - $row['AmountPaid'])) . "</td>";
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo $checkedIn ? "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>" : "";
@@ -703,7 +696,7 @@ class View extends Room {
 
   public function check() {
     global $db, $date;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE DateCancelled IS NULL");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -774,7 +767,7 @@ class View extends Room {
 
   public function listOfReservation() {
     global $db;
-    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NOT NULL");
+    $result = $db->query("SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, CheckIn, CheckOut, Adults, Children, TotalAmount FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE CheckOut IS NOT NULL");
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -1022,7 +1015,7 @@ class System {
 
   public function computeTotalAmount($bookingID) {
     global $db;
-    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
+    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID");
     $row            = $result->fetch_assoc();
     $expenses       = 0;
     $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID");
@@ -1045,7 +1038,7 @@ class System {
 
   public function computeBill($bookingID) {
     global $db;
-    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID WHERE booking.BookingID=$bookingID");
+    $result         = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_paypal ON booking.BookingID=booking_paypal.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID");
     $row            = $result->fetch_assoc();
     $expenses       = 0;
     $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID=$bookingID");
@@ -1068,11 +1061,13 @@ class System {
 
   public function payBill($bookingID, $payment) {
     global $db, $dateandtime;
-    $totalAmount = $this->computeTotalAmount($bookingID);
-    $payment += $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc()['AmountPaid'];
-    $db->query("INSERT INTO booking_transaction VALUES($bookingID,$totalAmount,$payment," . ($payment - $totalAmount) . ",'$dateandtime')");
+    $totalAmount = $this->computeBill($bookingID);
+    $row         = $db->query("SELECT * FROM booking_transaction WHERE BookingID=$bookingID")->fetch_assoc();
+    $amountPaid  = $row['AmountPaid'] + $payment;
+    $change      = $payment - $totalAmount;
+    $db->query("UPDATE booking_transaction SET AmountPaid=$amountPaid,PaymentChange=$change WHERE BookingID=$bookingID");
     if ($db->affected_rows > 0) {
-      return $payment - $totalAmount;
+      return $change;
     } else {
       return ERROR_OCCURED;
     }
@@ -1156,9 +1151,9 @@ class System {
     global $db, $date, $dateandtime;
     if (!$db->connect_error) {
       if ($bookingID == null) {
-        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
+        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE DateCancelled IS NULL");
       } else {
-        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
+        $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
       }
       while ($row = $result->fetch_assoc()) {
         if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0 && $db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID")->num_rows == 0) {

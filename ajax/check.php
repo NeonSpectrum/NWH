@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       $db->query("INSERT INTO booking_check VALUES($bookingID, '$dateandtime', NULL)");
     }
     if ($db->affected_rows > 0) {
-      $system->log("insert|walk-in|{$system->formatBookingID($bookingID)}|checkin");
+      $system->log("insert|{$system->formatBookingID($bookingID)}|checkin");
       echo true;
     } else {
       echo $db->error;
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     $db->query("UPDATE room JOIN booking_room ON room.RoomID=booking_room.RoomID SET Cleaning=1 WHERE BookingID=$bookingID");
     $db->query("UPDATE booking JOIN booking_check ON booking.BookingID=booking_check.BookingID SET CheckOut='$dateandtime' WHERE booking.BookingID=$bookingID");
     if ($db->affected_rows > 0) {
-      $system->log("update|walk-in|{$system->formatBookingID($bookingID)}|checkout");
+      $system->log("update|{$system->formatBookingID($bookingID)}|checkout");
       echo true;
     } else {
       echo $db->error;

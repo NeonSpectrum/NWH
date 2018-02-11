@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $bookingID = $system->filter_input($_POST['txtBookingID']);
   $payment   = $system->filter_input(str_replace($_POST['txtPayment'], ",", ""));
   if ($_POST['type'] == "booking") {
-    $db->query("UPDATE booking SET AmountPaid = AmountPaid + $payment WHERE BookingID = $bookingID");
+    $db->query("UPDATE booking_transaction SET AmountPaid = AmountPaid + $payment WHERE BookingID = $bookingID");
     if ($db->affected_rows > 0) {
       $system->log("insert|booking.payment|$bookingID|$payment");
     }
