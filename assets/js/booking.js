@@ -211,10 +211,7 @@ $('.btnEditReservation').click(function() {
 $(".btnCancel").click(function() {
   swal({
     title: 'Are you sure?',
-    input: 'select',
-    inputOptions: {
-      "Failed to go": "Failed to go"
-    },
+    input: 'text',
     inputClass: "form-control",
     text: "Please select a reason",
     type: 'warning',

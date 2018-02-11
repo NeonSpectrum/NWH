@@ -6,7 +6,9 @@ $roomID    = $roomDescription    = [];
 $roomList  = $room->getRoomIDList();
 $roomUsing = $room->getUsingRoomList();
 foreach ($roomList as $value) {
-  $cleaning = $db->query("SELECT * FROM room WHERE RoomID=$value")->fetch_assoc()['Cleaning'];
+  $row         = $db->query("SELECT * FROM room WHERE RoomID=$value")->fetch_assoc();
+  $cleaning    = $row['Cleaning'];
+  $maintenance = $row['Maintenance'];
   if (in_array($value, $roomUsing)) {
     $descriptions = $room->getRoomInfo($value);
     if (count($descriptions) == 0) {
@@ -17,6 +19,9 @@ foreach ($roomList as $value) {
   } else if ($cleaning) {
     $roomDescription[$value] = "Click to clean";
     $roomID[$value]          = "cleaning";
+  } else if ($maintenance) {
+    $roomDescription[$value] = "";
+    $roomID[$value]          = "maintenance";
   } else {
     $roomDescription[$value] = "";
     $roomID[$value]          = "available";
@@ -24,8 +29,13 @@ foreach ($roomList as $value) {
 }
 ?>
 <main class="l-main">
-  <!-- <div id="loadingMode" style="display:block"></div> -->
   <div class="content-wrapper content-wrapper--with-bg" style="padding:0">
+    <div style="position:absolute;bottom:0;right:5px">
+      Available: <div style='display:inline-block;background-color:green;height:10px;width:10px'></div> |
+      Using: <div style='display:inline-block;background-color:red;height:10px;width:10px'></div> |
+      Cleaning: <div style='display:inline-block;background-color:black;height:10px;width:10px'></div> |
+      Maintenance: <div style='display:inline-block;background-color:gray;height:10px;width:10px'></div>
+    </div>
     <div class="col-md-6">
       <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <h1 style="text-align:center">1<sup>st</sup> Building</h1>

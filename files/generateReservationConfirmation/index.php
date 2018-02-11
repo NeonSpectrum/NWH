@@ -7,7 +7,7 @@ require_once '../autoload.php';
 if (isset($_GET['BookingID'])) {
   $rooms     = [];
   $bookingID = $system->formatBookingID($_GET['BookingID'], true);
-  $result    = $db->query("SELECT DISTINCT(RoomType),COUNT(RoomType) AS NumberOfRoomType,FirstName,LastName,AccountType,booking.BookingID,DateCreated,account.EmailAddress,CheckInDate,CheckOutDate,TotalAmount FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON booking_room.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID WHERE booking.BookingID=$bookingID GROUP BY RoomType");
+  $result    = $db->query("SELECT DISTINCT(RoomType),COUNT(RoomType) AS NumberOfRoomType,FirstName,LastName,AccountType,booking.BookingID,DateCreated,account.EmailAddress,CheckInDate,CheckOutDate,TotalAmount FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN room ON booking_room.RoomID=room.RoomID JOIN room_type ON room.RoomTypeID=room_type.RoomTypeID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID GROUP BY RoomType");
   $row       = $result->fetch_assoc();
   if (!$account->isLogged()) {
     echo "Login first to view this file.";

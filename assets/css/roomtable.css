@@ -20,3 +20,8 @@ td.cleaning {
   color: white;
   cursor: pointer;
 }
+
+td.maintenance {
+  background-color: gray;
+  color: white;
+}

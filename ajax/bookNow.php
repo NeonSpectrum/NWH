@@ -54,13 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($data['csrf_t
       $body .= "Booking ID: " . $system->formatBookingID($bookingID) . "<br/>";
       $body .= "Guest Type: {$account->accountType}<br/><br/>";
       $body .= "$table<br/><br/>";
-      $body .= "Download and print this file: http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID);
+      $body .= "Download and print this file: <a href='http://{$_SERVER['SERVER_NAME']}{$root}files/generateReservationConfirmation/?BookingID=" . $system->formatBookingID($bookingID) . "'>ReservationConfirmation.pdf</a>";
 
-      if (!isset($data['txtEmail']) && $_SERVER['SERVER_NAME'] != "localhost") {
+      if (!isset($data['txtEmail'])) {
         $system->sendMail($email, $subject, $body);
       }
     } else {
-      $db->query("DELETE FROM booking WHERE BookingID=$bookingID");
+      $db->query("DELETE FROM booking WHERE BookingID = $bookingID");
     }
   } else {
     $arr[0] = false;

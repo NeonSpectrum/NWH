@@ -389,9 +389,9 @@ class Room extends System {
     }
   }
 
-  public function updateRoomStatus($roomID, $status) {
+  public function updateRoomStatus($roomID, $status, $type) {
     global $db;
-    $db->query("UPDATE room SET Status = $status WHERE RoomID = $roomID");
+    $db->query("UPDATE room SET $type = $status WHERE RoomID = $roomID");
 
     if ($db->affected_rows > 0) {
       $this->log("update|room.status|$roomID|$status");
@@ -623,14 +623,14 @@ class View extends Room {
     $result = $db->query("SELECT * FROM room_type");
     while ($row = $result->fetch_assoc()) {
       echo "<tr>";
-      echo "<td class='img-baguette' data-tooltip='tooltip' data-placement='bottom' title='Click to view images'>";
+      echo "<td style='width:40%' class='img-baguette'>";
       $first = true;
       foreach (glob("../gallery/images/rooms/{$row['RoomType']}*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
         $filename = str_replace("../gallery/images/rooms/", "", $image);
         $caption  = str_replace([".jpg", ".bmp", ".jpeg", ".png"], "", $filename);
         echo "<a href='$image' data-caption='$caption' style='";
         echo $first == true ? "" : "display:none";
-        echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' height='200px'></a>\n";
+        echo "'><img src='$image?v=" . filemtime("$image") . "' alt='$filename' data-tooltip='tooltip' data-placement='bottom' title='Click to view images' style='width:100%'></a>\n";
         $first = false;
       }
       echo "</td>";
@@ -688,7 +688,7 @@ class View extends Room {
         echo "<td id='txtTotalAmount'>₱&nbsp;" . number_format($row['TotalAmount']) . "</td>";
         echo "<td>";
         echo $checkedIn ? "<a class='btnEditReservation col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-toggle='modal' data-target='#modalEditReservation' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x'></i></a>" : "";
-        echo $checkedIn && ($this->checkUserLevel(2) || ($this->checkUserLevel(1) && ALLOW_RECEPTIONIST_CANCEL)) ? "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'" . (!$this->checkUserLevel(2) ? " disabled" : "") . "><i class='fa fa-ban fa-2x' style='color:red'></i></a>" : "";
+        echo $checkedIn && ($this->checkUserLevel(2) || ($this->checkUserLevel(1) && ALLOW_RECEPTIONIST_CANCEL)) ? "<a class='btnCancel col-md-6' id='{$row['BookingID']}' style='cursor:pointer;padding:0' data-tooltip='tooltip' data-placement='bottom' title='Cancel'><i class='fa fa-ban fa-2x' style='color:red'></i></a>" : "";
         echo "<a class='col-md-6' onclick='window.open(\"{$root}files/generateReservationConfirmation?BookingID=" . $this->formatBookingID($row['BookingID']) . "\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='Print'><i class='fa fa-print fa-2x'></i></a>";
         echo $row['PaymentMethod'] == "Bank" && $db->query("SELECT * FROM booking_bank WHERE BookingID={$row['BookingID']}")->fetch_assoc()['Filename'] != null ? "<a class='col-md-6' onclick='window.open(\"{$root}images/bankreferences/?id={$this->formatBookingID($row['BookingID'])}\",\"_blank\",\"height=650,width=1000\")' style='padding:0;cursor:pointer' data-tooltip='tooltip' data-placement='bottom' title='View Bank Reference'><i class='fa fa-image fa-2x' style='color:green'></i></a>" : "";
         echo "</td>";
@@ -905,10 +905,10 @@ class View extends Room {
         echo "<td id='txtRoomID'>{$row['RoomID']}</td>";
         echo "<td id='txtRoomType'>" . str_replace("_", " ", $row['RoomType']) . "</td>";
         $checked = $row['Status'] == 1 ? 'checked' : '';
-        echo "<td><input type='checkbox' data-toggle='toggle' data-on='Enabled' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' $checked/></td>";
+        echo "<td><input type='checkbox' data-toggle='toggle' data-on='Enabled' data-off='Disabled' class='cbxRoom' id='{$row['RoomID']}' data-type='Status' $checked/></td>";
         $checked  = $row['Maintenance'] == 1 ? 'checked' : '';
         $disabled = $this->isOccupied($row['RoomID']) ? "data-onstyle='danger' disabled" : "";
-        echo "<td><input type='checkbox' data-toggle='toggle' data-on='" . ($disabled == "" ? "Enabled" : "Occupied") . "' data-off='" . ($disabled == "" ? "Disabled" : "Occupied") . "' class='cbxRoom' id='{$row['RoomID']}' $checked $disabled/></td>";
+        echo "<td><input type='checkbox' data-toggle='toggle' data-on='" . ($disabled == "" ? "Enabled" : "Occupied") . "' data-off='" . ($disabled == "" ? "Disabled" : "Occupied") . "' class='cbxRoom' id='{$row['RoomID']}' data-type='Maintenance' $checked $disabled/></td>";
         echo "<td style='width:7%'>";
         echo "<a class='btnEditRoomID col-md-6' style='cursor:pointer;padding:0;' id='{$row['RoomID']}' data-toggle='modal' data-target='#modalEditRoomID' data-tooltip='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
         echo "<a class='btnDeleteRoomID col-md-6' style='cursor:pointer;padding:0;padding-left:2px' id='{$row['RoomID']}' data-tooltip='tooltip' data-placement='bottom' title='Delete'><i class='fa fa-trash fa-2x' aria-hidden='true'></i></a>";
