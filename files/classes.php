@@ -1161,7 +1161,7 @@ class System {
         $result = $db->query("SELECT booking.BookingID,AmountPaid,DateCreated FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL AND booking.BookingID=$bookingID");
       }
       while ($row = $result->fetch_assoc()) {
-        if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0) {
+        if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0 && $db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID")->num_rows == 0) {
           $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date','Auto expired')");
           $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
           if ($bookingID != null) {

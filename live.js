@@ -76,7 +76,7 @@ io.on('connection', function(client) {
   })
 })
 setInterval(function() {
-  var query = "SELECT booking.BookingID FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
+  var query = "SELECT booking.BookingID,DateCreated FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
   db.query(query, function(err, row) {
     for (var i = 0; i < row.length; i++) {
       if (moment(row[i].DateCreated, "YYYY-MM-DD HH:mm:ss").add(1, "days").format("YYYY-MM-DD HH:mm:ss") < moment().format("YYYY-MM-DD HH:mm:ss")) {
