@@ -26,10 +26,10 @@ require_once '../../../files/sidebar.php';
 if ($account->checkUserLevel(2)) {
   ?>
               <th>Status</th>
+              <th>Action</th>
 <?php
 }
 ?>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>

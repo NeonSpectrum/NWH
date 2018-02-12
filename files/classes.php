@@ -844,13 +844,14 @@ class View extends Room {
       echo "<td id='txtContactNumber'>{$row['ContactNumber']}</td>";
       echo "<td id='txtAccountType'>{$row['AccountType']}</td>";
       $checked = $row['Status'] == 1 ? 'checked' : '';
-      echo $this->checkUserLevel(2) ? "<td><input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/></td>" : "";
-      echo "<td>";
-      if ($this->checkUserLevel(1) && $this->email != $row['EmailAddress']) {
-        echo "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>";
-        echo "&nbsp;&nbsp;";
+      if ($this->checkUserLevel(2)) {
+        echo "<td>";
+        echo ($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3) ? "<input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/>" : "";
+        echo "</td>";
+        echo "<td>";
+        echo ($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3) ? "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>" : "";
+        echo "</td>";
       }
-      echo "</td>";
       echo "</tr>";
     }
   }
