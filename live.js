@@ -79,7 +79,7 @@ setInterval(function() {
   var query = "SELECT booking.BookingID FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
   db.query(query, function(err, row) {
     for (var i = 0; i < row.length; i++) {
-      if (moment(row[i].DateCreated, "YYYY-MM-DD HH:mm:ss").add(1, "days") < moment()) {
+      if (moment(row[i].DateCreated, "YYYY-MM-DD HH:mm:ss").add(1, "days").format("YYYY-MM-DD HH:mm:ss") < moment().format("YYYY-MM-DD HH:mm:ss")) {
         formatBookingID(row[i].BookingID, function(result) {
           var bookingID = result
           var message = "Please be reminded that <a href='/" + (config.system.hostname == 'localhost' ? "nwh/" : "") + "admin/booking/?search=" + bookingID + "'>" + bookingID + "</a> haven't check in yet."
