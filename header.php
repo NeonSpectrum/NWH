@@ -12,12 +12,12 @@ if (!$db->connect_error) {
     exit();
   }
   $system->checkExpiredBooking();
+  if (!isset($_SESSION['new_visitor'])) {
+    $_SESSION['new_visitor'] = true;
+    $system->addVisitorCount();
+  }
 }
 
-if (!isset($_SESSION['new_visitor'])) {
-  $_SESSION['new_visitor'] = true;
-  $system->addVisitorCount();
-}
 // GET CURRENT DIRECTORY EXAMPLE: home, gallery, roomandrates, contactus
 $currentDirectory = str_replace("?{$_SERVER['QUERY_STRING']}", "", $_SERVER['REQUEST_URI']);
 $currentDirectory = substr(strtolower($currentDirectory), 0, strrpos($currentDirectory, "/"));

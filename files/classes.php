@@ -1258,7 +1258,7 @@ class System {
           foreach ($columns as $column) {
             $data[] = $row["$column"];
           }
-          $query = "INSERT INTO $table (" . join($columns, ",") . ") VALUES('" . join($data, "','") . "')";
+          $query = "INSERT INTO $table (" . join($columns, ",") . ") VALUES('" . join($data, "','") . "');";
           $filedata .= $query . PHP_EOL;
         }
       }
