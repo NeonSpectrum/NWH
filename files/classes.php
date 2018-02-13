@@ -505,10 +505,10 @@ class Room extends System {
     $rooms  = [];
     $result = $db->query("SELECT RoomID, RoomType, Status, Maintenance FROM room JOIN room_type ON room.RoomTypeID = room_type.RoomTypeID WHERE $room");
     while ($row = $result->fetch_assoc()) {
-      $roomResult = $db->query("SELECT booking.BookingID, CheckInDate, CheckOutDate FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND CheckOutDate>='$date' AND DateCancelled IS NULL");
+      $roomResult = $db->query("SELECT booking.BookingID, CheckInDate, CheckOutDate, CheckIn, CheckOut FROM room JOIN booking_room ON room.RoomID=booking_room.RoomID JOIN booking ON booking_room.BookingID=booking.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE room.RoomID = '{$row['RoomID']}' AND DateCancelled IS NULL");
       if ($roomResult->num_rows > 0) {
         while ($roomRow = $roomResult->fetch_assoc()) {
-          if ($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate']) || $this->checkExpiredBooking($roomRow['BookingID'])) {
+          if (($this->isBetweenDate($checkInDate, $checkOutDate, $roomRow['CheckInDate'], $roomRow['CheckOutDate']) || $this->checkExpiredBooking($roomRow['BookingID'])) && ($roomRow['CheckIn'] == null && $roomRow['CheckOut'] == null)) {
             $roomAvailable = false;
             break;
           }
@@ -846,10 +846,10 @@ class View extends Room {
       $checked = $row['Status'] == 1 ? 'checked' : '';
       if ($this->checkUserLevel(2)) {
         echo "<td>";
-        echo ($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3) ? "<input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/>" : "";
+        echo (($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3)) && $row['EmailAddress'] != $this->email ? "<input type='checkbox' id='{$row['EmailAddress']}' class='cbxStatus' data-toggle='toggle' data-on='Activated' data-off='Deactivated' data-width='105' $checked/>" : "";
         echo "</td>";
         echo "<td>";
-        echo ($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3) ? "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>" : "";
+        echo (($row['AccountType'] != "Admin" && $row['AccountType'] != "Creator") || $this->checkUserLevel(3)) && $row['EmailAddress'] != $this->email ? "<a class='btnEditAccount' data-tooltip='tooltip' data-placement='bottom' title='Edit' id='{$row['EmailAddress']}' style='cursor:pointer' data-toggle='modal' data-target='#modalEditAccount'><i class='fa fa-pencil fa-2x' aria-hidden='true'></i></a>" : "";
         echo "</td>";
       }
       echo "</tr>";
@@ -1163,13 +1163,6 @@ class System {
         if (strtotime($row['DateCreated']) + 86400 < strtotime($dateandtime) && $row['AmountPaid'] == 0 && $db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID")->num_rows == 0) {
           $db->query("INSERT INTO booking_cancelled VALUES({$row['BookingID']},'$date','Auto expired')");
           $this->log("insert|{$this->formatBookingID($row['BookingID'])}|autocancel");
-          if ($bookingID != null) {
-            return true;
-          }
-        } else {
-          if ($bookingID != null) {
-            return false;
-          }
         }
       }
     }

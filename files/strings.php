@@ -1,6 +1,4 @@
 <?php
-use Bt51\NTP\Client;
-use Bt51\NTP\Socket;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,17 +23,17 @@ foreach ($config as $name => $value) {
   define(strtoupper($name), $value);
 }
 
-try {
-  if (!OFFLINE_MODE && !NTP_SERVER) {
-    $socket      = new Client(new Socket('pool.ntp.org', 123));
-    $ntp         = $socket->getTime();
-    $date        = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d");
-    $dateandtime = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d H:i:s");
-  } else {
-    throw new Exception;
-  }
-} catch (Exception $e) {
-  $date        = date("Y-m-d");
-  $dateandtime = date("Y-m-d H:i:s");
-}
+// try {
+//   if (!OFFLINE_MODE && !NTP_SERVER) {
+//     $socket      = new Client(new Socket('pool.ntp.org', 123));
+//     $ntp         = $socket->getTime();
+//     $date        = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d");
+//     $dateandtime = $ntp->setTimezone(new DateTimeZone(TIMEZONE))->format("Y-m-d H:i:s");
+//   } else {
+//     throw new Exception;
+//   }
+// } catch (Exception $e) {
+$date        = date("Y-m-d");
+$dateandtime = date("Y-m-d H:i:s");
+// }
 ?>

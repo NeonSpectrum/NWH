@@ -24,7 +24,7 @@ var db = mysql.createConnection({
   password: decrypt("2da795d3d7fe2aaa21a9b66944"),
   database: "cp018101_nwh"
 })
-var notifytime = 60
+var notifytime = 5
 db.connect(function(err) {
   if (err) {
     console.log(err.sqlMessage)
@@ -38,10 +38,11 @@ io.on('connection', function(client) {
   })
   client.on("notification", function(data) {
     data.time = moment().format('MMM DD hh:mm A')
+    data.messages = htmlspecialchars(data.messages);
     db.query("INSERT INTO notification VALUES(NULL,?,?,0,?)", [data.type, data.messages, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
       data.id = result.insertId
       io.emit('notification', data)
-      log("New Notification from " + data.user + ": " + data.messages, "Notif ")
+      log("New Notification from " + data.user + ": " + data.messages.replace(/<(?:.|\n)*?>/gm, ''), "Notif ")
     })
   })
   client.on("readNotif", function(data) {
@@ -76,10 +77,10 @@ io.on('connection', function(client) {
   })
 })
 setInterval(function() {
-  var query = "SELECT booking.BookingID,DateCreated FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
+  var query = "SELECT booking.BookingID,CheckInDate FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE CheckIn IS NULL AND DateCancelled IS NULL"
   db.query(query, function(err, row) {
     for (var i = 0; i < row.length; i++) {
-      if (moment(row[i].DateCreated, "YYYY-MM-DD HH:mm:ss").add(1, "days").format("YYYY-MM-DD HH:mm:ss") < moment().format("YYYY-MM-DD HH:mm:ss")) {
+      if (moment(row[i].CheckInDate, "YYYY-MM-DD").add(1, "days").format("YYYY-MM-DD") <= moment().format("YYYY-MM-DD")) {
         formatBookingID(row[i].BookingID, function(result) {
           var bookingID = result
           var message = "Please be reminded that <a href='/" + (config.system.hostname == 'localhost' ? "nwh/" : "") + "admin/booking/?search=" + bookingID + "'>" + bookingID + "</a> haven't check in yet."
@@ -124,6 +125,19 @@ function log(message, type = "System") {
 function decrypt(text) {
   var decipher = crypto.createDecipher(algorithm, password)
   var dec = decipher.update(text, 'hex', 'utf8')
-  dec += decipher.final('utf8');
-  return dec;
+  dec += decipher.final('utf8')
+  return dec
+}
+
+function htmlspecialchars(str) {
+  var map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }
+  return str.replace(/[&<>"']/g, function(m) {
+    return map[m];
+  })
 }

@@ -66,7 +66,7 @@ while ($row = $result->fetch_assoc()) {
     </li>
     <a id="btnLogout" data-tooltip="tooltip" data-placement="bottom" title="Logout" style="text-decoration:none;cursor:pointer" class="c-header-icon"><i class="fa fa-power-off"></i></a>
   </div>
-  <audio id="sndNotification" src="<?php echo $root; ?>files/notification.mp3"></audio>
+  <audio id="sndNotification" src="<?php echo $root; ?>files/notification.ogg"></audio>
 </header>
 <div class="l-sidebar">
   <a class="logo" data-tooltip="tooltip" data-placement="right" title="Go to home page" href="<?php echo $root; ?>" style="text-decoration:none">

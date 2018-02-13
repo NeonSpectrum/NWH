@@ -17,6 +17,8 @@ $roomIDs        = $room->getRoomIDList($bookingID);
 $roomTypes      = $room->getRoomTypeList();
 $roomQuantities = array_fill(0, count($roomTypes), 0);
 
+$row          = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc();
+$numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
 if ($db->query("SELECT * FROM booking_paypal WHERE BookingID=$bookingID")->num_rows > 0) {
   echo "<script>alert('Already Paid!');location.href='$root';</script>";
   return;
@@ -37,23 +39,24 @@ for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
   $item[$j]->setName(str_replace("_", " ", $roomTypes[$i]))
     ->setCurrency('PHP')
     ->setQuantity($roomQuantities[$i])
-    ->setPrice($room->getRoomPrice($roomTypes[$i]));
-  $price += $room->getRoomPrice($roomTypes[$i]) * $roomQuantities[$i];
+    ->setPrice($room->getRoomPrice($roomTypes[$i]) * $numberOfDays);
+  $price += $room->getRoomPrice($roomTypes[$i]) * $roomQuantities[$i] * $numberOfDays;
   $j++;
 }
-
-$item[$j] = new Item();
-$item[$j]->setName("50% Down Payment")
-  ->setCurrency('PHP')
-  ->setQuantity(1)
-  ->setPrice(-($price / 2));
-
+if ($numberOfDays > 1) {
+  $item[$j] = new Item();
+  $item[$j]->setName("50% Down Payment")
+    ->setCurrency('PHP')
+    ->setQuantity(1)
+    ->setPrice(-($price / 2));
+  $price /= 2;
+}
 $itemList = new ItemList();
 $itemList->setItems($item);
 
 $amount = new Amount();
 $amount->setCurrency('PHP')
-  ->setTotal($price / 2);
+  ->setTotal($price);
 
 $transaction = new Transaction();
 $transaction->setAmount($amount)
@@ -61,7 +64,7 @@ $transaction->setAmount($amount)
   ->setDescription("Test")
   ->setInvoiceNumber(uniqid());
 
-$data = $system->encrypt("txtAmount=" . ($price / 2) . "&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
+$data = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
 
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl("http://{$_SERVER['SERVER_NAME']}{$root}payment?type=success&data=$data")

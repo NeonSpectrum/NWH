@@ -213,7 +213,7 @@ $(".btnCancel").click(function() {
     title: 'Are you sure?',
     input: 'text',
     inputClass: "form-control",
-    text: "Please select a reason",
+    text: "Please input a reason",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

@@ -21,6 +21,7 @@ if (isset($_GET['BookingID'])) {
       $rooms[] = $roomRow['RoomID'];
     }
     sort($rooms);
+    $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
 
     $pdf = new Fpdi();
     $pdf->AddPage();
@@ -44,7 +45,7 @@ if (isset($_GET['BookingID'])) {
     $pdf->Write(0, date("M d, Y", strtotime($row['CheckOut'])));
 
     $pdf->SetXY(53, 109.8);
-    $pdf->Write(0, count($system->getDatesFromRange($row['CheckIn'], $row['CheckOut'])));
+    $pdf->Write(0, $numberOfDays);
 
     $pdf->SetXY(39, 117.2);
     $pdf->Write(0, $row['Adults']);
@@ -112,6 +113,7 @@ if (isset($_GET['BookingID'])) {
       $totalAmount += $expensesRow[$amount] * $expensesRow['Quantity'];
       $y += 5;
     }
+    $totalAmount *= $numberOfDays;
     $pdf->SetXY(150, 206);
     $pdf->Write(0, "P " . number_format($totalAmount - $totalAmount / 1.12 * .12, 2, ".", ","));
     $pdf->SetXY(150, 211.7);

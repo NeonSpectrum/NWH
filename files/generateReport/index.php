@@ -38,8 +38,8 @@ if (isset($_GET['daterange']) && $account->checkUserLevel(2)) {
     if (in_array($row['CheckInDate'], $dates) && in_array($row['CheckOutDate'], $dates)) {
       $pdf->Cell($width[0], 10, $system->formatBookingID($row['BookingID']), 1, 0, 'C');
       $pdf->Cell($width[1], 10, $row['FirstName'] . " " . $row['LastName'], 1, 0, 'C');
-      $pdf->Cell($width[2], 10, $row['CheckInDate'], 1, 0, 'C');
-      $pdf->Cell($width[3], 10, $row['CheckOutDate'], 1, 0, 'C');
+      $pdf->Cell($width[2], 10, $system->formatDate($row['CheckInDate'], "F d, Y"), 1, 0, 'C');
+      $pdf->Cell($width[3], 10, $system->formatDate($row['CheckOutDate'], "F d, Y"), 1, 0, 'C');
       $pdf->Cell($width[4], 10, "P " . number_format($system->computeTotalAmount($row['BookingID'])), 1, 0, 'C');
       $pdf->Ln();
       $totalAmount += $system->computeTotalAmount($row['BookingID']);

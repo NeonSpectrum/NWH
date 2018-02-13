@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $children      = $system->filter_input($data['txtChildren']);
     $paymentMethod = $system->filter_input($data['txtPaymentMethod']);
 
-    $db->query("UPDATE booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate', Adults=$adults, Children=$children, PaymentMethod='$paymentMethod' WHERE BookingID=$bookingID");
+    $db->query("UPDATE booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate', Adults=$adults, Children=$children, PaymentMethod='$paymentMethod' WHERE booking.BookingID=$bookingID");
     $db->query("DELETE FROM booking_room WHERE BookingID=$bookingID");
 
     $output         = true;
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     }
     if ($output != false) {
       $totalRoomPrice *= count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
-      $db->query("UPDATE booking SET TotalAmount=$totalRoomPrice, DateUpdated='$date' WHERE BookingID=$bookingID");
+      $db->query("UPDATE booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID SET TotalAmount=$totalRoomPrice, DateUpdated='$date' WHERE booking.BookingID=$bookingID");
     }
     if (isset($_FILES['file'])) {
       $directory = $_SERVER['DOCUMENT_ROOT'] . "{$root}images/bankreferences/";

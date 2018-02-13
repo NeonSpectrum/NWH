@@ -183,6 +183,7 @@ $(".dropdown-menu.notify-drop").click(function(e) {
   e.stopPropagation();
 });
 reinitializeButtonRIcon();
+document.getElementById("sndNotification").volume = 0.5;
 
 function reinitializeButtonRIcon() {
   $(".rIcon").unbind("click");

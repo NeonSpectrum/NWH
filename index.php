@@ -102,7 +102,7 @@ if (!$db->connect_error) {
         <h4 class="modal-title text-center"></h4>
       </div>
       <div class="modal-body">
-        <div id="loadingMode" style="width:95%"></div>
+        <div id="loadingMode" style="width:98%"></div>
         <div class="row" style="margin:0">
           <div class="col-md-8" id="pictures">
             <div id="rooms_slider_container" style="position: relative; top: 0px; left: 0px; width: 550px;height: 400px;">

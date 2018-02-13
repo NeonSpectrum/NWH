@@ -93,7 +93,7 @@ foreach ($roomList as $value) {
             <td style="border:none"></td>
             <td id="109" class="<?php echo $roomID[109]; ?>" title="<?php echo $roomDescription[109]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">109</td>
             <td id="110" class="<?php echo $roomID[110]; ?>" title="<?php echo $roomDescription[110]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">110</td>
-            <td id="110" class="<?php echo $roomID[111]; ?>" title="<?php echo $roomDescription[111]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">111</td>
+            <td id="111" class="<?php echo $roomID[111]; ?>" title="<?php echo $roomDescription[111]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">111</td>
             <td id="112" class="<?php echo $roomID[112]; ?>" title="<?php echo $roomDescription[112]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">112</td>
           </tr>
         </table>
