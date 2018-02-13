@@ -52,7 +52,7 @@ $("#frmSendToAllAdmin").submit(function(e) {
     socket.emit("notification", {
       user: email_address,
       type: "envelope",
-      messages: $(this).find("input[name=txtMessage]").val()
+      messages: $(this).find("input[name=txtMessage]").val().replace(/<(?:.|\n)*?>/gm, "")
     });
     $(this).trigger("reset");
   }

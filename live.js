@@ -38,11 +38,10 @@ io.on('connection', function(client) {
   })
   client.on("notification", function(data) {
     data.time = moment().format('MMM DD hh:mm A')
-    data.messages = htmlspecialchars(data.messages);
     db.query("INSERT INTO notification VALUES(NULL,?,?,0,?)", [data.type, data.messages, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result) {
       data.id = result.insertId
-      io.emit('notification', data)
       log("New Notification from " + data.user + ": " + data.messages.replace(/<(?:.|\n)*?>/gm, ''), "Notif ")
+      io.emit('notification', data)
     })
   })
   client.on("readNotif", function(data) {
@@ -127,17 +126,4 @@ function decrypt(text) {
   var dec = decipher.update(text, 'hex', 'utf8')
   dec += decipher.final('utf8')
   return dec
-}
-
-function htmlspecialchars(str) {
-  var map = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    "\"": "&quot;",
-    "'": "&#39;"
-  }
-  return str.replace(/[&<>"']/g, function(m) {
-    return map[m];
-  })
 }
