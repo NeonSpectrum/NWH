@@ -8,7 +8,7 @@ require_once '../../../files/sidebar.php';
     <h1 class="page-title">Control Panel</h1>
     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
 <?php
-if ($account->checkUserLevel(3)) {
+if ($account->checkUserLevel(3) && DEBUG == TRUE) {
   ?>
     <div class="col-md-4">
       <div class="panel panel-default">
