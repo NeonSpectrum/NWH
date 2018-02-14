@@ -612,7 +612,7 @@ class View extends Room {
 
   public function gallery($category) {
     foreach (glob("images/{$category}/*.{jpg,gif,png,JPG,GIF,PNG}", GLOB_BRACE) as $image) {
-      $filename  = str_replace("images/{$category}/", "", $image);
+      $filename  = str_replace("_", " ", str_replace(["images/{$category}/", ".jpg", ".gif", ".png", ".JPG", ".GIF", ".PNG"], "", $image));
       $thumbnail = str_replace("images/{$category}/", "images/{$category}/thumbnail/", $image);
       echo "<a href='$image' data-caption='$filename'><img src='$thumbnail?v=" . filemtime("$thumbnail") . "' alt='$filename' class='zoom'></a>\n";
     }
