@@ -51,6 +51,7 @@ $('input.birthDate').datepicker({
   format: DATE_FORMAT,
   autoclose: true,
   startView: 2,
+  startDate: "-" + (moment(date).format("YYYY") - parseInt(MIN_BIRTH_YEAR)) + "y",
   endDate: "-" + (moment(date).format("YYYY") - parseInt(MAX_BIRTH_YEAR)) + "y"
 });
 $("input.checkDate").each(function() {

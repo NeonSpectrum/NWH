@@ -49,7 +49,7 @@ foreach ($config as $name => $value) {
 }
 echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
 echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(" ", "+", $_SESSION['account']), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : "") . "\"";
-echo ", date=\"$date\", dateandtime=\"$dateandtime\";";
+echo ", date=\"$date\", dateandtime=\"$dateandtime\",session_id=\"" . session_id() . "\";";
 ?>
 var socket = io(NODE_JS_URL.includes("localhost") ? NODE_JS_URL.replace("localhost","<?php echo $_SERVER['SERVER_NAME']; ?>") : NODE_JS_URL);
 socket.on('connect', function(){
@@ -90,6 +90,17 @@ socket.on('all', function(data) {
     delay: 5000
   });
 });
+socket.on("logout",function(data){
+  if(email_address == data){
+    $.ajax({
+      url: root + 'account?mode=logout',
+      success: function() {
+        alert("Your account has been logged in somewhere. Logging out...");
+        location.reload(true);
+      }
+    });
+  }
+})
 socket.on('forcerefresh', function(data) {
   if(data == "all"){
     location.reload();

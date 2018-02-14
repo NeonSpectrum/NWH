@@ -387,7 +387,10 @@ Pace.on('done', function() {
               swal.showLoading()
             }
           })
-          socket.emit('login', $(this).find("#txtEmail").val());
+          socket.emit('login', {
+            email: $(this).find("#txtEmail").val(),
+            session: session_id
+          });
           setTimeout(function() {
             if (getQueryVariable("redirect")) {
               location.href = "//" + decodeURIComponent(getQueryVariable("redirect"));

@@ -57,7 +57,12 @@ io.on('connection', function(client) {
     })
   })
   client.on("login", function(data) {
-    log(data + " has logged in.", "Logged")
+    db.query("SELECT * FROM account WHERE EmailAddress=?", [data.email], function(err, row) {
+      if (row[0].AccountType == "User" && row[0].SessionID == data.session) {
+        client.broadcast.emit("logout", data.email);
+      }
+    })
+    log(data.email + " has logged in.", "Logged")
   })
   client.on("playmusic", function(data) {
     client.broadcast.emit("playmusic", data)
