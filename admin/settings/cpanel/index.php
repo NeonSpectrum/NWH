@@ -57,7 +57,7 @@ if ($account->checkUserLevel(3) && DEBUG == TRUE) {
               <button class="btn btn-default btn-block" id="btnAddDiscount" data-toggle="modal" data-target="#modalAddDiscount">Add Discount</button>
             </div>
           </div>
-          <div class="btn-group btn-group-justified">
+          <div class="btn-group btn-group-justified" style="margin-top:5px">
             <div class="btn-group">
               <button class="btn btn-default btn-block" id="btnEditExpenses" data-toggle="modal" data-target="#modalEditExpenses">Edit Expenses</button>
             </div>
