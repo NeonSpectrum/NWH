@@ -19,4 +19,7 @@ config.ini
 
 .htaccess
 _thumbs/*
-/filemanager/*
+filemanager/*
+
+!filemanager/connectors/php/filemanager.php
+!filemanager/config/*
