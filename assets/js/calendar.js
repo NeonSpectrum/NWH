@@ -25,17 +25,19 @@ $(document).ready(function() {
           if (event.checked == true) {
             element.css("background-color", "black");
             element.css("border-color", "black");
+            element.css("color", "white");
           } else if (event.check == true) {
             element.css("background-color", "red");
             element.css("border-color", "red");
+            element.css("color", "white");
           } else if (event.paid == true) {
             element.css("background-color", "darkblue");
             element.css("border-color", "darkblue");
+            element.css("color", "white");
           }
           element.css("cursor", "pointer");
           element.attr("data-html", true);
           element.attr("data-tooltip", "tooltip");
-          element.attr("data-placement", "bottom");
           element.attr("title", 'BookingID: ' + event.bookingID + '<br/>Name: ' + event.name + "<br/>Room: " + event.room + "<br/>Check In Date: " + event.checkInDate + "<br/>Check Out Date: " + event.checkOutDate);
           element.click(function() {
             if (!$(this).hasClass("disabled")) {
@@ -58,8 +60,7 @@ $(document).ready(function() {
           element.tooltip({
             container: 'body'
           });
-        },
-        eventAfterAllRender: function() {}
+        }
       });
       $(window).on('resize', function() {
         $('#calendar').fullCalendar('option', 'contentHeight', $("main.l-main").height() - 70);

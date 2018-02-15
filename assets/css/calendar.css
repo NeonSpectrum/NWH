@@ -5,3 +5,7 @@
 .fc-list-item-title.fc-widget-content {
   cursor: pointer;
 }
+
+.fc-unthemed .fc-list-item:hover td {
+  color: #337ab7 !important;
+}
