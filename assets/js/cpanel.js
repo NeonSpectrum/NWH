@@ -246,3 +246,65 @@ $("#btnMarkSeason, #btnMarkHoliday, #btnRevertPromo").click(function() {
     }
   });
 });
+$("#frmAddExpenses,#frmAddDiscount").submit(function(e) {
+  e.preventDefault();
+  var type = $(this).attr("id").replace("frmAdd", "");
+  $(this).find("#btnAdd").html('<i class="fa fa-spinner fa-pulse"></i> Saving...');
+  $(this).find('#btnAdd').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/addExpensesDiscount.php",
+    data: $(this).serialize() + "&type=" + type,
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal('hide');
+        alertNotif("success", UPDATE_SUCCESS, true);
+      } else {
+        $(this).find("#btnAdd").html('Save');
+        $(this).find('#btnAdd').attr('disabled', true);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
+        });
+      }
+    }
+  });
+});
+$("#frmEditExpenses,#frmEditDiscount").submit(function(e) {
+  e.preventDefault();
+  var type = $(this).attr("id").replace("frmEdit", "");
+  $(this).find("#btnEdit").html('<i class="fa fa-spinner fa-pulse"></i> Saving...');
+  $(this).find('#btnEdit').attr('disabled', true);
+  $(this).find(".lblDisplayError").html('');
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/editExpensesDiscount.php",
+    data: $(this).serialize() + "&type=" + type,
+    success: function(response) {
+      if (response == true) {
+        $(this).closest(".modal").modal('hide');
+        alertNotif("success", UPDATE_SUCCESS, true);
+      } else {
+        $(this).find("#btnEdit").html('Save');
+        $(this).find('#btnEdit').attr('disabled', true);
+        $(this).find(".lblDisplayError").show(function() {
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
+        });
+      }
+    }
+  });
+});
+$("select#txtName").change(function() {
+  var type = $(this).closest("form").attr("id").replace("frmEdit", "");
+  $.ajax({
+    context: this,
+    type: 'POST',
+    url: root + "ajax/getExpensesDiscount.php",
+    data: "txtName=" + $(this).val() + "&type=" + type + "&csrf_token=" + $("input[name=csrf_token]").val(),
+    success: function(response) {
+      $(this).closest("form").find("#txtAmount").val(response);
+    }
+  });
+});

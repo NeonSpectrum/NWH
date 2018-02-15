@@ -961,6 +961,50 @@ class System {
     }
   }
 
+  public function addExpenses($name, $price) {
+    global $db;
+    $db->query("INSERT INTO expenses VALUES(NULL,'$name',$price)");
+    if ($db->affected_rows > 0) {
+      $this->log("insert|expenses|$name|$price");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function addDiscount($name, $price) {
+    global $db;
+    $db->query("INSERT INTO discount VALUES(NULL,'$name',$price)");
+    if ($db->affected_rows > 0) {
+      $this->log("insert|discount|$name|$price");
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function editExpenses($name, $price) {
+    global $db;
+    $db->query("UPDATE expenses SET Amount=$price WHERE Name='$name'");
+    if ($db->affected_rows > 0) {
+      $this->log("update|expenses|$name|$price");
+      return true;
+    } else {
+      return $db->error;
+    }
+  }
+
+  public function editDiscount($name, $price) {
+    global $db;
+    $db->query("UPDATE discount SET Amount='$price' WHERE Name='$name'");
+    if ($db->affected_rows > 0) {
+      $this->log("update|discount|$name|$price");
+      return true;
+    } else {
+      return $db->error;
+    }
+  }
+
   public function markEvent($type = "", $startDate, $endDate) {
     global $db, $date;
     $startDate = $this->formatDate($startDate, "Y-m-d");

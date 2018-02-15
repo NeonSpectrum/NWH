@@ -47,6 +47,29 @@ if ($account->checkUserLevel(3) && DEBUG == TRUE) {
     </div>
     <div class="col-md-4">
       <div class="panel panel-default">
+        <div class="panel-heading">Add/Edit Expenses Discounts</div>
+        <div class="panel-body">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button class="btn btn-default btn-block" id="btnAddExpenses" data-toggle="modal" data-target="#modalAddExpenses">Add Expenses</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default btn-block" id="btnAddDiscount" data-toggle="modal" data-target="#modalAddDiscount">Add Discount</button>
+            </div>
+          </div>
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button class="btn btn-default btn-block" id="btnEditExpenses" data-toggle="modal" data-target="#modalEditExpenses">Edit Expenses</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default btn-block" id="btnEditDiscount" data-toggle="modal" data-target="#modalEditDiscount">Edit Discount</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
         <div class="panel-heading">Check</div>
         <div class="panel-body">
           <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
@@ -175,4 +198,158 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
 <?php
 }
 ?>
+<div id="modalAddExpenses" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Add Expenses</h4>
+      </div>
+      <form id="frmAddExpenses" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Expenses Name: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="txtName">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Amount: </label>
+            <div class="col-sm-8">
+               <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="modalAddDiscount" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Add Discount</h4>
+      </div>
+      <form id="frmAddDiscount" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Discount Name: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="txtName">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Amount: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" min="1" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="modalEditExpenses" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Edit Expenses</h4>
+      </div>
+      <form id="frmEditExpenses" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Expenses Name: </label>
+            <div class="col-sm-8">
+              <select id="txtName" name="txtName" class="form-control">
+<?php
+$result   = $db->query("SELECT * FROM expenses WHERE Name!='Others'");
+$discount = $result->fetch_assoc()['Amount'];
+$result->data_seek(0);
+while ($row = $result->fetch_assoc()) {
+  echo "<option value='{$row['Name']}'>{$row['Name']}</option>";
+}
+?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Amount: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $discount; ?>" pattern="[0-9]+%?" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="modalEditDiscount" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Edit Discount</h4>
+      </div>
+      <form id="frmEditDiscount" class="form-horizontal">
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
+          <div class="lblDisplayError">
+            <!-- errors will be shown here ! -->
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Discount Name: </label>
+            <div class="col-sm-8">
+              <select id="txtName" name="txtName" class="form-control">
+<?php
+$result = $db->query("SELECT * FROM discount WHERE Name!='Others'");
+$amount = $result->fetch_assoc()['Amount'];
+$result->data_seek(0);
+while ($row = $result->fetch_assoc()) {
+  echo "<option value='{$row['Name']}'>{$row['Name']}</option>";
+}
+?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Amount: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $amount; ?>" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <?php require_once '../../../footer.php';?>
