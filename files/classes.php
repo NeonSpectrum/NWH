@@ -1159,7 +1159,7 @@ class System {
     }
   }
 
-  public function saveImage($image, $directory, $filename, $size) {
+  public function saveImage($image, $directory, $filename, $size = 720) {
     if (file_exists($directory . $filename)) {
       unlink($directory . $filename);
     }
