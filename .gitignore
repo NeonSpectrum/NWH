@@ -18,3 +18,4 @@ config.ini
 *.tmp
 
 .htaccess
+_thumbs/*

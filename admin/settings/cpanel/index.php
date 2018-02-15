@@ -70,6 +70,15 @@ if ($account->checkUserLevel(3) && DEBUG == TRUE) {
     </div>
     <div class="col-md-4">
       <div class="panel panel-default">
+        <div class="panel-heading">File Manager</div>
+        <div class="panel-body">
+          <button class="btn btn-default btn-block" onclick="window.open('//'+location.hostname+'<?php echo $root; ?>filemanager/?exclusiveFolder=images/carousel')">Carousel</button>
+          <button class="btn btn-default btn-block" onclick="window.open('//'+location.hostname+'<?php echo $root; ?>filemanager/?exclusiveFolder=gallery/images')">Gallery</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
         <div class="panel-heading">Check</div>
         <div class="panel-body">
           <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
