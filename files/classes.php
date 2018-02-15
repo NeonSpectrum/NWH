@@ -1005,6 +1005,28 @@ class System {
     }
   }
 
+  public function deleteExpenses($name) {
+    global $db;
+    $db->query("DELETE FROM expenses WHERE Name='$name'");
+    if ($db->affected_rows > 0) {
+      $this->log("delete|expenses|$name");
+      return true;
+    } else {
+      return $db->error;
+    }
+  }
+
+  public function deleteDiscount($name) {
+    global $db;
+    $db->query("DELETE FROM discount WHERE Name='$name'");
+    if ($db->affected_rows > 0) {
+      $this->log("delete|discount|$name");
+      return true;
+    } else {
+      return $db->error;
+    }
+  }
+
   public function markEvent($type = "", $startDate, $endDate) {
     global $db, $date;
     $startDate = $this->formatDate($startDate, "Y-m-d");

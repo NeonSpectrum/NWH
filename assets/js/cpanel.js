@@ -308,3 +308,41 @@ $("select#txtName").change(function() {
     }
   });
 });
+$("#btnDelete").click(function() {
+  var type = $(this).closest("form").attr("id").replace("frmEdit", "");
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: "Delete"
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: root + "ajax/deleteExpensesDiscount.php",
+        data: "txtName=" + $(this).closest("form").find("#txtName").val() + "&type=" + type + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        success: function(response) {
+          if (response == true) {
+            swal({
+              title: "Deleted Successfully!",
+              type: 'success'
+            }).then((result) => {
+              if (result.value) {
+                location.reload();
+              }
+            });
+          } else {
+            swal({
+              title: 'Something went wrong!',
+              text: 'Error: ' + response,
+              type: 'warning'
+            });
+          }
+        }
+      });
+    }
+  });
+});

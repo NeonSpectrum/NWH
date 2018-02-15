@@ -47,7 +47,7 @@ if ($account->checkUserLevel(3) && DEBUG == TRUE) {
     </div>
     <div class="col-md-4">
       <div class="panel panel-default">
-        <div class="panel-heading">Add/Edit Expenses Discounts</div>
+        <div class="panel-heading">Add/Edit/Delete Expenses Discounts</div>
         <div class="panel-body">
           <div class="btn-group btn-group-justified">
             <div class="btn-group">
@@ -311,6 +311,7 @@ while ($row = $result->fetch_assoc()) {
           </div>
         </div>
         <div class="modal-footer">
+          <button id="btnDelete" type="button" class="btn btn-primary pull-left">Delete</button>
           <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -354,6 +355,7 @@ while ($row = $result->fetch_assoc()) {
           </div>
         </div>
         <div class="modal-footer">
+          <button id="btnDelete" type="button" class="btn btn-primary pull-left">Delete</button>
           <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
