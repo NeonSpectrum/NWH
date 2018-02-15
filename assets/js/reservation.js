@@ -337,7 +337,7 @@ $(document).ready(function() {
           alertNotif("error", "An adult is a must!");
           return false;
         }
-        $("#loadingMode").fadeIn();
+        $("#smartwizard").find("#loadingMode").fadeIn();
         $.ajax({
           type: 'POST',
           url: root + 'ajax/getRooms.php',
@@ -378,7 +378,7 @@ $(document).ready(function() {
               fullscreen: true
             });
             editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>", "info");
-            $("#loadingMode").fadeOut();
+            $("#smartwizard").find("#loadingMode").fadeOut();
           }
         });
       } else if (stepNumber == 1) {
@@ -425,7 +425,7 @@ $(document).ready(function() {
         editBookingSummary("<hr style='margin:5px 0 5px 0;border-color:#ccc'>" + roomHtml.join("<hr style='margin:5px 0 5px 0;border-color:#ccc'/>") + "<hr style='margin:5px 0 5px 0;border-color:#ccc'>VATable: <span class='pull-right'>₱&nbsp;" + (total - (total / 1.12 * .12)).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><br/>VAT (12%): <span class='pull-right'>₱&nbsp;" + (total / 1.12 * .12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span><hr style='margin:5px 0 5px 0;border-color:#ccc'/>Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" + total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>" + (diffDays > 1 ? "<br/>50% of the Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" + (total / 2).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + "</span>" : ""), "roomList");
       } else if (stepNumber == 2) {
         $('#reset-btn').css("display", "none");
-        $("#loadingMode").fadeIn();
+        $("#smartwizard").find("#loadingMode").fadeIn();
         $.ajax({
           context: this,
           type: 'POST',
@@ -444,14 +444,14 @@ $(document).ready(function() {
               }
               $('#frmBookNow').find('#btnPrint').attr("onclick", "window.open('//" + location.hostname + root + "files/generateReservationConfirmation/?BookingID=" + response[0] + "','_blank','height=650,width=1000')");
               editBookingSummary("Payment Method: <span class='pull-right'>" + $("#frmBookNow").find("input[name='txtPaymentMethod']:checked").val() + "</span>", "paymentMethod");
-              $("#loadingMode").fadeOut();
+              $("#smartwizard").find("#loadingMode").fadeOut();
               socket.emit('notification', {
                 user: email_address,
                 type: "book",
                 messages: 'Booking ID: <a href="' + root + 'admin/booking/?search=' + response[0] + '">' + response[0] + '</a><br/>Booked from ' + $('#frmBookNow').find('#txtCheckDate').val() + '<br/>Number of Rooms: ' + quantity
               });
             } else {
-              $("#loadingMode").fadeOut();
+              $("#smartwizard").find("#loadingMode").fadeOut();
               $("#step-4").html("<div style='width:100%;text-align:center;font-size:30px;padding:100px'>Something went wrong!</div>");
               swal({
                 title: 'Something went wrong!',

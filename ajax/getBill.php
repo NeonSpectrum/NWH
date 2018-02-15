@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $html .= "<table style='float:right;margin:20px 0'>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Number of Days:</td>";
-  $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>" . (count($room->getDatesFromRange($row['CheckIn'], $row['CheckOut'])) - 1) . "</td>";
+  $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>" . (count($room->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1) . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Original Price:</td>";
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   }
   $total = $row['TotalAmount'] + $expenses;
   $total = $total - (strpos($discount, "%") !== false ? $total * $system->percentToDecimal($discount) : $discount);
-  $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:</td>";
+  $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:" . (strpos($discount, "%") !== false ? $total * $system->percentToDecimal($discount) : $discount) . "</td>";
   $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / 1.12 * .12, 2, '.', ',') . "</td>";
   $html .= "</tr>";
   $html .= "<tr>";

@@ -49,7 +49,7 @@ echo "<span class='c-badge c-badge--header-icon animated shake' style='display:"
         </div>
         <div class="drop-content">
 <?php
-$result = $db->query("SELECT * FROM notification ORDER BY TimeStamp DESC");
+$result = $db->query("SELECT * FROM notification ORDER BY TimeStamp DESC LIMIT 100");
 while ($row = $result->fetch_assoc()) {
   echo "<li style='position:relative'" . ($row['MarkedAsRead'] == 0 ? " class='not-read'" : "") . ">
       <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-{$row['Type']}' style='font-size:4em'></i></div></div>

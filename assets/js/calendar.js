@@ -39,7 +39,7 @@ $(document).ready(function() {
           element.attr("title", 'BookingID: ' + event.bookingID + '<br/>Name: ' + event.name + "<br/>Room: " + event.room + "<br/>Check In Date: " + event.checkInDate + "<br/>Check Out Date: " + event.checkOutDate);
           element.click(function() {
             if (!$(this).hasClass("disabled")) {
-              var bookingID = $(this).attr("title").substring($(this).attr("data-original-title").lastIndexOf("Booking ID: ") + 12, $(this).attr("data-original-title").lastIndexOf("<br/>Name")).trim();
+              var bookingID = $(this).attr("data-original-title").substring($(this).attr("data-original-title").lastIndexOf("Booking ID: ") + 12, $(this).attr("data-original-title").lastIndexOf("<br/>Name")).trim();
               swal({
                 title: 'Are you sure?',
                 text: "You will redirect to booking information!",

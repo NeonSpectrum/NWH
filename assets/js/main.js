@@ -317,14 +317,14 @@ Pace.on('done', function() {
   $('#modalEditReservation').find(".checkDate").change(function() {
     var checkDate = $(this).val().split(" - ");
     if (checkDate[0] == checkDate[1]) return;
-    if ($(this).val() != currentDate) {
-      //   $('#modalEditReservation').find("label#Standard_Single").parent().find(".cmbQuantity").html(currentRoomQuantity[0]);
-      //   $('#modalEditReservation').find("label#Standard_Double").parent().find(".cmbQuantity").html(currentRoomQuantity[1]);
-      //   $('#modalEditReservation').find("label#Family_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[2]);
-      //   $('#modalEditReservation').find("label#Junior_Suites").parent().find(".cmbQuantity").html(currentRoomQuantity[3]);
-      //   $('#modalEditReservation').find("label#Studio_Type").parent().find(".cmbQuantity").html(currentRoomQuantity[4]);
-      //   $('#modalEditReservation').find("label#Barkada_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[5]);
-      // } else {
+    if ($(this).val() == currentDate) {
+      $('#modalEditReservation').find("label#Standard_Single").parent().find(".cmbQuantity").html(currentRoomQuantity[0]);
+      $('#modalEditReservation').find("label#Standard_Double").parent().find(".cmbQuantity").html(currentRoomQuantity[1]);
+      $('#modalEditReservation').find("label#Family_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[2]);
+      $('#modalEditReservation').find("label#Junior_Suites").parent().find(".cmbQuantity").html(currentRoomQuantity[3]);
+      $('#modalEditReservation').find("label#Studio_Type").parent().find(".cmbQuantity").html(currentRoomQuantity[4]);
+      $('#modalEditReservation').find("label#Barkada_Room").parent().find(".cmbQuantity").html(currentRoomQuantity[5]);
+    } else {
       $.ajax({
         type: 'POST',
         url: root + "ajax/getQuantityRooms.php",
