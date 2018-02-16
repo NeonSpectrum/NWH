@@ -514,7 +514,7 @@ Pace.on('done', function() {
           $(this).closest(".modal").modal("hide");
           $(this).find('#frmChange').trigger('reset');
           $(this).find('#btnUpdate').attr('disabled', false);
-          alertNotif("success", UPDATE_SUCCESS, true);
+          alertNotif("success", CHANGE_PASS_SUCCESS, true);
         } else {
           $(this).find("#btnUpdate").html('Update');
           $(this).find('#btnUpdate').attr('disabled', false);

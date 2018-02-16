@@ -115,4 +115,7 @@
 }, {
   "name": "ALREADY_PAID",
   "value": "Already Paid!"
+}, {
+  "name": "CHANGE_PASS_SUCCESS",
+  "value": "Updated Successfully. Please login again."
 }]

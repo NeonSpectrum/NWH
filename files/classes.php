@@ -163,9 +163,12 @@ class Account extends System {
 
       if ($result->num_rows == 1 && password_verify($oldpass, $row['Password'])) {
         $result = $db->query("UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'");
-        if (array_search($row['AccountType'], $levels) > 0) {
-          setcookie("nwhAuth", $this->encrypt(json_encode(["email" => $email, "password" => $newpass])), time() + (86400 * LOGIN_EXPIRED_DAYS), "/");
+
+        if (isset($_COOKIE['nwhAuth'])) {
+          setcookie('nwhAuth', '', time() - (60 * 60 * 24 * 7), '/');
+          unset($_COOKIE['nwhAuth']);
         }
+        unset($_SESSION['account']);
         if ($db->affected_rows > 0) {
           $this->log("update|user.password");
           return true;

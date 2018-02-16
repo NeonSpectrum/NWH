@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     if ($db->affected_rows > 0) {
       $result       = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
       $row          = $result->fetch_assoc();
-      $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], date("m/d/Y", strtotime($row['CheckOutDate']) - 86400)));
+      $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
       $price        = $room->getRoomPrice($room->getRoomType($roomID)) * $numberOfDays;
       $newPrice     = $room->getRoomPrice($room->getRoomType($newRoomID)) * $numberOfDays;
-      $db->query("UPDATE booking SET TotalAmount = TotalAmount - $price + $newPrice WHERE BookingID=$bookingID");
+      $db->query("UPDATE booking_transaction SET TotalAmount = TotalAmount - $price + $newPrice WHERE BookingID=$bookingID");
       $system->log("edit|booking.room|{$system->formatBookingID($bookingID)}|$newRoomID|$roomID");
       echo true;
     } else {
@@ -24,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     if ($db->affected_rows > 0) {
       $result       = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
       $row          = $result->fetch_assoc();
-      $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], date("m/d/Y", strtotime($row['CheckOutDate']) - 86400)));
+      $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
       $newPrice     = $room->getRoomPrice($room->getRoomType($newRoomID)) * $numberOfDays;
-      $db->query("UPDATE booking SET TotalAmount = TotalAmount + $newPrice WHERE BookingID=$bookingID");
+      $db->query("UPDATE booking_transaction SET TotalAmount = TotalAmount + $newPrice WHERE BookingID=$bookingID");
       $system->log("insert|booking.room|{$system->formatBookingID($bookingID)}|$newRoomID");
       echo true;
     } else {
