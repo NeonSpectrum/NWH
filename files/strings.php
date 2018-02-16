@@ -1,5 +1,5 @@
 <?php
-
+@date_default_timezone_set(TIMEZONE);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $root = stripos($_SERVER['SERVER_NAME'], "northwood-hotel.com") === false ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";

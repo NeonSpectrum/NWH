@@ -514,7 +514,12 @@ Pace.on('done', function() {
           $(this).closest(".modal").modal("hide");
           $(this).find('#frmChange').trigger('reset');
           $(this).find('#btnUpdate').attr('disabled', false);
-          alertNotif("success", CHANGE_PASS_SUCCESS, true);
+          if ($(this).find("#txtEmail").length) {
+            alertNotif("success", CHANGE_PASS_SUCCESS, false);
+            setTimeout("location.href = location.href.replace(location.search, '')", 1300);
+          } else {
+            alertNotif("success", CHANGE_PASS_SUCCESS, true);
+          }
         } else {
           $(this).find("#btnUpdate").html('Update');
           $(this).find('#btnUpdate').attr('disabled', false);
