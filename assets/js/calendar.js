@@ -52,7 +52,13 @@ $(document).ready(function() {
                 confirmButtonText: 'Go'
               }).then((result) => {
                 if (result.value) {
-                  location.href = root + "admin/reports/listofreservation/?search=" + bookingID;
+                  if (event.checked == true) {
+                    location.href = root + "admin/reports/listofreservation/?search=" + bookingID;
+                  } else if (event.check == true) {
+                    location.href = root + "admin/check/?search=" + bookingID;
+                  } else if (event.paid == true) {
+                    location.href = root + "admin/booking/?search=" + bookingID;
+                  }
                 }
               });
             }
