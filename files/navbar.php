@@ -86,8 +86,12 @@ if (!$account->isLogged()) {
 if ($account->checkUserLevel(1)) {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
   }
-  ?>
+  if ($currentDirectory != "reservation") {
+    ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
+<?php
+}
+  ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalTransHistory">View Transactions</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditProfile">Edit Profile</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalChangePassword">Change Password</a></li>
