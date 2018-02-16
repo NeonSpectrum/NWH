@@ -193,7 +193,7 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
 <span id="tokenError"><?php echo TOKEN_EXPIRED; ?></span>
 <?php
 }
-if ($account->checkFeedback()) {
+if (!$db->connect_error && $account->checkFeedback()) {
   ?>
 <div id="feedbackForm" style="display:none">
   <form id="frmFeedback">
