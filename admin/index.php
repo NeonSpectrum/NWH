@@ -74,9 +74,8 @@ for ($i = 1; $row = $result->fetch_assoc(); $i++) {
           <div class="panel-heading">Current Rating</div>
           <div class="panel-body">
 <?php
-$result = $db->query("SELECT COUNT(Star) AS Number, SUM(Star) as Total FROM feedback");
-$row    = $result->fetch_assoc();
-echo $result->num_rows == 0 ? "N/A" : number_format($row['Total'] / $row['Number'], 1, ".", ",");
+$row = $db->query("SELECT COUNT(Star) AS Number, SUM(Star) as Total FROM feedback");
+echo $row['Number'] == 0 ? "N/A" : number_format($row['Total'] / $row['Number'], 1, ".", ",");
 ?>
           </div>
         </div>
