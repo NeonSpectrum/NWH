@@ -1330,8 +1330,7 @@ class System {
     $statements = preg_replace("/\s/", ' ', $statements);
     foreach ($statements as $query) {
       if (trim($query) != '') {
-        // $res = $db->query($query);
-        echo $query . "\n";
+        $res = $db->query($query);
       }
     }
   }
