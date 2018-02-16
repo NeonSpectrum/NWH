@@ -69,6 +69,17 @@ for ($i = 1; $row = $result->fetch_assoc(); $i++) {
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Current Rating</div>
+          <div class="panel-body">
+<?php
+$row = $db->query("SELECT COUNT(Star) AS Number, SUM(Star) as Total FROM feedback")->fetch_assoc();
+echo number_format($row['Total'] / $row['Number'], 1, ".", ",");
+?>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">Rooms Chart</div>

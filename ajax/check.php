@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     $db->query("UPDATE room JOIN booking_room ON room.RoomID=booking_room.RoomID SET Cleaning=1 WHERE BookingID=$bookingID");
     $db->query("UPDATE booking JOIN booking_check ON booking.BookingID=booking_check.BookingID SET CheckOut='$dateandtime' WHERE booking.BookingID=$bookingID");
     if ($db->affected_rows > 0) {
+      $db->query("UPDATE account SET Feedback=1 WHERE EmailAddress='{$account->email}'");
       $system->log("update|{$system->formatBookingID($bookingID)}|checkout");
       echo true;
     } else {

@@ -154,3 +154,29 @@ $('.btnMoreInfo').click(function() {
     });
   };
 })();
+if ($("#feedbackForm").length) {
+  var feedbackForm = $("#feedbackForm").html();
+  $("#feedbackForm").remove();
+  swal({
+    title: "Please rate our service.",
+    html: feedbackForm,
+    allowOutsideClick: false,
+    type: 'info',
+    input: 'text',
+    inputPlaceholder: 'Comments and Suggestions'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/addFeedback.php',
+        data: $("#frmFeedback").serialize() + "&txtComment=" + result.value,
+        success: function(response) {
+          swal({
+            title: "Thanks for the feedback!",
+            type: 'success'
+          });
+        }
+      });
+    }
+  });
+}

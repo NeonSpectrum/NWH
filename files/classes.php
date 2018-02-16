@@ -110,7 +110,7 @@ class Account extends System {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
     }
 
-    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '1', '$date', NULL)");
+    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '1', '0', '$date', NULL)");
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
@@ -311,6 +311,23 @@ class Account extends System {
       }
     } else if ($kick) {
       $this->redirectLogin();
+    }
+  }
+
+  public function checkFeedback() {
+    global $db;
+    return $db->query("SELECT * FROM account WHERE EmailAddress='{$this->email}'")->fetch_assoc()['Feedback'];
+  }
+
+  public function addFeedback($star, $comment) {
+    global $db;
+    $db->query("UPDATE account SET Feedback=0 WHERE EmailAddress='{$this->email}'");
+    $db->query("INSERT INTO feedback VALUES(NULL,'$star','$comment')");
+    if ($db->affected_rows > 0) {
+      $this->log("add|feedback|$star|$comment");
+      return true;
+    } else {
+      return false;
     }
   }
 }
