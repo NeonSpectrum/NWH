@@ -88,8 +88,14 @@ setInterval(function() {
         formatBookingID(row[i].BookingID, function(result) {
           var bookingID = result
           var message = "Please be reminded that <a href='/" + (config.system.hostname == 'localhost' ? "nwh/" : "") + "admin/booking/?search=" + bookingID + "'>" + bookingID + "</a> haven't check in yet."
-          db.query("SELECT * FROM notification WHERE Message=? AND DATE(TimeStamp)=CURDATE()", [message], function(err, result) {
-            if (result.length == 0) {
+          db.query("SELECT * FROM notification WHERE Message=?", [message], function(err, result) {
+            var notAvailable = true;
+            for (var j = 0; j < result.length; j++) {
+              if (moment(result[j].TimeStamp, "YYYY-MM-DD").format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")) {
+                notAvailable = false;
+              }
+            }
+            if (notAvailable) {
               db.query("INSERT INTO notification VALUES(NULL,'exclamation-triangle',?,0,?)", [message, moment().format('YYYY-MM-DD HH:mm:ss')], function(err, insert) {
                 io.emit("notification", {
                   id: insert.insertId,
