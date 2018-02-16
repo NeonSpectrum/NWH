@@ -118,4 +118,7 @@
 }, {
   "name": "CHANGE_PASS_SUCCESS",
   "value": "Updated Successfully. Please login again."
+}, {
+  "name": "ROOM_NOT_AVAILABLE_IN_DATE",
+  "value": "Room is not available in your chosen date!"
 }]

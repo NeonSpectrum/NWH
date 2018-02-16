@@ -15,19 +15,30 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $children     = $system->filter_input($_POST['txtChildren']);
     $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
-    $row          = $db->query("SELECT * FROM booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID")->fetch_assoc();
-    $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
-    $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children,DateUpdated='$dateandtime' WHERE BookingID=$bookingID");
+    $result    = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=$bookingID");
+    $available = true;
+    while ($row = $result->fetch_assoc()) {
+      if ($room->isBookedInDate($row['BookingID'], $row['RoomID'], $row['CheckInDate'], $row['CheckOutDate'])) {
+        $available = false;
+      }
+    }
+    if ($available || ($row['CheckInDate'] == $checkInDate && $row['CheckOutDate'] == $checkOutDate)) {
+      $row          = $db->query("SELECT * FROM booking JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=$bookingID")->fetch_assoc();
+      $numberOfDays = count($system->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate'])) - 1;
+      $db->query("UPDATE booking SET CheckInDate='$checkInDate', CheckOutDate='$checkOutDate',Adults=$adults,Children=$children,DateUpdated='$dateandtime' WHERE BookingID=$bookingID");
 
-    if ($db->affected_rows > 0) {
-      $amount       = $row['TotalAmount'] / $numberOfDays;
-      $numberOfDays = count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
-      $amount *= $numberOfDays;
-      $db->query("UPDATE booking_transaction SET TotalAmount=$amount WHERE BookingID=$bookingID");
-      $system->log("update|booking|$bookingID");
-      echo true;
+      if ($db->affected_rows > 0) {
+        $amount       = $row['TotalAmount'] / $numberOfDays;
+        $numberOfDays = count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
+        $amount *= $numberOfDays;
+        $db->query("UPDATE booking_transaction SET TotalAmount=$amount WHERE BookingID=$bookingID");
+        $system->log("update|booking|$bookingID");
+        echo true;
+      } else {
+        echo $db->error;
+      }
     } else {
-      echo $db->error;
+      echo ROOM_NOT_AVAILABLE_IN_DATE;
     }
   } else if ($data['type'] == "booking") {
     $bookingID     = $system->filter_input($data['cmbBookingID']);

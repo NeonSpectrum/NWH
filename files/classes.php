@@ -429,6 +429,18 @@ class Room extends System {
     return in_array($roomID, $rooms);
   }
 
+  public function isBookedInDate($bookingID, $roomID, $startDate, $endDate) {
+    global $db;
+    $row   = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID")->fetch_assoc();
+    $dates = array_diff($this->getDatesFromRange($startDate, $endDate), $this->getDatesFromRange($row['CheckInDate'], $row['CheckOutDate']));
+    $rooms = $this->generateRoomID(null, null, $dates[0], $dates[count($dates) - 1]);
+    if (in_array($roomID, $rooms)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   public function getRoomInfo($roomID) {
     global $db;
     $result = $db->query("SELECT * FROM account JOIN booking ON account.EmailAddress=booking.EmailAddress JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE RoomID=$roomID AND CheckIn IS NOT NULL AND CheckOut IS NULL ORDER BY CheckIn DESC LIMIT 1");
