@@ -144,7 +144,7 @@ class Account extends System {
   }
 
   public function changePassword($credentials, $forgot) {
-    global $db;
+    global $db, $levels;
     $email   = $credentials['email'];
     $oldpass = $forgot == false ? $credentials['oldpass'] : null;
     $newpass = $credentials['newpass'];
@@ -163,6 +163,9 @@ class Account extends System {
 
       if ($result->num_rows == 1 && password_verify($oldpass, $row['Password'])) {
         $result = $db->query("UPDATE account SET Password='$newpass' WHERE EmailAddress='$email'");
+        if (array_search($row['AccountType'], $levels) > 0) {
+          setcookie("nwhAuth", $this->encrypt(json_encode(["email" => $email, "password" => $newpass])), time() + (86400 * LOGIN_EXPIRED_DAYS), "/");
+        }
         if ($db->affected_rows > 0) {
           $this->log("update|user.password");
           return true;
