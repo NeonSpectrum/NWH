@@ -46,13 +46,13 @@ if (!$account->isLogged()) {
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group has-feedback">
                     <label class="sr-only">Password</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-key"></span></span>
                       <input type="password" class="form-control" name="txtPassword" placeholder="Password" onkeypress="capsLock(event);" maxlength="50" required>
                     </div>
-                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <a style="cursor:pointer" onmousedown="$(this).parent().find('input[name=txtPassword]').attr('type','text')" onmouseup="$(this).parent().find('input[name=txtPassword]').attr('type','password')"><span style="z-index:5;position:absolute;top:0;right:0;display:block;width:34px;height:34px;line-height:34px;text-align:center;"><i class="fa fa-eye"></i></span></a>
                     <div id="caps" style="display:none;margin-top:4px;margin-left:2px;">Caps Lock is on.</div>
                     <!-- <div class="checkbox">
                       <label>
