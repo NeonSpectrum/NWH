@@ -215,6 +215,9 @@ $(".btnCancel").click(function() {
     inputClass: "form-control",
     text: "Please input a reason",
     type: 'warning',
+    inputAttributes: {
+      'maxlength': 50
+    },
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
