@@ -276,6 +276,19 @@ socket.on("shutdown", function() {
   });
 });
 
+setTimeout(function(){
+  swal({
+    title: "Session has expired.",
+    text: "Please click the button to reload.",
+    allowOutsideClick: false,
+    type: 'warning'
+  }).then((result)=>{
+    if(result.value){
+      location.reload();
+    }
+  });
+},3600000);
+
 // DISABLEKEY FUNCTION
 function disableKey(evt, key) {
   var charCode = (evt.which) ? evt.which : event.keyCode
