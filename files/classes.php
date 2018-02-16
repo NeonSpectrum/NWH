@@ -1319,8 +1319,7 @@ class System {
 
   public function importdb($file) {
     global $db;
-    $contents = file_get_contents($file);
-
+    $contents         = file_get_contents($file);
     $comment_patterns = array('/\/\*.*(\n)*.*(\*\/)?/',
       '/\s*--.*\n/',
       '/\s*#.*\n/',
@@ -1331,7 +1330,8 @@ class System {
     $statements = preg_replace("/\s/", ' ', $statements);
     foreach ($statements as $query) {
       if (trim($query) != '') {
-        $res = $db->query($query);
+        // $res = $db->query($query);
+        echo $query . "\n";
       }
     }
   }
