@@ -16,10 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
     $result    = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=$bookingID");
+    $row       = $result->fetch_assoc();
+    $dates     = array_diff($system->getDatesFromRange($checkInDate, date("Y-m-d", strtotime($checkOutDate) - 86400)), $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400)));
     $available = true;
+    $result->data_seek(0);
     while ($row = $result->fetch_assoc()) {
-      if ($room->isBookedInDate($row['BookingID'], $row['RoomID'], $row['CheckInDate'], $row['CheckOutDate'])) {
-        $available = false;
+      foreach ($dates as $oneDate) {
+        if (!in_array($row['RoomID'], $room->generateRoomID(null, null, $oneDate, date("Y-m-d", strtotime($oneDate) + 86400)))) {
+          $available = false;
+          break;
+        }
       }
     }
     if ($available || ($row['CheckInDate'] == $checkInDate && $row['CheckOutDate'] == $checkOutDate)) {

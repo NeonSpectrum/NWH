@@ -265,7 +265,7 @@ $("#frmAddExpenses,#frmAddDiscount").submit(function(e) {
         $(this).find("#btnAdd").html('Save');
         $(this).find('#btnAdd').attr('disabled', true);
         $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
         });
       }
     }
@@ -290,7 +290,7 @@ $("#frmEditExpenses,#frmEditDiscount").submit(function(e) {
         $(this).find("#btnEdit").html('Save');
         $(this).find('#btnEdit').attr('disabled', true);
         $(this).find(".lblDisplayError").show(function() {
-          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; Error editing the config file!</div>');
+          $(this).html('<div class="alert alert-danger animated bounceIn"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + '</div>');
         });
       }
     }
@@ -308,7 +308,7 @@ $("select#txtName").change(function() {
     }
   });
 });
-$("#btnDelete").click(function() {
+$(".btnDelete").click(function() {
   var type = $(this).closest("form").attr("id").replace("frmEdit", "");
   swal({
     title: 'Are you sure?',

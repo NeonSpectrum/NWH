@@ -263,7 +263,7 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
           <div class="form-group">
             <label class="col-sm-4 control-label">Amount: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="txtDiscount" id="txtDiscount" min="1" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)" required>
+              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" pattern="[0-9]+%?" required>
             </div>
           </div>
         </div>
@@ -306,12 +306,12 @@ while ($row = $result->fetch_assoc()) {
           <div class="form-group">
             <label class="col-sm-4 control-label">Amount: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $discount; ?>" pattern="[0-9]+%?" required>
+              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $discount; ?>" onkeypress="return disableKey(event,'letter')" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnDelete" type="button" class="btn btn-primary pull-left">Delete</button>
+          <button type="button" class="btn btn-primary pull-left btnDelete">Delete</button>
           <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -350,12 +350,12 @@ while ($row = $result->fetch_assoc()) {
           <div class="form-group">
             <label class="col-sm-4 control-label">Amount: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $amount; ?>" required>
+              <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $amount; ?>" pattern="[0-9]+%?" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnDelete" type="button" class="btn btn-primary pull-left">Delete</button>
+          <button type="button" class="btn btn-primary pull-left btnDelete">Delete</button>
           <button id="btnEdit" type="submit" class="btn btn-primary">Edit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

@@ -70,7 +70,7 @@ if ($account->isLogged()) {
             </div>
             <div class="col-md-6">
               <div class="form-group has-feedback">
-                <label>First Name<sup>*</sup></label>
+                <label>First Name<sup>*</sup>&emsp;<small>Only alphabets are allowed.</small></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" placeholder="John" required>
@@ -79,7 +79,7 @@ if ($account->isLogged()) {
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group has-feedback">
-                <label>Last Name<sup>*</sup></label>
+                <label>Last Name<sup>*</sup>&emsp;<small>Only alphabets are allowed.</small></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" placeholder="Smith" required>
@@ -91,13 +91,13 @@ if ($account->isLogged()) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" readonly required>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" placeholder="mm/dd/yyyy" onkeypress="return disableKey(event,'letter') && disableKey(event,'number');" autocomplete="off" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
               <div class="form-group has-feedback">
-                <label>Contact Number<sup>*</sup></label>
+                <label>Contact Number<sup>*</sup>&emsp;<small>Only numbers are allowed.</small></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" required>
