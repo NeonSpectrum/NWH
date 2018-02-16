@@ -165,18 +165,16 @@ if ($("#feedbackForm").length) {
     input: 'text',
     inputPlaceholder: 'Comments and Suggestions'
   }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        type: 'POST',
-        url: root + 'ajax/addFeedback.php',
-        data: $("#frmFeedback").serialize() + "&txtComment=" + result.value,
-        success: function(response) {
-          swal({
-            title: "Thanks for the feedback!",
-            type: 'success'
-          });
-        }
-      });
-    }
+    $.ajax({
+      type: 'POST',
+      url: root + 'ajax/addFeedback.php',
+      data: $("#frmFeedback").serialize() + "&txtComment=" + result.value,
+      success: function(response) {
+        swal({
+          title: "Thanks for the feedback!",
+          type: 'success'
+        });
+      }
+    });
   });
 }
