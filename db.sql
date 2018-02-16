@@ -21,39 +21,40 @@ CREATE TABLE `account` (
   `ContactNumber` varchar(20) NOT NULL,
   `BirthDate` date NOT NULL,
   `Status` tinyint(1) NOT NULL,
+  `Feedback` tinyint(1) NOT NULL,
   `DateRegistered` date NOT NULL,
   `SessionID` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `Status`, `DateRegistered`, `SessionID`) VALUES
-('arias_louie@hotmail.com', '$2y$10$psTt7F23OHGFeEvCGxEq0O55urRDQ89LvJWYuHsnW0E01X6KMYkl6', 'Receptionist', 'default', 'Arias', 'Louie', '123', '2018-01-01', 1, '2017-12-23', '11bfab5d094090fb6086d87ae0c27563'),
-('ashellehinautan@gmail.com', '$2y$10$LWS0wRcliDo6EZo3.ZnFz.ScCDA.O1jaS1QD9mxGQQkG9PuN8GQLO', 'User', 'default', 'Ashelle', 'Hinautan', '09086430087', '1999-04-19', 1, '2018-01-05', '564516727f8da1e89cd58f0a50714e78'),
-('beajewelcvines@gmail.com', '$2y$10$a19.IwDcblKsjDdQUXjZseQlWKzuDDtB6KhzLM7TPawA2.FlMmLVS', 'Receptionist', 'default', 'Bea Jewel', 'Vines', '123', '2017-12-13', 1, '2017-12-04', '833c6990e89b86c42aba8fc748cbaa70'),
-('carlojavate@yahoo.com', '$2y$10$WFYz3rVtE2eccdyOzXvWq.PPWfXnlY/QdygSlCe/wwl9qajBb.gqW', 'User', 'default', 'Jose Carlo', 'Javate', '09067713065', '1999-02-03', 1, '2018-04-05', 'op533dkk75fm7p2q9645h2gpb3'),
-('cheliterkim@gmail.com', '$2y$10$CGYjMnOkjFMjeWs7opVK8uVqw3GUCVthztacaWEBkOXd42Qm1SbNm', 'User', 'default', 'Roth ', 'Fernando', '09765412', '1998-12-23', 1, '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
-('cheljung09@gmail.com', '$2y$10$wocLbW43DtjRKGDUb5OjEeejgjOaz01uAvvPY1z2ahbXv3UmHlQp.', 'Admin', 'default', 'Rochelle', 'Kim', '09084056076', '1999-04-19', 1, '2018-01-05', '11356e5839c5ef05ef7139e80ca415bd'),
-('chelkim77@gmail.com', '$2y$10$nxj8sSFwJU2URrr08DuC9e8cVRyWI5VWfopug0rX39esTCqRHTR2a', 'User', 'default', 'Chel', 'Espiritu', '10628841', '1999-11-06', 1, '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
-('chimeisha@yahoo.com', '$2y$10$l5tu74SEz/dZ4BZEtMTT/urDp3euvzpHPUKvZTEKrKQY1hVI17NFu', 'User', 'default', 'Chime', 'Isha', '123', '1998-09-05', 1, '2018-01-05', '9jsfc4ropg2a6oiuq3vovs270o'),
-('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default', 'Rica', 'Guno', '123123123', '2017-12-13', 1, '2017-10-29', '73a05131c6901069d57d968465df363e'),
-('jasonallego01@gmail.com', '$2y$10$/OLoYaSBOhkVkBnuLkF6JOPoIExvQG4px4pgWg5i8UF02cTz62MjS', 'User', 'default', 'Jason', 'Allego', '1', '2018-01-01', 1, '2018-01-05', 'pii3n3jra196hnfd2lgrf2a9au'),
-('jasonallego02@gmail.com', '$2y$10$E7.5GwVcYbbPUzvOy5zmYOA8ZSsYPRrSFCMIHmWv0Qr8V2Yu/T1Ky', 'User', 'default', 'Facundo', 'Allego', '1', '2018-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego03@gmail.com', '$2y$10$OpiMkglUqkh6O33Jbn3ziuMT6uKlCs5KCdDjkHeR2RH/03Zr.C54.', 'User', 'default', 'Facundo', 'Allego', '1', '2018-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego04@gmail.com', '$2y$10$1/zPF/A3QwY392DfSMpl3.D0rPi3PR8fm2TtUp/t76Zb5a3BG1p7y', 'User', 'default', 'Fritos', 'Allego', '1', '2018-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego05@gmail.com', '$2y$10$.TSwZHJQpHfK8DY7W5RrBOp3ydjrZqnZXanT0PsrGl4/w07WFmYHW', 'User', 'default', 'Fujian', 'Allego', '1', '2018-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego06@gmail.com', '$2y$10$0xLi0Hv6XuBFMhriLLP15.WgE2uY7gwW79tF7yOK0ZntJl25XAZR6', 'User', 'default', 'Horizon', 'MiddleOfNoWhere', '1', '1970-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego07@gmail.com', '$2y$10$Th3QIsSReBWe15pYVUAPq.p1Fs0/YGB.wplMn.J6sYro2xw88VnTS', 'User', 'default', 'Chito', 'Melodrama', '1', '1970-01-01', 1, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
-('jasonallego08@gmail.com', '$2y$10$rkpN4TCJCsZisdZvq/4U4eSlnFIN36O9VPU.N0efQAVsEcTktu08u', 'Admin', 'default', 'Jason', 'Allego', '123', '2017-12-13', 1, '2017-11-20', 'apre3tvfpl1ugmncqfvs0maq1g'),
-('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Receptionist', 'default', 'Kate', 'Bolanos', '123', '2017-12-13', 1, '2017-11-29', '581tl75evccq32dpuia8e263u7'),
-('neonspectrumph@gmail.com', '$2y$10$CMRnT3VukkwNwqYrx9Sb6OhAOmkvEl0fVq3Emv0f8UHMnL28.1IVO', 'Receptionist', 'default', 'Manny', 'Young', '0123123123', '2018-01-01', 1, '2018-01-09', '901f454443bf21fb2b4616074599bdee'),
-('r.guno1@yahoo.com', '$2y$10$FnU2/9Al7DnznudnujLApO4cpRAAlf0yiEX3l/kin7uKUgre1tUf.', 'Receptionist', 'default', 'Ririiiii', 'Chi', '123', '2018-01-01', 1, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
-('r.guno2@yahoo.com', '$2y$10$gokdgeo85TC/scoaGPW9JuWMgut4u/L0IstBpfcrEJEii9sBai0qO', 'User', 'default', 'Riri', 'Chiii', '123', '2018-01-01', 1, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
-('r.guno3@yahoo.com', '$2y$10$6a7d1LYtEhWbVUZhBndeieft/CPxylpwj3YeVqWw4BUuTagzm4vHW', 'User', 'default', 'Taho', 'Vendor', '123', '1998-09-05', 1, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
-('r.guno4@yahoo.com', '$2y$10$JqlqoTenN5qrU0R6yCrh.eTw2wT7q1O901dq4tgWGUqgL92ijSd6O', 'User', 'default', 'Microsoft', 'Word', '123', '2000-10-25', 1, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
-('r.guno5@yahoo.com', '$2y$10$XRraga//dTbGxqzAT8tWhuDwh/vhWtqpzRU2RU9elnQX126Zxk2Pu', 'Receptionist', 'default', 'Ri', 'Ri', '1', '2007-09-24', 1, '2018-01-07', NULL),
-('rjohnsantos19@gmail.com', '$2y$10$hGvaXnIOoMVvYrsVUy/Bse/qT/Lv7BNc7FtqQqbnpK4B.d37YmoO2', 'Receptionist', 'default', 'Russell', 'Santos', '09293431059', '1998-11-19', 1, '2018-01-14', 'c72338f210d1da4987b4fe77c3de51ae'),
-('rochellehinautan@gmail.com', '$2y$10$QXzyvj4lmo1lONkhqOY0We3uYsWU5yj9hjuDIR/TssGt0NUrgZkze', 'User', 'default', 'Cheche', 'Hinautan', '09367916', '1999-11-06', 1, '2018-01-05', '80imp62k6ttgp6ra9nrhj58ohs'),
-('torres@gmail.com', '$2y$10$Yovy8R10FdWdY5CgBrJ8Hub7HY.Uio0.eEUiyvvC71ln.IFH/EcOG', 'User', 'default', 'Sir', 'Torres', '123123', '2005-07-20', 1, '2018-02-05', 'j5ednp6dhn0ca5ssm7bh3c5tm4'),
-('youngskymann@gmail.com', '$2y$10$XGNkdYqpdSxU6shiKHYYwe5nGsWUO4Xcf2VJFxMl128w.pGRYw5zS', 'Creator', 'eJPrId2Rfi224BbODKTP', 'Manny', 'Young', '123', '2017-12-13', 1, '2017-11-25', 'qdkboi58lgbmjmjlbctps9b5n5');
+INSERT INTO `account` (`EmailAddress`, `Password`, `AccountType`, `ProfilePicture`, `FirstName`, `LastName`, `ContactNumber`, `BirthDate`, `Status`, `Feedback`, `DateRegistered`, `SessionID`) VALUES
+('arias_louie@hotmail.com', '$2y$10$psTt7F23OHGFeEvCGxEq0O55urRDQ89LvJWYuHsnW0E01X6KMYkl6', 'Receptionist', 'default', 'Arias', 'Louie', '123', '2018-01-01', 0, 0, '2017-12-23', '11bfab5d094090fb6086d87ae0c27563'),
+('ashellehinautan@gmail.com', '$2y$10$LWS0wRcliDo6EZo3.ZnFz.ScCDA.O1jaS1QD9mxGQQkG9PuN8GQLO', 'User', 'default', 'Ashelle', 'Hinautan', '09086430087', '1999-04-19', 1, 0, '2018-01-05', '564516727f8da1e89cd58f0a50714e78'),
+('beajewelcvines@gmail.com', '$2y$10$a19.IwDcblKsjDdQUXjZseQlWKzuDDtB6KhzLM7TPawA2.FlMmLVS', 'Receptionist', 'default', 'Bea Jewel', 'Vines', '123', '2017-12-13', 1, 0, '2017-12-04', '833c6990e89b86c42aba8fc748cbaa70'),
+('carlojavate@yahoo.com', '$2y$10$WFYz3rVtE2eccdyOzXvWq.PPWfXnlY/QdygSlCe/wwl9qajBb.gqW', 'User', 'default', 'Jose Carlo', 'Javate', '09067713065', '1999-02-03', 1, 0, '2018-04-05', 'op533dkk75fm7p2q9645h2gpb3'),
+('cheliterkim@gmail.com', '$2y$10$CGYjMnOkjFMjeWs7opVK8uVqw3GUCVthztacaWEBkOXd42Qm1SbNm', 'User', 'default', 'Roth ', 'Fernando', '09765412', '1998-12-23', 1, 0, '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('cheljung09@gmail.com', '$2y$10$wocLbW43DtjRKGDUb5OjEeejgjOaz01uAvvPY1z2ahbXv3UmHlQp.', 'Admin', 'default', 'Rochelle', 'Kim', '09084056076', '1999-04-19', 1, 0, '2018-01-05', '11356e5839c5ef05ef7139e80ca415bd'),
+('chelkim77@gmail.com', '$2y$10$nxj8sSFwJU2URrr08DuC9e8cVRyWI5VWfopug0rX39esTCqRHTR2a', 'User', 'default', 'Chel', 'Espiritu', '10628841', '1999-11-06', 1, 0, '2018-01-05', '82e9e3fb5697604a67934ab7a2882533'),
+('chimeisha@yahoo.com', '$2y$10$l5tu74SEz/dZ4BZEtMTT/urDp3euvzpHPUKvZTEKrKQY1hVI17NFu', 'User', 'default', 'Chime', 'Isha', '123', '1998-09-05', 1, 0, '2018-01-05', '9jsfc4ropg2a6oiuq3vovs270o'),
+('gunorica@yahoo.com', '$2y$10$q5alrj46v/YhpATxazJ/1OVCF6lrnPFezh3YYc98vQQm/QXKUP9wG', 'Admin', 'default', 'Rica', 'Guno', '123123123', '2017-12-13', 1, 0, '2017-10-29', '73a05131c6901069d57d968465df363e'),
+('jasonallego01@gmail.com', '$2y$10$/OLoYaSBOhkVkBnuLkF6JOPoIExvQG4px4pgWg5i8UF02cTz62MjS', 'User', 'default', 'Jason', 'Allego', '1', '2018-01-01', 1, 0, '2018-01-05', 'tlstefl18563c1o4grnghc1trq'),
+('jasonallego02@gmail.com', '$2y$10$E7.5GwVcYbbPUzvOy5zmYOA8ZSsYPRrSFCMIHmWv0Qr8V2Yu/T1Ky', 'User', 'default', 'Facundo', 'Allego', '1', '2018-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego03@gmail.com', '$2y$10$OpiMkglUqkh6O33Jbn3ziuMT6uKlCs5KCdDjkHeR2RH/03Zr.C54.', 'User', 'default', 'Facundo', 'Allego', '1', '2018-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego04@gmail.com', '$2y$10$1/zPF/A3QwY392DfSMpl3.D0rPi3PR8fm2TtUp/t76Zb5a3BG1p7y', 'User', 'default', 'Fritos', 'Allego', '1', '2018-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego05@gmail.com', '$2y$10$.TSwZHJQpHfK8DY7W5RrBOp3ydjrZqnZXanT0PsrGl4/w07WFmYHW', 'User', 'default', 'Fujian', 'Allego', '1', '2018-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego06@gmail.com', '$2y$10$0xLi0Hv6XuBFMhriLLP15.WgE2uY7gwW79tF7yOK0ZntJl25XAZR6', 'User', 'default', 'Horizon', 'Middle', '1', '1970-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego07@gmail.com', '$2y$10$Th3QIsSReBWe15pYVUAPq.p1Fs0/YGB.wplMn.J6sYro2xw88VnTS', 'User', 'default', 'Chito', 'Melodrama', '1', '1970-01-01', 1, 0, '2018-01-05', '833c6990e89b86c42aba8fc748cbaa70'),
+('jasonallego08@gmail.com', '$2y$10$rkpN4TCJCsZisdZvq/4U4eSlnFIN36O9VPU.N0efQAVsEcTktu08u', 'Admin', 'default', 'Jason', 'Allego', '123', '2017-12-13', 1, 0, '2017-11-20', 'm2nadnc65foivis559bdu60l57'),
+('katebolanos2@gmail.com', '$2y$10$SqvhZvQpQCMFdLFnIPVbd.Z7MQuhin0OlJgkf2JgUwqcu0/Wr6wPa', 'Receptionist', 'default', 'Kate', 'Bolanos', '123', '2017-12-13', 1, 0, '2017-11-29', '581tl75evccq32dpuia8e263u7'),
+('neonspectrumph@gmail.com', '$2y$10$CMRnT3VukkwNwqYrx9Sb6OhAOmkvEl0fVq3Emv0f8UHMnL28.1IVO', 'Admin', 'default', 'The', 'Guest', '0123123123', '2018-01-01', 1, 0, '2018-01-09', 'qs7vdshllqbqupq8n1t4g6ijh3'),
+('r.guno1@yahoo.com', '$2y$10$FnU2/9Al7DnznudnujLApO4cpRAAlf0yiEX3l/kin7uKUgre1tUf.', 'Receptionist', 'default', 'Ririiiii', 'Chi', '123', '2018-01-01', 1, 0, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno2@yahoo.com', '$2y$10$gokdgeo85TC/scoaGPW9JuWMgut4u/L0IstBpfcrEJEii9sBai0qO', 'User', 'default', 'Riri', 'Chiii', '123', '2018-01-01', 1, 0, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno3@yahoo.com', '$2y$10$6a7d1LYtEhWbVUZhBndeieft/CPxylpwj3YeVqWw4BUuTagzm4vHW', 'User', 'default', 'Taho', 'Vendor', '123', '1998-09-05', 1, 0, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno4@yahoo.com', '$2y$10$JqlqoTenN5qrU0R6yCrh.eTw2wT7q1O901dq4tgWGUqgL92ijSd6O', 'User', 'default', 'Microsoft', 'Word', '123', '2000-10-25', 1, 0, '2018-01-05', 'd27335ff6affc2f321fbab28cace4f42'),
+('r.guno5@yahoo.com', '$2y$10$XRraga//dTbGxqzAT8tWhuDwh/vhWtqpzRU2RU9elnQX126Zxk2Pu', 'Receptionist', 'default', 'Ri', 'Ri', '1', '2007-09-24', 1, 0, '2018-01-07', NULL),
+('rjohnsantos19@gmail.com', '$2y$10$hGvaXnIOoMVvYrsVUy/Bse/qT/Lv7BNc7FtqQqbnpK4B.d37YmoO2', 'Receptionist', 'default', 'Russell', 'Santos', '09293431059', '1998-11-19', 1, 0, '2018-01-14', 'c72338f210d1da4987b4fe77c3de51ae'),
+('rochellehinautan@gmail.com', '$2y$10$QXzyvj4lmo1lONkhqOY0We3uYsWU5yj9hjuDIR/TssGt0NUrgZkze', 'User', 'default', 'Cheche', 'Hinautan', '09367916', '1999-11-06', 1, 0, '2018-01-05', '80imp62k6ttgp6ra9nrhj58ohs'),
+('torres@gmail.com', '$2y$10$Yovy8R10FdWdY5CgBrJ8Hub7HY.Uio0.eEUiyvvC71ln.IFH/EcOG', 'User', 'default', 'Sir', 'Torres', '123123', '2005-07-20', 1, 0, '2018-02-05', 'j5ednp6dhn0ca5ssm7bh3c5tm4'),
+('youngskymann@gmail.com', '$2y$10$HKb1p0FTtq9QNFyhxZpMtOQm2s.4csa7mMWB5v70G8pDVH5qA8lRO', 'Creator', 'eJPrId2Rfi224BbODKTP', 'Manny', 'Young', '123', '2017-12-13', 1, 0, '2017-11-25', 'ocrhsrncbl9qsooh46e62uns42');
 
 CREATE TABLE `booking` (
   `BookingID` int(11) NOT NULL,
@@ -138,8 +139,14 @@ CREATE TABLE `expenses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `expenses` (`ExpensesID`, `Name`, `Amount`) VALUES
-(1, 'Extra Bed', 300),
+(1, 'Extra Bed', 500),
 (2, 'Others', 0);
+
+CREATE TABLE `feedback` (
+  `ID` int(11) NOT NULL,
+  `Star` tinyint(4) NOT NULL,
+  `Comment` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `forgot_password` (
   `ID` int(11) NOT NULL,
@@ -179,9 +186,9 @@ CREATE TABLE `room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`, `Cleaning`, `Maintenance`) VALUES
-(101, 1, 1, 1, 0),
+(101, 1, 1, 0, 0),
 (102, 1, 1, 0, 0),
-(103, 1, 1, 0, 0),
+(103, 1, 1, 1, 0),
 (104, 5, 1, 0, 0),
 (105, 5, 1, 0, 0),
 (106, 5, 1, 0, 0),
@@ -191,10 +198,10 @@ INSERT INTO `room` (`RoomID`, `RoomTypeID`, `Status`, `Cleaning`, `Maintenance`)
 (110, 5, 1, 0, 0),
 (111, 5, 1, 0, 0),
 (112, 5, 1, 0, 0),
-(201, 1, 1, 0, 0),
+(201, 1, 1, 1, 0),
 (202, 1, 1, 1, 0),
 (203, 2, 1, 0, 0),
-(204, 2, 1, 0, 0),
+(204, 2, 1, 1, 0),
 (205, 4, 1, 0, 0),
 (206, 3, 1, 0, 0),
 (207, 4, 1, 0, 0),
@@ -266,10 +273,15 @@ ALTER TABLE `booking_transaction`
   ADD PRIMARY KEY (`BookingID`);
 
 ALTER TABLE `discount`
-  ADD PRIMARY KEY (`DiscountID`);
+  ADD PRIMARY KEY (`DiscountID`),
+  ADD UNIQUE KEY `Name` (`Name`);
 
 ALTER TABLE `expenses`
-  ADD PRIMARY KEY (`ExpensesID`);
+  ADD PRIMARY KEY (`ExpensesID`),
+  ADD UNIQUE KEY `Name` (`Name`);
+
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`ID`);
 
 ALTER TABLE `forgot_password`
   ADD PRIMARY KEY (`ID`),
@@ -290,22 +302,25 @@ ALTER TABLE `room_type`
 
 
 ALTER TABLE `booking`
-  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `discount`
-  MODIFY `DiscountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `DiscountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 ALTER TABLE `expenses`
-  MODIFY `ExpensesID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ExpensesID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `feedback`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 ALTER TABLE `forgot_password`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 ALTER TABLE `log`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=822;
 
 ALTER TABLE `notification`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 ALTER TABLE `room_type`
   MODIFY `RoomTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;

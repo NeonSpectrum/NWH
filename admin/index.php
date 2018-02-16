@@ -116,6 +116,5 @@ echo number_format($row['Total'] / $row['Number'], 1, ".", ",");
   </div>
 </main>
 <?php
-
 require_once '../footer.php';
 ?>
