@@ -628,13 +628,10 @@ Pace.on('done', function() {
       return;
     }
     var form_data = new FormData();
+    var hasPicture = false;
     if ($(this).find("#txtPaymentMethod").val() == "Bank" && $(this).find('#imgBankRef').prop('files')[0]) {
       form_data.append("file", $(this).find('#imgBankRef').prop('files')[0]);
-      socket.emit("notification", {
-        user: email_address,
-        type: "photo",
-        messages: '<a href="' + root + 'admin/booking/?search=' + $(this).find("#cmbBookingID option:selected").html() + '">' + $(this).find("#cmbBookingID option:selected").html() + '</a> added a Bank Reference Picture'
-      })
+      hasPicture = true;
     }
     form_data.append("rooms", JSON.stringify(rooms));
     form_data.append("data", $(this).serialize() + "&type=booking");
@@ -649,6 +646,13 @@ Pace.on('done', function() {
         if (response == true) {
           $('#modalEditReservation').modal('hide');
           alertNotif('success', 'Updated Successfully!', true);
+          if (hasPicture) {
+            socket.emit("notification", {
+              user: email_address,
+              type: "photo",
+              messages: '<a href="' + root + 'admin/booking/?search=' + $(this).find("#cmbBookingID option:selected").html() + '">' + $(this).find("#cmbBookingID option:selected").html() + '</a> added a Bank Reference Picture'
+            })
+          }
         } else {
           $(this).find("#btnUpdate").html('Update');
           $(this).find('#btnUpdate').attr('disabled', false);
