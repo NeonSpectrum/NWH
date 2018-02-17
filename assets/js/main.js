@@ -260,10 +260,10 @@ Pace.on('done', function() {
   });
   // DISPLAY BOOKING ID
   $('#modalEditReservation').find("#cmbBookingID").change(function() {
-    if ($(this).val() != "") {
-      $(this).closest("form").find("#btnPrint").prop("disabled", false);
-      $(this).closest("form").find("#btnUpdate").prop("disabled", false);
-    }
+    // if ($(this).val() != "") {
+    //   $(this).closest("form").find("#btnPrint").prop("disabled", false);
+    //   $(this).closest("form").find("#btnUpdate").prop("disabled", false);
+    // }
     $("#modalEditReservation").find("#loadingMode").fadeIn();
     $.ajax({
       url: root + 'ajax/cmbBookingIdDisplay.php',
