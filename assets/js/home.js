@@ -163,18 +163,21 @@ if ($("#feedbackForm").length) {
     allowOutsideClick: false,
     type: 'info',
     input: 'text',
-    inputPlaceholder: 'Comments and Suggestions'
+    inputPlaceholder: 'Comments and Suggestions',
+    allowEscapeKey: false,
   }).then((result) => {
-    $.ajax({
-      type: 'POST',
-      url: root + 'ajax/addFeedback.php',
-      data: $("#frmFeedback").serialize() + "&txtComment=" + result.value,
-      success: function(response) {
-        swal({
-          title: "Thanks for the feedback!",
-          type: 'success'
-        });
-      }
-    });
+    if (!result.dismiss) {
+      $.ajax({
+        type: 'POST',
+        url: root + 'ajax/addFeedback.php',
+        data: $("#frmFeedback").serialize() + "&txtComment=" + result.value,
+        success: function(response) {
+          swal({
+            title: "Thanks for the feedback!",
+            type: 'success'
+          });
+        }
+      });
+    }
   });
 }

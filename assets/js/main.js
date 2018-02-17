@@ -612,7 +612,8 @@ Pace.on('done', function() {
       return;
     }
     var rooms = [],
-      roomSelected = false;
+      roomSelected = false,
+      totalQuantity = 0;
     $(this).find(".cmbQuantity").each(function() {
       if ($(this).val() != 0) {
         var roomType = $(this).parent().parent().find(".lblRoomType").attr("id");
@@ -622,6 +623,7 @@ Pace.on('done', function() {
           roomQuantity: quantity
         });
         roomSelected = true;
+        totalQuantity += quantity;
       }
     });
     if (!roomSelected) {
@@ -631,6 +633,12 @@ Pace.on('done', function() {
         $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + CHOOSE_ROOM_TO_PROCEED + '</div>');
       })
       return;
+    } else if ($totalQuantity > MAX_ROOM_ALLOWED) {
+      $(this).find("#btnUpdate").html('Update');
+      $(this).find('#btnUpdate').attr('disabled', false);
+      $(this).find(".lblDisplayError").show(function() {
+        $(this).html('<div class="alert alert-danger animated bounceIn"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;' + MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED) + '</div>');
+      })
     }
     var form_data = new FormData();
     var hasPicture = false;

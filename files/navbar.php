@@ -549,24 +549,26 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
         <h4 class="modal-title text-center">Transaction Summary</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-stripped table-bordered">
-          <thead>
-            <th>Booking ID</th>
-            <th>Check In Date</th>
-            <th>Check Out Date</th>
-            <th>Adults</th>
-            <th>Children</th>
-            <th>Amount Paid</th>
-            <th>Total Amount</th>
-            <th>Status</th>
-            <th style="width:10%">Action</th>
-          </thead>
+        <div class="table-responsive">
+          <table class="table table-hover table-stripped table-bordered">
+            <thead>
+              <th>Booking ID</th>
+              <th>Check In Date</th>
+              <th>Check Out Date</th>
+              <th>Adults</th>
+              <th>Children</th>
+              <th>Amount Paid</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th style="width:10%">Action</th>
+            </thead>
 <?php
 if (!$db->connect_error) {
     $view->transactionHistory();
   }
   ?>
-        </table>
+          </table>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

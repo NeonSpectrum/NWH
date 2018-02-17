@@ -377,7 +377,7 @@ $(document).ready(function() {
               animation: 'fadeIn',
               fullscreen: true
             });
-            editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span>", "info");
+            editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span><br/>Number of Days: <span class='pull-right'>" + response[2] + "</span>", "info");
             $("#smartwizard").find("#loadingMode").fadeOut();
           }
         });

@@ -75,10 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $htmls[$i] .= "<small class='text-center center-block'>Only $numberOfRooms left.</small></div></div></div>";
     }
   }
+  $numberOfDays[] = count($system->getDatesFromRange($checkInDate, $checkOutDate)) - 1;
   if (strlen(implode($htmls)) == 0) {
-    echo json_encode([false]);
+    echo json_encode(array_merge([false], [false], [$numberOfDays]));
   } else {
-    echo json_encode(array_merge($htmls, $lastHtmls));
+    echo json_encode(array_merge($htmls, $lastHtmls, $numberOfDays));
   }
 }
 ?>

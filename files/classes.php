@@ -639,7 +639,7 @@ class View extends Room {
       }
       echo "<td>$status</td>";
       echo "<td><a href='{$root}files/generateReservationConfirmation/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Reservation'><i class='fa fa-print fa-2x'></i></a>";
-      echo $cancelledBook == 0 ? "&nbsp;<a href='{$root}files/generateReceipt/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Receipt'><i class='fa fa-print fa-2x'></i></a>" : "";
+      echo $cancelledBook == 0 && $row['CheckIn'] != null && $row['CheckOut'] != null ? "&nbsp;<a href='{$root}files/generateReceipt/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Receipt'><i class='fa fa-print fa-2x'></i></a>" : "";
       echo "</td>";
       echo "</tr>";
     }
