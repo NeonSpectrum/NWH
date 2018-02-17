@@ -688,7 +688,7 @@ Pace.on('done', function() {
   $('#frmContact').submit(function(e) {
     e.preventDefault();
     if (!$(this).find('#txtEmail').val().includes('@') || !$(this).find('#txtEmail').val().includes('.')) {
-      alertNotif("error", ERROR_EMAIL_FORMAT, false);
+      alertNotif("error", EMAIL_ERROR_FORMAT, false);
       $('#txtEmail').focus();
       return;
     }

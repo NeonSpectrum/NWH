@@ -525,9 +525,9 @@ class Room extends System {
   }
 
   public function getUsingRoomList() {
-    global $db, $date;
+    global $db;
     $rooms  = [];
-    $result = $db->query("SELECT RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckOut IS NULL AND CheckInDate='$date'");
+    $result = $db->query("SELECT RoomID FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL AND CheckOut IS NULL");
     while ($row = $result->fetch_assoc()) {
       $rooms[] = $row['RoomID'];
     }
@@ -639,7 +639,7 @@ class View extends Room {
       }
       echo "<td>$status</td>";
       echo "<td><a href='{$root}files/generateReservationConfirmation/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Reservation'><i class='fa fa-print fa-2x'></i></a>";
-      echo $cancelledBook > 0 ? "&nbsp;<a href='{$root}files/generateReceipt/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Receipt'><i class='fa fa-print fa-2x'></i></a>" : "";
+      echo $cancelledBook == 0 ? "&nbsp;<a href='{$root}files/generateReceipt/?BookingID={$this->formatBookingID($row['BookingID'])}' data-tooltip='tooltip' data-placement='bottom' title='Print Receipt'><i class='fa fa-print fa-2x'></i></a>" : "";
       echo "</td>";
       echo "</tr>";
     }

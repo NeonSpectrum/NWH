@@ -5,6 +5,7 @@ require_once '../../files/sidebar.php';
 $roomID    = $roomDescription    = [];
 $roomList  = $room->getRoomIDList();
 $roomUsing = $room->getUsingRoomList();
+
 foreach ($roomList as $value) {
   $row         = $db->query("SELECT * FROM room WHERE RoomID=$value")->fetch_assoc();
   $cleaning    = $row['Cleaning'];
