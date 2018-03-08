@@ -361,12 +361,11 @@ $(document).ready(function() {
               if (response.length == 1) {
                 $("#btnShowMore").hide();
               }
-              for (var i = 0, first = true; i < response.length; i++) {
-                if (first === true) {
-                  $("#txtSuggestedRooms").html(response[i]);
-                  first = false;
+              for (var i = 0; i < response[0].length; i++) {
+                if (i == 0) {
+                  $("#txtSuggestedRooms").html(response[0][i]);
                 } else {
-                  $("#txtOtherRooms").append(response[i]);
+                  $("#txtOtherRooms").append(response[0][i]);
                 }
               }
             }
@@ -377,7 +376,7 @@ $(document).ready(function() {
               animation: 'fadeIn',
               fullscreen: true
             });
-            editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span><br/>Number of Days: <span class='pull-right'>" + response[2] + "</span>", "info");
+            editBookingSummary("Check In Date: <span class='pull-right'>" + checkDate[0] + "</span><br/>Check Out Date: <span class='pull-right'>" + checkDate[1] + "</span><br/>Adults: <span class='pull-right'>" + $('#frmBookNow').find("#txtAdults").val() + "</span><br/>Children: <span class='pull-right'>" + $('#frmBookNow').find("#txtChildren").val() + "</span><br/>Number of Days: <span class='pull-right'>" + response[1] + "</span>", "info");
             $("#smartwizard").find("#loadingMode").fadeOut();
           }
         });
