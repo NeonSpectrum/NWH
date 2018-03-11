@@ -8,14 +8,18 @@ var moment = require('moment')
 var express = require('express')
 var mysql = require('mysql')
 var app = express()
-var http = require('http')
+var https = require('https')
 var fs = require('fs')
 var ini = require('ini')
 var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 var crypto = require('crypto'),
   algorithm = 'aes-256-ctr',
   password = '1ff8cc6708848c57e84e67d67f599156';
-var io = require('socket.io').listen(http.createServer(app).listen(port = 8755, function() {
+var io = require('socket.io').listen(https.createServer({
+  ca: fs.readFileSync('./key/ca_bundle.crt'),
+  key: fs.readFileSync('./key/private.key'),
+  cert: fs.readFileSync('./key/certificate.crt')
+}, app).listen(port = 8755, function() {
   log("Server started at port " + port)
 }))
 var db = mysql.createConnection({
