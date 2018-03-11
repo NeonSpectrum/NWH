@@ -19,3 +19,6 @@ config.ini
 
 .htaccess
 _thumbs/*
+
+# Keys
+/key
