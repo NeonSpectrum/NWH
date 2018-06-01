@@ -338,14 +338,14 @@ class Room extends System {
   }
 
   public function getRoomPrice($room) {
-    global $db;
+    global $db, $date;
     $room   = str_replace(" ", "_", $room);
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$room'");
     $row    = $result->fetch_assoc();
-    if (mktime(0, 0, 0, 10, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 5, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
+    if ((strtotime(date("Y") . "-10-01") <= strtotime($date) && strtotime(date("Y") . "-12-31") >= strtotime($date)) || (strtotime(date("Y") . "-01-01") <= strtotime($date) && strtotime(date("Y") . "-05-31") >= strtotime($date))) {
       // September 1 - May 31
       $price = $row['PeakRate'];
-    } else if (mktime(0, 0, 0, 7, 1, date('Y')) < mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y')) && mktime(11, 59, 59, 8, 31, date('Y') + 1) > mktime(date('H'), date('m'), date('s'), date('m'), date('d'), date('Y'))) {
+    } else if (strtotime(date("Y") . "-07-01") <= strtotime($date) && strtotime(date("Y") . "-08-31") >= strtotime($date)) {
       // July 1 - August 31
       $price = $row['LeanRate'];
     } else {
