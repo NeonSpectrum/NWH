@@ -15,21 +15,21 @@ foreach ($roomList as $value) {
     if (count($descriptions) == 0) {
       continue;
     }
-    $roomDescription[$value] = "Booking ID: {$descriptions['bookingID']}<br/>Name: {$descriptions['name']}<br/>Email: {$descriptions['email']}<br/>Rooms: {$descriptions['rooms']} (" . (substr_count($descriptions['rooms'], ",") + 1) . ")<br/>Check In Date: {$descriptions['checkInDate']}<br/>Check Out Date: {$descriptions['checkOutDate']}";
-    $roomID[$value]          = "using";
+    $roomDescription[$value] = "Booking ID: {$descriptions['bookingID']}<br/>Name: {$descriptions['name']}<br/>Email: {$descriptions['email']}<br/>Rooms: {$descriptions['rooms']} (" . (substr_count($descriptions['rooms'], ',') + 1) . ")<br/>Check In Date: {$descriptions['checkInDate']}<br/>Check Out Date: {$descriptions['checkOutDate']}";
+    $roomID[$value]          = 'using';
   } else if ($cleaning) {
-    $roomDescription[$value] = "Click to clean";
-    $roomID[$value]          = "cleaning";
+    $roomDescription[$value] = 'Click to clean';
+    $roomID[$value]          = 'cleaning';
   } else if ($maintenance) {
-    $roomDescription[$value] = "";
-    $roomID[$value]          = "maintenance";
+    $roomDescription[$value] = '';
+    $roomID[$value]          = 'maintenance';
   } else {
-    $roomDescription[$value] = "";
-    $roomID[$value]          = "available";
+    $roomDescription[$value] = '';
+    $roomID[$value]          = 'available';
   }
 }
 ?>
-<main class="l-main">
+<main class="l-main" style="position:relative">
   <div class="content-wrapper content-wrapper--with-bg" style="padding:0">
     <div style="position:absolute;bottom:0;right:5px">
       Available: <div style='display:inline-block;background-color:green;height:10px;width:10px'></div> |
@@ -38,7 +38,6 @@ foreach ($roomList as $value) {
       Maintenance: <div style='display:inline-block;background-color:gray;height:10px;width:10px'></div>
     </div>
     <div class="col-md-6">
-      <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <h1 style="text-align:center">1<sup>st</sup> Building</h1>
       <h1>First Floor</h1>
       <div class="table-responsive">

@@ -11,7 +11,6 @@ $children  = $_POST['txtChildren'] ?? '0';
 <div class="container-fluid" style="margin-bottom:20px">
   <div class="col-md-9">
     <form id="frmBookNow">
-      <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
       <div id="smartwizard">
         <ul>
           <li style="width:25%"><a style="pointer-events:none" href="#step-1">Step 1<br/><small>Check In & Check Out Date</small></a></li>
@@ -21,7 +20,7 @@ $children  = $_POST['txtChildren'] ?? '0';
         </ul>
         <div style="min-height: 200px">
           <div id="loadingMode"></div>
-          <div id="step-1" style="padding:20px" class="<?php echo isset($_POST['txtCheckDate']) ? " skip" : ""; ?>">
+          <div id="step-1" style="padding:20px" class="<?php echo isset($_POST['txtCheckDate']) ? ' skip' : ''; ?>">
             <div id="form-step-0" >
               <div class="form-group">
                 <label>Check Date:</label>
@@ -96,7 +95,7 @@ if (ALLOW_PAYPAL == true) {
       </div>
       <div class="navbar-btn col-md-12 btn-group" style="height:50px;display:block" role="group">
         <button class="btn btn-primary pull-right" style="margin-left:5px;width:80px" id="next-btn" type="button">Next</button>
-        <button class="btn btn-primary pull-right" style="margin-left:5px;width:80px" id="prev-btn" type="button">Previous</button>
+        <button class="btn btn-primary pull-right" style="margin-left:5px;width:80px;display:none" id="prev-btn" type="button">Previous</button>
         <button class="btn btn-default pull-right" style="width:80px" id="reset-btn" type="button">Reset</button>
       </div>
     </form>

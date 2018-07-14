@@ -1,7 +1,7 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   $credentials                = [];
   $credentials['email']       = $system->filter_input($_POST['txtEmail']);
   $credentials['accountType'] = $system->filter_input($_POST['cmbAccountType']);
@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   // $credentials['lastName']    = $system->filter_input($_POST['txtLastName']);
 
   echo $account->editProfile($credentials, true);
-} else if (!$system->validateToken($_POST['csrf_token'])) {
+} else if (!$system->validateToken()) {
   echo INVALID_TOKEN;
 }
 ?>

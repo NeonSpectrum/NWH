@@ -1,8 +1,8 @@
-$("td.using").click(function() {
-  var bookingID = $(this).attr("data-original-title").substring($(this).attr("data-original-title").lastIndexOf("Booking ID: ") + 12, $(this).attr("data-original-title").lastIndexOf("<br/>Name")).trim();
+$('td.using').click(function() {
+  var bookingID = $(this).attr('data-original-title').substring($(this).attr('data-original-title').lastIndexOf('Booking ID: ') + 12, $(this).attr('data-original-title').lastIndexOf('<br/>Name')).trim()
   swal({
     title: 'Are you sure?',
-    text: "You will redirect to check information!",
+    text: 'You will redirect to check information!',
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -10,12 +10,12 @@ $("td.using").click(function() {
     confirmButtonText: 'Go'
   }).then((result) => {
     if (result.value) {
-      location.href = root + "admin/check/?search=" + bookingID;
+      location.href = root + 'admin/check/?search=' + bookingID
     }
-  });
-});
-$("td.cleaning").click(function() {
-  var roomID = $(this).attr("id");
+  })
+})
+$('td.cleaning').click(function() {
+  var roomID = $(this).attr('id')
   swal({
     title: 'Are you sure the room is clean?',
     type: 'warning',
@@ -27,19 +27,20 @@ $("td.cleaning").click(function() {
     if (result.value) {
       $.ajax({
         type: 'POST',
-        url: root + "ajax/cleanRoom.php",
-        data: "roomID=" + roomID + "&csrf_token=" + $("input[name=csrf_token]").val(),
+        url: root + 'ajax/cleanRoom.php',
+        data: 'roomID=' + roomID,
         success: function(response) {
           swal({
             title: 'The room is now clean. Congratulations!',
             type: 'success',
+            allowOutsideClick: false
           }).then((result) => {
             if (result.value) {
-              location.reload();
+              location.reload()
             }
-          });
+          })
         }
-      });
+      })
     }
-  });
-});
+  })
+})

@@ -159,7 +159,6 @@ if (isset($_GET['email']) && isset($_GET['token']) && $account->verifyForgotToke
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" method="post" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -197,7 +196,6 @@ if (!$db->connect_error && $account->checkFeedback()) {
   ?>
 <div id="feedbackForm" style="display:none">
   <form id="frmFeedback">
-    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
     <div class='rate-area'>
       <input type='radio' id='5-star' name='rating' value='5' /><label for='5-star' title='Amazing'>5 stars</label>
       <input type='radio' id='4-star' name='rating' value='4' /><label for='4-star' title='Good'>4 stars</label>

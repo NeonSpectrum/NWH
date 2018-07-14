@@ -1,8 +1,9 @@
 <?php
-@date_default_timezone_set(TIMEZONE);
 require_once 'strings.php';
 
-$db = @new mysqli(DATABASE_URL, "cp018101", PASSWORD, "cp018101_nwh");
+@date_default_timezone_set(TIMEZONE);
+
+$db = @new mysqli(DATABASE_URL, 'cp018101', PASSWORD, 'cp018101_nwh');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

@@ -46,7 +46,6 @@ $view->booking();
       </div>
       <form id="frmAddBooking" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -104,7 +103,7 @@ foreach ($emails as $key => $value) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Single", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Standard_Single', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -117,7 +116,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Double", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Standard_Double', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -130,7 +129,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Family_Room", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Family_Room', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -143,7 +142,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Junior_Suites", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Junior_Suites', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -156,7 +155,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Studio_Type", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Studio_Type', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -169,7 +168,7 @@ for ($i = 0; $i <= $count; $i++) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Barkada_Room", null, $date, date("m/d/Y", strtotime($date) + 86400), true));
+$count = count($room->generateRoomID('Barkada_Room', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
 for ($i = 0; $i <= $count; $i++) {
   echo "<option value='$i'>$i</option>";
 }
@@ -197,7 +196,6 @@ for ($i = 0; $i <= $count; $i++) {
       </div>
       <form id="frmAddPayment" method="post" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -226,7 +224,6 @@ for ($i = 0; $i <= $count; $i++) {
       </div>
       <form id="frmEditReservation" method="post" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -270,7 +267,6 @@ for ($i = 0; $i <= $count; $i++) {
       </div>
       <form id="frmEditRoom" method="post" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

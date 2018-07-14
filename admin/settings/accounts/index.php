@@ -50,7 +50,6 @@ $view->accounts();
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmAddAccount" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -147,7 +146,6 @@ $view->accounts();
       </div>
       <form id="frmEditAccount" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

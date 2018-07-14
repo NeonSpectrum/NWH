@@ -1,7 +1,7 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   $bookingID = $system->filter_input($system->formatBookingID($_POST['txtBookingID'], true));
   $roomID    = $system->filter_input($_POST['roomID']);
   $db->query("DELETE FROM booking_room WHERE BookingID=$bookingID AND RoomID=$roomID");
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   } else {
     echo $db->error;
   }
-} else if (!$system->validateToken($_POST['csrf_token'])) {
+} else if (!$system->validateToken()) {
   echo INVALID_TOKEN;
 }
 ?>

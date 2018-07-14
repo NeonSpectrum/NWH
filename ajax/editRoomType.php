@@ -1,7 +1,7 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   $roomDetails[] = $system->filter_input($_POST['txtRoomType']);
   $roomDetails[] = $_POST['txtDescription'];
   $roomDetails[] = $system->filter_input($_POST['txtRoomSimpDesc']);
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
   $roomDetails[] = $system->filter_input($_POST['txtHolidayRate']);
 
   echo $room->editRoomType($roomDetails);
-} else if (!$system->validateToken($_POST['csrf_token'])) {
+} else if (!$system->validateToken()) {
   echo INVALID_TOKEN;
 }
 ?>

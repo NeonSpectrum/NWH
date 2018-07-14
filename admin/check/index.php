@@ -41,7 +41,6 @@ $view->check();
       </div>
       <form id="frmAddExpenses" method="post" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -51,11 +50,11 @@ $view->check();
             <div class="col-sm-9">
               <select id="cmbExpensesType" name="cmbExpensesType" class="form-control">
 <?php
-$result  = $db->query("SELECT * FROM expenses");
+$result  = $db->query('SELECT * FROM expenses');
 $payment = $result->fetch_assoc()['Amount'];
 $result->data_seek(0);
 while ($row = $result->fetch_assoc()) {
-  if ($row['Name'] != "Others") {
+  if ($row['Name'] != 'Others') {
     echo "<option value='{$row['Amount']}'>{$row['Name']}</option>";
   }
 }
@@ -94,7 +93,6 @@ while ($row = $result->fetch_assoc()) {
       </div>
       <form id="frmAddDiscount" method="post" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -104,11 +102,11 @@ while ($row = $result->fetch_assoc()) {
             <div class="col-sm-9">
               <select id="cmbDiscountType" name="cmbDiscountType" class="form-control">
 <?php
-$result   = $db->query("SELECT * FROM discount");
+$result   = $db->query('SELECT * FROM discount');
 $discount = $result->fetch_assoc()['Amount'];
 $result->data_seek(0);
 while ($row = $result->fetch_assoc()) {
-  if ($row['Name'] != "Others") {
+  if ($row['Name'] != 'Others') {
     echo "<option value='{$row['Amount']}'>{$row['Name']}</option>";
   }
 }

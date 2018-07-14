@@ -1,15 +1,15 @@
 <?php
-require_once "../files/autoload.php";
+require_once '../files/autoload.php';
 
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   parse_str($system->decrypt($_GET['data']), $data);
-  if ($_GET['type'] == "success" && isset($_GET['paymentId'])) {
+  if ($_GET['type'] == 'success' && isset($_GET['paymentId'])) {
     echo "<script src='../assets/js/required/socket.io.js'></script>";
     echo "<script src='../assets/js/core.php'></script>";
-    if (!$system->validateToken($data['csrf_token'])) {
+    if (!$system->validateToken($_GET['csrf_token'])) {
       echo "<script>alert('Token was invalid');location.href='$root';</script>";
       exit();
     }

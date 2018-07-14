@@ -1,11 +1,11 @@
 <?php
 require_once '../files/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   $bookingID = $system->filter_input($system->formatBookingID($_POST['txtBookingID'], true));
   $roomID    = $system->filter_input($_POST['txtRoomID']);
   $newRoomID = $system->filter_input($_POST['cmbNewRoomID']);
-  if ($_POST['txtType'] == "edit") {
+  if ($_POST['txtType'] == 'edit') {
     $db->query("UPDATE booking_room SET RoomID=$newRoomID WHERE BookingID=$bookingID AND RoomID=$roomID");
     if ($db->affected_rows > 0) {
       $result       = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
     } else {
       echo $db->error;
     }
-  } else if ($_POST['txtType'] == "add") {
+  } else if ($_POST['txtType'] == 'add') {
     $db->query("INSERT INTO booking_room VALUES($bookingID,$newRoomID)");
     if ($db->affected_rows > 0) {
       $result       = $db->query("SELECT * FROM booking WHERE BookingID=$bookingID");
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $system->validateToken($_POST['csrf_
       echo $db->error;
     }
   }
-} else if (!$system->validateToken($_POST['csrf_token'])) {
+} else if (!$system->validateToken()) {
   echo INVALID_TOKEN;
 }
 ?>

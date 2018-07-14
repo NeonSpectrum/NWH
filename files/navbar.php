@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__ . "/../images/logo-rendered.png"); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
+      <a class="navbar-brand" href="<?php echo $root; ?>"><img src="<?php echo $root; ?>images/logo-rendered.png?v=<?php echo filemtime(__DIR__ . '/../images/logo-rendered.png'); ?>" width="200px" style="float:left;margin-left:40px;margin-top:-5px;"/></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top:20px">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -17,7 +17,7 @@
             <li><a href="<?php echo $root; ?>gallery">Gallery</a></li>
             <li><a href="<?php echo $root; ?>roomandrates">Room & Rates</a></li>
 <?php
-if ($currentDirectory == "home") {
+if ($currentDirectory == 'home') {
   echo '<li><a style="cursor:pointer" data-toggle="modal" data-target="#modalPromo">Promos</a></li>';
 }
 ?>
@@ -34,7 +34,6 @@ if (!$account->isLogged()) {
             <div class="row">
               <div class="col-md-12">
                 <form id="frmLogin">
-                  <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
                   <div class="lblDisplayError">
                     <!-- error will be shown here ! -->
                   </div>
@@ -77,7 +76,7 @@ if (!$account->isLogged()) {
           <a style="cursor:pointer" class="dropdown-toggle" data-toggle="dropdown">
             <div class="user-icon-navbar" style="background-image: url('<?php echo $root; ?>images/profilepics/<?php echo $account->profilePicture; ?>?v=<?php echo filemtime(__DIR__ . "/../images/profilepics/{$account->profilePicture}"); ?>');background-position:center;"></div>
             <div class="user-name-navbar">
-              <?php echo strlen("{$account->firstName} {$account->lastName}") > 15 ? substr("{$account->firstName} {$account->lastName}", 0, 15) . "..." : "{$account->firstName} {$account->lastName}"; ?>
+              <?php echo strlen("{$account->firstName} {$account->lastName}") > 15 ? substr("{$account->firstName} {$account->lastName}", 0, 15) . '...' : "{$account->firstName} {$account->lastName}"; ?>
             </div>
             <span class="caret"></span>
           </a>
@@ -86,7 +85,7 @@ if (!$account->isLogged()) {
 if ($account->checkUserLevel(1)) {
     echo "<li><a href='{$root}admin/'>Admin Configuration</a></li>\n";
   }
-  if ($currentDirectory != "reservation") {
+  if ($currentDirectory != 'reservation') {
     ?>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#modalEditReservation">Edit Reservation</a></li>
 <?php
@@ -116,7 +115,6 @@ if (!$account->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -204,7 +202,7 @@ if (VERIFY_REGISTER) {
 <?php
 }
   ?>
-          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? '' : ' disabled'; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -219,7 +217,6 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Forgot Password</h4>
       </div>
       <form id="frmForgot" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -250,7 +247,6 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Change Password</h4>
       </div>
       <form id="frmChange" class="form-horizontal">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -285,7 +281,6 @@ if (VERIFY_REGISTER) {
         <h4 class="modal-title text-center">Edit Profile</h4>
       </div>
       <form id="frmEditProfile" enctype="multipart/form-data">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -327,7 +322,7 @@ if (VERIFY_REGISTER) {
                 <label>Birth Date<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date("m/d/Y", strtotime($account->birthDate)); ?>" required readonly>
+                  <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date('m/d/Y', strtotime($account->birthDate)); ?>" required readonly>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -362,7 +357,6 @@ if (VERIFY_REGISTER) {
       <form id="frmEditReservation" class="form-horizontal">
         <div class="modal-body">
           <div id="loadingMode" style="width:98%;height:95%"></div>
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -373,22 +367,22 @@ if (VERIFY_REGISTER) {
                 <div class="col-sm-8">
                   <select name="cmbBookingID" class="form-control" id="cmbBookingID">
 <?php
-$view->listBookingID("combobox");
+$view->listBookingID('combobox');
   ?>
                   </select>
                 </div>
               </div>
 <?php
-$result        = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=" . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
+$result        = $db->query('SELECT * FROM booking LEFT JOIN booking_room ON booking.BookingID=booking_room.BookingID LEFT JOIN booking_bank ON booking.BookingID=booking_bank.BookingID JOIN booking_transaction ON booking.BookingID=booking_transaction.BookingID WHERE booking.BookingID=' . ($view->listBookingID() != false ? $view->listBookingID()[0] : 0));
   $row           = $result->fetch_assoc();
-  $checkDate     = date("m/d/Y", strtotime($row['CheckInDate'])) . " - " . date("m/d/Y", strtotime($row['CheckOutDate']));
-  $checkInDate   = date("m/d/Y", strtotime($row['CheckInDate']));
-  $checkOutDate  = date("m/d/Y", strtotime($row['CheckOutDate']));
-  $checkDate     = $row['CheckInDate'] == "" && $row['CheckOutDate'] == "" ? date("m/d/Y", strtotime($date) + 86400) . " - " . date("m/d/Y", strtotime($date) + 86400 * 2) : $checkDate;
+  $checkDate     = date('m/d/Y', strtotime($row['CheckInDate'])) . ' - ' . date('m/d/Y', strtotime($row['CheckOutDate']));
+  $checkInDate   = date('m/d/Y', strtotime($row['CheckInDate']));
+  $checkOutDate  = date('m/d/Y', strtotime($row['CheckOutDate']));
+  $checkDate     = $row['CheckInDate'] == '' && $row['CheckOutDate'] == '' ? date('m/d/Y', strtotime($date) + 86400) . ' - ' . date('m/d/Y', strtotime($date) + 86400 * 2) : $checkDate;
   $adults        = $row['Adults'];
   $children      = $row['Children'];
   $paymentMethod = $row['PaymentMethod'];
-  $bankRef       = $row['Filename'] != null ? $row['Filename'] : "";
+  $bankRef       = $row['Filename'] != null ? $row['Filename'] : '';
   $roomTypes     = $room->getRoomTypeList();
   $roomQuantity  = array_fill(0, count($roomTypes), 0);
   $result->data_seek(0);
@@ -424,12 +418,12 @@ $result        = $db->query("SELECT * FROM booking LEFT JOIN booking_room ON boo
                 <label class="col-sm-4 control-label">Payment Method: </label>
                 <div class="col-sm-4">
                   <select name="txtPaymentMethod" class="form-control" id="txtPaymentMethod">
-                    <option value="Cash"<?php echo $paymentMethod == "Cash" ? " selected" : ""; ?>>Cash</option>
-                    <option value="Bank"<?php echo $paymentMethod == "Bank" ? " selected" : ""; ?>>Bank</option>
+                    <option value="Cash"<?php echo $paymentMethod == 'Cash' ? ' selected' : ''; ?>>Cash</option>
+                    <option value="Bank"<?php echo $paymentMethod == 'Bank' ? ' selected' : ''; ?>>Bank</option>
 <?php
 if (ALLOW_PAYPAL == true) {
     ?>
-                    <option value="PayPal"<?php echo $paymentMethod == "PayPal" ? " selected" : ""; ?>>PayPal</option>
+                    <option value="PayPal"<?php echo $paymentMethod == 'PayPal' ? ' selected' : ''; ?>>PayPal</option>
 <?php
 }
   ?>
@@ -437,16 +431,16 @@ if (ALLOW_PAYPAL == true) {
 <?php
 if (ALLOW_PAYPAL == true) {
     ?>
-                  <button id='btnPaypal' type='button' class='btn btn-primary' style='margin-top:10px;display:<?php echo $paymentMethod == "PayPal" ? "block" : "none"; ?>'>Pay now with Paypal</button>
+                  <button id='btnPaypal' type='button' class='btn btn-primary' style='margin-top:10px;display:<?php echo $paymentMethod == 'PayPal' ? 'block' : 'none'; ?>'>Pay now with Paypal</button>
 <?php
 }
   ?>
                 </div>
               </div>
-              <div id="bank-content" style="margin-top:5px;<?php echo $paymentMethod != "Bank" ? "display:none" : ""; ?>">
+              <div id="bank-content" style="margin-top:5px;<?php echo $paymentMethod != 'Bank' ? 'display:none' : ''; ?>">
                 <input type="file" class="form-control" name="imgBankRef" id="imgBankRef" onchange="readPicture(this);" accept="image/x-png,image/gif,image/jpeg">
                 <div class="center-block" style="border:1px solid #ccc;height:200px;width:100%;">
-                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" <?php echo $view->listBookingID()[0] != null ? "src='{$root}images/bankreferences/?id={$system->formatBookingID($view->listBookingID()[0])}'" : ""; ?> style="object-fit: cover"/>
+                  <img id="displayImage" style="width:100%;height:100%;object-fit:cover" <?php echo $view->listBookingID()[0] != null ? "src='{$root}images/bankreferences/?id={$system->formatBookingID($view->listBookingID()[0])}'" : ''; ?> style="object-fit: cover"/>
                 </div>
               </div>
             </div>
@@ -456,9 +450,9 @@ if (ALLOW_PAYPAL == true) {
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Standard_Single', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -469,9 +463,9 @@ $count = count($room->generateRoomID("Standard_Single", null, $checkInDate, $che
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Standard_Double', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -482,9 +476,9 @@ $count = count($room->generateRoomID("Standard_Double", null, $checkInDate, $che
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Family_Room', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -495,9 +489,9 @@ $count = count($room->generateRoomID("Family_Room", null, $checkInDate, $checkOu
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Junior_Suites', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -508,9 +502,9 @@ $count = count($room->generateRoomID("Junior_Suites", null, $checkInDate, $check
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Studio_Type', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -521,9 +515,9 @@ $count = count($room->generateRoomID("Studio_Type", null, $checkInDate, $checkOu
                 <div class="col-sm-4">
                   <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkOutDate));
+$count = count($room->generateRoomID('Barkada_Room', null, $checkInDate, $checkOutDate));
   for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : "") . ">$i</option>";
+    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : '') . ">$i</option>";
   }
   ?>
                   </select>
@@ -533,8 +527,8 @@ $count = count($room->generateRoomID("Barkada_Room", null, $checkInDate, $checkO
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Print</button>
-          <button id="btnUpdate" type="submit" class="btn btn-primary" <?php echo $view->listBookingID() == false ? "disabled" : ""; ?>>Update</button>
+          <button id="btnPrint" type="button" onclick="if($(this).closest('form').find('#cmbBookingID option:selected').html() != '') location.href='//<?php echo $_SERVER['SERVER_NAME'] . $root; ?>files/generateReservationConfirmation/?BookingID='+$(this).closest('form').find('#cmbBookingID option:selected').html()" class="btn btn-primary" <?php echo $view->listBookingID() == false ? 'disabled' : ''; ?>>Print</button>
+          <button id="btnUpdate" type="submit" class="btn btn-primary" <?php echo $view->listBookingID() == false ? 'disabled' : ''; ?>>Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>

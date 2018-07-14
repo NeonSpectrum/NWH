@@ -6,7 +6,6 @@ require_once '../../../files/sidebar.php';
 <main class="l-main">
   <div class="content-wrapper content-wrapper--with-bg">
     <h1 class="page-title">Control Panel</h1>
-    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
 <?php
 if ($account->checkUserLevel(3) && DEBUG == TRUE) {
   ?>
@@ -83,9 +82,9 @@ if ($account->checkUserLevel(3) && DEBUG == TRUE) {
         <div class="panel-body">
           <select id="cmbBookingID" class="form-control" style="width:100%;margin-bottom:5px">
 <?php
-$result = $db->query("SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL");
+$result = $db->query('SELECT * FROM booking LEFT JOIN booking_check ON booking.BookingID=booking_check.BookingID WHERE CheckIn IS NOT NULL');
 while ($row = $result->fetch_assoc()) {
-  $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
+  $dates = $system->getDatesFromRange($row['CheckInDate'], date('Y-m-d', strtotime($row['CheckOutDate']) - 86400));
   if (in_array($date, $dates)) {
     echo "<option value='{$row['BookingID']}'>{$system->formatBookingID($row['BookingID'])}</option>";
   }
@@ -136,7 +135,7 @@ if ($account->checkUserLevel(3)) {
         <div class="panel-body">
           <select multiple class="form-control" name="cmbTablesToBackup">
 <?php
-$result = $db->query("SHOW TABLES FROM cp018101_nwh");
+$result = $db->query('SHOW TABLES FROM cp018101_nwh');
 while ($row = $result->fetch_assoc()) {
   echo "<option value='{$row['Tables_in_cp018101_nwh']}'>{$row['Tables_in_cp018101_nwh']}</option>";
 }
@@ -169,20 +168,19 @@ if ($account->checkUserLevel(3)) {
       </div>
       <form id="frmEditConfig" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
 <?php
-$config = parse_ini_file(__DIR__ . "/../../../config.ini");
+$config = parse_ini_file(__DIR__ . '/../../../config.ini');
   foreach ($config as $name => $value) {
     echo "<div class='form-group'>
-            <label class='col-sm-4 control-label'>" . ucwords(str_replace("_", " ", $name)) . "</label>
+            <label class='col-sm-4 control-label'>" . ucwords(str_replace('_', ' ', $name)) . "</label>
             <div class='col-sm-6'>";
-    if ($value == "1" && $value == true && $name != "edit_reservation_days") {
+    if ($value == '1' && $value == true && $name != 'edit_reservation_days') {
       echo "<input type='checkbox' class='form-control' style='width:30px;height:30px' name='$name' checked/>";
       echo "<input type='hidden' name='$name' value='off'/>";
-    } else if ($value == "" && $value == false) {
+    } else if ($value == '' && $value == false) {
       echo "<input type='checkbox' class='form-control' style='width:30px;height:30px' name='$name'/>";
       echo "<input type='hidden' name='$name' value='off'/>";
     } else if ($value > 0) {
@@ -191,7 +189,7 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
       echo "<input type='text' class='form-control' name='$name' value='$value'/>";
     }
 
-    echo "</div></div>";
+    echo '</div></div>';
   }
   ?>
 
@@ -216,7 +214,6 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
       </div>
       <form id="frmAddExpenses" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -250,7 +247,6 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
       </div>
       <form id="frmAddDiscount" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -284,7 +280,6 @@ $config = parse_ini_file(__DIR__ . "/../../../config.ini");
       </div>
       <form id="frmEditExpenses" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -328,7 +323,6 @@ while ($row = $result->fetch_assoc()) {
       </div>
       <form id="frmEditDiscount" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

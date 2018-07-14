@@ -2,27 +2,24 @@
 require_once '../files/autoload.php';
 if (isset($_POST['data'])) {
   parse_str($_POST['data'], $data);
-  $resultToken = $system->validateToken($data['csrf_token']);
-} else {
-  $resultToken = $system->validateToken($_POST['csrf_token']);
 }
-if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
-  if (isset($_POST['type']) && $_POST['type'] == "admin") {
-    $checkDate    = explode(" - ", $system->filter_input($_POST['txtCheckDate']));
-    $checkInDate  = $system->formatDate($checkDate[0], "Y-m-d");
-    $checkOutDate = $system->formatDate($checkDate[1], "Y-m-d");
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
+  if (isset($_POST['type']) && $_POST['type'] == 'admin') {
+    $checkDate    = explode(' - ', $system->filter_input($_POST['txtCheckDate']));
+    $checkInDate  = $system->formatDate($checkDate[0], 'Y-m-d');
+    $checkOutDate = $system->formatDate($checkDate[1], 'Y-m-d');
     $adults       = $system->filter_input($_POST['txtAdults']);
     $children     = $system->filter_input($_POST['txtChildren']);
     $bookingID    = $system->filter_input($_POST['cmbBookingID']);
 
     $result    = $db->query("SELECT * FROM booking JOIN booking_room ON booking.BookingID=booking_room.BookingID WHERE booking.BookingID=$bookingID");
     $row       = $result->fetch_assoc();
-    $dates     = array_diff($system->getDatesFromRange($checkInDate, date("Y-m-d", strtotime($checkOutDate) - 86400)), $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400)));
+    $dates     = array_diff($system->getDatesFromRange($checkInDate, date('Y-m-d', strtotime($checkOutDate) - 86400)), $system->getDatesFromRange($row['CheckInDate'], date('Y-m-d', strtotime($row['CheckOutDate']) - 86400)));
     $available = true;
     $result->data_seek(0);
     while ($row = $result->fetch_assoc()) {
       foreach ($dates as $oneDate) {
-        if (!in_array($row['RoomID'], $room->generateRoomID(null, null, $oneDate, date("Y-m-d", strtotime($oneDate) + 86400)))) {
+        if (!in_array($row['RoomID'], $room->generateRoomID(null, null, $oneDate, date('Y-m-d', strtotime($oneDate) + 86400)))) {
           $available = false;
           break;
         }
@@ -46,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     } else {
       echo ROOM_NOT_AVAILABLE_IN_DATE;
     }
-  } else if ($data['type'] == "booking") {
+  } else if ($data['type'] == 'booking') {
     $bookingID     = $system->filter_input($data['cmbBookingID']);
-    $checkDate     = explode(" - ", $system->filter_input($data['txtCheckDate']));
-    $checkInDate   = $system->formatDate($checkDate[0], "Y-m-d");
-    $checkOutDate  = $system->formatDate($checkDate[1], "Y-m-d");
+    $checkDate     = explode(' - ', $system->filter_input($data['txtCheckDate']));
+    $checkInDate   = $system->formatDate($checkDate[0], 'Y-m-d');
+    $checkOutDate  = $system->formatDate($checkDate[1], 'Y-m-d');
     $adults        = $system->filter_input($data['txtAdults']);
     $children      = $system->filter_input($data['txtChildren']);
     $paymentMethod = $system->filter_input($data['txtPaymentMethod']);
@@ -61,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     $output         = true;
     $totalRoomPrice = 0;
     foreach (json_decode($_POST['rooms'], true) as $key => $rooms) {
-      $roomType     = str_replace(" ", "_", $rooms['roomType']);
+      $roomType     = str_replace(' ', '_', $rooms['roomType']);
       $roomQuantity = $system->filter_input($rooms['roomQuantity']);
       $roomIDs      = $room->generateRoomID($roomType, $roomQuantity, $checkInDate, $checkOutDate);
       if (count($roomIDs) > 0) {
@@ -107,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $resultToken) {
     }
     echo $output;
   }
-} else if (!$system->validateToken($_POST['csrf_token'])) {
+} else if (!$system->validateToken()) {
   echo INVALID_TOKEN;
 }
 ?>

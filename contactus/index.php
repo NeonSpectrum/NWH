@@ -15,15 +15,14 @@ require_once '../files/navbar.php';
     </div>
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="form-group">
-          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" maxlength="101" <?php echo isset($_SESSION['account']) ? "value='{$account->firstName} {$account->lastName}' readonly" : ""; ?> required />
+          <input style="width:90%" name="txtName" type="text" class="form-control" placeholder="Name" maxlength="101" <?php echo isset($_SESSION['account']) ? "value='{$account->firstName} {$account->lastName}' readonly" : ''; ?> required />
         </div>
         <div class="form-group">
-          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" maxlength="100" <?php echo isset($_SESSION['account']) ? "value='{$system->decrypt($_SESSION['account'])}' readonly" : ""; ?> required />
+          <input id="txtEmail" style="width:90%" name="txtEmail" type="email" class="form-control" placeholder="Email" maxlength="100" <?php echo isset($_SESSION['account']) ? "value='{$system->decrypt($_SESSION['account'])}' readonly" : ''; ?> required />
         </div>
         <div class="form-group">
-          <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)" minlength="5" maxlength="20" <?php echo isset($_SESSION['account']) ? "value='{$account->contactNumber}' readonly" : ""; ?>/>
+          <input id="txtContactNumber" style="width:90%" name="txtContactNumber" type="text" class="form-control" placeholder="Contact Number (Optional)" minlength="5" maxlength="20" <?php echo isset($_SESSION['account']) ? "value='{$account->contactNumber}' readonly" : ''; ?>/>
         </div>
         <div class="form-group">
           <textarea id="txtMessage" style="width:90%;resize:none" name="txtMessage" rows="5" class="form-control" placeholder="Message" maxlength="255" required></textarea>

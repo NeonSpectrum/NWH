@@ -28,7 +28,7 @@ require_once '../../../files/sidebar.php';
             </thead>
             <tbody>
 <?php
-$view->rooms("statuses");
+$view->rooms('statuses');
 ?>
             </tbody>
           </table>
@@ -48,7 +48,7 @@ $view->rooms("statuses");
             </thead>
             <tbody>
 <?php
-$view->rooms("descriptions");
+$view->rooms('descriptions');
 ?>
             </tbody>
           </table>
@@ -66,7 +66,6 @@ $view->rooms("descriptions");
       </div>
       <form id="frmAddRoom" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -82,7 +81,7 @@ $view->rooms("descriptions");
               <select name="cmbRoomType" class="form-control">
 <?php
 foreach ($room->getRoomTypeList() as $roomType) {
-  echo "<option value='$roomType'>" . str_replace("_", " ", $roomType) . "</option>";
+  echo "<option value='$roomType'>" . str_replace('_', ' ', $roomType) . '</option>';
 }
 ?>
               </select>
@@ -106,7 +105,6 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <form id="frmAddRoomType" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -170,7 +168,6 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <form id="frmEditRoomID" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>
@@ -180,7 +177,7 @@ foreach ($room->getRoomTypeList() as $roomType) {
               <select id="cmbRoomType" name="cmbRoomType" class="form-control">
 <?php
 foreach ($room->getRoomTypeList() as $roomType) {
-  echo "<option value='$roomType'>" . str_replace("_", " ", $roomType) . "</option>";
+  echo "<option value='$roomType'>" . str_replace('_', ' ', $roomType) . '</option>';
 }
 ?>
               </select>
@@ -204,7 +201,6 @@ foreach ($room->getRoomTypeList() as $roomType) {
       </div>
       <form id="frmEditRoomType" class="form-horizontal">
         <div class="modal-body">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
           </div>

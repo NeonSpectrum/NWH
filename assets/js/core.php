@@ -21,11 +21,11 @@ function getQueryVariable(variable) {
 }
 <?php
 @session_start();
-require_once "../../files/strings.php";
+require_once '../../files/strings.php';
 
-$root     = stripos($_SERVER['SERVER_NAME'], "northwood-hotel.com") === false ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], "/", 1) + 1) : "/";
-$config   = parse_ini_file(__DIR__ . "/../../config.ini");
-$jsonFile = file_get_contents(__DIR__ . "/../../strings.json");
+$root     = stripos($_SERVER['SERVER_NAME'], 'northwood-hotel.com') === false ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '/', 1) + 1) : '/';
+$config   = parse_ini_file(__DIR__ . '/../../config.ini');
+$jsonFile = file_get_contents(__DIR__ . '/../../strings.json');
 $json     = json_decode($jsonFile, true);
 $first    = true;
 foreach ($json as $string) {
@@ -37,19 +37,19 @@ foreach ($json as $string) {
   }
 }
 foreach ($config as $name => $value) {
-  if (!strpos($name, "paypal")) {
-    if ($value == "1" && $value == true) {
-      echo "," . strtoupper($name) . "=true";
-    } else if ($value == "" && $value == false) {
-      echo "," . strtoupper($name) . "=false";
+  if (!strpos($name, 'paypal')) {
+    if ($value == '1' && $value == true) {
+      echo ',' . strtoupper($name) . '=true';
+    } else if ($value == '' && $value == false) {
+      echo ',' . strtoupper($name) . '=false';
     } else {
-      echo "," . strtoupper($name) . "=\"$value\"";
+      echo ',' . strtoupper($name) . "=\"$value\"";
     }
   }
 }
-echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? "true" : "false");
-echo ", email_address=\"" . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(" ", "+", $_SESSION['account']), "AES-256-CTR", ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : "") . "\"";
-echo ", date=\"$date\", dateandtime=\"$dateandtime\",session_id=\"" . session_id() . "\";";
+echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? 'true' : 'false');
+echo ', email_address="' . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(' ', '+', $_SESSION['account']), 'AES-256-CTR', ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : '') . '"';
+echo ", date=\"$date\", dateandtime=\"$dateandtime\",session_id=\"" . session_id() . '";';
 ?>
 var socket = io(NODE_JS_URL.includes("localhost") ? NODE_JS_URL.replace("localhost","<?php echo $_SERVER['SERVER_NAME']; ?>") : NODE_JS_URL);
 socket.on('connect', function(){
@@ -76,6 +76,11 @@ function alertNotif(type, message, reload = false, timeout = 1300) {
       return
   }, timeout);
 }
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
+  }
+});
 socket.on('all', function(data) {
   $.notify({
     icon: 'glyphicon glyphicon-bell',

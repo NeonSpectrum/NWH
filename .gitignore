@@ -1,3 +1,6 @@
+# composer
+/vendor
+
 /images/profilepics/*
 /images/bankreferences/*
 /node_modules/*

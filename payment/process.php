@@ -36,7 +36,7 @@ for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
     continue;
   }
   $item[$j] = new Item();
-  $item[$j]->setName(str_replace("_", " ", $roomTypes[$i]))
+  $item[$j]->setName(str_replace('_', ' ', $roomTypes[$i]))
     ->setCurrency('PHP')
     ->setQuantity($roomQuantities[$i])
     ->setPrice($room->getRoomPrice($roomTypes[$i]) * $numberOfDays);
@@ -45,7 +45,7 @@ for ($i = 0, $j = 0; $i < count($roomTypes); $i++) {
 }
 if ($numberOfDays > 1) {
   $item[$j] = new Item();
-  $item[$j]->setName("50% Down Payment")
+  $item[$j]->setName('50% Down Payment')
     ->setCurrency('PHP')
     ->setQuantity(1)
     ->setPrice(-($price / 2));
@@ -61,7 +61,7 @@ $amount->setCurrency('PHP')
 $transaction = new Transaction();
 $transaction->setAmount($amount)
   ->setItemList($itemList)
-  ->setDescription("Test")
+  ->setDescription('Test')
   ->setInvoiceNumber(uniqid());
 
 $data = $system->encrypt("txtAmount=$price&txtBookingID=$bookingID&csrf_token={$query['csrf_token']}");
@@ -78,7 +78,7 @@ $payment->setIntent('sale')
 
 try {
   $payment->create($apiContext);
-  header("Location: " . $payment->getApprovalLink());
+  header('Location: ' . $payment->getApprovalLink());
 } catch (Exception $ex) {
   // echo "Error: " . $ex->getMessage();
   echo print_r($ex->getData());

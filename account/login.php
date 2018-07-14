@@ -1,5 +1,5 @@
 <?php
-require_once "../header.php";
+require_once '../header.php';
 if ($account->isLogged()) {
   header("Location: $root");
 }
@@ -12,7 +12,6 @@ if ($account->isLogged()) {
     <div class="row">
       <div class="col-md-12">
         <form id="frmLogin">
-          <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
           <div class="lblDisplayError">
             <!-- error will be shown here ! -->
           </div>
@@ -57,7 +56,6 @@ if ($account->isLogged()) {
         <h4 class="modal-title text-center">Registration</h4>
       </div>
       <form id="frmRegister" data-toggle="validator">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>"/>
         <div class="modal-body">
           <div class="lblDisplayError">
             <!-- errors will be shown here ! -->
@@ -145,7 +143,7 @@ if (VERIFY_REGISTER) {
 <?php
 }
 ?>
-          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? "" : " disabled"; ?>>Register</button>
+          <button id="btnRegister" type="submit" class="btn btn-primary"<?php echo !VERIFY_REGISTER ? '' : ' disabled'; ?>>Register</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -153,5 +151,5 @@ if (VERIFY_REGISTER) {
   </div>
 </div>
 <?php
-require_once "../footer.php";
+require_once '../footer.php';
 ?>
