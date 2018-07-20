@@ -1399,6 +1399,7 @@ class System {
     try {
       $mail = new PHPMailer(true);
       $mail->isSMTP();
+      $mail->Timeout  = 10;
       $mail->Host     = 'ssl://cpanel02wh.sin1.cloud.z.com:465';
       $mail->SMTPAuth = true;
       $mail->Username = NOREPLY_EMAIL;
@@ -1450,9 +1451,9 @@ class System {
    * @param $action
    * @param $email
    */
-  public function log($action, $email = '') {
+  public function log($action, $email = null) {
     global $db;
-    $email = $email == null && $this->email ?? $email;
+    $email = $email ?? $this->email;
     $date  = date('Y-m-d H:i:s');
     $db->query("INSERT INTO log VALUES(NULL, '$email', '$action', '$date')");
   }

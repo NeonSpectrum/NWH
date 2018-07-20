@@ -9,15 +9,15 @@ String.prototype.includes = function (str) {
 }
 
 function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
-            return decodeURIComponent(pair[1]);
-        }
+  var query = window.location.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    if (decodeURIComponent(pair[0]) == variable) {
+      return decodeURIComponent(pair[1]);
     }
-    return false;
+  }
+  return false;
 }
 <?php
 @session_start();
@@ -51,7 +51,7 @@ echo ", root=\"$root\", isLogged=" . (isset($_SESSION['account']) ? 'true' : 'fa
 echo ', email_address="' . (isset($_SESSION['account']) ? openssl_decrypt(str_replace(' ', '+', $_SESSION['account']), 'AES-256-CTR', ENCRYPT_KEYWORD, OPENSSL_ZERO_PADDING, INITIALIZATION_VECTOR) : '') . '"';
 echo ", date=\"$date\", dateandtime=\"$dateandtime\",session_id=\"" . session_id() . '";';
 ?>
-var socket = io(NODE_JS_URL.includes("localhost") ? NODE_JS_URL.replace("localhost","<?php echo $_SERVER['SERVER_NAME']; ?>") : NODE_JS_URL);
+const socket = io(NODE_JS_URL.includes("localhost") ? NODE_JS_URL.replace("localhost","<?php echo $_SERVER['SERVER_NAME']; ?>") : NODE_JS_URL);
 socket.on('connect', function(){
   socket.emit("access", (email_address == "" ? "Someone" : email_address));
 });
