@@ -47,7 +47,6 @@ foreach ($roomList as $value) {
             <td id="102" class="<?php echo $roomID[102]; ?>" title="<?php echo $roomDescription[102]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">102</td>
             <td style="border:none"></td>
             <td id="103" class="<?php echo $roomID[103]; ?>" title="<?php echo $roomDescription[103]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">103</td>
-            <td id="104" class="<?php echo $roomID[104]; ?>" title="<?php echo $roomDescription[104]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">104</td>
           </tr>
         </table>
       </div>
@@ -86,6 +85,7 @@ foreach ($roomList as $value) {
       <div class="table-responsive">
         <table class="text-center" cellspacing="0">
           <tr>
+            <td id="104" class="<?php echo $roomID[104]; ?>" title="<?php echo $roomDescription[104]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">104</td>
             <td id="105" class="<?php echo $roomID[105]; ?>" title="<?php echo $roomDescription[105]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">105</td>
             <td id="106" class="<?php echo $roomID[106]; ?>" title="<?php echo $roomDescription[106]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">106</td>
             <td id="107" class="<?php echo $roomID[107]; ?>" title="<?php echo $roomDescription[107]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">107</td>
@@ -94,7 +94,9 @@ foreach ($roomList as $value) {
             <td id="109" class="<?php echo $roomID[109]; ?>" title="<?php echo $roomDescription[109]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">109</td>
             <td id="110" class="<?php echo $roomID[110]; ?>" title="<?php echo $roomDescription[110]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">110</td>
             <td id="111" class="<?php echo $roomID[111]; ?>" title="<?php echo $roomDescription[111]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">111</td>
-            <td id="112" class="<?php echo $roomID[112]; ?>" title="<?php echo $roomDescription[112]; ?>" data-tooltip="tooltip" data-placement="right" data-html="true">112</td>
+            <td id="112" class="<?php echo $roomID[112]; ?>" title="<?php echo $roomDescription[112]; ?>" data-tooltip="tooltip" data-placement="left" data-html="true">112</td>
+            <td id="112" class="<?php echo $roomID[114]; ?>" title="<?php echo $roomDescription[114]; ?>" data-tooltip="tooltip" data-placement="left" data-html="true">114</td>
+            <td id="112" class="<?php echo $roomID[115]; ?>" title="<?php echo $roomDescription[115]; ?>" data-tooltip="tooltip" data-placement="left" data-html="true">115</td>
           </tr>
         </table>
       </div>
