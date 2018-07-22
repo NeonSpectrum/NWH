@@ -57,8 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
       }
     }
   }
-  $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount FROM discount JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
+  $discountResult = $db->query("SELECT Name, discount.Amount as Amount, booking_discount.Amount as oAmount, discount.TaxFree FROM discount JOIN booking_discount ON discount.DiscountID=booking_discount.DiscountID WHERE BookingID=$bookingID");
   $discountRow    = $discountResult->fetch_assoc();
+  $taxFree        = (bool) $discountRow['TaxFree'];
   if ($discountRow['Name'] == 'Others') {
     $discount = $discountRow['oAmount'];
   } else {
@@ -83,22 +84,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Extra Charges:</td>";
   $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($expenses, 2, '.', ',') . '</td>';
   $html .= '</tr>';
+  $total = $row['TotalAmount'] + $expenses;
   if ($discount != null) {
+    $total = $total - (strpos($discount, '%') !== false ? $total * $system->percentToDecimal($discount) : $discount);
     $html .= '<tr>';
     $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Discount ({$discountRow['Name']}):</td>";
     $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>$discount</td>";
     $html .= '</tr>';
+    $html .= '<tr>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Discounted Price:</td>";
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total, 2, '.', ',') . '</td>';
+    $html .= '</tr>';
   }
-  $total = $row['TotalAmount'] + $expenses;
-  $total = $total - (strpos($discount, '%') !== false ? $total * $system->percentToDecimal($discount) : $discount);
-  $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:</td>";
-  $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / 1.12 * .12, 2, '.', ',') . '</td>';
-  $html .= '</tr>';
-  $html .= '<tr>';
-  $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT (12%):</td>";
-  $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . '</td>';
-  $html .= '</tr>';
-  $html .= '<tr>';
+  if (!$taxFree) {
+    $html .= '<tr>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:</td>";
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= '</tr>';
+    $html .= '<tr>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT (12%):</td>";
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= '</tr>';
+    $html .= '<tr>';
+  } else {
+    $html .= '<tr>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT-free (12%):</td>";
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>- ₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= '</tr>';
+    $total -= $total / 1.12 * .12;
+  }
+  $html .= '<tr style="height:20px"></tr>';
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Total:</td>";
   $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total, 2, '.', ',') . '</td>';
   $html .= '</tr>';

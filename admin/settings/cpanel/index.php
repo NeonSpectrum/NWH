@@ -262,6 +262,12 @@ $config = parse_ini_file(__DIR__ . '/../../../config.ini');
               <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" pattern="[0-9]+%?" required>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Tax Free: </label>
+            <div class="col-sm-8">
+              <input type="checkbox" name="cbxTaxFree" style="height:25px;width:25px">
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>
@@ -331,8 +337,10 @@ while ($row = $result->fetch_assoc()) {
             <div class="col-sm-8">
               <select id="txtName" name="txtName" class="form-control">
 <?php
-$result = $db->query("SELECT * FROM discount WHERE Name!='Others'");
-$amount = $result->fetch_assoc()['Amount'];
+$result  = $db->query("SELECT * FROM discount WHERE Name!='Others'");
+$row     = $result->fetch_assoc();
+$amount  = $row['Amount'];
+$taxFree = $row['TaxFree'];
 $result->data_seek(0);
 while ($row = $result->fetch_assoc()) {
   echo "<option value='{$row['Name']}'>{$row['Name']}</option>";
@@ -345,6 +353,12 @@ while ($row = $result->fetch_assoc()) {
             <label class="col-sm-4 control-label">Amount: </label>
             <div class="col-sm-8">
               <input type="text" class="form-control" name="txtAmount" id="txtAmount" min="1" value="<?php echo $amount; ?>" pattern="[0-9]+%?" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Tax Free: </label>
+            <div class="col-sm-8">
+              <input type="checkbox" name="cbxTaxFree"<?php echo $taxFree ? ' checked' : '' ?> style="height:25px;width:25px">
             </div>
           </div>
         </div>

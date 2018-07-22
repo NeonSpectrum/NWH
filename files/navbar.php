@@ -165,6 +165,22 @@ if (!$account->isLogged()) {
             </div>
             <div class="col-md-6">
               <div class="form-group has-feedback">
+                <label>Nationality<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-globe"></span></span>
+                  <select name="txtNationality" class="form-control">
+                    <option></option>
+<?php
+foreach ($nationalities as $nationality) {
+    echo "<option>{$nationality}</option>";
+  }
+  ?>
+                  </select>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true" style="right:10px"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
                 <label>Email Address<sup>*</sup></label>
                 <div class="input-group">
                   <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
@@ -304,8 +320,6 @@ if (VERIFY_REGISTER) {
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" value="<?php echo $account->firstName; ?>" required>
                 </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label>Last Name<sup>*</sup></label>
@@ -313,8 +327,20 @@ if (VERIFY_REGISTER) {
                   <span class="input-group-addon"><span class="fa fa-user-o"></span></span>
                   <input type="text" name="txtLastName" id="txtLastName" class="form-control" maxlength="50" pattern="[a-zA-Z][a-zA-Z ]+" value="<?php echo $account->lastName; ?>" required>
                 </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group has-feedback">
+                <label>Nationality<sup>*</sup></label>
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="fa fa-globe"></span></span>
+                  <select name="txtNationality" class="form-control">
+                    <option></option>
+<?php
+foreach ($nationalities as $nationality) {
+    echo '<option' . ($nationality == $account->nationality ? ' selected' : '') . ">{$nationality}</option>";
+  }
+  ?>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -324,8 +350,6 @@ if (VERIFY_REGISTER) {
                   <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                   <input type="text" name="txtBirthDate" id="txtBirthDate" class="form-control birthDate" value="<?php echo date('m/d/Y', strtotime($account->birthDate)); ?>" required readonly>
                 </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label>Contact Number<sup>*</sup></label>
@@ -333,8 +357,6 @@ if (VERIFY_REGISTER) {
                   <span class="input-group-addon"><span class="fa fa-mobile fa-lg"></span></span>
                   <input type="text" name="txtContactNumber" id="txtContactNumber" class="form-control" minlength="5" maxlength="20" pattern="[0-9]*$" onkeypress="return disableKey(event,'letter');" value="<?php echo $account->contactNumber; ?>" required>
                 </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
               </div>
             </div>
           </div>

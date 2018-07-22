@@ -31,6 +31,7 @@ class Account extends System {
       $this->accountType    = $row['AccountType'];
       $this->birthDate      = $row['BirthDate'];
       $this->contactNumber  = $row['ContactNumber'];
+      $this->nationality    = $row['Nationality'];
       if ($row['Status'] == 0) {
         $this->logout();
       }
@@ -87,11 +88,12 @@ class Account extends System {
     $password      = $this->filter_input($credentials['txtPassword'], true);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
     $birthDate     = $this->filter_input($credentials['txtBirthDate']);
+    $nationality   = $this->filter_input($credentials['txtNationality']);
 
     $result = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
 
     if ($result->num_rows == 0) {
-      $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&TimeStamp=" . strtotime('now'));
+      $data     = $this->encrypt("txtFirstName=$fname&txtLastName=$lname&txtEmail=$email&txtPassword=$password&txtContactNumber=$contactNumber&txtBirthDate=$birthDate&txtNationality=$nationality&TimeStamp=" . strtotime('now'));
       $subject  = 'Northwood Hotel Account Creation';
       $body     = "Please proceed to this link to register your account:<br/>Click <a href='http://{$_SERVER['SERVER_NAME']}{$root}account/?mode=register&token=$data'>here</a> to register.";
       $sentMail = $this->sendMail($email, $subject, $body);
@@ -118,12 +120,13 @@ class Account extends System {
     $password      = password_hash($this->filter_input($credentials['txtPassword'], true), PASSWORD_DEFAULT);
     $contactNumber = $this->filter_input($credentials['txtContactNumber']);
     $birthDate     = date('Y-m-d', strtotime($this->filter_input($credentials['txtBirthDate'])));
+    $nationality   = $this->filter_input($credentials['txtNationality']);
 
     if (isset($credentials['expirydate']) && $this->isExpired($credentials['TimeStamp'], EMAIL_EXPIRATION)) {
       return "<script>alert('Link Expired. Please register again.');location.href='$root';</script>";
     }
 
-    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '1', '0', '$date', NULL)");
+    $db->query("INSERT INTO account VALUES ('$email', '$password', 'User', 'default', '$fname', '$lname', '$contactNumber', '$birthDate', '$nationality', '1', '0', '$date', NULL)");
 
     if (!$verify) {
       if ($db->affected_rows > 0) {
@@ -306,6 +309,7 @@ class Account extends System {
       $lname         = $this->filter_input($credentials['lname']);
       $birthDate     = date('Y-m-d', strtotime($this->filter_input($credentials['birthDate'])));
       $contactNumber = $this->filter_input($credentials['contactNumber']);
+      $nationality   = $this->filter_input($credentials['nationality']);
 
       if (isset($credentials['image'])) {
         $accountResult = $db->query("SELECT * FROM account WHERE EmailAddress='$email'");
@@ -329,7 +333,7 @@ class Account extends System {
         }
       }
 
-      $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber' WHERE EmailAddress='$email'");
+      $db->query("UPDATE account SET FirstName='$fname', LastName='$lname', BirthDate='$birthDate', ContactNumber='$contactNumber', Nationality='$nationality' WHERE EmailAddress='$email'");
 
       if ($db->affected_rows > 0) {
         $this->log('update|account.profile');
@@ -1141,6 +1145,7 @@ class System {
       $this->accountType    = $row['AccountType'];
       $this->birthDate      = $row['BirthDate'];
       $this->contactNumber  = $row['ContactNumber'];
+      $this->nationality    = $row['Nationality'];
     }
   }
 
@@ -1163,9 +1168,9 @@ class System {
    * @param $name
    * @param $price
    */
-  public function addDiscount($name, $price) {
+  public function addDiscount($name, $price, $taxFree) {
     global $db;
-    $db->query("INSERT INTO discount VALUES(NULL,'$name',$price)");
+    $db->query("INSERT INTO discount VALUES(NULL,'$name','" . ($taxFree != null ? 1 : 0) . "',$price)");
     if ($db->affected_rows > 0) {
       $this->log("insert|discount|$name|$price");
       return true;
@@ -1195,9 +1200,9 @@ class System {
    * @param $price
    * @return mixed
    */
-  public function editDiscount($name, $price) {
+  public function editDiscount($name, $price, $taxFree) {
     global $db;
-    $db->query("UPDATE discount SET Amount='$price' WHERE Name='$name'");
+    $db->query("UPDATE discount SET Amount='$price', TaxFree='" . ($taxFree != null ? 1 : 0) . "' WHERE Name='$name'");
     if ($db->affected_rows > 0) {
       $this->log("update|discount|$name|$price");
       return true;
@@ -1456,7 +1461,7 @@ class System {
    * @return mixed
    */
   public function validateToken($token = null) {
-    return $_SESSION['csrf_token'] === $this->decrypt($token ?? $_SERVER['HTTP_X_CSRF_TOKEN']);
+    return isset($_SERVER['HTTP_X_CSRF_TOKEN']) && $_SESSION['csrf_token'] === $this->decrypt($token ?? $_SERVER['HTTP_X_CSRF_TOKEN']);
   }
 
   /**
@@ -1477,11 +1482,24 @@ class System {
   public function formatBookingID($id, $revert = false) {
     global $db;
     if ($revert == false) {
-      $result = $db->query("SELECT * FROM booking WHERE BookingID=$id");
-      $row    = $result->fetch_assoc();
-      return 'NWH' . date('mdy', strtotime($row['DateCreated'])) . '-' . sprintf("% '04d", $id);
+      $dateCreated = $this->formatDate($db->query("SELECT DateCreated FROM booking WHERE BookingID=$id")->fetch_assoc()['DateCreated'], 'Y-m-d');
+      $result      = $db->query("SELECT * FROM booking WHERE DateCreated>='{$dateCreated} 00:00:00' AND DateCreated<='{$dateCreated} 23:59:59'");
+      $number      = 1;
+      for (; $row = $result->fetch_assoc(); $number++) {
+        if ($id == $row['BookingID']) {
+          break;
+        }
+      }
+      return 'NWH' . date('mdy', strtotime($row['DateCreated'])) . '-' . sprintf("% '04d", $number);
     } else {
-      return (int) substr(strrchr($id, '-'), 1);
+      $dateCreated = DateTime::createFromFormat('mdy', substr($id, 3, 6));
+      $dateCreated = $dateCreated->format('Y-m-d');
+      $bookingID   = (int) substr(strrchr($id, '-'), 1) - 1;
+      $result      = $db->query("SELECT * FROM booking WHERE DateCreated>='{$dateCreated} 00:00:00' AND DateCreated<='{$dateCreated} 23:59:59'");
+      $result->data_seek($bookingID);
+      $row = $result->fetch_assoc();
+
+      return (int) $row['BookingID'];
     }
   }
 

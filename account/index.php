@@ -19,6 +19,7 @@ if (isset($_POST['mode']) && $system->validateToken()) {
       $credentials['txtPassword']      = $_POST['txtPassword'];
       $credentials['txtContactNumber'] = $_POST['txtContactNumber'];
       $credentials['txtBirthDate']     = $_POST['txtBirthDate'];
+      $credentials['txtNationality']   = $_POST['txtNationality'];
       if ($_POST['verify'] == 'false') {
         echo $account->register($credentials, false);
       } else {
@@ -62,6 +63,7 @@ if (isset($_POST['mode']) && $system->validateToken()) {
       $credentials['lname']         = $system->filter_input($data['txtLastName']);
       $credentials['birthDate']     = $system->filter_input($data['txtBirthDate']);
       $credentials['contactNumber'] = $system->filter_input($data['txtContactNumber']);
+      $credentials['nationality']   = $system->filter_input($data['txtNationality']);
       if (isset($_FILES['file'])) {
         $credentials['image'] = $_FILES['file'];
       }

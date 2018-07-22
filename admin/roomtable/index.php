@@ -37,7 +37,7 @@ foreach ($roomList as $value) {
       Dirty: <div style='display:inline-block;background-color:black;height:10px;width:10px'></div> |
       Maintenance: <div style='display:inline-block;background-color:gray;height:10px;width:10px'></div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="border-right:1px solid #102c58;height:100%">
       <h1 style="text-align:center">1<sup>st</sup> Building</h1>
       <h1>First Floor</h1>
       <div class="table-responsive">
@@ -79,7 +79,7 @@ foreach ($roomList as $value) {
         </table>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="height:100%">
       <h1 style="text-align:center">2<sup>nd</sup> Building</h1>
       <h1>&nbsp;</h1>
       <div class="table-responsive">
