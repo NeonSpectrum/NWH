@@ -403,7 +403,7 @@ class Room extends System {
     global $db;
     $result = $db->query("SELECT * FROM room_type WHERE RoomType='$roomType'");
     $row    = $result->fetch_assoc();
-    $db->query("INSERT INTO room VALUES($roomID,{$row['RoomTypeID']},1,0)");
+    $db->query("INSERT INTO room VALUES($roomID,{$row['RoomTypeID']},1,0,0)");
 
     if ($db->affected_rows > 0) {
       $this->log("add|room|$roomType|$roomID");
@@ -418,7 +418,7 @@ class Room extends System {
    */
   public function addRoomType($roomDetails) {
     global $db;
-    $db->query("INSERT INTO room_type VALUES(NULL,'{$roomDetails[0]}','{$roomDetails[1]}','{$roomDetails[2]}','{$roomDetails[3]}',{$roomDetails[4]},{$roomDetails[5]},{$roomDetails[6]},{$roomDetails[7]})");
+    $db->query("INSERT INTO room_type VALUES(NULL,'" . str_replace(' ', '_', $roomDetails[0]) . "','{$roomDetails[1]}','{$roomDetails[2]}','{$roomDetails[3]}',{$roomDetails[4]},{$roomDetails[5]},{$roomDetails[6]},{$roomDetails[7]})");
 
     if ($db->affected_rows > 0) {
       $this->log("add|room_type|{$roomDetails[0]}");
@@ -717,7 +717,7 @@ class View extends Room {
       echo '      ';
       echo "<div class='wow slideInUp center-block text-center col-md-4' style='margin-bottom:40px'>
         <figure class='imghvr-fade-in'>
-          <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
+          <img src='gallery/images/rooms/{$row['RoomType']}.jpg?v=" . @filemtime("gallery/images/rooms/{$row['RoomType']}.jpg") . "'>
           <figcaption style='background: url(\"gallery/images/rooms/{$row['RoomType']}.jpg\") center;text-align:center;color:black;padding:0px'>
             <div style='background-color:rgba(255,255,255,0.8);position:relative;height:100%;width:100%;'>
               <div style='text-align:center;color:black;font-size:22px;padding-top:10px;font-weight:bold'>" . str_replace('_', ' ', $row['RoomType']) . "<br/><div style='font-size:15px'>Price: <i>₱" . number_format($this->getRoomPrice($row['RoomType'])) . '</i></div></div>
@@ -990,6 +990,18 @@ class View extends Room {
       echo "<td>{$row['InvoiceNumber']}</td>";
       echo '<td>₱&nbsp;' . number_format($row['PaymentAmount'], 2, '.', ',') . '</td>';
       echo '<td>' . date('m/d/Y h:i:s A', strtotime($row['TimeStamp'])) . '</td>';
+      echo '</tr>';
+    }
+  }
+
+  public function listOfFeedback() {
+    global $db;
+    $result = $db->query('SELECT * FROM feedback');
+    while ($row = $result->fetch_assoc()) {
+      echo '<tr>';
+      echo "<td>{$row['ID']}</td>";
+      echo "<td>{$row['Star']}</td>";
+      echo '<td>' . ($row['Comment'] ?? 'N/A') . '</td>';
       echo '</tr>';
     }
   }

@@ -10,7 +10,7 @@ require_once '../files/sidebar.php'
         <div class="panel panel-default">
           <div class="panel-heading">Accounts</div>
 <?php
-$query  = "SELECT count(*) as rows FROM account";
+$query  = 'SELECT count(*) as rows FROM account';
 $result = mysqli_query($db, $query);
 $row    = mysqli_fetch_assoc($result)['rows'];
 ?>
@@ -27,9 +27,9 @@ $row    = mysqli_fetch_assoc($result)['rows'];
           <div class="panel-heading">Books Ongoing Today</div>
 <?php
 $count  = 0;
-$result = $db->query("SELECT * FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL");
+$result = $db->query('SELECT * FROM booking LEFT JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID WHERE DateCancelled IS NULL');
 while ($row = $result->fetch_assoc()) {
-  $dates = $system->getDatesFromRange($row['CheckInDate'], date("Y-m-d", strtotime($row['CheckOutDate']) - 86400));
+  $dates = $system->getDatesFromRange($row['CheckInDate'], date('Y-m-d', strtotime($row['CheckOutDate']) - 86400));
   if (in_array($date, $dates)) {
     $count++;
   }
@@ -47,7 +47,7 @@ while ($row = $result->fetch_assoc()) {
         <div class="panel panel-default">
           <div class="panel-heading">Total Available Rooms</div>
           <div class="panel-body">
-<?php echo count($room->generateRoomID(null, null, $date, date("Y-m-d", strtotime($date) + 86400), true)); ?><br/>
+<?php echo count($room->generateRoomID(null, null, $date, date('Y-m-d', strtotime($date) + 86400), true)); ?><br/>
           </div>
           <div class="panel-footer">
             <a href="<?php echo $root; ?>admin/roomtable">View more...</a>
@@ -74,8 +74,8 @@ for ($i = 1; $row = $result->fetch_assoc(); $i++) {
           <div class="panel-heading">Current Rating</div>
           <div class="panel-body">
 <?php
-$row = $db->query("SELECT COUNT(Star) AS Number, SUM(Star) as Total FROM feedback")->fetch_assoc();
-echo $row['Number'] == 0 ? "N/A" : number_format($row['Total'] / $row['Number'], 1, ".", ",");
+$row = $db->query('SELECT COUNT(Star) AS Number, SUM(Star) as Total FROM feedback')->fetch_assoc();
+echo $row['Number'] == 0 ? 'N/A' : number_format($row['Total'] / $row['Number'], 1, '.', ',');
 ?>
           </div>
         </div>
@@ -89,26 +89,46 @@ echo $row['Number'] == 0 ? "N/A" : number_format($row['Total'] / $row['Number'],
         </div>
       </div>
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">Booking Chart</div>
-          <div class="panel-body">
-            <canvas id="bookingChart"></canvas>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Booking Chart</div>
+            <div class="panel-body">
+              <canvas id="bookingChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Walk In Chart</div>
+            <div class="panel-body">
+              <canvas id="walkInChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Site Visitors Chart</div>
+            <div class="panel-body">
+              <canvas id="visitorChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">Walk In Chart</div>
-          <div class="panel-body">
-            <canvas id="walkInChart"></canvas>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Room Types Chart</div>
+            <div class="panel-body">
+              <canvas id="roomTypesChart"></canvas>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">Site Visitors Chart</div>
-          <div class="panel-body">
-            <canvas id="visitorChart"></canvas>
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Booking vs Walk-in Chart</div>
+            <div class="panel-body">
+              <canvas id="bookingVsWalkinChart"></canvas>
+            </div>
           </div>
         </div>
       </div>

@@ -36,8 +36,8 @@ if ($account->checkUserLevel(3) && stripos($_SERVER['SERVER_NAME'], 'northwood-h
 ?>
     <li class="dropdown c-header-icon navbar-right" style="list-style:none;float:right;margin-right:0;">
 <?php
-$result = $db->query("SELECT * FROM notification WHERE MarkedAsRead=0 ORDER BY TimeStamp DESC");
-echo "<span class='c-badge c-badge--header-icon animated shake' style='display:" . ($result->num_rows > 0 ? "block" : "none") . "'>{$result->num_rows}</span>";
+$result = $db->query('SELECT * FROM notification WHERE MarkedAsRead=0 ORDER BY TimeStamp DESC');
+echo "<span class='c-badge c-badge--header-icon animated shake' style='display:" . ($result->num_rows > 0 ? 'block' : 'none') . "'>{$result->num_rows}</span>";
 ?>
       <a style="cursor:pointer;width:100%;height:100%;align-items:center;justify-content:center;display:flex;text-decoration:none" class="dropdown-toggle" data-toggle="dropdown" data-tooltip="tooltip" data-placement="bottom" title="Notifications"><i class="fa fa-bell"></i></a>
       <ul class="dropdown-menu notify-drop" style="cursor:default;">
@@ -49,13 +49,13 @@ echo "<span class='c-badge c-badge--header-icon animated shake' style='display:"
         </div>
         <div class="drop-content">
 <?php
-$result = $db->query("SELECT * FROM notification ORDER BY TimeStamp DESC LIMIT 100");
+$result = $db->query('SELECT * FROM notification ORDER BY TimeStamp DESC LIMIT 100');
 while ($row = $result->fetch_assoc()) {
-  echo "<li style='position:relative'" . ($row['MarkedAsRead'] == 0 ? " class='not-read'" : "") . ">
+  echo "<li style='position:relative'" . ($row['MarkedAsRead'] == 0 ? " class='not-read'" : '') . ">
       <div class='col-md-3 col-sm-3 col-xs-3' style='width:25%'><div class='notify-img'><i class='fa fa-{$row['Type']}' style='font-size:4em'></i></div></div>
-      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message' style='width:75%'>{$row['Message']}</div>" . ($row['MarkedAsRead'] == 0 ? "<a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>" : "") . "
-      <small style='position:absolute;bottom:0;right:0'>" . date("M d h:i A", strtotime($row['TimeStamp'])) . "</small>
-    </li>";
+      <div class='col-md-9 col-sm-9 col-xs-9 pd-l0 notify-message' style='width:75%'>{$row['Message']}</div>" . ($row['MarkedAsRead'] == 0 ? "<a id='{$row['ID']}' class='rIcon' title='Mark As Read' data-tooltip='tooltip' data-placement='bottom'><i class='fa fa-dot-circle-o'></i></a>" : '') . "
+      <small style='position:absolute;bottom:0;right:0'>" . date('M d h:i A', strtotime($row['TimeStamp'])) . '</small>
+    </li>';
 }
 ?>
         </div>
@@ -143,6 +143,13 @@ if (ALLOW_PAYPAL == true) {
 <?php
 }
 ?>
+          <ul class="c-menu__submenu u-list">
+            <li>
+              <a class="c-menu__item__inner" href="<?php echo $root; ?>admin/reports/listoffeedback" data-tooltip="tooltip" data-placement="right" title="List Of Feedbacks"><i class="fa fa-feed"></i>
+                <div class="c-menu-item__title"><span>List of Feedbacks</span></div>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="c-menu__item has-submenu <?php echo $settings; ?>">
           <a class="c-menu__item__inner" data-tooltip="tooltip" data-placement="right" title="Settings"><i class="fa fa-cogs"></i>

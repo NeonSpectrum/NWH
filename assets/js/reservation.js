@@ -202,8 +202,7 @@ $.getScript(root + 'assets/js/smartwizard.js', function() {
                       .html()
                       .replace(/[^0-9\.-]+/g, '')
                   )
-                    .toFixed(2)
-                    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+                    .formatMoney() +
                   '</span><br>' +
                   $(this)
                     .parent()
@@ -225,8 +224,7 @@ $.getScript(root + 'assets/js/smartwizard.js', function() {
                     ) *
                     diffDays
                   )
-                    .toFixed(2)
-                    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+                    .formatMoney() +
                   '</span>'
               )
               total +=
@@ -255,20 +253,20 @@ $.getScript(root + 'assets/js/smartwizard.js', function() {
             })
             return false
           }
-          $('span#txtRoomPrice').html(total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'))
+          $('span#txtRoomPrice').html(total.formatMoney())
           editBookingSummary(
             "<hr style='margin:5px 0 5px 0;border-color:#ccc'>" +
               roomHtml.join("<hr style='margin:5px 0 5px 0;border-color:#ccc'/>") +
               "<hr style='margin:5px 0 5px 0;border-color:#ccc'>VATable: <span class='pull-right'>₱&nbsp;" +
-              (total - (total / 1.12) * 0.12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+              (total - (total / 1.12) * 0.12).formatMoney() +
               "</span><br/>VAT (12%): <span class='pull-right'>₱&nbsp;" +
-              ((total / 1.12) * 0.12).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+              ((total / 1.12) * 0.12).formatMoney() +
               "</span><hr style='margin:5px 0 5px 0;border-color:#ccc'/>Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" +
-              total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+              total.formatMoney() +
               '</span>' +
               (diffDays > 1
                 ? "<br/>50% of the Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" +
-                  (total / 2).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') +
+                  (total / 2).formatMoney() +
                   '</span>'
                 : ''),
             'roomList'

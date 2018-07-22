@@ -34,7 +34,7 @@ foreach ($roomList as $value) {
     <div style="position:absolute;bottom:0;right:5px">
       Available: <div style='display:inline-block;background-color:green;height:10px;width:10px'></div> |
       Using: <div style='display:inline-block;background-color:red;height:10px;width:10px'></div> |
-      Cleaning: <div style='display:inline-block;background-color:black;height:10px;width:10px'></div> |
+      Dirty: <div style='display:inline-block;background-color:black;height:10px;width:10px'></div> |
       Maintenance: <div style='display:inline-block;background-color:gray;height:10px;width:10px'></div>
     </div>
     <div class="col-md-6">

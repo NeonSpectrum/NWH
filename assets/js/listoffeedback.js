@@ -1,13 +1,11 @@
-$("#tblEvents").on("init.dt", function(e, settings, json) {
+$("#tblFeedback").on("init.dt", function(e, settings, json) {
   $("#loadingMode").fadeOut()
 })
-$("#tblEvents").DataTable({
-  order: [[0, "desc"]]
-})
-$("#tblEvents_length")
+var oTable = $("#tblFeedback").DataTable()
+$("#tblFeedback_length")
   .find("select")
   .addClass("form-control")
-$("#tblEvents_filter")
+$("#tblFeedback_filter")
   .find("input[type=search]")
   .addClass("form-control")
 $('input[type="search"]').focus()
