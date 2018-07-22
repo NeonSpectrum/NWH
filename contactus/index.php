@@ -10,8 +10,8 @@ require_once '../files/navbar.php';
       <h2>Northwood Hotel</h2><br/>
       <i><b><font size="3px">21 Quezon Ave. Poblacion, Alaminos City Pangasinan<br/>
       For inquiries call or text .<br/>
-      TEL NOS. (075) 636-0910 / (075) 205-0647<br/>
-      MOBILE NOS. 09297890088 / 09954086292</font></b></i>
+      TEL NOS. (075) 636-0910<br/>
+      MOBILE NOS. 0929-789-0088 / 0956-226-5236</font></b></i>
     </div>
     <div class="box-content">
       <form class="form-horizontal center-block text-center" id="frmContact">
