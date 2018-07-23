@@ -393,7 +393,7 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
       return true
     })
     $("#next-btn").on("click", function() {
-      if (location.hash == "#step-3") {
+      if ($("#step-3").css("display") == "block") {
         if ($("input[name=cbxTermsAndConditions]").prop("checked") == false) {
           alertNotif("error", CHECK_TERMS_AND_CONDITIONS)
           return false
