@@ -243,7 +243,7 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
           })
           if (quantity > MAX_ROOM_ALLOWED) {
             swal({
-              title: "Error!<br/>Only " + MAX_ROOM_ALLOWED + " rooms and below are allowed",
+              title: "Only " + MAX_ROOM_ALLOWED + " rooms and below are allowed",
               html:
                 MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED) +
                 "<br/><small>(075) 636-0910<br/>0929-789-0088 / 0956-226-5236</small>",
