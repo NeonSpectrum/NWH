@@ -977,7 +977,7 @@ class View extends Room {
       echo '<td>' . date('m/d/Y', strtotime($row['CheckOutDate'])) . '</td>';
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
-      echo "<td>{$row['Date Cancelled']}</td>";
+      echo "<td>{$row['DateCancelled']}</td>";
       echo "<td>{$row['Reason']}</td>";
       echo '</tr>';
     }
