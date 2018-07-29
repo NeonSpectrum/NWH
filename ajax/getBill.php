@@ -99,19 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   if (!$taxFree) {
     $html .= '<tr>';
     $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Subtotal:</td>";
-    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total - $total / (VAT_RATE / 100 + 1) * (VAT_RATE / 100), 2, '.', ',') . '</td>';
     $html .= '</tr>';
     $html .= '<tr>';
-    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT (12%):</td>";
-    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT (" . VAT_RATE . '%):</td>';
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>₱&nbsp;" . number_format($total / (VAT_RATE / 100 + 1) * (VAT_RATE / 100), 2, '.', ',') . '</td>';
     $html .= '</tr>';
     $html .= '<tr>';
   } else {
     $html .= '<tr>';
-    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT-free (12%):</td>";
-    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>- ₱&nbsp;" . number_format($total / 1.12 * .12, 2, '.', ',') . '</td>';
+    $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>VAT-free (" . VAT_RATE . '%):</td>';
+    $html .= "<td style='text-align:right;font-size:16px;width:20%;padding-left:20px'>- ₱&nbsp;" . number_format($total / (VAT_RATE / 100 + 1) * (VAT_RATE / 100), 2, '.', ',') . '</td>';
     $html .= '</tr>';
-    $total -= $total / 1.12 * .12;
+    $total -= $total / (VAT_RATE / 100 + 1) * (VAT_RATE / 100);
   }
   $html .= '<tr style="height:20px"></tr>';
   $html .= "<td style='text-align:right;font-size:16px;font-weight:bold'>Total:</td>";

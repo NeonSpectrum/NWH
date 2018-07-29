@@ -883,18 +883,18 @@ class View extends Room {
         echo "<td id='txtEmail'>{$row['EmailAddress']}</td>";
         echo "<td id='txtRoomID'>" . join(', ', $rooms) . '</td>';
         echo "<td id='txtGuests'>Adults: {$row['Adults']}<br/>Children: {$row['Children']}</td>";
-        echo "<td id='txtCheckDate'>{$row['CheckInDate']} - {$row['CheckOutDate']}</td>";
+        echo "<td id='txtCheckDate' width='15%'>{$row['CheckInDate']} - {$row['CheckOutDate']}</td>";
         echo "<td id='txtCheckIn'>$checkIn</td>";
         echo "<td id='txtCheckOut'>$checkOut</td>";
         echo "<td id='txtExtraCharges'>";
         $expenses       = 0;
-        $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID={$row['BookingID']}");
+        $expensesResult = $db->query("SELECT Name, Quantity, expenses.Amount as Amount, booking_expenses.Amount as oAmount, Remark FROM expenses LEFT JOIN booking_expenses ON expenses.ExpensesID=booking_expenses.ExpensesID WHERE BookingID={$row['BookingID']}");
         while ($expensesRow = $expensesResult->fetch_assoc()) {
           if ($expensesRow['Name'] == 'Others') {
-            echo "{$expensesRow['Name']}({$expensesRow['Quantity']}): ₱&nbsp;" . number_format($expensesRow['oAmount'] * $expensesRow['Quantity'], 2, '.', ',') . '<br/>';
+            echo "{$expensesRow['Name']}({$expensesRow['Quantity']})" . ($expensesRow['Remark'] != '' ? "({$expensesRow['Remark']})" : '') . ': ₱&nbsp;' . number_format($expensesRow['oAmount'] * $expensesRow['Quantity'], 2, '.', ',') . '<br/>';
             $expenses += $expensesRow['oAmount'] * $expensesRow['Quantity'];
           } else {
-            echo "{$expensesRow['Name']}({$expensesRow['Quantity']}): ₱&nbsp;" . number_format($expensesRow['Amount'] * $expensesRow['Quantity'], 2, '.', ',') . '<br/>';
+            echo "{$expensesRow['Name']}({$expensesRow['Quantity']})" . ($expensesRow['Remark'] != '' ? "({$expensesRow['Remark']})" : '') . ': ₱&nbsp;' . number_format($expensesRow['Amount'] * $expensesRow['Quantity'], 2, '.', ',') . '<br/>';
             $expenses += $expensesRow['Amount'] * $expensesRow['Quantity'];
           }
         }
@@ -962,7 +962,7 @@ class View extends Room {
 
   public function listOfCancelledBooking() {
     global $db;
-    $result = $db->query('SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, Reason FROM booking JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID');
+    $result = $db->query('SELECT booking.BookingID, EmailAddress, CheckInDate, CheckOutDate, Adults, Children, DateCancelled, Reason FROM booking JOIN booking_cancelled ON booking.BookingID=booking_cancelled.BookingID');
     while ($row = $result->fetch_assoc()) {
       $roomResult = $db->query("SELECT * FROM booking_room WHERE BookingID={$row['BookingID']}");
       $rooms      = [];
@@ -977,6 +977,7 @@ class View extends Room {
       echo '<td>' . date('m/d/Y', strtotime($row['CheckOutDate'])) . '</td>';
       echo "<td>{$row['Adults']}</td>";
       echo "<td>{$row['Children']}</td>";
+      echo "<td>{$row['Date Cancelled']}</td>";
       echo "<td>{$row['Reason']}</td>";
       echo '</tr>';
     }

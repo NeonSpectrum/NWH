@@ -75,6 +75,12 @@ while ($row = $result->fetch_assoc()) {
               <input type="text" class="form-control" name="txtPayment" id="txtPayment" min="1" value="<?php echo number_format($payment); ?>" onkeypress="return disableKey(event,'letter')" onkeyup="FormatCurrency(this)" readonly required>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Remarks: </label>
+            <div class="col-sm-9">
+              <textarea class="form-control" name="txtRemark" rows="5" style="resize:none"></textarea>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button id="btnAdd" type="submit" class="btn btn-primary">Add</button>

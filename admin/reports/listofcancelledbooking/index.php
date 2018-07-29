@@ -17,6 +17,7 @@ require_once '../../../files/sidebar.php';
             <th>Check Out Date</th>
             <th>Adults</th>
             <th>Children</th>
+            <th>Date Cancelled</th>
             <th>Reason</th>
           </thead>
           <tbody>

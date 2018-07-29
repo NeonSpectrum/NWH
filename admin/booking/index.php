@@ -98,84 +98,27 @@ foreach ($emails as $key => $value) {
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Standard_Single'>Standard Single: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
+
 <?php
-$count = count($room->generateRoomID('Standard_Single', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
+$result = $db->query('SELECT * FROM room_type');
+
+for ($i = 0; $row = $result->fetch_assoc(); $i++) {
+  echo "
+<div class='form-group'>
+  <label class='col-sm-5 control-label lblRoomType' id='{$row['RoomType']}'>" . str_replace('_', ' ', $row['RoomType']) . ": </label>
+  <div class='col-sm-4'>
+    <select class='form-control cmbQuantity'>
+";
+  $count = count($room->generateRoomID($row['RoomType'], null, $date, date('m/d/Y', strtotime($date) + 86400), true));
+  for ($j = 0; $j <= $count; $j++) {
+    echo "<option value='$j'>$j</option>";
+  }
+  echo '</select>
+  </div>
+</div>
+';
 }
 ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Standard_Double'>Standard Double: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Standard_Double', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
-}
-?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Family_Room'>Family Room: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Family_Room', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
-}
-?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Junior_Suites'>Junior Suites: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Junior_Suites', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
-}
-?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Studio_Type'>Studio Type: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Studio_Type', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
-}
-?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Barkada_Room'>Barkada Room: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Barkada_Room', null, $date, date('m/d/Y', strtotime($date) + 86400), true));
-for ($i = 0; $i <= $count; $i++) {
-  echo "<option value='$i'>$i</option>";
-}
-?>
-                  </select>
-                </div>
-              </div>
             </div>
           </div>
         </div>

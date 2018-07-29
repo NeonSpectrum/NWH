@@ -467,84 +467,26 @@ if (ALLOW_PAYPAL == true) {
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Standard_Single'>Standard Single: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
 <?php
-$count = count($room->generateRoomID('Standard_Single', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[0]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[0] == $i ? " selected='selected'" : '') . ">$i</option>";
+$result = $db->query('SELECT * FROM room_type');
+
+  for ($i = 0; $row = $result->fetch_assoc(); $i++) {
+    echo "
+<div class='form-group'>
+  <label class='col-sm-5 control-label lblRoomType' id='{$row['RoomType']}'>" . str_replace('_', ' ', $row['RoomType']) . ": </label>
+  <div class='col-sm-4'>
+    <select class='form-control cmbQuantity'>
+";
+    $count = count($room->generateRoomID($row['RoomType'], null, $checkInDate, $checkOutDate));
+    for ($j = 0; $j <= $count + $roomQuantity[$i]; $j++) {
+      echo "<option value='$j'" . ($roomQuantity[$i] == $j ? " selected='selected'" : '') . ">$j</option>";
+    }
+    echo '</select>
+  </div>
+</div>
+';
   }
   ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Standard_Double'>Standard Double: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Standard_Double', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[1]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[1] == $i ? " selected='selected'" : '') . ">$i</option>";
-  }
-  ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Family_Room'>Family Room: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Family_Room', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[2]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[2] == $i ? " selected='selected'" : '') . ">$i</option>";
-  }
-  ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Junior_Suites'>Junior Suites: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Junior_Suites', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[3]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[3] == $i ? " selected='selected'" : '') . ">$i</option>";
-  }
-  ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Studio_Type'>Studio Type: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Studio_Type', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[4]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[4] == $i ? " selected='selected'" : '') . ">$i</option>";
-  }
-  ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-5 control-label lblRoomType" id='Barkada_Room'>Barkada Room: </label>
-                <div class="col-sm-4">
-                  <select class="form-control cmbQuantity">
-<?php
-$count = count($room->generateRoomID('Barkada_Room', null, $checkInDate, $checkOutDate));
-  for ($i = 0; $i <= $count + $roomQuantity[5]; $i++) {
-    echo "<option value='$i'" . ($roomQuantity[5] == $i ? " selected='selected'" : '') . ">$i</option>";
-  }
-  ?>
-                  </select>
-                </div>
-              </div>
             </div>
           </div>
         </div>

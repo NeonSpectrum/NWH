@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
       $roomType     = str_replace(' ', '_', $rooms['roomType']);
       $roomQuantity = $system->filter_input($rooms['roomQuantity']);
       $roomIDs      = $room->generateRoomID($roomType, $roomQuantity, $checkInDate, $checkOutDate);
-      if (count($roomIDs) > 0) {
+      if (count($roomIDs) != $roomQuantity) {
         for ($i = 1; $i <= $roomQuantity; $i++) {
           $totalRoomPrice += $system->filter_input($room->getRoomPrice($roomType));
           $roomID = $system->filter_input($roomIDs[$i - 1]);
@@ -68,6 +68,7 @@ Download and print this file: <a href='http://{$_SERVER['SERVER_NAME']}{$root}fi
       }
     } else {
       $db->query("DELETE FROM booking WHERE BookingID = $bookingID");
+      $db->query("DELETE FROM booking_room WHERE BookingID = $bookingID");
     }
   } else {
     $arr[0] = false;

@@ -1,9 +1,9 @@
-$.getScript(root + "assets/js/smartwizard.js", function() {
+$.getScript(root + 'assets/js/smartwizard.js', function() {
   var rooms = []
   var quantity = 0
   $(document).ready(function() {
     // Smart Wizard
-    $("#smartwizard").smartWizard({
+    $('#smartwizard').smartWizard({
       selected: 0, // Initial selected step, 0 = first step
       keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
       autoAdjustHeight: true, // Automatically adjust content height
@@ -13,11 +13,11 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
       showStepURLhash: false,
       lang: {
         // Language variables
-        next: "Next",
-        previous: "Previous"
+        next: 'Next',
+        previous: 'Previous'
       },
       toolbarSettings: {
-        toolbarPosition: "none"
+        toolbarPosition: 'none'
       },
       anchorSettings: {
         anchorClickable: false, // Enable/Disable anchor navigation
@@ -28,89 +28,89 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
       contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
       disabledSteps: [], // Array Steps disabled
       errorSteps: [], // Highlight step with errors
-      theme: "arrows",
-      transitionEffect: "fade", // Effect on navigation, none/slide/fade
-      transitionSpeed: "400"
+      theme: 'arrows',
+      transitionEffect: 'fade', // Effect on navigation, none/slide/fade
+      transitionSpeed: '400'
     })
     // Show step
-    $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
-      if (stepPosition === "first") {
-        $("#prev-btn").css("display", "none")
-        $("#next-btn").prop("disabled", false)
-        $("#btnShowMore").html("Show Other Rooms")
-      } else if (stepPosition === "final") {
-        $(".navbar-btn").remove()
+    $('#smartwizard').on('showStep', function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+      if (stepPosition === 'first') {
+        $('#prev-btn').css('display', 'none')
+        $('#next-btn').prop('disabled', false)
+        $('#btnShowMore').html('Show Other Rooms')
+      } else if (stepPosition === 'final') {
+        $('.navbar-btn').remove()
       }
     })
     // Leave Step
-    $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+    $('#smartwizard').on('leaveStep', function(e, anchorObject, stepNumber, stepDirection) {
       $(window).scrollTop(0)
-      if (stepDirection == "forward") {
+      if (stepDirection == 'forward') {
         if (stepNumber == 0) {
-          $("#prev-btn").css("display", "block")
-          var checkDate = $("#frmBookNow")
-            .find("#txtCheckDate")
+          $('#prev-btn').css('display', 'block')
+          var checkDate = $('#frmBookNow')
+            .find('#txtCheckDate')
             .val()
-            .split(" - ")
+            .split(' - ')
           var checkIn = new Date(checkDate[0])
           var checkOut = new Date(checkDate[1])
           if (checkIn > checkOut) {
-            alertNotif("error", "Check Out date must be greater than Check In date.")
+            alertNotif('error', 'Check Out date must be greater than Check In date.')
             return false
           }
           if (
             parseInt(
-              $("#frmBookNow")
-                .find("#txtAdults")
+              $('#frmBookNow')
+                .find('#txtAdults')
                 .val()
             ) <= 0
           ) {
-            alertNotif("error", "An adult is a must!")
+            alertNotif('error', 'An adult is a must!')
             return false
           }
-          $("#smartwizard")
-            .find("#loadingMode")
+          $('#smartwizard')
+            .find('#loadingMode')
             .fadeIn()
           $.ajax({
-            type: "POST",
-            url: root + "ajax/getRooms.php",
-            data: $("#frmBookNow").serialize(),
-            dataType: "json",
+            type: 'POST',
+            url: root + 'ajax/getRooms.php',
+            data: $('#frmBookNow').serialize(),
+            dataType: 'json',
             success: function(response) {
-              $("#roomList").html("")
-              $("btnShowMore").html("Show Other Rooms")
-              $("#txtSuggestedRooms").html("")
-              $("#txtOtherRooms")
-                .html("")
+              $('#roomList').html('')
+              $('btnShowMore').html('Show Other Rooms')
+              $('#txtSuggestedRooms').html('')
+              $('#txtOtherRooms')
+                .html('')
                 .hide()
               if (response[0] === false) {
-                $("#next-btn").prop("disabled", true)
-                $("#txtSuggestedRooms").html(
+                $('#next-btn').prop('disabled', true)
+                $('#txtSuggestedRooms').html(
                   "<div style='padding:15% 0%;width:100%;text-align:center;font-size:22px'>No Rooms Available</div>"
                 )
-                $("#btnShowMore").hide()
+                $('#btnShowMore').hide()
               } else {
-                $("#next-btn").prop("disabled", false)
-                $("#btnShowMore").show()
+                $('#next-btn').prop('disabled', false)
+                $('#btnShowMore').show()
                 response = response.filter(function(a) {
-                  return a !== ""
+                  return a !== ''
                 })
                 if (response.length == 1) {
-                  $("#btnShowMore").hide()
+                  $('#btnShowMore').hide()
                 }
                 for (var i = 0; i < response[0].length; i++) {
                   if (i == 0) {
-                    $("#txtSuggestedRooms").html(response[0][i])
+                    $('#txtSuggestedRooms').html(response[0][i])
                   } else {
-                    $("#txtOtherRooms").append(response[0][i])
+                    $('#txtOtherRooms').append(response[0][i])
                   }
                 }
               }
               $('[data-tooltip="tooltip"]').tooltip({
-                container: "body"
+                container: 'body'
               })
-              baguetteBox.run(".img-baguette", {
-                animation: "fadeIn",
+              baguetteBox.run('.img-baguette', {
+                animation: 'fadeIn',
                 fullscreen: true
               })
               editBookingSummary(
@@ -119,36 +119,36 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
                   "</span><br/>Check Out Date: <span class='pull-right'>" +
                   checkDate[1] +
                   "</span><br/>Adults: <span class='pull-right'>" +
-                  $("#frmBookNow")
-                    .find("#txtAdults")
+                  $('#frmBookNow')
+                    .find('#txtAdults')
                     .val() +
                   "</span><br/>Children: <span class='pull-right'>" +
-                  $("#frmBookNow")
-                    .find("#txtChildren")
+                  $('#frmBookNow')
+                    .find('#txtChildren')
                     .val() +
                   "</span><br/>Number of Days: <span class='pull-right'>" +
                   response[1] +
-                  "</span>",
-                "info"
+                  '</span>',
+                'info'
               )
-              $("#smartwizard")
-                .find("#loadingMode")
+              $('#smartwizard')
+                .find('#loadingMode')
                 .fadeOut()
             }
           })
         } else if (stepNumber == 1) {
           var roomSelected = false
-          $(".numberOfRooms").each(function() {
+          $('.numberOfRooms').each(function() {
             if (
               $(this)
-                .find("select")
+                .find('select')
                 .val() != 0
             ) {
               roomSelected = true
             }
           })
           if (!roomSelected) {
-            alertNotif("error", CHOOSE_ROOM_TO_PROCEED)
+            alertNotif('error', CHOOSE_ROOM_TO_PROCEED)
             return false
           }
           var roomHtml = [],
@@ -156,18 +156,18 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
             total = 0
           rooms = []
           quantity = 0
-          $(".numberOfRooms").each(function() {
+          $('.numberOfRooms').each(function() {
             if (
               $(this)
-                .find("select")
+                .find('select')
                 .val() != 0
             ) {
               var roomName = $(this)
                 .parent()
-                .find("#roomName")
+                .find('#roomName')
                 .html()
               var roomQuantity = $(this)
-                .find("select")
+                .find('select')
                 .val()
               rooms.push({
                 roomType: roomName,
@@ -175,67 +175,67 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
               })
               quantity += parseInt(
                 $(this)
-                  .find("select")
+                  .find('select')
                   .val()
               )
               var dates = $(this)
-                .closest("form")
-                .find("#txtCheckDate")
+                .closest('form')
+                .find('#txtCheckDate')
                 .val()
-                .split(" - ")
+                .split(' - ')
               var date1 = new Date(dates[0])
               var date2 = new Date(dates[1])
               diffDays = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24))
               roomHtml.push(
                 roomName +
-                  ": " +
+                  ': ' +
                   "<span class='pull-right'>" +
                   $(this)
-                    .find("select")
+                    .find('select')
                     .val() +
-                  " x " +
-                  "₱" +
+                  ' x ' +
+                  '₱' +
                   parseInt(
                     $(this)
                       .parent()
-                      .find("#roomPrice")
+                      .find('#roomPrice')
                       .html()
-                      .replace(/[^0-9\.-]+/g, "")
+                      .replace(/[^0-9\.-]+/g, '')
                   ).formatMoney() +
-                  "</span><br>" +
+                  '</span><br>' +
                   $(this)
                     .parent()
-                    .find("span#roomSimpDesc")
+                    .find('span#roomSimpDesc')
                     .html() +
                   "Total: <span class='pull-right'>₱&nbsp;" +
                   (
                     parseInt(
                       $(this)
                         .parent()
-                        .find("#roomPrice")
+                        .find('#roomPrice')
                         .html()
-                        .replace(/[^0-9\.-]+/g, "")
+                        .replace(/[^0-9\.-]+/g, '')
                     ) *
                     parseInt(
                       $(this)
-                        .find("select")
+                        .find('select')
                         .val()
                     ) *
                     diffDays
                   ).formatMoney() +
-                  "</span>"
+                  '</span>'
               )
               total +=
                 parseInt(
                   $(this)
                     .parent()
-                    .find("#roomPrice")
+                    .find('#roomPrice')
                     .html()
-                    .replace(/[^0-9\.-]+/g, "")
+                    .replace(/[^0-9\.-]+/g, '')
                 ) *
                 parseInt(
                   $(this)
-                    .find("select")
+                    .find('select')
                     .val()
                 ) *
                 diffDays
@@ -243,113 +243,115 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
           })
           if (quantity > MAX_ROOM_ALLOWED) {
             swal({
-              title: "Only " + MAX_ROOM_ALLOWED + " rooms and below are allowed",
+              title: 'Only ' + MAX_ROOM_ALLOWED + ' rooms and below are allowed',
               html:
-                MAX_ROOM_ERROR.replace("{0}", MAX_ROOM_ALLOWED) +
-                "<br/><small>(075) 636-0910<br/>0929-789-0088 / 0956-226-5236</small>",
-              type: "warning"
+                MAX_ROOM_ERROR.replace('{0}', MAX_ROOM_ALLOWED) +
+                '<br/><small>(075) 636-0910<br/>0929-789-0088 / 0956-226-5236</small>',
+              type: 'warning'
             })
             return false
           }
-          $("span#txtRoomPrice").html(total.formatMoney())
+          $('span#txtRoomPrice').html(total.formatMoney())
           editBookingSummary(
             "<hr style='margin:5px 0 5px 0;border-color:#ccc'>" +
               roomHtml.join("<hr style='margin:5px 0 5px 0;border-color:#ccc'/>") +
               "<hr style='margin:5px 0 5px 0;border-color:#ccc'>VATable: <span class='pull-right'>₱&nbsp;" +
-              (total - (total / 1.12) * 0.12).formatMoney() +
-              "</span><br/>VAT (12%): <span class='pull-right'>₱&nbsp;" +
-              ((total / 1.12) * 0.12).formatMoney() +
+              (total - (total / (VAT_RATE / 100 + 1)) * (VAT_RATE / 100)).formatMoney() +
+              '</span><br/>VAT (' +
+              VAT_RATE +
+              "%): <span class='pull-right'>₱&nbsp;" +
+              ((total / (VAT_RATE / 100 + 1)) * (VAT_RATE / 100)).formatMoney() +
               "</span><hr style='margin:5px 0 5px 0;border-color:#ccc'/>Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" +
               total.formatMoney() +
-              "</span>" +
+              '</span>' +
               (diffDays > 1
                 ? "<br/>50% of the Total: <span class='pull-right' style='font-weight:bold'>₱&nbsp;" +
                   (total / 2).formatMoney() +
-                  "</span>"
-                : ""),
-            "roomList"
+                  '</span>'
+                : ''),
+            'roomList'
           )
         } else if (stepNumber == 2) {
-          $("#reset-btn").css("display", "none")
-          $("#smartwizard")
-            .find("#loadingMode")
+          $('#reset-btn').css('display', 'none')
+          $('#smartwizard')
+            .find('#loadingMode')
             .fadeIn()
           $.ajax({
             context: this,
-            type: "POST",
-            url: root + "ajax/bookNow.php",
-            dataType: "json",
+            type: 'POST',
+            url: root + 'ajax/bookNow.php',
+            dataType: 'json',
             data: {
-              data: $("#frmBookNow").serialize() + "&type=reservation",
+              data: $('#frmBookNow').serialize() + '&type=reservation',
               rooms: rooms
             },
             success: function(response) {
               if (response[0] != false) {
-                $("#modalRules").modal("show")
-                $("#tblResult").html(response[1])
+                $('#modalRules').modal('show')
+                $('#tblResult').html(response[1])
                 if (
-                  $("input[name=txtPaymentMethod]:checked")
+                  $('input[name=txtPaymentMethod]:checked')
                     .val()
-                    .toLowerCase() == "paypal"
+                    .toLowerCase() == 'paypal'
                 ) {
-                  $("#step-4")
-                    .find("#btnPrint")
+                  $('#step-4')
+                    .find('#btnPrint')
                     .before(
                       "<button type='button' style='margin-right:-10px' class='btn btn-primary' onclick='window.open(\"" +
                         response[2] +
-                        "\");'>Pay now with Paypal</button>"
+                        '");\'>Pay now with Paypal</button>'
                     )
                 }
-                $("#frmBookNow")
-                  .find("#btnPrint")
+                $('#frmBookNow')
+                  .find('#btnPrint')
                   .attr(
-                    "onclick",
+                    'onclick',
                     "window.open('//" +
                       location.hostname +
                       root +
-                      "files/generateReservationConfirmation/?BookingID=" +
+                      'files/generateReservationConfirmation/?BookingID=' +
                       response[0] +
                       "','_blank','height=650,width=1000')"
                   )
                 editBookingSummary(
                   "Payment Method: <span class='pull-right'>" +
-                    $("#frmBookNow")
+                    $('#frmBookNow')
                       .find("input[name='txtPaymentMethod']:checked")
                       .val() +
-                    "</span>",
-                  "paymentMethod"
+                    '</span>',
+                  'paymentMethod'
                 )
-                $("#smartwizard")
-                  .find("#loadingMode")
+                $('#smartwizard')
+                  .find('#loadingMode')
                   .fadeOut()
-                socket.emit("notification", {
+                socket.emit('notification', {
                   user: email_address,
-                  type: "book",
+                  type: 'book',
                   messages:
                     'Booking ID: <a href="' +
                     root +
-                    "admin/booking/?search=" +
+                    'admin/booking/?search=' +
                     response[0] +
                     '">' +
                     response[0] +
-                    "</a><br/>Booked from " +
-                    $("#frmBookNow")
-                      .find("#txtCheckDate")
+                    '</a><br/>Booked from ' +
+                    $('#frmBookNow')
+                      .find('#txtCheckDate')
                       .val() +
-                    "<br/>Number of Rooms: " +
+                    '<br/>Number of Rooms: ' +
                     quantity
                 })
               } else {
-                $("#smartwizard")
-                  .find("#loadingMode")
+                $('#smartwizard')
+                  .find('#loadingMode')
                   .fadeOut()
-                $("#step-4").html(
+                $('#step-4').html(
                   "<div style='width:100%;text-align:center;font-size:30px;padding:100px'>Something went wrong!</div>"
                 )
                 swal({
-                  title: "Something went wrong!",
+                  title: 'Something went wrong!',
                   text: ALREADY_RESERVED,
-                  type: "error",
+                  type: 'error',
                   allowOutsideClick: false
                 }).then(result => {
                   if (result.value) {
@@ -363,78 +365,78 @@ $.getScript(root + "assets/js/smartwizard.js", function() {
       }
     })
     // External Button Events
-    $("#reset-btn").on("click", function() {
-      if (confirm("Do you want to reset the process?")) {
-        $("#smartwizard").smartWizard("reset")
-        $("#bookingSummary").html("")
-        $("#prev-btn").css("display", "none")
-        $("#bookingSummary").html("<div id='info'></div><div id='roomList'></div><div id='paymentMethod'></div>")
-        $("#frmBookNow")
-          .find("#txtAdults")
-          .val("1")
-        $("#frmBookNow")
-          .find("#txtChildren")
-          .val("0")
-        $("#frmBookNow")
-          .find(".checkDate")
+    $('#reset-btn').on('click', function() {
+      if (confirm('Do you want to reset the process?')) {
+        $('#smartwizard').smartWizard('reset')
+        $('#bookingSummary').html('')
+        $('#prev-btn').css('display', 'none')
+        $('#bookingSummary').html("<div id='info'></div><div id='roomList'></div><div id='paymentMethod'></div>")
+        $('#frmBookNow')
+          .find('#txtAdults')
+          .val('1')
+        $('#frmBookNow')
+          .find('#txtChildren')
+          .val('0')
+        $('#frmBookNow')
+          .find('.checkDate')
           .val(
             moment(new Date())
-              .add(1, "days")
-              .format("MM/DD/YYYY") +
-              " - " +
+              .add(1, 'days')
+              .format('MM/DD/YYYY') +
+              ' - ' +
               moment(new Date())
-                .add(2, "days")
-                .format("MM/DD/YYYY")
+                .add(2, 'days')
+                .format('MM/DD/YYYY')
           )
       }
     })
-    $("#prev-btn").on("click", function() {
-      $("#smartwizard").smartWizard("prev")
+    $('#prev-btn').on('click', function() {
+      $('#smartwizard').smartWizard('prev')
       return true
     })
-    $("#next-btn").on("click", function() {
-      if ($("#step-3").css("display") == "block") {
-        if ($("input[name=cbxTermsAndConditions]").prop("checked") == false) {
-          alertNotif("error", CHECK_TERMS_AND_CONDITIONS)
+    $('#next-btn').on('click', function() {
+      if ($('#step-3').css('display') == 'block') {
+        if ($('input[name=cbxTermsAndConditions]').prop('checked') == false) {
+          alertNotif('error', CHECK_TERMS_AND_CONDITIONS)
           return false
         }
         swal({
-          title: "Are you sure?",
+          title: 'Are you sure?',
           text: "You won't be able to revert this!",
-          type: "warning",
+          type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Submit"
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Submit'
         }).then(result => {
           if (result.value) {
-            $("#smartwizard").smartWizard("next")
+            $('#smartwizard').smartWizard('next')
           }
         })
       } else {
-        $("#smartwizard").smartWizard("next")
+        $('#smartwizard').smartWizard('next')
       }
       return true
     })
-    $("#btnShowMore").click(function() {
+    $('#btnShowMore').click(function() {
       var btn = $(this)
-      $("#txtOtherRooms").fadeToggle(function() {
-        if ($(this).css("display") == "none") {
-          btn.html("Show Other Rooms")
+      $('#txtOtherRooms').fadeToggle(function() {
+        if ($(this).css('display') == 'none') {
+          btn.html('Show Other Rooms')
         } else {
-          btn.html("Hide Other Rooms")
+          btn.html('Hide Other Rooms')
         }
       })
     })
-    if ($("#step-1").hasClass("skip")) {
-      $("#smartwizard").smartWizard("next")
+    if ($('#step-1').hasClass('skip')) {
+      $('#smartwizard').smartWizard('next')
     }
   })
 })
 function editBookingSummary(html, type) {
-  $("#bookingSummary").hide()
-  $("#bookingSummary")
-    .find("#" + type)
+  $('#bookingSummary').hide()
+  $('#bookingSummary')
+    .find('#' + type)
     .html(html)
-  $("#bookingSummary").fadeIn()
+  $('#bookingSummary').fadeIn()
 }

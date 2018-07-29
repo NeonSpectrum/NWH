@@ -102,7 +102,8 @@ CREATE TABLE `booking_expenses` (
   `BookingID` int(11) NOT NULL,
   `ExpensesID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
-  `Amount` int(11) DEFAULT NULL
+  `Amount` int(11) DEFAULT NULL,
+  `Remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `booking_paypal` (

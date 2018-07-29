@@ -12,12 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $system->validateToken()) {
   } else if ($_POST['type'] == 'check') {
     $expensesType = $system->filter_input($_POST['expensesType']);
     $quantity     = $system->filter_input($_POST['txtQuantity']);
+    $remark       = $system->filter_input($_POST['txtRemark']);
     $result       = $db->query("SELECT * FROM expenses WHERE Name='$expensesType'");
     $expensesID   = $result->fetch_assoc()['ExpensesID'];
     if ($expensesType == 'Others') {
-      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, $payment)");
+      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, $payment, '$remark')");
     } else {
-      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, NULL)");
+      $db->query("INSERT INTO booking_expenses VALUES($bookingID, $expensesID, $quantity, NULL, '$remark')");
     }
     if ($db->affected_rows > 0) {
       $system->log("insert|booking.expenses|{$system->formatBookingID($bookingID)}|{$_POST['expensesType']}|$quantity|₱" . number_format($payment, 2, '.', ','));
